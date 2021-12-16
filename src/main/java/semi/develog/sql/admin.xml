@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<!-- 게시글 수 조회 -->
+	<entry key="memberListCount">
+		SELECT COUNT(*) FROM MEMBER
+	</entry>
+
+	<!-- 회원 조회 -->
+	<entry key="selectMember">
+		SELECT * FROM(
+		SELECT ROWNUM RNUM, A.* FROM
+		(SELECT MEMBER_NO, MEMBER_NM, MEMBER_EMAIL, 
+			TO_CHAR(ENROLL_DT, 'YYYY-MM-DD'), INTRO, VIOLATION_COUNT,
+			TO_CHAR(MODIFY_DT, 'YYYY-MM-DD'), STATUS_NM,GRADE_NM
+		FROM MEMBER
+		JOIN MEMBER_STATUS USING(STATUS_CD)
+		JOIN GRADE USING(GRADE_CD)
+		ORDER BY MEMBER_NO DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+
+	<!-- 게시글 조회 -->
+	<entry key="selectPost">
+		SELECT * FROM(
+		SELECT ROWNUM RNUM, A.* FROM
+		(SELECT POST_NO, POST_TITLE, POST_CONTENT, 
+			TO_CHAR(CREATE_DT, 'YYYY-MM-DD'), READ_COUNT, VIOLATION_COUNT, LIKE_COUNT,
+			TO_CHAR(MODIFY_DT, 'YYYY-MM-DD'), BLOG_NO, CATEGORY_CD, POST_STATUS_NM, REPORT_COUNT
+		FROM POST
+        JOIN POST_STATUS USING (POST_STATUS_CD)
+		ORDER BY POST_NO DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+</properties>
