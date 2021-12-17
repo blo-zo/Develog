@@ -1,0 +1,684 @@
+/* @font-face {
+    font-family: '';
+    src: url(C:\Users\DG\Desktop\font);
+    font-weight: bold;
+   
+} */
+
+body * {
+  box-sizing: border-box;
+
+}
+ /* common.css */
+html, body{
+  margin:0; 
+  padding:0; 
+ 
+  font-family: "Noto Sans KR" !important; 
+  font-size:15px; 
+  color:#323232;
+  background-color: #FDFDFD;
+
+  margin-bottom: 50px;
+}
+
+hr{
+  max-width: 70%;
+  border: 2px solid gray;
+  margin: auto;
+  margin-bottom: 50px;
+}
+
+
+html,body{
+    width: 100%;
+    height: 100%;
+   
+}
+header{
+    margin: auto;
+    margin-bottom: 40px;
+    background-color: #FDFDFD;
+}
+body{
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+main{
+    margin-top: 50px;
+}
+p{
+    padding: 0px;
+   
+}
+a{
+    text-decoration: none;
+   
+    color: inherit;
+}
+ input::placeholder { 
+    color: #989898;
+    
+
+ }
+
+
+
+/* input::-ms-input-placeholder {
+	color: #989898;
+} */
+
+/*---------------- Header ----------------*/
+/* 검색창 오프캔버스 */
+/* 헤더 */
+.jun-header{
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* 검색창 오프캔버스 */
+.search-offcanvas{
+  height: 40vh;
+}
+
+.search-offcanvas-body{
+  text-align: center;
+}
+
+
+#search-input{
+  border: none;
+  border-bottom: #323232 solid 3px;
+  outline: none;
+  width: 375px;
+}
+
+#search-area{
+  margin: auto;
+  width: 400px;
+}
+
+#search-btn{
+  width: 21px;
+  height: 21px;
+  border: none;
+}
+
+.recent-search{
+  text-align: left;
+  width: 380px;
+}
+.recent-search p > span:first-child:hover{
+  color: #3278FE;
+}
+
+.recent-search p{
+  margin: 5px;
+}
+
+/* 최근 검색어 전체 삭제 */
+#search-delete-all, .search-delete{
+  cursor: pointer;
+  color: #323232;
+}
+.search-delete{
+  margin-left: 20px;
+}
+#search-delete-all:hover, .search-delete:hover{
+  opacity: 70%;
+}
+
+/* ---- 헤더 공통 부분 끝 ---- */
+/* 로그인 버튼 */
+.login-btn{
+  font-size: 18px;
+  padding: 0px;
+  width: 60px;
+  height: 37px;
+  color: white;
+  background-color: #3278FE;
+  border-radius: 5px;
+  border: none;
+  margin-top: 2px;
+  margin-left: 15px;
+  cursor: pointer;
+ 
+}
+/* ----------------------------------------------------캐러셀 ------------------------------------------------------------ */
+
+
+/* ----------------------------------------------------캐러셀 끝 ------------------------------------------------------------ */
+/* 전체 post box */
+.post-hr{
+    width: 1200px;
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    margin: 80px auto;
+  
+    
+}
+/* post 선 */
+.post-hr >.hr{
+    width: 47%;
+    border: 1px solid ;
+    margin: auto;
+}
+
+
+/* post 글자 */
+.post-hr > .post{
+ 
+    width: 94px;
+    font-size: 30px;
+    text-align: center;
+    margin: 10px 30px 60px 30px;
+}
+
+/* nav 바 */
+nav{
+    display: flex;
+    width: 1200px;
+    margin-top: 100px;
+    margin: auto;
+}
+
+.nav-tr {
+    display: flex;
+    position: relative;
+    width: 200px;
+    height: 30px;
+}
+#tr-img{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+#tr-img2{
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+#date-form{
+    border: #D6D6D6;
+    height: 30px;
+    margin-top: 12px;
+    margin-left: 50px;
+}
+#date{
+    width: 90px;
+    height: 26px;
+    border: #D6D6D6;
+    color: #989898;
+    font-weight: bold;
+    text-align: center;
+    
+}
+/* 트랜드 최신 */
+.nav-wrap{
+    width: 400px;
+    display: flex;
+}
+.nav-tr a {
+    
+    font-size: 18px;
+    
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    font-size: 20px;
+    text-decoration: none;
+    color: rgb(134, 142, 150);
+    
+}
+.nav-tr a:nth-child(2) {
+    
+    margin-left: 16px;
+}
+
+
+.sort-menu{
+    width: 300px;
+    height: 50px;
+    display: flex;
+    
+  
+  }
+
+  
+  .under-line-on{
+    width: 150px;
+    height: 50px;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 5px solid #3278FE;
+    
+    cursor: pointer;
+  }
+  
+  .under-line-off{
+    width: 150px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 20px;
+    font-weight: 600;
+    opacity: 0.7;
+    text-align: center;
+    border-bottom: 2px solid #323232;
+  
+    cursor: pointer;
+  }
+  
+  
+  .under-line-on{
+    width: 150px;
+    height: 50px;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 5px solid #3278FE;
+    
+    cursor: pointer;
+  }
+  
+  .under-line-off{
+    width: 150px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 20px;
+    font-weight: 600;
+    opacity: 0.7;
+    text-align: center;
+    border-bottom: 2px solid #323232;
+   
+    cursor: pointer;
+  }
+
+/* 카드 만들기 */
+
+/* 카드 영역*/
+.card-bord{
+    
+    width: 1200px;
+    height: auto;
+    margin: 0 auto;
+    margin-top: 50px;
+    
+}
+/* 카드 wrapper */
+.wrapper-card{
+    width: 300px;
+    height: 250px;
+    float: left;
+    margin-top: 20px;
+    
+}
+
+/* 카드 */
+.card {           
+    width: 280px;
+    height: 250px;
+    margin: auto;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0px 5px 5px gray;
+}  
+.wrapper-a{
+   
+    text-decoration: none;
+    color: black;
+}
+
+/* 마우스 들어갔을 때 */
+.card:hover{
+    transform: translate(-5px, -10px);
+    transition-duration: 0.5s;
+    color: black;
+}
+/* 카드 이미지 */
+.image{
+    width: 280px;
+    height: 150px;
+    position: relative;
+    margin: 0px;
+    border-radius: 5px;
+}
+#img-size{
+    width: 100%;
+    height: 100%;
+}
+/* 타이틀박스 */
+.title-box{
+    width: 280px;
+    height: 60px;
+}
+/* 타이틀글자 */
+.title{
+    text-align: left;
+    margin: 0px;
+    margin-top: 25px;
+    margin-left: 20px;
+    font-size: 20px;
+    
+}
+
+/* 아래박스 */
+
+
+.sub-div {
+    
+    display: flex;
+    font-size: 15px;
+    margin-top: 7px;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    cursor: pointer;
+}
+/* 아이디부분  */
+.by_name{
+    margin-left: 20px;
+}
+.sub-div .user {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    -webkit-box-align: center;
+    
+}
+
+#ht{
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+}
+.likes{
+    margin-right: 12px;
+}
+
+
+/*----------------------------------------------------------- 모달------------------------------------------------ */
+/* 모달창 크기 */
+.modal-content{
+    width: 620px; 
+    height: 440px; 
+    margin: auto;
+    border-radius: 5px;
+    border: none;
+}
+/* 모달 x */
+.x-box{
+    position: absolute;
+    left: 550px;
+    top: 50px;
+}
+/* 로그인 */
+#md-title{
+    font-size: 40px;
+     margin-top: 30px;
+     text-align: center;
+}
+/* 모달헤더 */
+.modal-header{
+    margin: 0px;
+    width: 100%;
+    height: 130px;
+    border: none;
+}
+/* 모달 헤더 div */
+.login-hd{
+    width: 100%; 
+    height: 100%;
+     padding: 0px;
+}
+
+/* 모달 바디 */
+.modal-body{
+    padding: 0px;
+    height: 220px;
+    position: relative;
+    flex: none;
+    padding: none;
+}
+/* input wrp */
+.input-box{
+    margin: auto;
+    width: 480px;
+    height: 120px;
+    margin-top: 15px
+}
+/* 회원가입  비밀번호 찾기 영역 */
+.signUp-box{
+    width: 430px;
+    height: 30px;
+    margin: auto;
+    margin-top: 5px;
+}
+/* 회원가입 비밀번호 영역 a 태그 */
+.signUp-box a {
+   color: #3278FE;
+   display: inline-block;
+}
+/* a태그안에 p태그 */
+.sigUp-box a p{
+    font-size: 15px;
+    display: inline-block;
+}
+/* 클릭되었을 시 */
+.signUp-box a p:hover{
+    color: #989898;
+}
+/* 모달창 로그인 버튼 */
+#modal-log{
+    width: 140px;
+    height: 37px;
+    color: #ffffff;
+    background-color: #3278FE;
+    float: right;
+   
+}
+/* input 감싸는 영역 */
+.put{
+
+    border: 1px solid #D6D6D6;
+    width: 450px;
+    height: 50px;
+    margin: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+/* input 안에 사진 input창 나누는 영역 */
+.img-wrp{
+
+    width: 50px;
+    height: 50px;
+    padding: 10px 0px 10px 10px;
+    float: left;
+
+}
+/* img 영역 */
+.img-type{
+    width: 30px;
+    height: 30px;
+}
+/* input영역 */
+.input-wrp{
+    width: 320px;
+    height: 50px;
+    float: left;
+}
+
+/* input 입력 창 */
+.sumit-box{
+    margin: auto;
+    padding: 3px;
+    width: 370px;
+    height: 30px;
+    margin-top: 11px;
+    border: none;
+    outline: none;
+}
+/* 아이디저장 */
+.idcheckbox{
+  width: 430px;
+  height: 30px;
+  margin: auto;
+  font-weight: lighter;
+}
+/* 아직 회원가입 안하셨어요? */
+#qs{
+    display: inline-block;
+    margin-right: 77px;
+    font-size: 15px;
+}
+/* 회원가입 비밀번호 찾기 */
+#sign-span{
+    margin-left: 20px;
+}
+#sign-span a p{
+    font-size: 15px;
+}
+#sign-span a p:last-child{
+    margin-left: 8px;
+}
+.modal-ft{
+  width: 450px;
+  margin: auto;
+  margin-top: 0;
+}
+/* -----------------------------------------------------------모달끝 ------------------------------------------------*/
+
+
+/* -----------------------------------------------------------캐러셀------------------------------------------------ */
+.swiper {
+  width: 1360px;
+  height: 320px;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-wrapper{
+width: 453px;
+height: 250px;
+float: left;
+}
+
+.swiper-pagination-bullet {
+background-color: #3278FE ;
+margin-top: 20px ;
+width: 40px;
+height: 3px;
+} 
+.carousel-imgbox{
+width: 400px;
+height: 250px;
+margin: auto;
+border-radius: 0px;
+}
+.swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet, .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
+border-radius: 0px;
+margin: 0px;
+width: 100px;
+height: 3px;
+}
+/* -----------------------------------------------------------캐러셀 끝------------------------------------------------ */
+
+
+/* 검색창 오프캔버스 */
+.offcanvas{
+    height: 40vh;
+  }
+  
+  .offcanvas-body{
+    text-align: center;
+  }
+  
+  #search-icon{
+    width: 20px;
+    height: 20px;
+  }
+  
+  #search-input{
+    border: none;
+    border-bottom: #323232 solid 3px;
+    outline: none;
+    width: 375px;
+  }
+  
+  #search-area{
+    margin: auto;
+    width: 400px;
+  }
+  
+  .recent-search{
+    text-align: left;
+  }
+  .recent-search p > span:first-child:hover{
+    color: #3278FE;
+  }
+  
+  .recent-search p{
+    margin: 5px;
+  }
+  
+  /* 최근 검색어 전체 삭제 */
+  #search-delete-all, .search-delete{
+    cursor: pointer;
+    color: #323232;
+  }
+  .search-delete{
+    margin-left: 20px;
+  }
+  #search-delete-all:hover, .search-delete:hover{
+    opacity: 70%;
+  }
+
+
+  /* *************************************************************** 캐러셀 호버시******************************************************** */
+  .wrapper{
+    width: 420px;
+    height: 250px;
+    position: relative;
+    display: inline-block;
+}
+
+.bg{
+  width: 401px;
+  height: 250px;
+  position: absolute;
+  top: 0;
+  left: 16px;
+  background-color: rgba(255, 255, 255, 0.465);
+  opacity: 0;
+  transition-duration: 0.5s;
+}
+.bg > p {
+  line-height: 230px;
+  font-size: 30px;
+  color: #323232;
+  font-weight: bold;
+}
+
+.bg:hover{
+  opacity: 0.9;
+}
