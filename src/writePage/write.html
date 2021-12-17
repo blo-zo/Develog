@@ -84,9 +84,19 @@
         </footer>
     </div><!-- wrapper -->
 
+    <!-- 
+        수정한 부분 css파일에 포함할것
+        지금은 보이고 안보이고 정도만 작성
+        나중에 움직이는걸로 바꾸고 싶으면 transform 했던거 찾으면 될거에요
+    -->
+    <style>
+        .modal-content-area{display:none;}
+        .modal-content-area.active{display:flex;}
+    </style>
+
     <aside id="offCanvas"   style="height: 100%;">  </aside> 
     <!-- modal slide up -->
-        <div class="modal-content-area" style="display: none;">
+        <div class="modal-content-area">
             <div class="modal-content-box">
                 
                 <div class="thumbnail-area">
@@ -196,8 +206,24 @@
     
     // 글작성 -출간하기 버튼 (모달)
     document.getElementById("btn-pre-submit").onclick = function(){
-        alert("dffd");
+        // 모달 클래스에 active클래스 포함 되있을때 : 모달창 보이고있음
+        if ($(".modal-content-area").hasClass("active")) { 
+            $(".modal-content-area").removeClass("active");
+        } 
+        // 모달 클래스에 active클래스 없을때 : 모달창 안보이고 있음
+        else {
+            $(".modal-content-area").addClass("active");
+        }
+        // alert("dffd");
     };
+
+    // 모달 취소 버튼 클릭시
+    $(".modal-content-area .btn-cancel").on("click", function () {
+        $(".modal-content-area").removeClass("active");
+    })
+
+
+    
 
 
     
