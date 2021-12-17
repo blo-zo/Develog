@@ -1,4 +1,4 @@
-package semidevelog.common;
+package semi.common;
 
 
 import java.io.FileInputStream;
