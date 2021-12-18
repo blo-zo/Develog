@@ -16,5 +16,12 @@ function loginValidate(){
         return false;
 
     }
-
+    if(confirm("로그인 하시겠습니까?")){
+       
+        alert("로그인 되었습니다.")
+        return;
+    }else{
+        
+        return false;
+    }
 }

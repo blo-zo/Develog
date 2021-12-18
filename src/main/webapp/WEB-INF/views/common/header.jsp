@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="${contextPath}/resources/css/mainPage.css">
     <link rel="stylesheet" href="${signUp}">
     <link rel = "stylesheet" href = "${searchPw}">
+    <link rel = "stylesheet" href = "${updatePw}">
     <style>
        
     </style>
@@ -122,7 +123,7 @@
                
                 <li><a class="dropdown-item" href="#">설정</a></li>
            
-                <li><a class="dropdown-item" href="#">1:1문의</a></li>
+                <li><a class="dropdown-item" href="${contextPath}/enquiry/list">1:1문의</a></li>
              
                 <li><a class="dropdown-item" href="${contextPath}/member/logout">로그아웃</a></li>
                
@@ -162,7 +163,7 @@
            <div class="input-box">
              <div  class="put">
                <div class="img-wrp"><label for="email">
-                 <img class="img-type" src="${contextPath}/resources/img/아이디.jpg" alt="">
+                 <img class="img-type" src="${contextPath}/resources/images/아이디.jpg" alt="">
                 </label></div>
                 <div class="input-wrp">
                   <input type="email" class="sumit-box" id="email" name="memberEmail" placeholder="이메일을 입력하세요." value = "${cookie.save.value}">
@@ -170,7 +171,7 @@
               </div>
               <div  class="put">
                 <div class="img-wrp"><label for="pw">
-                  <img class="img-type" src="${contextPath}/resources/img/비밀번호.jpg" alt="">
+                  <img class="img-type" src="${contextPath}/resources/images/비밀번호.jpg" alt="">
                 </label></div>
                 <div class="input-wrp">
                   <input type="password" class="sumit-box" id="pw" name="memberPw" placeholder="비밀번호를 입력하세요." >

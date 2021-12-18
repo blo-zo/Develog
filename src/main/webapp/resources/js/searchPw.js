@@ -51,10 +51,22 @@ $("#searchPw-email").on("input", function () {
     }
 
 });
+
 function emailput(){
-	if(signUpCheckObj.email == true){
-		
-		alert("전송완료");
+	const inputEmail = $("#searchPw-email")
+    if(signUpCheckObj.email == true){
+        $.ajax({
+            url : "sendMail/sendMail",
+            data : {"inputEmail" : inputEmail},
+
+            success: function(){
+
+            }
+
+
+
+        });
+		alert("임시번호가 전송되었습니다.");
 	}else if(signUpCheckObj.email == false){
 		alert("이메일을 확인해주세요")
 	}

@@ -23,9 +23,14 @@ function validate() {
             // document.getElementById(key).focus();
             return false;
         }
-
+        
     } 
-
+    if(confirm("회원가입 하시겠습니까?")){
+        
+        return;
+    }else{
+        return false;
+    }
 
   
 
@@ -118,7 +123,7 @@ $("#signUp-email").on("input", function () {
 /* 비밀번호 유효성 검사 */
 $("#pwd1").on("input", function () {
 
-    const regExp = /^[a-zA-z\d\!\@\#\-\_]{6,20}$/;
+    const regExp = /^[a-zA-Z\d\!\@\#\-\_]{6,20}$/;
     const inputPwd1 = $(this).val();
 
     if (inputPwd1.length == 0) {
@@ -176,3 +181,14 @@ $("#signUp-pw1, #signUp-pw").on("input", function () {
     }
 
 });
+
+
+function signUpSmi(){
+    if(confirm("로그아웃 하시겠습니까")){
+        return;
+
+    }else{
+        return false;
+    }
+}
+

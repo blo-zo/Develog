@@ -32,7 +32,7 @@
                     <!-- 비밀번호 -->
                     <tr>
                         
-                        <td>  <label for="password" class="label1">비밀번호</label><input class="searchPw-input" id="password" type="password" name="pw" placeholder="  비밀번호를 입력해주세요" required="required">
+                        <td>  <label for="password" class="label1">임시비밀번호</label><input class="searchPw-input" id="password" type="password" name="pw" placeholder="  비밀번호를 입력해주세요" required="required">
                                 
                         </td> 
                     </tr>
