@@ -1,4 +1,4 @@
-package semi.develog.common;
+package semi.blozo.develog.common;
 
 import java.io.FileInputStream;
 import java.sql.Connection;

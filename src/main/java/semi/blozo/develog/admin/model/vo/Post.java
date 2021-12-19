@@ -1,4 +1,4 @@
-package semi.develog.admin.model.vo;
+package semi.blozo.develog.admin.model.vo;
 
 public class Post {
 	private int postNo;

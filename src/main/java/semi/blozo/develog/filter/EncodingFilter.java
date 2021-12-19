@@ -1,4 +1,4 @@
-package semi.develog.filter;
+package semi.blozo.develog.filter;
 
 import java.io.IOException;
 import javax.servlet.Filter;

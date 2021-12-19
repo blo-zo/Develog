@@ -1,4 +1,4 @@
-package semi.develog.admin.controller;
+package semi.blozo.develog.admin.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import semi.develog.admin.model.service.AdminService;
-import semi.develog.admin.model.vo.Enquiry;
-import semi.develog.admin.model.vo.Member;
-import semi.develog.admin.model.vo.Pagination;
-import semi.develog.admin.model.vo.Post;
-import semi.develog.admin.model.vo.Report;
+import semi.blozo.develog.admin.model.service.AdminService;
+import semi.blozo.develog.admin.model.vo.Enquiry;
+import semi.blozo.develog.admin.model.vo.Member;
+import semi.blozo.develog.admin.model.vo.Pagination;
+import semi.blozo.develog.admin.model.vo.Post;
+import semi.blozo.develog.admin.model.vo.Report;
 
 @WebServlet("/admin/*")
 public class AdminController extends HttpServlet {

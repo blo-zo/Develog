@@ -1,4 +1,4 @@
-package semi.develog.admin.model.vo;
+package semi.blozo.develog.admin.model.vo;
 
 // 페이징 처리에 필요한 모든 값들을 저장 하고있는 객체
 public class Pagination {

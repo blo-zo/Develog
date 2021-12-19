@@ -1,6 +1,6 @@
-package semi.develog.admin.model.dao;
+package semi.blozo.develog.admin.model.dao;
 
-import static semi.develog.common.JDBCTemplate.*;
+import static semi.blozo.develog.common.JDBCTemplate.*;
 
 import java.io.FileInputStream;
 import java.sql.Connection;
@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import semi.develog.admin.model.vo.Enquiry;
-import semi.develog.admin.model.vo.Member;
-import semi.develog.admin.model.vo.Pagination;
-import semi.develog.admin.model.vo.Post;
-import semi.develog.admin.model.vo.Report;
+import semi.blozo.develog.admin.model.vo.Enquiry;
+import semi.blozo.develog.admin.model.vo.Member;
+import semi.blozo.develog.admin.model.vo.Pagination;
+import semi.blozo.develog.admin.model.vo.Post;
+import semi.blozo.develog.admin.model.vo.Report;
 
 public class AdminDAO {
 	
@@ -26,7 +26,7 @@ public class AdminDAO {
 	private Properties prop;
 	
 	   public AdminDAO() {
-		      String filePath = AdminDAO.class.getResource("/semi/develog/sql/admin.xml").getPath();                    
+		      String filePath = AdminDAO.class.getResource("/semi/blozo/develog/sql/admin.xml").getPath();                    
 		      
 		      try {
 		         prop = new Properties();

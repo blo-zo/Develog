@@ -1,16 +1,16 @@
-package semi.develog.admin.model.service;
+package semi.blozo.develog.admin.model.service;
 
-import static semi.develog.common.JDBCTemplate.*;
+import static semi.blozo.develog.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.List;
 
-import semi.develog.admin.model.dao.AdminDAO;
-import semi.develog.admin.model.vo.Enquiry;
-import semi.develog.admin.model.vo.Member;
-import semi.develog.admin.model.vo.Pagination;
-import semi.develog.admin.model.vo.Post;
-import semi.develog.admin.model.vo.Report;
+import semi.blozo.develog.admin.model.dao.AdminDAO;
+import semi.blozo.develog.admin.model.vo.Enquiry;
+import semi.blozo.develog.admin.model.vo.Member;
+import semi.blozo.develog.admin.model.vo.Pagination;
+import semi.blozo.develog.admin.model.vo.Post;
+import semi.blozo.develog.admin.model.vo.Report;
 
 public class AdminService {
 	
