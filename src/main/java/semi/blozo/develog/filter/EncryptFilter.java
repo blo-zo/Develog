@@ -38,7 +38,7 @@ public class EncryptFilter implements Filter {
 			chain.doFilter(request, response);
 		}
 		
-		
+		//
 	}
 	public void destroy() {
 		System.out.println("벨로그필터 제거! 재생성");
