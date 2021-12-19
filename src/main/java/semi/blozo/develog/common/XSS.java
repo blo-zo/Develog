@@ -2,7 +2,6 @@ package semi.blozo.develog.common;
 
 public class XSS {
 	
-<<<<<<< HEAD
 	public static String replaceParameter(String parameter) {
 		
 		if(parameter != null) {
@@ -15,17 +14,4 @@ public class XSS {
 		return parameter;
 	}
 	
-=======
-	// 크로스 사이트 스크립트 공격을 방지하기 위한 메소드
-	public static String replaceParameter(String parameter) {
-		if(parameter != null) {
-			parameter = parameter.replaceAll("&", "&amp");
-			parameter = parameter.replaceAll("<", "&lt");
-			parameter = parameter.replaceAll(">", "&gt");
-			parameter = parameter.replaceAll("\"", "&quot");
-			
-		}
-		return parameter;
-	}
->>>>>>> dcf32d051412d6a89fe8c14660b8918114751257
 }
