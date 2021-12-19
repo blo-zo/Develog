@@ -8,12 +8,16 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+<<<<<<< HEAD
 import javax.servlet.http.HttpServlet;
+=======
+>>>>>>> dcf32d051412d6a89fe8c14660b8918114751257
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import semi.blozo.develog.wrapper.EncryptWrapper;
 
+<<<<<<< HEAD
 //@WebFilter : 어떤 요청을 필터링할지 주소를 작성하고 필터에 
 //				이름을 부여하며 필터링 순서를 지정할 수 있게 하는 이노테이션
 @WebFilter(filterName = "encryptFilter" , urlPatterns = {"/member/login" , "/member/signup" , "/member/updatePw" , "/member/secession"})
@@ -57,10 +61,31 @@ public class EncryptFilter implements Filter {
 			// -> 오버라이딩된 getParameter 사용가능
 			
 			// 기존 req 대신 encWrapper를 Servlet으로 전달
+=======
+
+
+@WebFilter(filterName = "encryptFilter" , urlPatterns = {"/member/login" , "/member/signup", "/member/searchpw" , "/member/updatepw"})
+public class EncryptFilter implements Filter {
+
+	public void init(FilterConfig fConfig) throws ServletException {
+	System.out.println("벨로그 필터 생성");
+	}
+   
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		
+		HttpServletRequest req = (HttpServletRequest)request;
+		//HttpServletResponse resp = (HttpServletResponse)response;
+		
+		//필터링 확인하기
+		//System.out.println(req.getParameter("memberPw"));
+		if(req.getMethod().equals("POST")) {
+			EncryptWrapper encWrapper = new EncryptWrapper(req);
+>>>>>>> dcf32d051412d6a89fe8c14660b8918114751257
 			
 			chain.doFilter(encWrapper, response);
 		}else {
 			
+<<<<<<< HEAD
 			//chain.doFilter(request, response); : 다음 필터로 요청 / 응답 전달
 			// 다음 필터가 없으면 Servlet/ JSP로 전달
 			chain.doFilter(request, response);
@@ -80,5 +105,17 @@ public class EncryptFilter implements Filter {
 	
 
 	
+=======
+			chain.doFilter(request, response);
+		}
+		
+		//
+	}
+	public void destroy() {
+		System.out.println("벨로그필터 제거! 재생성");
+	}
+
+
+>>>>>>> dcf32d051412d6a89fe8c14660b8918114751257
 
 }

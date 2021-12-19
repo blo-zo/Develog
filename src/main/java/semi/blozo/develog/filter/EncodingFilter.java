@@ -9,8 +9,12 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
+<<<<<<< HEAD
 	// * : 모든
  	// /* : 모든페이지
+=======
+
+>>>>>>> dcf32d051412d6a89fe8c14660b8918114751257
 @WebFilter(filterName = "encodingFilter", urlPatterns = "/*" )
 public class EncodingFilter implements Filter {
 
