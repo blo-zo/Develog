@@ -1,0 +1,4 @@
+CREATE USER semipractice IDENTIFIED BY semipractice1234;
+
+GRANT CONNECT, RESOURCE, CREATE VIEW TO semipractice;
+
