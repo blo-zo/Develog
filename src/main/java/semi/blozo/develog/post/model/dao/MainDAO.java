@@ -1,6 +1,6 @@
 package semi.blozo.develog.post.model.dao;
 
-import static semi.blozo.develog.common.JDBCTemplate2.*;
+import static semi.blozo.develog.common.JDBCTemplate.*;
 
 import java.io.FileInputStream;
 import java.sql.Connection;
@@ -30,7 +30,7 @@ public class MainDAO {
 				prop = new Properties();
 				
 				String filePath 
-				= MainDAO.class.getResource("/semi/blozo/develog/sql/post-query.xml").getPath();     
+				= MainDAO.class.getResource("/semi/blozo/develog/sql/post-query2.xml").getPath();     
 				// -> SQL이 작성된 XML 파일의 경로
 				
 				prop.loadFromXML( new FileInputStream( filePath ) );

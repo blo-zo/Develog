@@ -1,5 +1,5 @@
 package semi.blozo.develog.enquiry.model.dao;
-import static semi.blozo.develog.common.JDBCTemplate2.*;
+import static semi.blozo.develog.common.JDBCTemplate.*;
 
 import java.io.FileInputStream;
 import java.sql.Connection;

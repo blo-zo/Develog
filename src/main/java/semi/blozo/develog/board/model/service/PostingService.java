@@ -24,8 +24,8 @@ public class PostingService {
 		postVO.setPostNo(postNo);
 		
 		// 2-1) XSS 방지 처리
-		postVO.setPostTitle(XSS.repalceParameter( postVO.getPostTitle()) );
-		postVO.setPostContent(XSS.repalceParameter( postVO.getPostContent()) );
+		postVO.setPostTitle(XSS.replaceParameter(postVO.getPostTitle()));
+		postVO.setPostContent(XSS.replaceParameter( postVO.getPostContent()) );
 		
 		// 2-2) 개행문자 -> <br> 태그로 변경
 		String content = postVO.getPostContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>");

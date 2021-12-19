@@ -12,7 +12,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-public class JDBCTemplate2 {
+public class JDBCTemplate {
 	/* DB 연결, JDBC 자원 반환 등의 JDBC관련 공통 내용을 모아둔 클래스
 	 * getConnection() : 커넥션을 반환하는 메소드
 	 * close(stmt | pstmt | rs | conn) : 자원 반환 메소드

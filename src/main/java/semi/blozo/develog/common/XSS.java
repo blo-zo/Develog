@@ -1,6 +1,6 @@
 package semi.blozo.develog.common;
 
-public class XSS2 {
+public class XSS {
 	
 	public static String replaceParameter(String parameter) {
 		
