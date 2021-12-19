@@ -82,7 +82,7 @@
 		<footer style="display: flex;">
 			<button class="out-area" onclick="location.href='#' ">
 				<div class="out-image" id="out-image">
-					<img src="images/arrow.png"  class="img-arrow" id="img-arrow">
+					<img src="../resources/images/arrow.png"  class="img-arrow" id="img-arrow">
 				</div>
 				<span class="out-span" id="out-span">나가기</span>
 			</button>
