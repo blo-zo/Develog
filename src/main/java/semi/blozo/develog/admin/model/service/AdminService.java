@@ -1,6 +1,6 @@
 package semi.blozo.develog.admin.model.service;
 
-import static semi.blozo.develog.common.JDBCTemplate.*;
+import static semi.blozo.develog.common.JDBCTemplate2.*;
 
 import java.sql.Connection;
 import java.util.List;

@@ -1,6 +1,6 @@
 package semi.blozo.develog.post.model.dao;
 
-import static semi.blozo.develog.common.JDBCTemplate.*;
+import static semi.blozo.develog.common.JDBCTemplate2.*;
 
 import java.io.FileInputStream;
 import java.sql.Connection;
