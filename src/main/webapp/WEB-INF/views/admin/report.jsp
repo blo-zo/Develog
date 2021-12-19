@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -128,7 +129,8 @@ section>div:nth-child(4) {
 		</nav>
 	</header>
 	<main id="main">
-
+아 더블클릭으로 내용을 확인 했다는 표시를 하면 되겠내 진짜 <br>
+XSS 방지 처리도 해야하내
 		<section id="section-table">
 
 			<table id="admin-table">
@@ -142,143 +144,31 @@ section>div:nth-child(4) {
 						<th>유형</th>
 						<th>내용</th>
 						<th>작성일</th>
-						<th>확인여부</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>1</td>
-						<td>1</td>
-						<td>게시글</td>
-						<td>1</td>
-						<td>음란성</td>
-						<td class="report-content" data-bs-toggle="modal"
-							data-bs-target="#exampleModal">음란물 게시</td>
-						<td>2021-11-20</td>
-						<td>확인</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>2</td>
-						<td>2</td>
-						<td>댓글</td>
-						<td>2</td>
-						<td>홍보물</td>
-						<td>홍부물 게시</td>
-						<td>2021-11-21</td>
-						<td>미확인</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>3</td>
-						<td>3</td>
-						<td>게시글</td>
-						<td>3</td>
-						<td>기타</td>
-						<td>인격모독 내용의 글</td>
-						<td>2021-10-21</td>
-						<td>확인</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
+					<c:choose>
+						<c:when test="${empty reportList }">
+							<td colspan="11">게시글이 존재하지 않습니다.</td>
+						</c:when>
+						<c:otherwise>
+							<c:forEach items="${reportList}" var="report">
+								<tr>
+									<td><input type="checkbox"></td>
+									<td>${report.reportNo}</td>
+									<td>${report.memberNo}</td>
+									<td>${report.reportType}</td>
+									<td>${report.targetNo}</td>
+									<td>${report.reportStatusName}</td>
+									<td class="report-content"
+									    data-bs-toggle="modal"
+									    data-bs-target="#exampleModal"
+										onclick="reportDetailContent(this)">${report.reportContent}</td>
+									<td>${report.createDate}</td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</tbody>
 
 			</table>
@@ -300,13 +190,44 @@ section>div:nth-child(4) {
 					<option value="">확인여부</option>
 				</select>
 			</div>
-			<div id="paging">
+				${pagination}
+      <div class="my-5">
+		<ul class="pagination" style="justify-content: center;">
+			<c:if test="${pagination.startPage != 1}">
+			<li>
+				<a class="page-link" href="report?cp=1">&lt;&lt;</a>
+			</li>
+			<li>
+				<a class="page-link" href="report?cp=${pagination.prevPage}">&lt;</a>
+			</li>
+			
+			</c:if>
+			<%-- 페이지네이션 번호 목록 --%>
+			<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" step="1" var="i">
+				<c:choose>
+					<c:when test="${i == pagination.currentPage}">
+						<li>
+							<a class="page-link" style="color:black; font-weight:bold;">${i}</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+							<a class="page-link" href="post?cp=${i}">${i}</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<c:if test="${pagination.endPage != pagination.maxPage}">
+			<li>
+				<a class="page-link" href="report?cp=${pagination.nextPage}">&gt;</a>
+			</li>
+			<li>
+				<a class="page-link" href="report?cp=${pagination.maxPage}">&gt;&gt;</a>
+			</li>
+			</c:if>
 
-				<a href=""><span>이전</span></a> <a href=""><span>1</span></a> <a
-					href=""><span>2</span></a> <a href=""><span>3</span></a> <a href=""><span>4</span></a>
-				<a href=""><span>5</span></a> <a href=""><span>...</span></a> <a
-					href=""><span>maxNum</span></a> <a href=""><span>다음</span></a>
-			</div>
+		</ul>
+	</div>
 		</section>
 	</main>
 	<!-- Modal -->
@@ -322,17 +243,17 @@ section>div:nth-child(4) {
 				<div class="modal-body">
 					<section id="modal-section">
 						<div>
-							<div class="info">
-								nn번 게시글 <br> 유형 : <span>홍보</span>
+							<div class="info input-modal">
+								<!-- nn번 게시글 <br> 유형 : <span>홍보</span> -->
 							</div>
-							<div class="info">
-								userid@email.com <br> 2021-11-10 <br> 미해결
+							<div class="info input-modal">
+								<!-- userid@email.com <br> 2021-11-10 <br> 미해결 -->
 							</div>
 						</div>
 						<div>
-							<div class="content">&nbsp;신고내용</div>
+							<div class="content" input-modal>&nbsp;신고내용</div>
 							<div class="content">
-								<div>토토 홍보함</div>
+								<div class="input-modal">토토 홍보함</div>
 							</div>
 						</div>
 					</section>
@@ -340,9 +261,13 @@ section>div:nth-child(4) {
 			</div>
 		</div>
 	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
+	<script>
+		const contextPath = "${pageContext.servletContext.contextPath}" // 아니 스크립트에 EL표현식이 있으니까 ajax에 Syntax json에러가 나내 ㄷㄷ
+	</script>
+	<script src="${pageContext.servletContext.contextPath}/resources/js/modal.js"></script>
 </body>
 </body>
 </html>

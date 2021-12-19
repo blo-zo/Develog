@@ -4,23 +4,19 @@ public class Report {
 	private int reportNo;
 	private String reportContent;
 	private String createDate;
-	private int postNo;
-	private int replyNo;
+	private int targetNo;
 	private int memberNo;
 	private int reportStatusCode;
+	private String reportType;
 	
-	
-	public int getReplyNo() {
-		return replyNo;
+	// 신고 상태 테이블
+	private String reportStatusName;
+	public String getReportStatusName() {
+		return reportStatusName;
 	}
-
-	public void setReplyNo(int replyNo) {
-		this.replyNo = replyNo;
+	public void setReportStatusName(String reportStatusName) {
+		this.reportStatusName = reportStatusName;
 	}
-
-	public Report() {
-	}
-	
 	public int getReportNo() {
 		return reportNo;
 	}
@@ -39,11 +35,11 @@ public class Report {
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
-	public int getPostNo() {
-		return postNo;
+	public int getTargetNo() {
+		return targetNo;
 	}
-	public void setPostNo(int postNo) {
-		this.postNo = postNo;
+	public void setTargetNo(int targetNo) {
+		this.targetNo = targetNo;
 	}
 	public int getMemberNo() {
 		return memberNo;
@@ -57,6 +53,13 @@ public class Report {
 	public void setReportStatusCode(int reportStatusCode) {
 		this.reportStatusCode = reportStatusCode;
 	}
+	public String getReportType() {
+		return reportType;
+	}
+	public void setReportType(String reportType) {
+		this.reportType = reportType;
+	}
+	
 	
 	
 	

@@ -15,7 +15,16 @@ public class Post {
 	private int postStatusCode;
 	private String postStatusName;
 	
+	// POST_READ_COUNT TABLE
+	private String readCountDate;
 	
+	
+	public String getReadCountDate() {
+		return readCountDate;
+	}
+	public void setReadCountDate(String readCountDate) {
+		this.readCountDate = readCountDate;
+	}
 	public String getPostStatusName() {
 		return postStatusName;
 	}

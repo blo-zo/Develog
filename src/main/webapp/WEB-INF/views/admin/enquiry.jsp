@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -119,7 +120,6 @@ section>div:nth-child(4) {
 		</nav>
 	</header>
 	<main id="main">
-
 		<section id="section-table">
 
 			<table id="admin-table">
@@ -131,119 +131,33 @@ section>div:nth-child(4) {
 						<th>제목</th>
 						<th>내용</th>
 						<th>작성일</th>
+						<th>수정일</th>
 						<th>답장여부</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>1</td>
-						<td>1</td>
-						<td class="enquiry-title" data-bs-toggle="modal"
-							data-bs-target="#exampleModal">Title1</td>
-						<td>블로그 통계는 어떻게 보나요?</td>
-						<td>2021-11-20</td>
-						<td>답장</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>2</td>
-						<td>2</td>
-						<td>Title2</td>
-						<td>회원가입은 어떻게 하나요?</td>
-						<td>2021-11-01</td>
-						<td>미답장</td>
-					</tr>
-					<tr>
-						<td><input type="checkbox"></td>
-						<td>3</td>
-						<td>3</td>
-						<td>Title3</td>
-						<td>회원가입은 어떻게 하나요?</td>
-						<td>2021-09-01</td>
-						<td>답장</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
+					<c:choose>
+						<c:when test="${empty enquiryList }">
+							<td colspan="11">게시글이 존재하지 않습니다.</td>
+						</c:when>
+						<c:otherwise>
+							<c:forEach items="${enquiryList}" var="enquiry">
+								<tr>
+									<td><input type="checkbox"></td>
+									<td>${enquiry.enquiryNo}</td>
+									<td>${enquiry.memberNo}</td>
+									<td>${enquiry.enquiryTitle}</td>
+									<td class="report-content"
+									data-bs-toggle="modal"
+									data-bs-target="#exampleModal"
+									onclick="enquiryDetailContent(this)" >${enquiry.enquiryContent}</td>
+									<td>${enquiry.createDate}</td>
+									<td>${enquiry.modifyDate}</td>
+									<td>${enquiry.parentEnquiry}</td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</tbody>
 
 			</table>
@@ -265,13 +179,43 @@ section>div:nth-child(4) {
 					<option value="">답장여부</option>
 				</select>
 			</div>
-			<div id="paging">
+      <div class="my-5">
+		<ul class="pagination" style="justify-content: center;">
+			<c:if test="${pagination.startPage != 1}">
+			<li>
+				<a class="page-link" href="post?cp=1">&lt;&lt;</a>
+			</li>
+			<li>
+				<a class="page-link" href="post?cp=${pagination.prevPage}">&lt;</a>
+			</li>
+			
+			</c:if>
+			<%-- 페이지네이션 번호 목록 --%>
+			<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" step="1" var="i">
+				<c:choose>
+					<c:when test="${i == pagination.currentPage}">
+						<li>
+							<a class="page-link" style="color:black; font-weight:bold;">${i}</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+							<a class="page-link" href="post?cp=${i}">${i}</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+			<c:if test="${pagination.endPage != pagination.maxPage}">
+			<li>
+				<a class="page-link" href="post?cp=${pagination.nextPage}">&gt;</a>
+			</li>
+			<li>
+				<a class="page-link" href="post?cp=${pagination.maxPage}">&gt;&gt;</a>
+			</li>
+			</c:if>
 
-				<a href=""><span>이전</span></a> <a href=""><span>1</span></a> <a
-					href=""><span>2</span></a> <a href=""><span>3</span></a> <a href=""><span>4</span></a>
-				<a href=""><span>5</span></a> <a href=""><span>...</span></a> <a
-					href=""><span>maxNum</span></a> <a href=""><span>다음</span></a>
-			</div>
+		</ul>
+	</div>
 		</section>
 	</main>
 	<!-- Modal -->
@@ -288,13 +232,13 @@ section>div:nth-child(4) {
 					<section id="modal-section">
 						<div>
 							<div class="info"></div>
-							<div class="info">
-								userid@email.com <br> 2021-11-10 <br> 미답장
+							<div class="info input-modal">
+								<!-- userid@email.com <br> 2021-11-10 <br> 미답장 -->
 							</div>
 						</div>
 						<div>
 							<div class="content">&nbsp;내용</div>
-							<textarea class="content" name="" id="" cols="100" rows="10"
+							<textarea class="content input-modal" name="" id="" cols="100" rows="10"
 								readonly style="resize: none; outline: none;"></textarea>
 						</div>
 						<br>
@@ -314,9 +258,9 @@ section>div:nth-child(4) {
 			</div>
 		</div>
 	</div>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-		></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
 		const button = document.getElementsByClassName("modal-button")
 		const textarea = document.getElementsByTagName("textarea");
@@ -327,5 +271,10 @@ section>div:nth-child(4) {
 			button2.style.display = "block";
 		})
 	</script>
+	<script>
+		const contextPath = "${pageContext.servletContext.contextPath}"
+	</script>
+	<script src="${pageContext.servletContext.contextPath}/resources/js/modal.js"></script>
+	
 </body>
 </html>

@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/adminCss.css">
 </head>
 <body>
-${contextPath}
+&searchWord=${searchWord}&searchTag=${searchTag}
   <header id="header">
     <div id="logout">
       Logout
@@ -78,19 +78,21 @@ ${contextPath}
           style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px;">
           경고</div>
       </div>
-      <div id="search-area">
-        <input type="text" placeholder="검색어를 입력해주세요">
-        <img id="search" src="image/search-solid.svg" style="width: 20px; height: 20px;">
-        <select name="" id="">
-          <option value="">글 번호</option>
-          <option value="">제목</option>
-          <option value="">회원번호</option>
-          <option value="">내용</option>
-          <option value="">작성일</option>
-          <option value="">글 상태</option>
-        </select>
-      </div>
-      ${pagination}
+	  <form action="member?cp=1" method="GET" onsubmit="return memberSearch()">
+		  <div id="search-area">
+			 <input type="text" name="searchWord" placeholder="검색어를 입력해주세요">
+			 <img id="search" src="image/search-solid.svg" style="width: 20px; height: 20px;">
+			 <select name="searchTag">
+			   <option value="no">회원 번호</option>
+			   <option value="emai;">이메일</option>
+			   <option value="name">닉네임</option>
+			   <option value="enrollDate">가입일</option>
+			   <option value="">신고횟수</option>
+			   <option value="6">경고 횟수</option>
+			   <option value="7">회원 상태</option>
+			 </select>
+		   </div>
+	  </form>
       <div class="my-5">
 		<ul class="pagination" style="justify-content: center;">
 			<c:if test="${pagination.startPage != 1}">
@@ -112,14 +114,14 @@ ${contextPath}
 					</c:when>
 					<c:otherwise>
 						<li>
-							<a class="page-link" href="member?cp=${i}">${i}</a>
+							<a class="page-link" href="member?cp=${i}&searchWord=${searchWord}&searchTag=${searchTag}">${i}</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			<c:if test="${pagination.endPage != pagination.maxPage}">
 			<li>
-				<a class="page-link" href="member?cp=${pagination.nextPage}">&gt;</a>
+				<a class="page-link" href="member?cp=${pagination.nextPage}&searchWord=${searchWord}&searchTag=${searchTag}">&gt;</a>
 			</li>
 			<li>
 				<a class="page-link" href="member?cp=${pagination.maxPage}">&gt;&gt;</a>
@@ -130,6 +132,17 @@ ${contextPath}
 	</div>
     </section>
   </main>
+  <script>
+	  const inputSearch = document.getElementById("search-area").firstElementChild
+	  inputSearch.addEventListener("keyup", function(){
+		  if(e.key =="Enter"){
+			  memberSearch()
+		  }
+	  })
 
+	  function memberSearch(){
+		  return true
+	  }
+  </script>
 </body>
 </html>
