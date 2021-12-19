@@ -13,7 +13,7 @@ import semi.blozo.develog.board.model.vo.PostVO;
 import semi.blozo.develog.common.XSS;
 
 public class PostingService {
-	
+	//
 	private PostingDAO dao = new PostingDAO();
 
 	public int insertPost(PostVO postVO, List<PostImageVO> imgList) throws Exception{
