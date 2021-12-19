@@ -1,5 +1,5 @@
 package semi.blozo.develog.member.model.service;
-import static semi.blozo.develog.common.JDBCTemplate.*;
+import static semi.blozo.develog.common.JDBCTemplate2.*;
 
 import java.sql.Connection;
 
