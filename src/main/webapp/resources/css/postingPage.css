@@ -2,11 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 body { font-family: 'Noto Sans KR', sans-serif; }
 
-/* div{
-    box-sizing: border-box;
-    border: 1px solid darkgrey;
-}     
-    */
 
 body{
     
@@ -27,11 +22,9 @@ body{
 /* headTitle */
 .head-title{
     margin: auto;
-    /* max-width: 1200px; */
     height: 80px;
-    margin-bottom: 10px;
 }
-#head-textarea{
+.head-textarea{
     border: none; 
     resize:none; 
     outline: none;  
@@ -42,10 +35,15 @@ body{
     line-height: initial;
 }
 
+/* 하단 라인 */
+.line{
+    border-top: 2px solid #EEEEEE;
+    padding: 10px;
+}
 /* content 영역 */
 .content{
     margin: auto;
-    height: 700px;
+    height: 1000px;
     font-size: 1.125rem;
     line-height: 1.5;
 }
@@ -55,7 +53,7 @@ body{
     margin: auto;
     height: 50px;
 }
-#inputTag{
+.inputTag{
     border: none; outline: none;
     font-size: 15px;
     width: -webkit-fill-available;
@@ -68,10 +66,10 @@ footer{
     background-color: #ffffff;
     margin: auto;
     width: -webkit-fill-available;
-    height: 50px;
+    height: 80px;
     display: flex;
     position: fixed;
-    padding: 0em 1em;
+    padding: 0px 30px;
 
     justify-content: space-between;
     align-items: center;
@@ -80,13 +78,13 @@ footer{
     z-index: 10; 
 }
 .out-area{  border: none;}
-#out-image{ display: inline-block; }
-#img-arrow{
+.out-image{ display: inline-block; }
+.img-arrow{
     width: 15px;
     text-align: center;
 }
 
-#out-span{  
+.out-span{  
     display:inline-block;
     vertical-align:middle;
     font-size: 15px;
@@ -118,6 +116,7 @@ footer{
     outline: none;
     border: none;
     font-size: 15px;
+    text-decoration: none;
 }
 /* 태그 묶어놓은 영역 */
 .post-tags{
@@ -148,9 +147,14 @@ footer{
 
 
 /* 모달 영역----------------------------------------------------- */
-
+/*
+    수정한 부분 css파일에 포함할것
+    지금은 보이고 안보이고 정도
+    움직이는걸로 바꾸고 싶으면 transform 했던거 찾아서 변경
+*/    
 .modal-content-area{
-    display: flex;
+    
+    display:none;
     -webkit-box-pack: center;
     justify-content: center;
     -webkit-box-align: center;
@@ -164,6 +168,7 @@ footer{
     z-index: 10;
     background: rgb(248, 249, 250);
 }
+.modal-content-area.active{display:flex;}
 
 .modal-content-box{
     width: 770px;
@@ -184,7 +189,7 @@ footer{
 }
 
 /* 모달 line */
-.line{
+.modalLine{
     width: 30px;
     height: 425px; 
     margin-right: 30px;
@@ -226,7 +231,7 @@ footer{
     display: inline-block;
 }
 
-#img-earth, #img-lock{
+.img-earth, .img-lock{
     width: 20%;
     margin-left: 0px;
     margin-right: 7px;
@@ -292,56 +297,3 @@ footer{
 }
 
 /* --- 모달 영역 끝 ----- */
-
-
-
-
-
-
-
-
-
-/* --------------------------------------------------------- */
-.modal.fade.in .lab-modal-body {
-    bottom: 0;
-    opacity: 1;
-}
-
-.lab-modal-body h1 {
-    font-size: 4rem;
-}
-
-.lab-modal-body p {
-    margin: 0 0 1.62rem 0;
-    line-height: 1.62;
-    font-weight: 300;
-    font-size: 1.62rem;
-    color: #666;
-}
-
-.lab-modal-body {
-    position: relative;
-    bottom: -250px;
-    margin: 150px auto 0;
-    padding: 40px;
-    max-width: 60%;
-    height: auto;
-    background-color: rgb(248, 250, 247);
-    border: 1px solid #BEBEBE;
-    opacity: 0;
-    -webkit-transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
-    -moz-transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
-    -o-transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
-    transition: opacity 0.3s ease-out, bottom 0.3s ease-out;
-}
-
-.close {
-    margin-top: -20px;
-    margin-right: -20px;
-    text-shadow: 0 1px 0 #ffffff;
-}
-
-.popup-button {
-    margin-top: 70px;
-}
-
