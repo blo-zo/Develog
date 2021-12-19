@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<!-- 문의 전체 수 조회 -->
+	<entry key="getListCount">
+	SELECT COUNT(*) FROM ENQUIRY
+	</entry>
+	
+	<!-- 문의 목록 조회  -->
+	<entry key="selectEnquriyList">
+ 			SELECT * FROM 
+               (SELECT ROWNUM RNUM, A.* FROM(
+               SELECT * FROM ENQUIRY 
+               ORDER BY ENQUIRY_NO DESC)A)
+               JOIN MEMBER USING(MEMBER_NO)
+               WHERE RNUM BETWEEN ? AND ?
+               AND MEMBER_NO = ?
+	</entry>
+	
+</properties>
