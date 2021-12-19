@@ -22,7 +22,7 @@ import semi.blozo.develog.common.MyRenamePolicy;
 
 @WebServlet("/board/*")
 public class PostingController extends HttpServlet{
-	
+	//
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String method = req.getMethod();
