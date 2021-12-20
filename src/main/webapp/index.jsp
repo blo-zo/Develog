@@ -9,7 +9,8 @@
 <body>
 	<a href="${pageContext.servletContext.contextPath}/admin/login">LSY</a>
 	<a href="${pageContext.servletContext.contextPath}/board/insert">JDB</a>
+	<a href="${pageContext.servletContext.contextPath}/blog/sample">KYJ</a>
 	<a href="${pageContext.servletContext.contextPath}/main">YDH</a>
-	<a href="${pageContext.servletContext.contextPath}">KYJ</a>
+	
 </body>
 </html>

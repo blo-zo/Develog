@@ -9,10 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import semi.blozo.develog.member.model.service.MemberService;
-import semi.blozo.develog.member.model.vo.Member;
-
-
+import semi.blozo.develog.member.model.Member;
+import semi.blozo.develog.member.model.MemberService;
 
 @WebServlet("/member/updatepw")
 public class UpdatePwServlet extends HttpServlet{

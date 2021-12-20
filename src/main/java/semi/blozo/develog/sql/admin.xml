@@ -123,4 +123,8 @@
 		GROUP BY TO_CHAR(READ_COUNT_DT, '"new Date"(YYYY, MM, DD)')
 		ORDER BY 1
 	</entry>
+
+	<!-- 회원 경고  -->
+	<entry key="updateViolation">
+	</entry>
 </properties>

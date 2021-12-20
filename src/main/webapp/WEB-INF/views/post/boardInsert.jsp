@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <title>게시글 등록</title>
 <link rel="stylesheet" href="${contextPath}/resources/css/board-style.css">
-		<jsp:include page="../common/header.jsp"></jsp:include>
 
 		<div class="container my-5">
 
@@ -96,7 +95,6 @@
 			</form>
 		</div>
 
-		<jsp:include page="../common/footer.jsp"></jsp:include>
 		
 		<script src="${contextPath}/resources/js/board.js"></script>
 </body>

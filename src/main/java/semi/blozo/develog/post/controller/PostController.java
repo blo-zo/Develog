@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import semi.blozo.develog.post.model.service.PostService;
-import semi.blozo.develog.post.model.service.ReplyService;
 import semi.blozo.develog.post.model.vo.Blog;
 import semi.blozo.develog.post.model.vo.Post;
 import semi.blozo.develog.post.model.vo.PostCategory;
@@ -107,10 +106,7 @@ public class PostController extends HttpServlet{
 				if(post != null) {
 					
 					// + 댓글 조회
-					List<PostReply> prList = new ReplyService().selectReplyList(postNo); 
-					
-					
-					
+//					List<PostReply> prList = new ReplyService(). 
 					
 					req.setAttribute("post", post);
 					

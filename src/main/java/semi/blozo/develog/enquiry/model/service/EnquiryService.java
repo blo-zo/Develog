@@ -4,15 +4,13 @@ import static semi.blozo.develog.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.List;
 
-import semi.blozo.develog.enquiry.model.dao.EnquiryDAO;
+import semi.blozo.develog.enquiry.model.dao.EnquriyDAO;
 import semi.blozo.develog.enquiry.model.vo.Enquiry;
 import semi.blozo.develog.enquiry.model.vo.Pagination;
 
 
-
-
 public class EnquiryService {
-	private EnquiryDAO dao = new EnquiryDAO();
+	private EnquriyDAO dao = new EnquriyDAO();
 
 	
 	/** 페이징 처리용 객체 생성

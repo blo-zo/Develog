@@ -448,4 +448,57 @@ public class AdminDAO {
 		return memberList;
 	}
 
+	public int updateViolationPlus(int[] memberNo, Connection conn) throws Exception {
+		int result = 0;
+		try {
+//			String sql = prop.getProperty("updateViolation");
+			String str = "";
+			for(int i = 0; i < memberNo.length; i++) {
+				if(i != memberNo.length-1) {
+					str += "MEMBER_NO = "+memberNo[i]+" OR ";
+				}else {
+					str += "MEMBER_NO = "+memberNo[i];					
+				}
+			}
+			String temp = "UPDATE MEMBER SET VIOLATION_COUNT = VIOLATION_COUNT + 1 WHERE ";
+			String sql = temp + str;
+			System.out.println(sql);
+			pstmt = conn.prepareStatement(sql);
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+	
+	}
+
+	public int updateViolationMinus(int[] memberNo, Connection conn) throws Exception {
+		int result = 0;
+		try {
+//			String sql = prop.getProperty("updateViolation");
+			String str = "";
+			for(int i = 0; i < memberNo.length; i++) {
+				if(i != memberNo.length-1) {
+					str += "MEMBER_NO = "+memberNo[i]+" OR ";
+				}else {
+					str += "MEMBER_NO = "+memberNo[i];					
+				}
+			}
+			String temp = "UPDATE MEMBER SET VIOLATION_COUNT = VIOLATION_COUNT - 1 WHERE ";
+			String sql = temp + str;
+			System.out.println(sql);
+			pstmt = conn.prepareStatement(sql);
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+	
+	}
 }

@@ -7,7 +7,6 @@
 <title>게시판</title>
 <link rel="stylesheet" href="${contextPath}/resources/css/board-style.css">
 
-	<jsp:include page="../common/header.jsp"></jsp:include>
 	
 	<div class="container my-5">
 		<h1>게시판</h1>
@@ -103,7 +102,6 @@
 
 		</div>
 	</div>
-	<jsp:include page="../common/footer.jsp"></jsp:include>
 
 
 </body>

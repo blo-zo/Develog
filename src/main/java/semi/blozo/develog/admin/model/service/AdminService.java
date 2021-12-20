@@ -173,4 +173,30 @@ public class AdminService {
 	
 	}
 
+	public int updateViolationPlus(int[] memberNo) throws Exception {
+		Connection conn = getConnection();
+		
+		int result = dao.updateViolationPlus(memberNo, conn);
+		
+		if(result > 0) conn.commit();
+		else	       conn.rollback();
+		
+		return result;
+		
+	
+	}
+	
+	public int updateViolationMinus(int[] memberNo) throws Exception {
+		Connection conn = getConnection();
+		
+		int result = dao.updateViolationMinus(memberNo, conn);
+		
+		if(result > 0) conn.commit();
+		else	       conn.rollback();
+		
+		return result;
+		
+	
+	}
+
 }

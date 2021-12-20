@@ -13,7 +13,7 @@ import semi.blozo.develog.board.model.vo.PostVO;
 import semi.blozo.develog.common.XSS;
 
 public class PostingService {
-	//
+	
 	private PostingDAO dao = new PostingDAO();
 
 	public int insertPost(PostVO postVO, List<PostImageVO> imgList) throws Exception{
@@ -24,7 +24,7 @@ public class PostingService {
 		postVO.setPostNo(postNo);
 		
 		// 2-1) XSS 방지 처리
-		postVO.setPostTitle(XSS.replaceParameter(postVO.getPostTitle()));
+		postVO.setPostTitle(XSS.replaceParameter( postVO.getPostTitle()) );
 		postVO.setPostContent(XSS.replaceParameter( postVO.getPostContent()) );
 		
 		// 2-2) 개행문자 -> <br> 태그로 변경

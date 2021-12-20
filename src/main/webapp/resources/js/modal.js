@@ -50,3 +50,59 @@ function enquiryDetailContent(e){
 
     })
 }
+
+function warningPlus(){
+    let memberNo = []
+  for(const items of checkBox){
+      if(items.checked){
+          memberNo.push(items.parentElement.nextElementSibling.innerText) 
+          
+                  }
+  }
+  console.log(memberNo)
+  $.ajax({
+      url : contextPath + "/admin/member/warningPlus",
+      traditional : true, //이게 뭔지는 모르겠는데 배열을 넘겨준데
+      data : {"memberNo" : memberNo},
+      type : "GET",
+      success : function(){
+                  },
+                  
+      error : function(req, status, error){
+                  console.log("ajax 실패");
+                  console.log(req.responseText);
+                  console.log(status);
+                  console.log(error);
+              }
+                  
+  })
+}
+
+function warningMinus(){
+    let memberNo = []
+    console.log("warning");
+  for(const items of checkBox){
+      if(items.checked){
+          memberNo.push(items.parentElement.nextElementSibling.innerText) 
+          console.log("확인")
+          
+                  }
+  }
+  console.log(memberNo)
+  $.ajax({
+      url : contextPath + "/admin/member/warningMinus",
+      traditional : true, //이게 뭔지는 모르겠는데 배열을 넘겨준데
+      data : {"memberNo" : memberNo},
+      type : "GET",
+      success : function(){
+                  },
+                  
+      error : function(req, status, error){
+                  console.log("ajax 실패");
+                  console.log(req.responseText);
+                  console.log(status);
+                  console.log(error);
+              }
+                  
+  })
+}

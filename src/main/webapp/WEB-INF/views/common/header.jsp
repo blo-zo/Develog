@@ -88,30 +88,30 @@
                       <svg class="bi d-block" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.809 21.646l-6.205-6.205c1.167-1.605 1.857-3.579 1.857-5.711 0-5.365-4.365-9.73-9.731-9.73-5.365 0-9.73 4.365-9.73 9.73 0 5.366 4.365 9.73 9.73 9.73 2.034 0 3.923-.627 5.487-1.698l6.238 6.238 2.354-2.354zm-20.955-11.916c0-3.792 3.085-6.877 6.877-6.877s6.877 3.085 6.877 6.877-3.085 6.877-6.877 6.877c-3.793 0-6.877-3.085-6.877-6.877z"/></svg>
                     </a>
                   </li>
-               
+      			
                     
-        <c:choose>
-            <c:when test="${empty sessionScope.loginMember}">
-               
+  		<c:choose>
+      		<c:when test="${empty sessionScope.loginMember}">
+      			
                      <button type="button" class="btn btn-primary login-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" >
                                 로그인
                       </button>
-                  
-            </c:when>
-            <c:otherwise>
+      				
+      		</c:when>
+      		<c:otherwise>
                   <!-- 글쓰기 -->
                <li>
-                    <a href="#" class="nav-link">
-                 <svg class="bi d-block " xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M14.078 4.232l-12.64 12.639-1.438 7.129 7.127-1.438 12.641-12.64-5.69-5.69zm-10.369 14.893l-.85-.85 11.141-11.125.849.849-11.14 11.126zm2.008 2.008l-.85-.85 11.141-11.125.85.85-11.141 11.125zm18.283-15.444l-2.816 2.818-5.691-5.691 2.816-2.816 5.691 5.689z"/></svg>
-                  </a>
-                </li> 
-                
-                      <!--  프로필 --> 
+           			<a href="#" class="nav-link">
+              	<svg class="bi d-block " xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M14.078 4.232l-12.64 12.639-1.438 7.129 7.127-1.438 12.641-12.64-5.69-5.69zm-10.369 14.893l-.85-.85 11.141-11.125.849.849-11.14 11.126zm2.008 2.008l-.85-.85 11.141-11.125.85.85-11.141 11.125zm18.283-15.444l-2.816 2.818-5.691-5.691 2.816-2.816 5.691 5.689z"/></svg>
+            		</a>
+          		</li> 
+          		
+          		      <!--  프로필 --> 
           <li>
             <div class="dropdown">
               <a href="#" class="nav-link d-block text-decoration-none " id="userID" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="images/profile-small.png" width="30" height="30" class="rounded-circle">
-              </a>
+						<P>${sessionScope.loginMember.memberNm}</P>						
+	              </a>
               <ul class="dropdown-menu text-small" aria-labelledby="userID">
                 <li"><a class="dropdown-item" href="#">내 블로그</a></li>
                 
@@ -130,16 +130,16 @@
               </ul>
             </div>
           </li>
-                
-                
-   
-            </c:otherwise>
+          		
+          		
+	
+      		</c:otherwise>
       
-            </c:choose>
+      		</c:choose>
          
                 </ul>
 
-      
+		
                 </div>
             </div>
         </div>
@@ -209,3 +209,4 @@
     </div>
   </div>
 </header>
+  <!-- -----------------------------------------------------------모달 끝----------------------------------------- -->  

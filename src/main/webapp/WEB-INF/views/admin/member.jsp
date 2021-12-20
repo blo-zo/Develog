@@ -29,11 +29,12 @@
       <div><a href="${pageContext.servletContext.contextPath}/admin/report" class="category" >Report</a></div>
       <div><a href="${pageContext.servletContext.contextPath}/admin/enquiry" class="category">1:1 Enquiry</a></div>
     </nav>
-  </header>
-  <main id="main">
-
-    <section id="section-table">
-
+</header>
+<main id="main">
+	
+	<section id="section-table">
+		
+		<form action="member" Method="POST" id="mainForm"> <!-- window.location.href : 현재 주소 -->
 			<table id="admin-table">
 				<thead>
 					<tr>
@@ -55,13 +56,13 @@
 						<c:otherwise>
 							<c:forEach items="${memberList}" var="member">
 								<tr>
-									<td><input type="checkbox"></td>
+									<td><input class="check" name="check" type="checkbox" ></td>
 									<td>${member.memberNo }</td>
 									<td>${member.memberEmail }</td>
 									<td>${member.memberName }</td>
 									<td>${member.enrollDate }</td>
-									<td>${member.violationCount}</td>
 									<td>2</td>
+									<td>${member.violationCount}</td>
 									<td>${member.statusName}</td>
 								</tr>
 							</c:forEach>
@@ -74,11 +75,15 @@
         <div class="button"
           style="background-color: #3278FE; color: white; width: 70px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px;">
           상태변경</div>
-        <div class="button"
+        <div class="button" onclick="warningPlus(), location.reload()"
           style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px;">
-          경고</div>
+          경고 +</div>
+		  <div class="button" onclick="warningMinus(), location.reload()"
+          style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px;">
+          경고 -</div>
+         </form>
       </div>
-	  <form action="member?cp=1" method="GET" onsubmit="return memberSearch()">
+	  <form action="member?cp=1" method="GET" onsubmit="return refresh()">
 		  <div id="search-area">
 			 <input type="text" name="searchWord" placeholder="검색어를 입력해주세요">
 			 <img id="search" src="image/search-solid.svg" style="width: 20px; height: 20px;">
@@ -132,17 +137,26 @@
 	</div>
     </section>
   </main>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script>
 	  const inputSearch = document.getElementById("search-area").firstElementChild
+	  const warningBtn = document.getElementsByClassName("button");
+	  const contextPath = "${pageContext.servletContext.contextPath}"
+	  const checkBox = document.getElementsByClassName("check")
+	  console.log(checkBox[0].checked);
+	  console.log(checkBox[0].parentElement.nextElementSibling.innerText);
+	  console.log(checkBox.checked);
+
 	  inputSearch.addEventListener("keyup", function(){
 		  if(e.key =="Enter"){
-			  memberSearch()
+			  refresh1()
 		  }
 	  })
 
-	  function memberSearch(){
+	  function refresh1(){
 		  return true
 	  }
   </script>
+  <script src="${pageContext.servletContext.contextPath}/resources/js/modal.js"></script>
 </body>
 </html>
