@@ -1,4 +1,4 @@
-package semi.blozo.develog.member.model.dao;
+package semi.blozo.develog.member.model;
 import static semi.blozo.develog.common.JDBCTemplate.*;
 
 import java.io.FileInputStream;
@@ -7,8 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
-
-import semi.blozo.develog.member.model.vo.Member;
 public class MemberDAO {
 
 	private Statement stmt;
@@ -20,7 +18,7 @@ public class MemberDAO {
 		try {
 			prop = new Properties();
 			String filePath
-			= MemberDAO.class.getResource("/semi/blozo/develog/member-query.xml").getPath();
+			= MemberDAO.class.getResource("/semi/blozo/develog/sql/member-query.xml").getPath();
 			
 			prop.loadFromXML(new FileInputStream(filePath));
 			
@@ -190,4 +188,3 @@ public class MemberDAO {
 
 	
 }
-

@@ -1,4 +1,5 @@
 package semi.blozo.develog.enquiry.controller;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -12,8 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import semi.blozo.develog.enquiry.model.service.EnquiryService;
 import semi.blozo.develog.enquiry.model.vo.Enquiry;
 import semi.blozo.develog.enquiry.model.vo.Pagination;
-import semi.blozo.develog.member.model.vo.Member;
-
+import semi.blozo.develog.member.model.Member;
 
 
 @WebServlet("/enquiry/*")

@@ -63,13 +63,43 @@ public class AdminController extends HttpServlet {
 					memberList = service.selectMemberSearch(searchWord, searchTag, pagination);
 					
 				}
+				
+				if(req.getParameterValues("check") != null) {
+					String[] checked = req.getParameterValues("check");
+					System.out.println(checked);
+					System.out.println(checked[0]);
+					System.out.println(checked[1]);
+					System.out.println(checked[2]);
+					System.out.println(checked[3]);
+				}
 				req.setAttribute("pagination", pagination);
 				req.setAttribute("memberList", memberList);
 				path = "/WEB-INF/views/admin/member.jsp";
 				req.getRequestDispatcher(path).forward(req, resp);
-//				 dispatcher = req.getRequestDispatcher(path); 
-//				 dispatcher.forward(req, resp);
 
+			}else if(command.equals("member/warningPlus")) {
+				String[] temp = req.getParameterValues("memberNo"); // 언제 부터 values였지? 자동으로 되어있내
+				int[] memberNo = new int[temp.length];
+				System.out.println(temp.length);
+				for(int i=0; i < temp.length; i++) {
+					memberNo[i] = Integer.parseInt(temp[i]);
+				}
+				int result = service.updateViolationPlus(memberNo);
+				System.out.println(result);
+				
+				
+			}else if(command.equals("member/warningMinus")) {
+				System.out.println("연결 확인");
+				String[] temp = req.getParameterValues("memberNo"); // 언제 부터 values였지? 자동으로 되어있내
+				int[] memberNo = new int[temp.length];
+				System.out.println(temp.length);
+				for(int i=0; i < temp.length; i++) {
+					memberNo[i] = Integer.parseInt(temp[i]);
+				}
+				int result = service.updateViolationMinus(memberNo);
+				System.out.println(result);
+				
+				
 			}
 			
 			else if(command.equals("post")) {

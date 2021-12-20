@@ -13,14 +13,13 @@ import java.util.Properties;
 import semi.blozo.develog.enquiry.model.vo.Enquiry;
 import semi.blozo.develog.enquiry.model.vo.Pagination;
 
-
-public class EnquiryDAO {
+public class EnquriyDAO {
 	private Statement stmt;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	private Properties prop;
-	public EnquiryDAO() {
-		String filePath = EnquiryDAO.class.getResource("/semi/blozo/develog/enquriy-query.xml").getPath();                    
+	public EnquriyDAO() {
+		String filePath = EnquriyDAO.class.getResource("/semi/blozo/develog/sql/enquriy-query.xml").getPath();                    
 		
 		try {
 			prop = new Properties();
