@@ -22,11 +22,11 @@ public class PostService {
 	 * @return PostPagination
 	 * @throws Exception
 	 */
-	public PostPagination getPostPagination(int cp, String blogTitle) throws Exception{
+	public PostPagination getPostPagination(int cp, String memberName) throws Exception{
 		
 		Connection conn = getConnection();
 		
-		int blogListCount = dao.getBlogListCount(conn, blogTitle);
+		int blogListCount = dao.getBlogListCount(conn, memberName);
 		
 		close(conn);
 		
@@ -40,10 +40,10 @@ public class PostService {
 	 * @return postList
 	 * @throws Exception
 	 */
-	public List<Post> selectBlogPostList(PostPagination blogPostPagination, String blogTitle) throws Exception{
+	public List<Post> selectBlogPostList(PostPagination blogPostPagination, String memberName) throws Exception{
 
 		Connection conn = getConnection();
-		List<Post> postList = dao.selectBlogPostList(blogPostPagination, blogTitle, conn);
+		List<Post> postList = dao.selectBlogPostList(blogPostPagination, memberName, conn);
 		
 //		for(Post temp : postList) {
 //			
@@ -71,10 +71,12 @@ public class PostService {
 		Post post = dao.selectPost(postNo, conn);
 		
 		// 포스트 이미지 조회
+		List<PostImage> postImgList = dao.selectPostImageList(postNo, conn);
 		
+		post.setPostImgList(postImgList);
 		
 		// 조회수
-		if(post != null /* && post.getMemberNo() != memberNo */) {
+		if(post != null && post.getMemberNo() != memberNo ) {
 			
 			int result = dao.plusReadCount(postNo, conn);
 			if(result > 0) {

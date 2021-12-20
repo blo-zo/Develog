@@ -51,7 +51,7 @@
             <li>
               <div class="dropdown">
                 <a href="#" class="nav-link d-block text-decoration-none " id="userID" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img src="images/profile-small.png" width="30" height="30" class="rounded-circle">
+                  <img src="${contextPath}/resources/images/common/profile-small.png" width="30" height="30" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="userID">
                   <li><a class="dropdown-item" href="${contextPath}/blog/sample">내 블로그</a></li>
@@ -158,11 +158,11 @@
       <!-- 소셜 계정 정보 영역 -->
       <div class="social-account-area">
 	  <%-- 소셜 정보 링크 삽입 c:when 사용해서 값이 있으면 보여주기 --%>
-          <a href="#"><img class="social-icon" src="images/hompage.png"></a>
-          <a href="#"><img class="social-icon" src="images/facebook.png"></a>
-          <a href="#"><img class="social-icon" src="images/twitter.png"></a>
-          <a href="#"><img class="social-icon" src="images/github.png"></a>
-          <a href="#"><img class="social-icon" src="images/mail.png"></a>
+          <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/hompage.png"></a>
+          <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/facebook.png"></a>
+          <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/twitter.png"></a>
+          <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/github.png"></a>
+          <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/mail.png"></a>
 
       </div>
 
@@ -230,7 +230,7 @@
   					
 			            <!-- 블로그 본문 내용 -->
 			            <div class="card blog-post-card">
-			              <a href="view?blog=${post.blogTitle}&pno=${post.postNo}&cp=${blogPostPagination.currentPage}" class="card-link">
+			              <a href="${post.memberName}/view?pno=${post.postNo}&cp=${blogPostPagination.currentPage}" class="card-link">
 			  
 			                <div class="card-img-top blog-post-img">
 			                  <!-- 이미지 영역 -->
@@ -254,7 +254,7 @@
 			                  </div>
 <!-- memberName으로 변경 예정 -->
 			                  <div class="blog-post-author">
-			                    by. <span>${post.memberNo} </span>
+			                    by. <span>${post.memberName} </span>
 			                  </div>
 			                  <div class="blog-post-date">
 			                    <span>${post.createDate}</span>

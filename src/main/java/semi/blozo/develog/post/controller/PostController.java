@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import semi.blozo.develog.member.model.Member;
 import semi.blozo.develog.post.model.service.PostService;
+import semi.blozo.develog.post.model.service.ReplyService;
 import semi.blozo.develog.post.model.vo.Blog;
 import semi.blozo.develog.post.model.vo.Post;
 import semi.blozo.develog.post.model.vo.PostCategory;
@@ -26,147 +28,140 @@ public class PostController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		// 요청 방식
-		String method = req.getMethod();
-		
-		
-		String uri = req.getRequestURI();
-		String contextPath = req.getContextPath();
-		String command = uri.substring( (contextPath + "/blog/" ).length());
-		
-		
-		String path = null;
-		RequestDispatcher dispatcher = null;
-		String message = null;
-		
-		try {
-			
-			
-			PostService service = new PostService();
-			
-			HttpSession session = req.getSession();
-			
-			int cp = req.getParameter("cp") == null ? 1 : Integer.parseInt(req.getParameter("cp"));
-			
-			// 메인페이지에서 blog 제목을 파라미터로 받아오기
-			
-			
-			
-			// -------------- 블로그 메인 -------------------
-			
-			// 메인 페이지에서 작성자를 클릭하면 블로그 메인으로 이동
-			// 요청 주소는 blog/@블로그타이틀 
-			// 메인 페이지 주소가 @블로그타이틀인 경우코드 강사님께 물어보기
-			if(command.equals("sample")) {
+				String method = req.getMethod();
+				
+				// requestUrI에서 '/' 개수를 찾아서 1개인 경우 : 블로그 메인
+				// 2개인 경우 : 마지막 부분을 잘라서 명령어(command : insert/update/delete)로  사용한다 -> split
+				String uri = req.getRequestURI();
+				String contextPath = req.getContextPath();
+				
+				String command = uri.substring( (contextPath + "/blog/" ).length());
 				
 				
-				// 쿼리스트링으로 블로그에 번호 부여(bNo)
-				
-				// 특정 블로그에 있는 전체 게시글 수 카운트
-				
-				String blogTitle = "sample"; /* req.getParameter("blog"); */
-				
-				PostPagination blogPostPagination = service.getPostPagination(cp, blogTitle);
+				String[] arr = uri.substring( (contextPath + "/blog/" ).length()).split("/");	
+				// 주소의 뒷부분을 '/'로 나누어서 저장하는 배열
 				
 				
-				// 카테고리 메뉴 추가, 삭제에 사용
-				// 로그인 회번 번호 조회
-//				Member loginMember = (Member)req.getSession().getAttribute("loginMember");
-//				int memberNo = 0;
-//				if(loginMember != null) memberNo = loginMember.getMemberNo();
+				String path = null;
+				RequestDispatcher dispatcher = null;
+				String message = null;
 				
-				List<Post> postList = service.selectBlogPostList(blogPostPagination, blogTitle);
-				
-				
-				// 화면 출력하기
-				req.setAttribute("blogPostPagination", blogPostPagination);
-				req.setAttribute("postList", postList);
-				
-				
-				path = "/WEB-INF/views/post/blogMain.jsp";
-				dispatcher = req.getRequestDispatcher(path);
-				dispatcher.forward(req, resp);
-				
-				
-			}
-			
-			
-			// 게시글 상세 페이지
-			else if(command.equals("view")) {
-				
-				// pno, cp
-				int postNo = Integer.parseInt(req.getParameter("pno"));
-				
-				// 게시글 수정 삭제에 사용예정
-//				Member loginMember = (Member)req.getSession().getAttribute("loginMember");
-				int memberNo = 0;
-//				if(loginMember != null) memberNo = loginMember.getMemberNo();
-				
-				Post post = service.selectPost(postNo, memberNo);
-				
-				if(post != null) {
+				try {
 					
-					// + 댓글 조회
-//					List<PostReply> prList = new ReplyService(). 
+					PostService service = new PostService();
 					
-					req.setAttribute("post", post);
+					HttpSession session = req.getSession();
 					
-					path = "/WEB-INF/views/post/postView.jsp";
-					dispatcher = req.getRequestDispatcher(path);
-					dispatcher.forward(req, resp);
+					int cp = req.getParameter("cp") == null ? 1 : Integer.parseInt(req.getParameter("cp"));
+					
+
+					// 메인페이지에서 blog 제목(글쓴이 memberName)을 파라미터로 받아오기
 					
 					
-				}else {
-//					req.getSession().setAttribute("message", "삭제되었거나 존재하지 않는 포스트입니다.");
-					resp.sendRedirect("main");
-				}
-				
-			}
-			
-			
-			// 게시글 작성 페이지
-			else if(command.equals("insert")) {
-				
-				// 글 작성 페이지로 이동
-				if(method.equals("GET")) {
-					
-					// 카테고리 조회하기
-//					List<PostCategory> category = service.selectCategory();
-					
-//					req.setAttribute("category", category);
-					
-					path = "/WEB-INF/views/post/boardInsert.jsp";
-					dispatcher = req.getRequestDispatcher(path);
-					dispatcher.forward(req, resp);
-					
-				}
-				
-				
-			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+					// 블로그 메인 페이지
+					if(arr.length == 1) {	
+						
+						// 특정 블로그에 있는 전체 게시글 수 카운트
+						
+						/* req.getParameter("blog"); */
+						String memberName = "뚱이";
+						
+						PostPagination blogPostPagination = service.getPostPagination(cp, memberName);
+						
+						
+						// 카테고리 메뉴 추가, 삭제에 사용
+						// 로그인 회번 번호 조회
+						Member loginMember = (Member)req.getSession().getAttribute("loginMember");
+						int memberNo = 0;
+						if(loginMember != null) memberNo = loginMember.getMemberNo();
+						
+						List<Post> postList = service.selectBlogPostList(blogPostPagination, memberName);
+						
+						
+						// 화면 출력하기
+						req.setAttribute("blogPostPagination", blogPostPagination);
+						req.setAttribute("postList", postList);
+						
+						
+						path = "/WEB-INF/views/post/blogMain.jsp";
+						dispatcher = req.getRequestDispatcher(path);
+						dispatcher.forward(req, resp);
+						
+						
+						
+					}else {
+						
+						if(arr[1].equals("view")) {
+							
+							// pno, cp
+							int postNo = Integer.parseInt(req.getParameter("pno"));
+							
+							// 게시글 수정 삭제에 사용예정
+							Member loginMember = (Member)req.getSession().getAttribute("loginMember");
+							int memberNo = 0;
+							if(loginMember != null) memberNo = loginMember.getMemberNo();
+							
+							Post post = service.selectPost(postNo, memberNo);
+							
+							if(post != null) {
+								
+								// + 댓글 조회
+								List<PostReply> prList = new ReplyService().selectPostReplyList(postNo);
+								
+								req.setAttribute("prList", prList);
+								req.setAttribute("replyCount", prList.size());
+								req.setAttribute("post", post);
+								
+								path = "/WEB-INF/views/post/postView.jsp";
+								dispatcher = req.getRequestDispatcher(path);
+								dispatcher.forward(req, resp);
+								
+								
+							}else {
+//								req.getSession().setAttribute("message", "삭제되었거나 존재하지 않는 포스트입니다.");
+								resp.sendRedirect("뚱이");
+							}
+							
+						}
+						
+						else if(arr[1].equals("insert")) {
+							
+							
+							// 글 작성 페이지로 이동
+							if(method.equals("GET")) {
+								
+								// 카테고리 조회하기
+//								List<PostCategory> category = service.selectCategory();
+								
+//								req.setAttribute("category", category);
+								
+								path = "/WEB-INF/views/post/boardInsert.jsp";
+								dispatcher = req.getRequestDispatcher(path);
+								dispatcher.forward(req, resp);
+								
+							}
+							
+							
+							
+
+							
+							
+							
+						} // 주소 값 else END
+						
+						
+						
+						
+						
+						
+						
+						
+						
+					}
 			
 		}catch(Exception e) {
 			
-			
 			e.printStackTrace();
-			
 			
 		}
 		

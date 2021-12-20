@@ -159,7 +159,7 @@
 					<table style="margin: 5px;">
 		                <tr>
 		                  <td colspan="2">
-		                    By.<a href="${post.blogTitle}"><span id="post-author">${post.memberNo}</span></a> 
+		                    By.<a href="${contextPath}/blog/${post.memberName}"><span id="post-author">${post.memberName}</span></a> 
 		                  </td>
 		                </tr>
 		                <tr>
@@ -209,10 +209,10 @@
 	        </div>
 	
 	        <!-- 포스트 중간(게시글 내용) -->
-	        <div class="post-body" style="min-height: 200px;">
+	        <div class="post-body" style="min-height: 200px; word-break:break-all;">
 				
 				${post.postContent}
-		
+				
 	        </div>
 	
 	        <!-- 게시글 하단 태그 버튼, 이전 글 다음 글 버튼 -->
@@ -241,7 +241,7 @@
 	          <div class="post-prev-next-btn">
 	            <div class="post-prev-btn">이전 글</div>
                 <div class="goList">
-	              <a href="${post.blogTitle}?cp=${param.cp}">목록으로</a>
+	              <a href="${contextPath}/blog/${post.memberName}?cp=${param.cp}">목록으로</a>
                 </div>
 	            <div class="post-next-btn">다음 글</div>
 	          </div>
@@ -258,8 +258,8 @@
 	              <img id="post-profile-img" src="https://via.placeholder.com/200x200" alt="">
 	            </div>
 	            <div class="post-profile-text">
-	              <h1>${post.memberNo}</h1>
-	              <p>Introduction</p>
+	              <h1>${post.memberName}</h1>
+	              <p>${post.intro}</p>
 	            </div>
 	          </div>
 	
@@ -486,7 +486,7 @@
 
 		<form action="#" method="post" name="requestForm" >
 		<input type="hidden" name = "cp" value="${param.cp }">
-		<input type="hidden" name = "pno" value="${param.pno }">
+		<input type="hidden" name = "pno" value="${param.pno}">
 		</form>
 
 

@@ -4,51 +4,65 @@
 			  <!-- 댓글 -->
 	          
 	          <!-- 댓글 개수 나타내는 영역 -->
-	          <div class="reply-count">
-	            <span> 0 </span> 개의 댓글
-	          </div>
-	
-	          <!-- 댓글 작성 영역 -->
-	          <div class="post-reply-write-area">
-	            <form action="#">
-	
-	              <textarea name="post-reply" id="post-reply"></textarea>
-	  
-	              <button class="btn btn-primary btn-sm" id="post-reply-btn" style="float: right;">
-	                댓글 작성
-	              </button>
-	
-	            </form>
-	
-	          </div>
-			
-	
-	          <!-- 작성된 댓글들 -->
-	          <div class="post-replies border" style="margin: auto; margin-top: 100px; margin-bottom: 100px; clear: both; width: 600px; height: 250px;">
-	
-	            <!-- 댓글 박스 -->
-	            <div class="post-reply">
-	              <div style="display: flex; justify-content: space-between;">
-	                <div>
-	                  (사진) + 댓글작성자
+          <div class="reply-count">
+            총 <span style="font-size:20px; color:blue;"> ${replyCount} </span> 개의 댓글
+          </div>
+
+          <!-- 댓글 작성 영역 -->
+          <div class="post-reply-write-area">
+
+              <textarea name="post-reply" id="post-reply"></textarea>
+  
+              <button class="btn btn-primary btn-sm" id="post-reply-btn" style="float: right;">
+                댓글 작성
+              </button>
+
+
+          </div>
+
+
+          <!-- 작성된 댓글들 -->
+          <div class="post-reply-box">
+
+            <!-- 댓글 박스 -->
+            
+            <c:forEach items="${prList}" var="reply">
+            
+	            <div class="post-reply-wrap">
+	              
+	              <div class="reply-header">
+	                <div class="reply-writer" style="margin-left: 30px;">
+	                  <a href="${contextPath}/blog/${reply.memberName}">${reply.memberName}</a>
+	                  <span style="margin-left:10px; font-size:10px">
+	                  	${reply.replyCreateDate}
+	                  </span>
 	                </div>
 	                
-	                <div>
-	                  <span>삭제하기</span>
-	                  <span style="display: none;">신고하기</span>
-	                  <span>답글달기</span>
+	                <div class="reply-menu" style="margin-right: 30px;">
+	                  
+	                  <c:choose>
+
+	                  	<c:when test="${loginMember.memberNo == reply.memberNo}">
+		                  <span onclick="">수정하기</span>
+		                  <span onclick="">삭제하기</span>
+	                  	</c:when>
+
+						<c:otherwise>
+		                  <span onclick="">신고하기</span>
+						</c:otherwise>
+
+	                  </c:choose>
+	                  
 	                </div>
 	              </div>
 	
-	              <div style="width: 500px; min-height: 100px; margin: auto; margin-top: 30px; margin-bottom: 30px; padding: 10px; border: 1px solid black;">
-	                <p>댓글 내용 부분</p>
+	              <div class="reply-body" style="word-break:break-all;">
+	                ${reply.replyContent}
 	              </div>
 	
-	              <div>
-	                +<span>n</span>개의 답글
+	                <%-- <button class="btn btn-primary btn-sm" id="post-reply-btn" style="margin-right: 40px; margin-bottom: 20px;">댓글 수정</button> --%>
 	
-	              </div>
 	            </div>
-	
-	
-	          </div>
+            
+            </c:forEach>
+           </div>

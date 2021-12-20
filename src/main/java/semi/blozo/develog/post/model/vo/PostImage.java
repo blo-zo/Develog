@@ -5,9 +5,11 @@ public class PostImage {
 	private int postImgNo;
 	private String postImgPath;
 	private String postImgName;
+	private String postImgDate;
 	private String postImgOriginal;
-	private String postImgLevel;
+	private int postImgLevel;
 	private int postNo;
+	// postThumbImg
 	
 	
 	public PostImage() {	}
@@ -43,6 +45,16 @@ public class PostImage {
 	}
 
 
+	public String getPostImgDate() {
+		return postImgDate;
+	}
+
+
+	public void setPostImgDate(String postImgDate) {
+		this.postImgDate = postImgDate;
+	}
+
+
 	public String getPostImgOriginal() {
 		return postImgOriginal;
 	}
@@ -53,12 +65,12 @@ public class PostImage {
 	}
 
 
-	public String getPostImgLevel() {
+	public int getPostImgLevel() {
 		return postImgLevel;
 	}
 
 
-	public void setPostImgLevel(String postImgLevel) {
+	public void setPostImgLevel(int postImgLevel) {
 		this.postImgLevel = postImgLevel;
 	}
 
@@ -76,9 +88,11 @@ public class PostImage {
 	@Override
 	public String toString() {
 		return "PostImage [postImgNo=" + postImgNo + ", postImgPath=" + postImgPath + ", postImgName=" + postImgName
-				+ ", postImgOriginal=" + postImgOriginal + ", postImgLevel=" + postImgLevel + ", postNo=" + postNo
-				+ "]";
+				+ ", postImgDate=" + postImgDate + ", postImgOriginal=" + postImgOriginal + ", postImgLevel="
+				+ postImgLevel + ", postNo=" + postNo + "]";
 	}
+
+
 	
 	
 	
