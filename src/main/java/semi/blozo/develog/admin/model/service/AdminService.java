@@ -178,7 +178,11 @@ public class AdminService {
 		
 		int result = dao.updateViolationPlus(memberNo, conn);
 		
-		if(result > 0) conn.commit();
+		if(result > 0) {
+			
+			result = dao.updateViolationChangePlus(conn);
+			conn.commit();
+		}
 		else	       conn.rollback();
 		
 		return result;
@@ -191,12 +195,27 @@ public class AdminService {
 		
 		int result = dao.updateViolationMinus(memberNo, conn);
 		
-		if(result > 0) conn.commit();
+		if(result > 0) {
+			result = dao.updateViolationChangeMinus(conn);
+			conn.commit();
+		}
 		else	       conn.rollback();
 		
 		return result;
 		
 	
+	}
+
+	public Member adminLogin(String adminPw) throws Exception {
+
+		Connection conn = getConnection();
+
+		Member adminMember = dao.adminLogin(adminPw, conn);
+
+		conn.close();
+
+		return adminMember;
+
 	}
 
 }

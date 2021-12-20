@@ -106,7 +106,6 @@
 					<option value="">가입상태</option>
 				</select>
 			</div>
-			${pagination}
       <div class="my-5">
 		<ul class="pagination" style="justify-content: center;">
 			<c:if test="${pagination.startPage != 1}">

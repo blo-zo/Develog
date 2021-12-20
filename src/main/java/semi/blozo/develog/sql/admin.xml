@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
+
+	<!-- 관리자 로그인 -->
+	<entry key="adminLogin">
+		SELECT * FROM MEMBER WHERE MEMBER_NO = 0 AND MEMBER_PW = ? AND GRADE_CD = 101
+	</entry>
+	
 	<!-- 게시글 수 조회 -->
 	<entry key="memberListCount">
 		SELECT COUNT(*) FROM MEMBER
@@ -124,7 +130,13 @@
 		ORDER BY 1
 	</entry>
 
-	<!-- 회원 경고  -->
-	<entry key="updateViolation">
+	<!-- 경고 증가 시 회원 상태 변환  -->
+	<entry key="updateViolationChangePlus">
+		UPDATE MEMBER SET STATUS_CD = 202 WHERE VIOLATION_COUNT >= 3
+	</entry>
+
+	<!-- 경고 감소 시 회원 상태 변환  -->
+	<entry key="updateViolationChangeMinus">
+		UPDATE MEMBER SET STATUS_CD = 200 WHERE VIOLATION_COUNT &lt; 3
 	</entry>
 </properties>

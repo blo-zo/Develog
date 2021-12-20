@@ -190,7 +190,6 @@ XSS 방지 처리도 해야하내
 					<option value="">확인여부</option>
 				</select>
 			</div>
-				${pagination}
       <div class="my-5">
 		<ul class="pagination" style="justify-content: center;">
 			<c:if test="${pagination.startPage != 1}">

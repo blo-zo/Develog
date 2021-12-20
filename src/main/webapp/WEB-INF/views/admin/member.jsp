@@ -15,9 +15,11 @@
 	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/adminCss.css">
 </head>
 <body>
-&searchWord=${searchWord}&searchTag=${searchTag}
+	${loginAdmin}
   <header id="header">
-    <div id="logout">
+    <div id="logout" 
+	
+	onclick="location.href='${pageContext.servletContext.contextPath}/admin/logout'">
       Logout
     </div>
     <nav id="nav">
@@ -72,9 +74,6 @@
 
 			</table>
 			<div class="button-area">
-        <div class="button"
-          style="background-color: #3278FE; color: white; width: 70px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px;">
-          상태변경</div>
         <div class="button" onclick="warningPlus(), location.reload()"
           style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px;">
           경고 +</div>

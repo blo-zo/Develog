@@ -10,6 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.catalina.SessionIdGenerator;
 
 import com.google.gson.Gson;
 
@@ -36,19 +39,33 @@ public class AdminController extends HttpServlet {
 		String path = null;
 		RequestDispatcher dispatcher = null;
 		String message = null;
+		HttpSession session = req.getSession();
 		AdminService service = new AdminService();
+		System.out.println(command);
 		try{
 			int cp = req.getParameter("cp") == null ? 1: Integer.parseInt(req.getParameter("cp"));
+			
+			// 로그인이 안되는 문제를 알았다. 
+			// 올바른 비밀번호를 입력하면 관리자 세션이 생성되고 필터에 잘 걸러져 정상 작동한거다.
+			// 틀린 비밀번호를 입력하면 관리자 세션이 생성이 되지 않고 다른 페이지로 이동하게 되는데 그렇게 되면 필터에 의해서 다시 돌아온다.
+			// 그러니 문제가 생긴 것
+			
 			if(command.equals("login")) {
-				 path = "/WEB-INF/views/admin/login.jsp";
-//				 dispatcher = req.getRequestDispatcher(path); // 여기에 .forward(req, resp)하면 왜 안되지?
-//				 dispatcher.forward(req, resp);
-				 req.getRequestDispatcher(path).forward(req, resp);
-				
+				path = "/WEB-INF/views/admin/login.jsp";
+				dispatcher = req.getRequestDispatcher(path);
+				dispatcher.forward(req, resp);
+			}else if(command.equals("test")){
+				System.out.println("연결 확인");
+				String a = req.getParameter("adminId");
+				String b = req.getParameter("adminPw");
+				System.out.println(a);
+				System.out.println(b);
+				path = "/WEB-INF/views/admin/test.jsp";
+				dispatcher = req.getRequestDispatcher(path);
+				dispatcher.forward(req, resp);
 			}
 			
 			else if(command.equals("member")) {
-				
 				Pagination pagination = service.getPagination(cp);
 				List<Member> memberList = new ArrayList<Member>();
 				if(req.getParameter("searchWord") ==  null) {
@@ -72,6 +89,9 @@ public class AdminController extends HttpServlet {
 					System.out.println(checked[2]);
 					System.out.println(checked[3]);
 				}
+				System.out.println(pagination);
+				System.out.println(memberList);
+				
 				req.setAttribute("pagination", pagination);
 				req.setAttribute("memberList", memberList);
 				path = "/WEB-INF/views/admin/member.jsp";

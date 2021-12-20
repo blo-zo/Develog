@@ -501,4 +501,60 @@ public class AdminDAO {
 		return result;
 	
 	}
+
+	public int updateViolationChangePlus(Connection conn) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("updateViolationChangePlus");
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+	
+		return result;
+	}
+
+	public int updateViolationChangeMinus(Connection conn) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("updateViolationChangeMinus");
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+	
+		return result;
+	}
+
+	public Member adminLogin(String adminPw, Connection conn) throws Exception {
+		Member loginMember = new Member();
+		try {
+			String sql = prop.getProperty("adminLogin");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, adminPw);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				loginMember.setMemberNo(rs.getInt("MEMBER_NO"));
+				loginMember.setMemberPw(rs.getString("MEMBER_PW"));
+				loginMember.setMemberName(rs.getString("MEMBER_NM"));
+				loginMember.setMemberEmail(rs.getString("MEMBER_EMAIL"));
+//				loginMember.setEnrollDate(rs.getString("EMROLL_DT"));
+//				loginMember.setIntro(rs.getString("INTRO"));
+				loginMember.setViolationCount(rs.getInt("VIOLATION_COUNT"));
+//				loginMember.setModifyDate(rs.getString("MODIFY_DT"));
+				loginMember.setStatusCode(rs.getInt("STATUS_CD"));
+				loginMember.setGradeCode(rs.getInt("GRADE_CD"));
+				
+			}
+		}finally {
+			pstmt.close();
+		}
+		
+		return loginMember;
+	}
 }
