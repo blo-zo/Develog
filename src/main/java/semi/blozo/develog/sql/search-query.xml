@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<!-- 게시글 조회 결과 수 -->
+	<entry key="searchResultCount">
+		SELECT COUNT(*) 
+		  FROM POST
+		  WHERE POST_TITLE LIKE '%' || ? || '%'
+	</entry>
+		  <!-- OR POST_CONTENT LIKE '%' || ? || '%' -->
+	<!-- OR 태그 = ?  -->
+	<!-- 게시글 상태 = 정상 -->
+	<!-- CLOB은 무슨 차이가 있는걸까 -->
+
+</properties>
