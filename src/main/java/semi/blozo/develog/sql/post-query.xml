@@ -11,19 +11,25 @@
 	<!-- 게시글 삽입 + 이미지 정보 삽입 총 3번 -->
 	<!-- 다음 게시글 번호 조회 -->
 	<entry key="nextPostNo">
-		SELECT SEQ_POST_NO.NEXTVAL FROM DUAL
+		SELECT SEQ_POST.NEXTVAL FROM DUAL
 	</entry>
 	
 	<!-- 게시글 삽입 -->
 	<entry key="insertPost">
 		INSERT INTO POST 
-		VALUES( ?, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 0, ?, ?)
+		VALUES(SEQ_POST.NEXTVAL, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT,DEFAULT, ?, ?, ?)
 	</entry>
 	
 	<!-- 게시글 이미지 정보 삽입 -->
 	<entry key="insertPostImage">
 		INSERT INTO POST_IMG 
-		VALUES( SEQ_IMG_NO.NEXTVAL, ?, ?, DEFAULT, ?, ?, ?)
+		VALUES( SEQ_POST_IMG.NEXTVAL, ?, ?, DEFAULT, ?, ?, ?)
+	</entry>
+	
+	<!-- 태그 삽입 -->
+	<entry key="insertTag">
+		INSERT INTO TAG
+		VALUES (SEQ_TAG.NEXTVAL, ?, ?)
 	</entry>
 	
 	
