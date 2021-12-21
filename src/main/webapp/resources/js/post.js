@@ -32,7 +32,6 @@ $(".blog-menu > div").on("click",function(){
 });
 
 
-console.log("hi");
 
 
 // ************* 댓글 *************
@@ -64,6 +63,7 @@ function selectReplyList(){
         const replyCreateDate = $('<span style="margin-left:10px; font-size:10px">').text(reply.replyCreateDate);
 
         const replyBody = $('<div class="reply-body" style="word-break:break-all;">');
+        const rContent = $('<p>');
 
         replyWriter.append(rWriter);
         replyWriter.append(replyCreateDate);
@@ -94,24 +94,28 @@ function selectReplyList(){
 
         if(reply.replyStatusName == "블라인드"){
 
-          replyBody.text("블라인드 처리된 댓글입니다.").css("color","red").css("font-size", "20px");
+          replyBody.append(rContent);
+          rContent.text("블라인드 처리된 댓글입니다.").css("color","red").css("font-size", "20px");
 
         }else if(reply.replyStatusName == "비밀"){
 
           // 댓글 작성자 == 로그인멤버 OR 게시글 작성자 == 로그인멤버인 경우
           if(reply.memberNo == loginMemberNo || loginMemberNo == postMemberNo){
             
-            replyBody.text(reply.replyContent);
+            replyBody.append(rContent);
+            rContent.html(reply.replyContent);
 
           }else{
             
-            replyBody.text("비밀 댓글입니다.").css("color", "blue").css("font-size","20px");
+            replyBody.append(rContent);
+            rContent.text("비밀 댓글입니다.").css("color", "blue").css("font-size","20px");
 
           }
 
         }else{
           
-          replyBody.text(reply.replyContent);
+          replyBody.append(rContent);
+          rContent.html(reply.replyContent);
 
         }
 
@@ -121,6 +125,9 @@ function selectReplyList(){
 
       // 조회마다 댓글 개수 변경
       $(".reply-count > span").text(prList.length);
+
+      // 비밀글 체크박스 체크 해제
+      $("#secretReply").prop("checked", false);
 
     },
 
@@ -154,12 +161,14 @@ function addReply(){
 
     }else{    // 댓글 내용을 작성한 경우
 
+
       $.ajax({
 
         url : contextPath + "/blog/" + memberName + "/reply/insert",
         data : {  "memberNo" : loginMemberNo , 
                   "postNo" : postNo , 
-                  "replyContent" : $("#post-reply").val() 
+                  "replyContent" : $("#post-reply").val(),
+                  "secretReply" :  $("#secretReply").is(":checked")
                },
         type : "POST",
         
@@ -190,16 +199,140 @@ function addReply(){
 
 }
 
-
-// 댓글 수정
+// -----------------------------  댓글 수정 ----------------------------
+// 댓글 수정폼 열기
 function showUpdateReply(replyNo, el){
+
+  //console.log($(".replyUpdateContent").length);
+
+  // 이미 열려있는 댓글 수정 창이 있을 경우 닫아주기
+  if ($(".replyUpdateContent").length > 0) {
+      
+    if(confirm("확인 클릭 시 작성한 내용이 사라집니다.")){
+
+        $(".replyUpdateContent").eq(0).parent().html(beforeReplyRow);
+
+    }else{
+        return;
+    }
+  }
+
+  // 수정 전 댓글 요소 저장
+  beforeReplyRow = $(el).parent().parent().parent().html();
+  // console.log(beforeReplyRow);
+
+  // 수정 전 댓글 내용
+  let beforeContent = $(el).parent().parent().next().children().html();
+  // console.log(beforeContent);
+
+  // XSS 해제
+  beforeContent = beforeContent.replace(/&amp;/g, "&");
+  beforeContent = beforeContent.replace(/&lt;/g, "<");
+  beforeContent = beforeContent.replace(/&gt;/g, ">");
+  beforeContent = beforeContent.replace(/&quot;/g, "\"");
+
+  beforeContent = beforeContent.replace(/<br>/g, "\n");
+
+  // 수정 textarea
+  $(el).parent().parent().next().remove();
+  const textarea = $('<textarea class="replyUpdateContent" style="width:500px; height:100px; resize:none; background-color:#eeeeee50; outline:none; margin-left:40px; margin-top:10px; margin-bottom:5px; padding:10px;">').val(beforeContent);
+  $(el).parent().parent().after(textarea);
+
+  // 수정 버튼
+  const updateReply = $('<button style="color:white; margin-left:40px; background-color:#3278FE;">').addClass("btn btn-sm ml-1 mb-4").text("댓글 수정").attr("onclick", "updateReply(" + replyNo + ", this)");
+  
+  // 취소 버튼
+  const cancelBtn = $('<button style="color:white; background-color:#3278FE; margin-left:10px;">').addClass("btn btn-sm ml-1 mb-4").text("취소").attr("onclick", "updateCancel(this)");
+
+  const btnArea = $(el).parent().parent().parent();
+
+  // $(btnArea).empty();
+  $(btnArea).append(updateReply);
+  $(btnArea).append(cancelBtn);
 
 };
 
+// 취소 버튼 누르면 원래 작성 화면으로
+function updateCancel(el) {
+  
+  // el : 클릭된 취소 버튼
+  $(el).parent().html(beforeReplyRow);
+
+};
+
+// 댓글 수정
+function updateReply(replyNo, el) {
+
+  // 댓글 수정 버튼의 부모의 이전 요소 값
+  const replyContent = $(el).prev().val();
+
+  $.ajax({
+
+    url : contextPath + "/blog/" + memberName + "/reply/update",
+    data : {"replyNo" : replyNo , "replyContent" : replyContent },
+    type : "POST",
+
+    success : function(result){
+
+      if(result > 0){   // 수정 성공
+
+        alert("댓글이 수정되었습니다.");
+        selectReplyList(); 
+        
+      }else{
+
+        alert("댓글 수정 실패");
+
+      }
+
+    },
+
+    error : function(req, status, error){
+      console.log("댓글 수정 실패")
+      console.log(req.responseText)
+    }
+
+  });
+
+}
 
 
 // 댓글 삭제
-function deleteReply(){
+function deleteReply(replyNo){
+
+  $.ajax({
+
+    url : contextPath + "/blog/" + memberName + "/reply/delete",
+    data : { "replyNo" : replyNo },
+    type : "POST",
+
+    success : function(result){
+
+      if(confirm( "정말 삭제하시겠습니까?" )){
+
+        if(result > 0){
+          
+          alert("댓글이 삭제되었습니다.");
+          selectReplyList();
+  
+        }else{
+          alert("댓글 삭제 실패");
+        }
+  
+      }else{
+
+        return;
+
+      }
+
+    },
+
+    error : function(req, status, error){
+      console.log("댓글 삭제 실패")
+      console.log(req.responseText)
+    }
+
+  });
 
 };
 

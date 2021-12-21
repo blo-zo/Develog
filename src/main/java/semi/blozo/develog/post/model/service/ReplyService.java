@@ -34,10 +34,11 @@ public class ReplyService {
 
 	/** 댓글 입력 Service
 	 * @param reply
+	 * @param secretReply 
 	 * @return result
 	 * @throws Exception
 	 */
-	public int insertPostReply(PostReply reply) throws Exception{
+	public int insertPostReply(PostReply reply, String secretReply) throws Exception{
 
 		Connection conn = getConnection();
 		
@@ -47,7 +48,17 @@ public class ReplyService {
 		// 개행 문자 처리
 		reply.setReplyContent( reply.getReplyContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>") );
 		
-		int result = dao.insertPostReply(reply, conn);
+		int result = 0;
+		
+		if(secretReply.equals("false")) {
+			
+			result = dao.insertPostReply(reply, conn);
+			
+		}else {
+			
+			result = dao.insertSecretReply(reply, conn);
+			
+		}
 		
 		if(result > 0) commit(conn);
 		else rollback(conn);
@@ -76,6 +87,24 @@ public class ReplyService {
 		int result = dao.updateReply(replyNo, replyContent, conn);
 		
 		if(result > 0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+
+
+	/** 댓글 삭제
+	 * @param replyNo
+	 * @return
+	 * @throws Exception
+	 */
+	public int deleteReply(int replyNo) throws Exception{
+		
+		Connection conn = getConnection();
+		int result = dao.deleteReply(replyNo, conn);
+		if(result>0) commit(conn);
 		else rollback(conn);
 		
 		close(conn);

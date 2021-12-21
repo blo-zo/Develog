@@ -51,13 +51,14 @@ public class PostController extends HttpServlet{
 				//-----------------------------------------------------------------------
 				// 샘플 로그인 데이터 세팅
 				
-				Member loginMember = new Member("123123!", "뚱이", "ddong2@gmail.com");
-				loginMember.setMemberNo(1);
-				loginMember.setStatusCd(200);
-				loginMember.setGradeCd(100);
-				
-				HttpSession session = req.getSession();
-				session.setAttribute("loginMember", loginMember);
+//				Member loginMember = new Member("123123!", "뚱이", "ddong2@gmail.com");
+//				loginMember.setMemberNo(1);
+//				loginMember.setStatusCd(200);
+//				loginMember.setGradeCd(100);
+//				
+//				HttpSession session = req.getSession();
+//				session.setAttribute("loginMember", loginMember);
+//				session.setMaxInactiveInterval(1800);
 				//-----------------------------------------------------------------------
 				
 				
@@ -86,7 +87,8 @@ public class PostController extends HttpServlet{
 						
 						// 카테고리 메뉴 추가, 삭제에 사용
 						// 로그인 회번 번호 조회
-//						Member loginMember = (Member)req.getSession().getAttribute("loginMember");
+						Member loginMember = (Member)req.getSession().getAttribute("loginMember");
+						
 //						int memberNo = 0;
 						int memberNo = 1;
 						if(loginMember != null) memberNo = loginMember.getMemberNo();
@@ -114,7 +116,8 @@ public class PostController extends HttpServlet{
 							
 							
 							// 게시글 수정 삭제에 사용예정
-//							Member loginMember = (Member)req.getSession().getAttribute("loginMember");
+							Member loginMember = (Member)req.getSession().getAttribute("loginMember");
+							
 							int memberNo = 0;
 							
 							if(loginMember != null) memberNo = loginMember.getMemberNo();
@@ -180,6 +183,9 @@ public class PostController extends HttpServlet{
 								
 								int postNo = Integer.parseInt(req.getParameter("postNo"));
 								String replyContent = req.getParameter("replyContent");
+								String secretReply = req.getParameter("secretReply");	// 비밀글 여부
+								
+								System.out.println(secretReply);
 								
 								PostReply reply = new PostReply();
 								
@@ -187,7 +193,7 @@ public class PostController extends HttpServlet{
 								reply.setPostNo(postNo);
 								reply.setReplyContent(replyContent);
 								
-								int result = new ReplyService().insertPostReply(reply);
+								int result = new ReplyService().insertPostReply(reply, secretReply);
 								
 								resp.getWriter().print(result);
 								
@@ -209,7 +215,7 @@ public class PostController extends HttpServlet{
 								
 								int replyNo = Integer.parseInt(req.getParameter("replyNo"));
 								
-//								resp.getWriter().print(new ReplyService().deleteReply(replyNo));
+								resp.getWriter().print(new ReplyService().deleteReply(replyNo));
 								
 							}
 							

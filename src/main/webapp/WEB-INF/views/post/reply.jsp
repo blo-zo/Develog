@@ -12,6 +12,11 @@
           <div class="post-reply-write-area">
 
               <textarea name="post-reply" id="post-reply"></textarea>
+              
+			  <input class="form-check-input" type="checkbox" id="secretReply">
+			  <label class="form-check-label" for="secretReply">
+			     비밀 댓글
+			  </label>
   
               <button class="btn btn-primary btn-sm" id="post-reply-btn" style="float: right;" onclick="addReply()">
                 댓글 작성
@@ -65,26 +70,26 @@
 	              <c:choose>
 	              	<c:when test="${reply.replyStatusCode == 601}">
 	              		<div class="reply-body" style="word-break:break-all; font-size:20px; color:red;">
-	              			블라인드 처리된 댓글입니다.
+	              			<p>블라인드 처리된 댓글입니다.</p>
 	              		</div>
 	              	</c:when>
 	              	
 	              	<c:when test="${(reply.replyStatusCode == 602) && (loginMember.memberNo == reply.memberNo || loginMember.memberNo == post.memberNo)}">
 	              		<div class="reply-body" style="word-break:break-all;">
-			                ${reply.replyContent}
+			                <p>${reply.replyContent}</p>
 		                	
 		              	</div>
 	              	</c:when>
 
 	              	<c:when test="${reply.replyStatusCode == 602 }">
 						<div class="reply-body" style="word-break:break-all; color:#0000ffb5; font-size:20px;">
-							비밀 댓글입니다.
+							<p>비밀 댓글입니다.</p>
 		              	</div>
 	              	</c:when>
 	              	
 					<c:otherwise>
 		              <div class="reply-body" style="word-break:break-all;">
-		                ${reply.replyContent}
+		                <p>${reply.replyContent}</p>
 		              </div>
 					</c:otherwise>	              	
 	              	

@@ -112,6 +112,38 @@ public class ReplyDAO {
 		
 		return result;
 	}
+	
+	/** 비밀 댓글 입력
+	 * @param reply
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertSecretReply(PostReply reply, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			
+			// 댓글상태 default 설정하기
+			String sql = prop.getProperty("insertSecretReply");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, reply.getReplyContent());
+			pstmt.setInt(2, reply.getPostNo());
+			pstmt.setInt(3, reply.getMemberNo());
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+	
+	
 
 	/** 포스트 댓글 수정 DAO
 	 * @param replyNo
@@ -127,13 +159,44 @@ public class ReplyDAO {
 		try {
 			
 			String sql = prop.getProperty("updateReply");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, replyContent);
+			pstmt.setInt(2, replyNo);
+			result = pstmt.executeUpdate();
 			
 		}finally {
-			
+			close(pstmt);
 		}
 		
 		return result;
 	}
+
+	/** 댓글 삭제
+	 * @param replyNo
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int deleteReply(int replyNo, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("deleteReply");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, replyNo);
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	
 	
 	
 	

@@ -501,10 +501,10 @@ const contextPath = "${contextPath}";
 const loginMemberNo = "${loginMember.memberNo}";
 
 // 포스트 작성자의 회원번호
-const postMemberNo = ${post.memberNo};
+const postMemberNo = "${post.memberNo}";
 
 // 현재 게시글 번호
-const postNo = ${post.postNo};
+const postNo = "${post.postNo}";
 
 // 현재 게시글 작성자명
 const memberName = "${post.memberName}";
