@@ -11,22 +11,33 @@ import semi.blozo.develog.board.model.dao.PostingDAO;
 import semi.blozo.develog.board.model.vo.Category;
 import semi.blozo.develog.board.model.vo.PostImageVO;
 import semi.blozo.develog.board.model.vo.PostVO;
+import semi.blozo.develog.board.model.vo.TagVO;
 import semi.blozo.develog.common.XSS;
 
 public class PostingService {
 	
 	private PostingDAO dao = new PostingDAO();
 
-	public int insertPost(PostVO postVO, List<PostImageVO> imgList) throws Exception{
+	/** 게시글 삽입 ( post + tagList)
+	 * @param postVO
+	 * @param tagList 
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertPost(PostVO postVO, List<TagVO> tagVOList) throws Exception{
 		Connection conn = getConnection();
 		
+		// 다음 게시글 번호를 미리 지정
 		int postNo = dao.nextPostNo(conn);
-		
 		postVO.setPostNo(postNo);
+		
 		
 		// 2-1) XSS 방지 처리
 		postVO.setPostTitle(XSS.replaceParameter( postVO.getPostTitle()) );
 		postVO.setPostContent(XSS.replaceParameter( postVO.getPostContent()) );
+		
+//		tagList.setTagName(XSS.replaceParameter( tagList.getTagName()) );
+	
 		
 		// 2-2) 개행문자 -> <br> 태그로 변경
 		String content = postVO.getPostContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
@@ -36,35 +47,41 @@ public class PostingService {
 		int result = dao.insertPost(postVO, conn);
 		
 		if(result > 0) {
-			
-			for(PostImageVO img : imgList) {
-				
-				img.setPostNo(postNo);
-				
-				result = dao.insertPostImage(img, conn);
-				
-				if(result == 0) {
-					rollback(conn);
-					break;
-				}
-			}
-			
-			if(result>0) {
-				commit(conn);		
-				result = postNo;
-			} else {
-				rollback(conn);
-			}
-			
-		} else { // 게시글등록 실패시
-			rollback(conn); 
 		
-		}  
+			Boolean flag = true;
+		   
+		   for(TagVO tagVO : tagVOList) {
+	        	 
+			   result = dao.insertTag(tagVO.getTagName(), postVO.getPostNo(), conn);
+	        	 
+			   if(result == 0) {
+				   rollback(conn);
+				   
+				   flag = false;
+	               break;
+			   }
+		   }
+		   if (flag) {
+			   commit(conn);
+			   result = postNo;
+		   }
+	   }
+
 		
+		
+//		if(result>0) {
+//			commit(conn);		
+//			result = postNo;
+//		} else {
+//			rollback(conn);
+//		}
 				
-		return postNo;
+		return result;
 	}
 
+	
+	
+	
 	/** 카테고리 조회
 	 * @return
 	 * @throws Exception

@@ -4,15 +4,97 @@ $('#summernote').summernote({
     minHeight: 800,             // set minimum height of editor
     maxHeight: 800,             // set maximum height of editor
     focus: true,                      // 에디터 로딩후 포커스를 맞출지 여부
-    lang: "ko-KR"					// 한글 설정   
+    lang: "ko-KR",					// 한글 설정   
+
+	// 이미지 업로드 이벤트가 발생했을 때 
+	callbacks:{
+	   onImageUpload: function(files, editor) {
+	        // 업로드된 이미지를 ajax를 이용하여 서버에 저장
+	        sendFile(files[0], this);
+	   }
+	}
 });
 
 
 
-/* 글 삽입 - insert */
-function createPost(){
+
+// 섬머노트에서 업로드된 이미지를 ajax를 이용하여 서버로 전송하여 저장하는 함수
+function sendFile(file, editor){
+   
+   form_data = new FormData();
+   // FormData : form 태그 내부 값 전송을 위한  k:v 쌍을 쉽게 생성할 수 있는 객체
+   
+   form_data.append("uploadFile", file);
+   // FormData 객체에 새로운 K, V 를 추가
+   
+   $.ajax({
+      url : "insertImage",
+      type : "post",
+      data : form_data,
+      //dataType: "json",
+      enctype: "multipart/form-data",
+      cache : false,
+        contentType : false,
+        // contentType : 서버로 전송되는 데이터의 형식 설정
+        // 기본값  : application/x-www-form-urlencoded; charset=UTF-8
+        // 파일 전송 시 multipart/form-data 형식으로 데이터를 전송해야 하므로
+        // 데이터의 형식이 변경되지 않도록 false로 지정.
+        
+        processData : false,
+        // processData : 서버로 전달되는 값을 쿼리스트링으로 보낼경우 true(기본값), 아니면 false
+        //            파일 전송 시 false로 지정 해야 함.
+        
+      success : function(result){
+           var contextPath = location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+		console.log
+         
+         // 저장된 이미지를 에디터에 삽입
+         //$(editor).summernote('editor.insertImage', contextPath + result.filePath + result.changeFileName);
+         $(editor).summernote('editor.insertImage', result);
+         
+
+         
+      }
+      
+   });
+}
+
+
+// 글 삽입 유효성 검사
+function postValidate() {
+	if ($("#head-textarea").val().trim().length == 0) {
+		alert("제목을 입력해 주세요.");
+		$("#head-textarea").focus();
+		return false;
+	}
+	
+	if ($("#summernote").val().trim().length == 0) {
+		alert("내용을 입력해 주세요.");
+		$("#summernote").focus();
+		return false;
+	}
+	
+	
+	// 입력된 태그를 form 태그 마지막에 hidden 타입으로 추가
+	$(".tags").each(function(index, tag){
+		const input = $("<input type='hidden' name='tags'>").val($(tag).text());
+		$("[name=insertForm]").append(input);
+	})
+	
+	
+	
+	document.insertForm.submit();// form태그 name값이 제출이 되게 지정
+}
+
+
+
+
+/* 글 삽입 - insert -- 얘는 사용 x*/
+/*function createInsert(){
+	
+	
 	$.ajax({
-        url : contextPath + "/reply/insert",
+        url : contextPath + "/board/insert",
         data : {
 				"postTitle" : $(".head-textarea").val(), 
 				"postContent": $("#summernote").val(),
@@ -38,13 +120,13 @@ function createPost(){
             console.log(req.responseText);
         }});
 }
-
+*/
 
 // 1. 입력 버튼이 클릭 되었을 때
-document.getElementById("inputText").addEventListener("click", postTags);
+document.getElementById("inputTag").addEventListener("click", postTags);
 
 // 2. input태그에서 엔터가 눌러졌을때
-document.getElementById("inputText").addEventListener("keyup", function(e){
+document.getElementById("inputTag").addEventListener("keyup", function(e){
     // e : 발생된 이벤트와 관련된 정보가 모두 담겨있음.
     console.log(e.code);
     if(e.key == "Enter"){ //엔터키 입력 시 
@@ -62,18 +144,14 @@ document.getElementById("inputText").addEventListener("keyup", function(e){
 //3. 1,2 번의 공통 동작을 작성해둔 function 생성
 function postTags(){
     // #input-text에 작성된 값을 읽어오기
-    const input = document.getElementById("inputText");
+    const input = document.getElementById("inputTag");
 
     //입력된 값이 있을 때만 추가
     if(input.value.trim().length != 0){   
         // p태그 형식으로 추가
         document.getElementById("postTags").innerHTML 
-            += "<span class='tags post-tag'>#" + input.value +"<b class='del' onclick='deleteTag(this)'>X</b></span>";
+            += "<span class='tags post-tag' >#" + input.value +"<b class='del' onclick='deleteTag(this)'>X</b></span>";
 
-        document.getElementById( "inputText" ).scrollWidth 
-
-        document.getElementById("inputText").scrollTop
-            = document.getElementById("inputText").scrollTop;
 
         //3) input 태그에 작성된 내용을 삭제
         input.value = "";
@@ -114,4 +192,5 @@ document.getElementById("btn-pre-submit").onclick = function(){
 $(".modal-content-area .btn-cancel").on("click", function () {
   $(".modal-content-area").removeClass("active");
 })
+
 

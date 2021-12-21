@@ -25,7 +25,7 @@
 
 <body>
 
-	<form action="insert" method="post" enctype="multipart/form-data" role="form" onsubmit="return boardValidate();">
+	<form action="insert" name="insertForm" method="post"  role="form" onsubmit="return false">
 	<div class="wrapper">
 		<div class="write-area" style="max-width: 80%;">
 			<div class="head-title">
@@ -34,19 +34,19 @@
 
 			<div class="line"></div>
 
-			<div class="summernote" id="summernote" style="height: fit-content;"></div>
+			<textarea class="summernote" id="summernote" name="postContent" style=" height: fit-content;"></textarea>
 			<!-- content end -->
 
 			<div class="tag-area">
                 <div class="postTags" id="postTags"></div>  <!-- 태그 생성될 영역 -->
-                <input type="text" class="inputText" id="inputText" name="inputText" placeholder="태그를 입력하세요">
+                <input type="text" class="inputTag" id="inputTag" placeholder="태그를 입력하세요">
             </div> <!-- tag-area -->
             
 		</div>
 		<!-- write area -->
 
 		<footer>
-            <button class="out-area" onclick="location.href='#' ">
+            <button class="out-area" onclick="location.href='# 목록페이지' ">
                 <div id="out-image">
                     <img src="../resources/images/board/arrow.png" id="img-arrow" >
                 </div>
@@ -91,11 +91,11 @@
 						<h4>공개 설정</h4>
 					</div>
 					<div class="open-btns">
-						<button class="all-btn postStatusBtn" value="1" type="button">
+						<button class="all-btn postStatusBtn" value="500" type="button">
 							<img src="../resources/images/board/earth.png" class="img-earth" alt="">
 							<p>전체 공개</p>
 						</button>
-						<button class="lock-btn postStatusBtn" value="2" type="button">
+						<button class="lock-btn postStatusBtn" value="502" type="button">
 							<img src="../resources/images/board/padlock.png" class="img-lock" alt="">
 							<p>비공개</p>
 						</button>
@@ -111,9 +111,9 @@
 						<div class="sort-post dropstart border" data-bs-toggle="dropdown"
 							aria-expanded="false">
 							<select name="categoryCode">
-							<option value="">선택하세요</option>
-							<option value="001">일상</option>
-								<option value="002">영어</option>
+								<option value="">선택하세요</option>
+								<option value="1">일상</option>
+								<option value="2">영어</option>
 							</select>
 							<!-- <button type="button" class="btn dropdown-toggle"
 								data-bs-toggle="dropdown" aria-expanded="false">정렬 방식</button>
@@ -127,7 +127,7 @@
 				</div>
 				<div class="set-btns">
 					<button class="btn-cancel" >취소</button>
-					<button class="btn-submit">출간하기</button>
+					<button class="btn-submit" onclick="postValidate();">출간하기</button>
 				</div>
 
 			</div>

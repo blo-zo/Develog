@@ -21,12 +21,12 @@ import semi.blozo.develog.board.model.vo.Category;
 import semi.blozo.develog.board.model.service.PostingService;
 import semi.blozo.develog.board.model.vo.PostImageVO;
 import semi.blozo.develog.board.model.vo.PostVO;
+import semi.blozo.develog.board.model.vo.TagVO;
 import semi.blozo.develog.common.MyRenamePolicy;
 import semi.blozo.develog.member.model.Member;
 
 @WebServlet("/board/*")
-public class PostingController extends HttpServlet{
-	 
+public class PostingController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,6 +45,7 @@ public class PostingController extends HttpServlet{
 
 			PostingService service = new PostingService();
 			
+			System.out.println(command);
 			
 			// 게시글 삽입
 			if(command.equals("insert")) {
@@ -61,101 +62,87 @@ public class PostingController extends HttpServlet{
 					dispatcher = req.getRequestDispatcher(path);
 					dispatcher.forward(req, resp);
 				
-					
 				} else { // POST 방식 요청
 					System.out.println("@post일때" + method); 
-
-					// 2. 업로드 되는 파일을 서버 컴퓨터 어디에 저장할지 경로 지정
-					HttpSession session = req.getSession();
-					int maxSize = 1024 * 1024 * 100;
 					
-					String root =  session.getServletContext().getRealPath("/");
-					
-					// 나머지 파일 경로(DB에 저장되어 주소경로로 사용할 예정)
-					String filePath = "/resources/images/board/";
-					
-					// 실제 경로
-					String realPath = root + filePath;
-					realPath = "C:\\workspace\\Servlet_JSP\\Develog\\src\\main\\webapp\\resources\\images\\board";
-					
-					 MultipartRequest mReq = new MultipartRequest(req, filePath, maxSize, "utf-8",new MyRenamePolicy());
-					 // 1) 텍스트 형식의 파라미터
-					System.out.println("@post일때2"+req);
-					String postTitle = mReq.getParameter("postTitle");
-					String postContent = mReq.getParameter("postContent");
-					int categoryCode = Integer.parseInt( mReq.getParameter("categoryCode"));
-					int postStatusCode = Integer.parseInt( mReq.getParameter("postStatusCode"));
-					
-					System.out.println("@post일때3"+postTitle);
-					System.out.println("@post일때3"+postContent);
-					System.out.println("@post일때3"+categoryCode);
-					System.out.println("@post일때3"+postStatusCode);
-				         
-					int memberNo = ((Member)session.getAttribute("loginMember")).getMemberNo();
+					// 1) 텍스트 형식의 파라미터
+	
+					String postTitle = req.getParameter("postTitle");
+					String postContent =  req.getParameter("postContent");
+					int categoryCode = Integer.parseInt(req.getParameter("categoryCode"));
+					int postStatusCode = Integer.parseInt(req.getParameter("postStatusCode"));
+					int blogNo = 3; //((Member)req.getSession().getAttribute("loginMember")).getMemberNo();
 					
 					PostVO postVO = new PostVO();
 					postVO.setPostTitle(postTitle);
 					postVO.setPostContent(postContent);
 					postVO.setCategoryCode(categoryCode);
 					postVO.setPostStatusCode(postStatusCode);
-					postVO.setMemberNo(memberNo); 
-			         
+					postVO.setBlogNo(blogNo);
 					
-					System.out.println(postTitle);
+					String[] tags = req.getParameterValues("tags");
 					
+					List<TagVO> tagVOList = new ArrayList<TagVO>();
 					
-					// 파일 이미지 처리 
-					if(ServletFileUpload.isMultipartContent(req)) {
-				         String root = req.getSession().getServletContext().getRealPath("/");
-				         String savePath = root + "/resources/images/board/";
-				         int maxSize = 1024 * 1024 * 10;  // 업로드 사이즈 제한 10M 이하
-				         
-				         MultipartRequest mReq = new MultipartRequest(req, savePath, maxSize, "utf-8",new MyRenamePolicy());
-				         
-				         // 단일 파일 업로드
-				         Enumeration<String> files = mReq.getFileNames();
-				         String saveFile = null;
-				         String originFile = null;
-				         if(files.hasMoreElements()) {
-				            
-				            String name = files.nextElement();
-				            System.out.println(name);
-				            if(mReq.getFilesystemName(name) != null) {
-				               saveFile = mReq.getFilesystemName(name);
-				               originFile = mReq.getOriginalFileName(name);
-				            }
-				         }
-				          
-						
-				      } // if end
-					   
-				         
+					for(String vo : tags) {
+						TagVO tagvo = new TagVO();
+						tagvo.setTagName(vo);
+						tagVOList.add(tagvo);
+					}
 					
+					int result = service.insertPost(postVO, tagVOList );
 					
-					
-					
-					 
-				}
+					if (result > 0) {
+						message = "게시글이 작성되었습니다.";
+						// path = 작성된 후 게시글 페이지 주소
 
-					
-//					
-//					// postVO, imgList db에 삽입하는 서비스 호출 후 결과 반환
-//					int result = service.insertPost(postVO, imgList );
-//					
-//					if(result > 0 ) {
-//						message = "게시글이 작성되었습니다.";
-////						path = 작성된 후 게시글 페이지 주소 
-//						
-//					} else {				
-//						message = "게시글 등록 중 문제가 발생하였습니다.";
-//						path = "insert"; 
-//					}
-//					
-//					session.setAttribute("message", message);
-//					resp.sendRedirect(path);
-				
-			
+					} else {
+						message = "게시글 등록 중 문제가 발생하였습니다.";
+						path = "insert";
+					}
+
+					req.getSession().setAttribute("message", message);
+					resp.sendRedirect(path);
+				  
 				}
+				
+			}// insert if end
+			
+			else if(command.equals("insertImage")) {
+			      if(ServletFileUpload.isMultipartContent(req)) {
+			          String root = req.getSession().getServletContext().getRealPath("/");
+			          String savePath = root + "/resources/images/board/";
+			          int maxSize = 1024 * 1024 * 20;  // 업로드 사이즈 제한 20M 이하
+			          
+			          MultipartRequest multiRequest = new MultipartRequest(req, savePath, maxSize, "utf-8",new MyRenamePolicy());
+			          
+			          // 단일 파일 업로드
+			          Enumeration<String> files = multiRequest.getFileNames();
+			          String saveFile = null;
+			          String originFile = null;
+			          if(files.hasMoreElements()) {
+			             
+			             String name = files.nextElement();
+			             System.out.println(name);
+			             if(multiRequest.getFilesystemName(name) != null) {
+			                saveFile = multiRequest.getFilesystemName(name);
+			                originFile = multiRequest.getOriginalFileName(name);
+			             }
+			          }
+			          
+			          System.out.println(saveFile);
+			          System.out.println(originFile);
+			          
+			          
+			          String reqPath = req.getContextPath()+"/resources/images/board/";
+			          
+			          String uploadFile = reqPath + saveFile;
+			          
+			          System.out.println(uploadFile);
+			          resp.getWriter().print(uploadFile);
+			      }
+			}
+
 			
 			
 		}catch (Exception e) {
@@ -163,7 +150,7 @@ public class PostingController extends HttpServlet{
 			
 		}
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);

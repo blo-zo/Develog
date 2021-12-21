@@ -17,14 +17,14 @@ public class PostVO {
 	private int boardStatusCode;
 	private int categoryCode;
 	
-	private int tagCode;		// 태그 코드 
-	private String tagName;		// 태그명 
+//	private int tagCode;		// 태그 코드 
+//	private String tagName;		// 태그 내용 
 	
 	// join하면서 가져온것들(화면에 필요한것들)
 	private int blogNo;			// 블로그 번호
 	private int categoryName;	// 카테고리 코드
 	private int postStatusCode;	// post 상태 코드
-	
+
 	
 	public PostVO( ) {}
 
@@ -150,36 +150,45 @@ public class PostVO {
 
 	
 	
+//	public int getTagCode() {
+//		return tagCode;
+//	}
+//
+//
+//	public void setTagCode(int tagCode) {
+//		this.tagCode = tagCode;
+//	}
+//
+//
+//	public String getTagName() {
+//		return tagName;
+//	}
+//
+//
+//	public void setTagName(String tagName) {
+//		this.tagName = tagName;
+//	}
+//
+//
+//	@Override
+//	public String toString() {
+//		return "PostVO [postNo=" + postNo + ", postTitle=" + postTitle + ", postContent=" + postContent
+//				+ ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", readCount=" + readCount
+//				+ ", memberNo=" + memberNo + ", boardStatusCode=" + boardStatusCode + ", categoryCode=" + categoryCode
+//				+ ", tagCode=" + tagCode + ", tagName=" + tagName + ", blogNo=" + blogNo + ", categoryName="
+//				+ categoryName + ", postStatusCode=" + postStatusCode + "]";
+//	}
 	
-
-	public int getTagCode() {
-		return tagCode;
-	}
-
-
-	public void setTagCode(int tagCode) {
-		this.tagCode = tagCode;
-	}
-
-
-	public String getTagName() {
-		return tagName;
-	}
-
-
-	public void setTagName(String tagName) {
-		this.tagName = tagName;
-	}
-
-
 	@Override
 	public String toString() {
 		return "PostVO [postNo=" + postNo + ", postTitle=" + postTitle + ", postContent=" + postContent
 				+ ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", readCount=" + readCount
 				+ ", memberNo=" + memberNo + ", boardStatusCode=" + boardStatusCode + ", categoryCode=" + categoryCode
-				+ ", tagCode=" + tagCode + ", tagName=" + tagName + ", blogNo=" + blogNo + ", categoryName="
+				+ ",  blogNo=" + blogNo + ", categoryName="
 				+ categoryName + ", postStatusCode=" + postStatusCode + "]";
 	}
+	
+
 
 
 	
