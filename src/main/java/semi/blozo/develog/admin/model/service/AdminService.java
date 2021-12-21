@@ -233,4 +233,30 @@ public class AdminService {
 	
 	}
 
+	public List<Report> selectViolation(int memberNo) throws Exception {
+
+		Connection conn = getConnection();
+		
+		List<Report> violationList = dao.selectViolation(memberNo, conn);
+		
+		conn.close();
+		
+		return violationList;
+	}
+
+	public int deleteViolation(int violationNo) throws Exception{
+		Connection conn = getConnection();
+		
+		int result = dao.deleteViolation(violationNo, conn);
+		
+		// 트랜잭션 제어 깜빡했내
+		if(result >0) conn.commit();
+		else		  conn.rollback();
+		
+		conn.close();
+		
+		return result;
+	
+	}
+
 }

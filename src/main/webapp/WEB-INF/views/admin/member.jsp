@@ -21,6 +21,10 @@
 		.col{
 			font-size: 25px;
 		}
+
+		.removeViolation:hover{
+			cursor: pointer;
+		}
 	</style>
 </head>
 <body>
@@ -74,7 +78,7 @@
 									<td>${member.enrollDate }</td>
 									<td>2</td>
 									<td class="violationTd"
-										onclick="warningContent(this)"
+										onclick="warningContent(${member.memberNo})"
 										data-bs-toggle="modal" data-bs-target="#violationModal">
 										${member.violationCount}
 									</td>
@@ -208,9 +212,6 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
 				<div>
 					<div class="content" input-modal>
 						<div class="container">
-							<div class="col">12 : bbbbb</div>
-							<div class="col">h3</div>
-							<div class="col">h4</div>
 						</div>
 
 					</div>

@@ -137,34 +137,11 @@ public class AdminController extends HttpServlet {
 				resp.getWriter().print(message);
 				
 			}else if(command.equals("member/warningMinus")) {
+				System.out.println("연결");
+				int violationNo = Integer.parseInt(req.getParameter("violationNo"));
 				
-				String[] arr = req.getParameterValues("memberNo"); // 언제 부터 values였지? 자동으로 되어있내
-				int[] memberNo = new int[arr.length-1];
-				for(int i=0; i<arr.length-1; i++) {
-						memberNo[i] = Integer.parseInt(arr[i]);
-				}
-				String content = arr[arr.length-1];
-				int result = 0;
-				String str ="";
-				for(int i=0; i < memberNo.length; i++) {
-					if(!content.equals("")) {
-						result = service.insertViolationPlus(memberNo[i], content);						
-					}
-						if(result != 1) {
-							str += memberNo[i]+" ";
-						}else {
-						}
-				}
-				if(result>0) {
-					message = "경고 기능이 수행되었습니다.";					
-				}else {
-					
-					message = "경고 기능이 수행되지 않았습니다.\r\n"
-							+ "경고 실패 회원 번호" + str;
-				}
-					
-				resp.getWriter().print(message);
-				
+				int result = service.deleteViolation(violationNo);
+				System.out.println(result);
 			}
 			
 			else if(command.equals("post")) {
@@ -234,14 +211,24 @@ public class AdminController extends HttpServlet {
 				 req.getRequestDispatcher(path).forward(req, resp);
 				
 			}else if(command.equals("enquiry/modal")) {
-				System.out.println("모달 확인");
 				int enquiryNo = Integer.parseInt(req.getParameter("enquiryNo"));
 				
 				Enquiry enquiry = service.selectDetailEnquiry(enquiryNo);
 				System.out.println(enquiry);
 				
 				new Gson().toJson(enquiry, resp.getWriter());
+			}else if(command.equals("violation")) {
+				System.out.println("경고 서블렛 확인");
+				
+				int memberNo = Integer.parseInt(req.getParameter("memberNo"));
+				
+				// vo report 이용
+				List<Report> violation = service.selectViolation(memberNo);
+				
+				new Gson().toJson(violation, resp.getWriter());
+				
 			}
+			
 			
 		}catch(Exception e) {
 			e.printStackTrace();

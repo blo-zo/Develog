@@ -142,8 +142,20 @@
 		UPDATE MEMBER SET STATUS_CD = 200 WHERE VIOLATION_COUNT &lt; 3
 	</entry>
 
-	<!-- 경고 감소 시 회원 상태 변환  -->
+	<!-- 경고 내용 삽입  -->
 	<entry key="insertViolationPlus">
 		INSERT INTO VIOLATION VALUES(SEQ_VIOLATION.NEXTVAL, ?, ?)	
 	</entry>
+
+	<!-- 경고 내용 출력  -->
+	<entry key="selectViolation">
+		SELECT * FROM VIOLATION WHERE MEMBER_NO = ?
+	</entry>
+
+	<!-- 경고 삭제  -->
+	<entry key="deleteViolation">
+		DELETE FROM VIOLATION WHERE VIOLATION_NO = ?
+	</entry>
+
+
 </properties>

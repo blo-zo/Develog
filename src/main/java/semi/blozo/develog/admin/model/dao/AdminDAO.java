@@ -601,4 +601,45 @@ public class AdminDAO {
 	
 	
 	}
+
+	public List<Report> selectViolation(int memberNo, Connection conn) throws Exception {
+		List<Report> violationList = new ArrayList<Report>();
+		
+		try {
+			String sql = prop.getProperty("selectViolation");
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memberNo);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Report violation = new Report();
+				violation.setReportNo(rs.getInt(1));
+				violation.setMemberNo(rs.getInt(2));
+				violation.setReportContent(rs.getString(3));
+				violationList.add(violation);
+			}
+		}finally {
+			
+		}
+		return violationList;
+	}
+
+	public int deleteViolation(int violationNo, Connection conn) throws Exception{
+		int result = 0;
+		try {
+			String sql = prop.getProperty("deleteViolation");
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, violationNo);
+			
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+		return result;
+	
+	}
 }
