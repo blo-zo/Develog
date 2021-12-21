@@ -7,10 +7,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import semi.blozo.develog.board.model.vo.PostImageVO;
 import semi.blozo.develog.board.model.vo.PostVO;
+import semi.blozo.develog.board.model.vo.TagVO;
 
 
 
@@ -89,12 +92,15 @@ public class PostingDAO {
 				
 				pstmt = conn.prepareStatement(sql);
 				
-				pstmt.setInt(1, postVO.getPostNo());
-				pstmt.setString(2, postVO.getPostTitle());
-				pstmt.setString(3, postVO.getPostContent());
-				pstmt.setInt(4, postVO.getCategoryCode());
-				pstmt.setInt(5, postVO.getPostStatusCode());
+//				pstmt.setInt(1, postVO.getPostNo());			// 게시글번호
+				pstmt.setString(1, postVO.getPostTitle());		// 제목
+				pstmt.setString(2, postVO.getPostContent());	// 내용
+				pstmt.setInt(3, postVO.getBlogNo());			// 블로그 번호
+				pstmt.setInt(4, postVO.getCategoryCode());		// 카테고리 코드
+				pstmt.setInt(5, postVO.getPostStatusCode());	// 게시글 상태 코드
+				
 				result = pstmt.executeUpdate();
+				
 			} finally {
 				close(pstmt);
 			}
@@ -120,7 +126,7 @@ public class PostingDAO {
 		          pstmt.setString(3, img.getImgOriginal());
 		          pstmt.setInt(4, img.getImgLevel());
 		          pstmt.setInt(5, img.getBoardNo());
-		          */
+		           */
 		          result = pstmt.executeUpdate();
 		          
 		       }finally {
@@ -128,6 +134,38 @@ public class PostingDAO {
 		       }   
 		       return result;
 		}
+
+
+		/** 태그 삽입
+		 * @param postNo 
+		 * @param tagList
+		 * @param conn
+		 * @return 
+		 * @throws Exception
+		 */
+		public int insertTag(String tagName, int postNo, Connection conn) throws Exception{
+
+			int result = 0;
+			
+			try {
+				String sql = prop.getProperty("insertTag");
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, tagName);
+				pstmt.setInt(2, postNo);
+				
+				result = pstmt.executeUpdate();
+				
+			} finally {
+				close(pstmt);
+				
+			}
+			
+			return result;
+		}
+
+
+
 	
 	
 	
