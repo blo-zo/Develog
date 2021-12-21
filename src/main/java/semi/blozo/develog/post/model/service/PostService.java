@@ -9,6 +9,7 @@ import semi.blozo.develog.post.model.dao.PostDAO;
 import semi.blozo.develog.post.model.vo.Post;
 import semi.blozo.develog.post.model.vo.PostImage;
 import semi.blozo.develog.post.model.vo.PostPagination;
+import semi.blozo.develog.post.model.vo.PostReply;
 
 public class PostService {
 	
@@ -90,6 +91,8 @@ public class PostService {
 		
 		return post;
 	}
+
+
 
 	
 	

@@ -59,6 +59,7 @@ public class ReplyDAO {
 				
 				PostReply reply = new PostReply();
 				
+				// 댓글 경고수로 조건문 만들기
 				reply.setReplyNo(rs.getInt("REPLY_NO"));
 				reply.setReplyContent(rs.getString("REPLY_CONTENT"));
 	            reply.setReplyCreateDate(rs.getString("REPLY_CREATE_DT"));
@@ -81,6 +82,57 @@ public class ReplyDAO {
 		}
 		
 		return prList;
+	}
+
+	/** 포스트 댓글 입력 DAO
+	 * @param reply
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertPostReply(PostReply reply, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			
+			// 댓글상태 default 설정하기
+			String sql = prop.getProperty("insertPostReply");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, reply.getReplyContent());
+			pstmt.setInt(2, reply.getPostNo());
+			pstmt.setInt(3, reply.getMemberNo());
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	/** 포스트 댓글 수정 DAO
+	 * @param replyNo
+	 * @param replyContent
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updateReply(int replyNo, String replyContent, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("updateReply");
+			
+		}finally {
+			
+		}
+		
+		return result;
 	}
 	
 	

@@ -488,6 +488,33 @@
 		<input type="hidden" name = "cp" value="${param.cp }">
 		<input type="hidden" name = "pno" value="${param.pno}">
 		</form>
+		
+<script>
+
+// 전역 변수로 댓글 관련 기능에 사용될 변수를 미리 선언
+// -> 이 때 JSP에서만 사용 가능한 EL 값을 전역 변수로 선언하면
+//    아래 쪽에 추가된 js파일에서 사용 가능
+
+const contextPath = "${contextPath}";
+
+// 로그인한 회원의 회원 번호, 비로그인 시 "" (빈문자열) (따옴표 안붙이면 아예 빈 공간이라 오류 발생)
+const loginMemberNo = "${loginMember.memberNo}";
+
+// 포스트 작성자의 회원번호
+const postMemberNo = ${post.memberNo};
+
+// 현재 게시글 번호
+const postNo = ${post.postNo};
+
+// 현재 게시글 작성자명
+const memberName = "${post.memberName}";
+
+// 수정 전 댓글 요소를 저장할 변수 (댓글 수정 시 사용)
+let beforeReplyRow;
+
+</script>
+		
+		
 
 
 

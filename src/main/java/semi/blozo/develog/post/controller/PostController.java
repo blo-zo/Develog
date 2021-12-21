@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import semi.blozo.develog.member.model.Member;
 import semi.blozo.develog.post.model.service.PostService;
 import semi.blozo.develog.post.model.service.ReplyService;
@@ -46,11 +48,24 @@ public class PostController extends HttpServlet{
 				RequestDispatcher dispatcher = null;
 				String message = null;
 				
+				//-----------------------------------------------------------------------
+				// 샘플 로그인 데이터 세팅
+				
+				Member loginMember = new Member("123123!", "뚱이", "ddong2@gmail.com");
+				loginMember.setMemberNo(1);
+				loginMember.setStatusCd(200);
+				loginMember.setGradeCd(100);
+				
+				HttpSession session = req.getSession();
+				session.setAttribute("loginMember", loginMember);
+				//-----------------------------------------------------------------------
+				
+				
 				try {
 					
 					PostService service = new PostService();
 					
-					HttpSession session = req.getSession();
+//					HttpSession session = req.getSession();
 					
 					int cp = req.getParameter("cp") == null ? 1 : Integer.parseInt(req.getParameter("cp"));
 					
@@ -71,8 +86,9 @@ public class PostController extends HttpServlet{
 						
 						// 카테고리 메뉴 추가, 삭제에 사용
 						// 로그인 회번 번호 조회
-						Member loginMember = (Member)req.getSession().getAttribute("loginMember");
-						int memberNo = 0;
+//						Member loginMember = (Member)req.getSession().getAttribute("loginMember");
+//						int memberNo = 0;
+						int memberNo = 1;
 						if(loginMember != null) memberNo = loginMember.getMemberNo();
 						
 						List<Post> postList = service.selectBlogPostList(blogPostPagination, memberName);
@@ -96,10 +112,13 @@ public class PostController extends HttpServlet{
 							// pno, cp
 							int postNo = Integer.parseInt(req.getParameter("pno"));
 							
+							
 							// 게시글 수정 삭제에 사용예정
-							Member loginMember = (Member)req.getSession().getAttribute("loginMember");
+//							Member loginMember = (Member)req.getSession().getAttribute("loginMember");
 							int memberNo = 0;
+							
 							if(loginMember != null) memberNo = loginMember.getMemberNo();
+							
 							
 							Post post = service.selectPost(postNo, memberNo);
 							
@@ -119,35 +138,86 @@ public class PostController extends HttpServlet{
 								
 							}else {
 //								req.getSession().setAttribute("message", "삭제되었거나 존재하지 않는 포스트입니다.");
+								
+								
+								// 경로 동적 요소로 바꾸기
+								
 								resp.sendRedirect("뚱이");
 							}
 							
 						}
 						
-						else if(arr[1].equals("insert")) {
+						
+						
+						// ----------------------- 댓글 ------------------------
+						
+						
+						// 댓글 조회
+						else if(arr[1].equals("reply")) {
 							
 							
-							// 글 작성 페이지로 이동
-							if(method.equals("GET")) {
+							if(arr[2].equals("select")) {
 								
-								// 카테고리 조회하기
-//								List<PostCategory> category = service.selectCategory();
+								// 파라미터 얻어오기
+								int postNo = Integer.parseInt(req.getParameter("postNo"));
 								
-//								req.setAttribute("category", category);
+								List<PostReply> prList = new ReplyService().selectPostReplyList(postNo);
 								
-								path = "/WEB-INF/views/post/boardInsert.jsp";
-								dispatcher = req.getRequestDispatcher(path);
-								dispatcher.forward(req, resp);
+								// ajax 비동기 통신 시
+								// 연결된 스트림을 이용하여 값(JSON 형태)만을 내보낸다.
+								
+								// JSONSimple, GSON 둘 중 하나 사용
+								new Gson().toJson(prList, resp.getWriter());
 								
 							}
 							
 							
+							// 댓글 삽입
+							else if(arr[2].equals("insert")) {
+								
+								//int memberNo = Integer.parseInt(req.getParameter("memberNo"));
+								int memberNo = 1;	// 테스트용
+								
+								int postNo = Integer.parseInt(req.getParameter("postNo"));
+								String replyContent = req.getParameter("replyContent");
+								
+								PostReply reply = new PostReply();
+								
+								reply.setMemberNo(memberNo);
+								reply.setPostNo(postNo);
+								reply.setReplyContent(replyContent);
+								
+								int result = new ReplyService().insertPostReply(reply);
+								
+								resp.getWriter().print(result);
+								
+							}
 							
-
+							
+							// 댓글 수정
+							else if(arr[2].equals("update")) {
+								
+								int replyNo = Integer.parseInt(req.getParameter("replyNo"));
+								String replyContent = req.getParameter("replyContent");
+								
+								resp.getWriter().print(new ReplyService().updateReply(replyNo, replyContent));
+							}
 							
 							
+							// 댓글 삭제
+							else if(arr[2].equals("delete")) {
+								
+								int replyNo = Integer.parseInt(req.getParameter("replyNo"));
+								
+//								resp.getWriter().print(new ReplyService().deleteReply(replyNo));
+								
+							}
 							
-						} // 주소 값 else END
+							
+						}	// 댓글 부분 END
+						
+						
+						
 						
 						
 						

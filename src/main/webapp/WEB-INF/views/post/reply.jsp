@@ -5,7 +5,7 @@
 	          
 	          <!-- 댓글 개수 나타내는 영역 -->
           <div class="reply-count">
-            총 <span style="font-size:20px; color:blue;"> ${replyCount} </span> 개의 댓글
+            총 <span style="font-size:20px; color:#3278FE;"> ${replyCount} </span> 개의 댓글
           </div>
 
           <!-- 댓글 작성 영역 -->
@@ -13,7 +13,7 @@
 
               <textarea name="post-reply" id="post-reply"></textarea>
   
-              <button class="btn btn-primary btn-sm" id="post-reply-btn" style="float: right;">
+              <button class="btn btn-primary btn-sm" id="post-reply-btn" style="float: right;" onclick="addReply()">
                 댓글 작성
               </button>
 
@@ -43,22 +43,53 @@
 	                  <c:choose>
 
 	                  	<c:when test="${loginMember.memberNo == reply.memberNo}">
-		                  <span onclick="">수정하기</span>
-		                  <span onclick="">삭제하기</span>
+		                  <span onclick="showUpdateReply(${reply.replyNo}, this)">수정하기</span>
+		                  <span onclick="deleteReply(${reply.replyNo})">삭제하기</span>
 	                  	</c:when>
 
 						<c:otherwise>
-		                  <span onclick="">신고하기</span>
+						  
+						  <c:if test="${loginMember.memberNo == post.memberNo}">
+						  	<span onclick="">삭제하기</span>
+						  </c:if>
+
+		                  <span onclick="reportReply(${reply.replyNo})">신고하기</span>
+
 						</c:otherwise>
 
 	                  </c:choose>
 	                  
 	                </div>
 	              </div>
+	              
+	              <c:choose>
+	              	<c:when test="${reply.replyStatusCode == 601}">
+	              		<div class="reply-body" style="word-break:break-all; font-size:20px; color:red;">
+	              			블라인드 처리된 댓글입니다.
+	              		</div>
+	              	</c:when>
+	              	
+	              	<c:when test="${(reply.replyStatusCode == 602) && (loginMember.memberNo == reply.memberNo || loginMember.memberNo == post.memberNo)}">
+	              		<div class="reply-body" style="word-break:break-all;">
+			                ${reply.replyContent}
+		                	
+		              	</div>
+	              	</c:when>
+
+	              	<c:when test="${reply.replyStatusCode == 602 }">
+						<div class="reply-body" style="word-break:break-all; color:#0000ffb5; font-size:20px;">
+							비밀 댓글입니다.
+		              	</div>
+	              	</c:when>
+	              	
+					<c:otherwise>
+		              <div class="reply-body" style="word-break:break-all;">
+		                ${reply.replyContent}
+		              </div>
+					</c:otherwise>	              	
+	              	
+	              </c:choose>
 	
-	              <div class="reply-body" style="word-break:break-all;">
-	                ${reply.replyContent}
-	              </div>
 	
 	                <%-- <button class="btn btn-primary btn-sm" id="post-reply-btn" style="margin-right: 40px; margin-bottom: 20px;">댓글 수정</button> --%>
 	
