@@ -13,6 +13,15 @@
 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 	crossorigin="anonymous">
 	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/adminCss.css">
+	<style>
+		.violationTd:hover{
+			cursor : pointer;
+			color: #3278FE;
+		}
+		.col{
+			font-size: 25px;
+		}
+	</style>
 </head>
 <body>
 	${loginAdmin}
@@ -64,7 +73,11 @@
 									<td>${member.memberName }</td>
 									<td>${member.enrollDate }</td>
 									<td>2</td>
-									<td>${member.violationCount}</td>
+									<td class="violationTd"
+										onclick="warningContent(this)"
+										data-bs-toggle="modal" data-bs-target="#violationModal">
+										${member.violationCount}
+									</td>
 									<td>${member.statusName}</td>
 								</tr>
 							</c:forEach>
@@ -74,81 +87,152 @@
 
 			</table>
 			<div class="button-area">
-        <div class="button" onclick="warningPlus(), location.reload()"
+        <div class="button" data-bs-toggle="modal"
+		data-bs-target="#exampleModal"
           style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px;">
-          경고 +</div>
-		  <div class="button" onclick="warningMinus(), location.reload()"
-          style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px;">
-          경고 -</div>
-         </form>
-      </div>
-	  <form action="member?cp=1" method="GET" onsubmit="return refresh()">
-		  <div id="search-area">
-			 <input type="text" name="searchWord" placeholder="검색어를 입력해주세요">
-			 <img id="search" src="image/search-solid.svg" style="width: 20px; height: 20px;">
-			 <select name="searchTag">
-			   <option value="no">회원 번호</option>
-			   <option value="emai;">이메일</option>
-			   <option value="name">닉네임</option>
-			   <option value="enrollDate">가입일</option>
-			   <option value="">신고횟수</option>
-			   <option value="6">경고 횟수</option>
-			   <option value="7">회원 상태</option>
-			 </select>
-		   </div>
-	  </form>
-      <div class="my-5">
+          경고</div>
+		</form>
+	</div>
+	<form action="member?cp=1" method="GET" onsubmit="return refresh()">
+		<div id="search-area">
+			<input type="text" name="searchWord" placeholder="검색어를 입력해주세요">
+			<img id="search" src="image/search-solid.svg" style="width: 20px; height: 20px;">
+			<select name="searchTag">
+				<option value="no">회원 번호</option>
+				<option value="email">이메일</option>
+				<option value="name">닉네임</option>
+				<option value="enrollDate">가입일</option>
+				<option value="reoport">신고횟수</option>
+				<option value="violation">경고 횟수</option>
+				<option value="status">회원 상태</option>
+			</select>
+		</div>
+	</form>
+	<div class="my-5">
 		<ul class="pagination" style="justify-content: center;">
 			<c:if test="${pagination.startPage != 1}">
-			<li>
-				<a class="page-link" href="member?cp=1">&lt;&lt;</a>
-			</li>
+				<li>
+					<a class="page-link" href="member?cp=1">&lt;&lt;</a>
+				</li>
 			<li>
 				<a class="page-link" href="member?cp=${pagination.prevPage}">&lt;</a>
 			</li>
 			
-			</c:if>
-			<%-- 페이지네이션 번호 목록 --%>
-			<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" step="1" var="i">
-				<c:choose>
-					<c:when test="${i == pagination.currentPage}">
-						<li>
-							<a class="page-link" style="color:black; font-weight:bold;">${i}</a>
-						</li>
-					</c:when>
-					<c:otherwise>
-						<li>
-							<a class="page-link" href="member?cp=${i}&searchWord=${searchWord}&searchTag=${searchTag}">${i}</a>
-						</li>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-			<c:if test="${pagination.endPage != pagination.maxPage}">
+		</c:if>
+		<%-- 페이지네이션 번호 목록 --%>
+		<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" step="1" var="i">
+			<c:choose>
+				<c:when test="${i == pagination.currentPage}">
+					<li>
+						<a class="page-link" style="color:black; font-weight:bold;">${i}</a>
+					</li>
+				</c:when>
+				<c:otherwise>
+					<li>
+						<a class="page-link" href="member?cp=${i}&searchWord=${searchWord}&searchTag=${searchTag}">${i}</a>
+					</li>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		<c:if test="${pagination.endPage != pagination.maxPage}">
 			<li>
 				<a class="page-link" href="member?cp=${pagination.nextPage}&searchWord=${searchWord}&searchTag=${searchTag}">&gt;</a>
 			</li>
 			<li>
 				<a class="page-link" href="member?cp=${pagination.maxPage}">&gt;&gt;</a>
 			</li>
-			</c:if>
-
-		</ul>
+		</c:if>
+		
+	</ul>
+</div>
+</section>
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+	<div class="modal-content">
+		<div class="modal-header">
+			<span style="font-size: 30px; font-weight: bold;">경고 내용</span>
+			<button type="button" class="btn-close" data-bs-dismiss="modal"
+			aria-label="Close"></button>
+					
+		</div>
+		<div class="modal-body">
+			<section id="modal-section">
+				<div>
+					<div class="info input-modal">
+						<!-- nn번 게시글 <br> 유형 : <span>홍보</span> -->
+					</div>
+					<div class="info input-modal">
+						<!-- userid@email.com <br> 2021-11-10 <br> 미해결 -->
+					</div>
+				</div>
+				<div>
+					<div class="content" input-modal style="float: right;">
+						<form action="">
+							<textarea name="" id="" cols="90" rows="7" style="border: none; margin-left: 1%; outline: none; resize: none;"></textarea>
+							<div class="button" onclick="warningMinus(), location.reload()"
+							style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px; float: right;">
+							경고 -</div>
+							
+							<div class="button" onclick="warningPlus()"
+							  style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px; float: right; margin-right: 10px; ">
+							  경고 +</div>
+						</form>
+					</div>
+				</div>
+			</section>
+				</div>
+			</div>
+		</div>
 	</div>
-    </section>
+	<!-- Modal2 -->
+<div class="modal" id="violationModal" tabindex="-1"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+	<div class="modal-content">
+		<div class="modal-header">
+			<span style="font-size: 30px; font-weight: bold;">경고 내역</span>
+			<button type="button" class="btn-close" data-bs-dismiss="modal"
+			aria-label="Close"></button>
+					
+		</div>
+		<div class="modal-body">
+			<section id="modal-section">
+				<!-- <div>
+					<div class="info input-modal">
+					</div>
+					<div class="info input-modal">
+					</div>
+				</div> -->
+				<div>
+					<div class="content" input-modal>
+						<div class="container">
+							<div class="col">12 : bbbbb</div>
+							<div class="col">h3</div>
+							<div class="col">h4</div>
+						</div>
+
+					</div>
+				</div>
+			</section>
+				</div>
+			</div>
+		</div>
+	</div>
   </main>
+  <script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   <script>
 	  const inputSearch = document.getElementById("search-area").firstElementChild
 	  const warningBtn = document.getElementsByClassName("button");
 	  const contextPath = "${pageContext.servletContext.contextPath}"
 	  const checkBox = document.getElementsByClassName("check")
-	  console.log(checkBox[0].checked);
-	  console.log(checkBox[0].parentElement.nextElementSibling.innerText);
-	  console.log(checkBox.checked);
 
 	  inputSearch.addEventListener("keyup", function(){
 		  if(e.key =="Enter"){
-			  refresh1()
+			 refresh1()
 		  }
 	  })
 

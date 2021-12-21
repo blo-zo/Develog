@@ -2,6 +2,7 @@ package semi.blozo.develog.admin.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -80,14 +81,14 @@ public class AdminController extends HttpServlet {
 				message = "관리자 로그아웃";
 				session.setAttribute("message", message);
 				resp.sendRedirect(req.getContextPath()+"/admin/login");
-			}
-				else if(command.equals("member")) {
+			
+			}else if(command.equals("member")) {
 				Pagination pagination = service.getPagination(cp);
 				List<Member> memberList = new ArrayList<Member>();
-				if(req.getParameter("searchWord") ==  null) {
-				
+				if(req.getParameter("searchWord") == null || req.getParameter("searchWord").equals(""))  {
 					memberList = service.selectMember(pagination);
 				}else {
+					// 페이지를 넘기니까 무조건 searchTag는 넘어와 지내 그러니 그조건도 써야 일로 안넘어오지
 					String searchWord = req.getParameter("searchWord");
 					String searchTag = req.getParameterValues("searchTag")[0];
 					
@@ -97,9 +98,9 @@ public class AdminController extends HttpServlet {
 					
 				}
 				
-				if(req.getParameterValues("check") != null) {
-					String[] checked = req.getParameterValues("check");
-				}
+//				if(req.getParameterValues("check") != null) {
+//					String[] checked = req.getParameterValues("check");
+//				}
 				
 				req.setAttribute("pagination", pagination);
 				req.setAttribute("memberList", memberList);
@@ -107,24 +108,62 @@ public class AdminController extends HttpServlet {
 				req.getRequestDispatcher(path).forward(req, resp);
 
 			}else if(command.equals("member/warningPlus")) {
-				String[] temp = req.getParameterValues("memberNo"); // 언제 부터 values였지? 자동으로 되어있내
-				int[] memberNo = new int[temp.length];
-				System.out.println(temp.length);
-				for(int i=0; i < temp.length; i++) {
-					memberNo[i] = Integer.parseInt(temp[i]);
-				}
-				int result = service.updateViolationPlus(memberNo);
 				
+				String[] arr = req.getParameterValues("memberNo"); // 언제 부터 values였지? 자동으로 되어있내
+				int[] memberNo = new int[arr.length-1];
+				for(int i=0; i<arr.length-1; i++) {
+						memberNo[i] = Integer.parseInt(arr[i]);
+				}
+				String content = arr[arr.length-1];
+				int result = 0;
+				String str ="";
+				for(int i=0; i < memberNo.length; i++) {
+					if(!content.equals("")) {
+						result = service.insertViolationPlus(memberNo[i], content);						
+					}
+						if(result != 1) {
+							str += memberNo[i]+" ";
+						}else {
+						}
+				}
+				if(result>0) {
+					message = "경고 기능이 수행되었습니다.";					
+				}else {
+					
+					message = "경고 기능이 수행되지 않았습니다.\r\n"
+							+ "경고 실패 회원 번호" + str;
+				}
+					
+				resp.getWriter().print(message);
 				
 			}else if(command.equals("member/warningMinus")) {
-				String[] temp = req.getParameterValues("memberNo"); // 언제 부터 values였지? 자동으로 되어있내
-				int[] memberNo = new int[temp.length];
-				System.out.println(temp.length);
-				for(int i=0; i < temp.length; i++) {
-					memberNo[i] = Integer.parseInt(temp[i]);
-				}
-				int result = service.updateViolationMinus(memberNo);
 				
+				String[] arr = req.getParameterValues("memberNo"); // 언제 부터 values였지? 자동으로 되어있내
+				int[] memberNo = new int[arr.length-1];
+				for(int i=0; i<arr.length-1; i++) {
+						memberNo[i] = Integer.parseInt(arr[i]);
+				}
+				String content = arr[arr.length-1];
+				int result = 0;
+				String str ="";
+				for(int i=0; i < memberNo.length; i++) {
+					if(!content.equals("")) {
+						result = service.insertViolationPlus(memberNo[i], content);						
+					}
+						if(result != 1) {
+							str += memberNo[i]+" ";
+						}else {
+						}
+				}
+				if(result>0) {
+					message = "경고 기능이 수행되었습니다.";					
+				}else {
+					
+					message = "경고 기능이 수행되지 않았습니다.\r\n"
+							+ "경고 실패 회원 번호" + str;
+				}
+					
+				resp.getWriter().print(message);
 				
 			}
 			

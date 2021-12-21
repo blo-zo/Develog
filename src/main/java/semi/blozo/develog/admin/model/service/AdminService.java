@@ -218,4 +218,19 @@ public class AdminService {
 
 	}
 
+	public int insertViolationPlus(int memberNo, String content) throws Exception {
+
+		Connection conn = getConnection();
+		
+		int result = dao.insertViolationPlus(memberNo, content, conn);
+		
+		if(result > 0) conn.commit();
+		else		   conn.rollback();
+		
+		conn.close();
+		
+		return result;
+	
+	}
+
 }
