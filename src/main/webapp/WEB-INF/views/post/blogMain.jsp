@@ -47,7 +47,6 @@
             </li>
             
             <!-- 프로필 -->
-            <%-- 내블로그 -> loginMember.blotTitle로 설정하기 memberVO에 blogTitle 변수 얻기 --%>
             <li>
               <div class="dropdown">
                 <a href="#" class="nav-link d-block text-decoration-none " id="userID" data-bs-toggle="dropdown" aria-expanded="false">
@@ -150,8 +149,8 @@
           <img id="blog-profile-img" src="https://via.placeholder.com/200x200" alt="">
         </div>
         <div class="blog-profile-text">
-          <h1>ID</h1>
-          <p>Introduction</p>
+          <h1>${post.memberName}</h1>
+          <p>${post.intro}</p>
         </div>
       </div>
 
@@ -274,13 +273,12 @@
     	
     	
     	
-    	
     	<!-- 페이지 -->
     	<div class="pageSelector">
-			<ul class="pagination">
+			<ul class="pagination" style="justify-content:center;">
 				<c:if test="${blogPostPagination.startPage != 1}">
-					<li><a class = "page-link" href = "${post.blogTitle}?cp=1">&lt;&lt;</a></li>
-					<li><a class = "page-link" href = "${post.blogTitle}?cp=${blogPostPagination.prevPage}">&lt;</a></li>
+					<li><a class = "page-link" href = "${post.memberName}?cp=1">&lt;&lt;</a></li>
+					<li><a class = "page-link" href = "${post.memberName}?cp=${blogPostPagination.prevPage}">&lt;</a></li>
 				</c:if>
 				
 				<%-- 페이지네이션 번호 목록 --%>
@@ -291,14 +289,14 @@
 						</c:when>
 						
 						<c:otherwise>
-							<li><a class = "page-link" href = "${post.blogTitle}?cp=${i}">${i}</a></li>
+							<li><a class = "page-link" href = "${post.memberName}?cp=${i}">${i}</a></li>
 						</c:otherwise>
 					</c:choose>
 					
 				</c:forEach>
-					<c:if test="${pagination.endPage != pagination.nextPage}">
-						<li><a class = "page-link" href = "${post.blogTitle}?cp=${blogPostPagination.nextPage}">&gt;</a></li>
-						<li><a class = "page-link" href = "${post.blogTitle}?cp=${blogPostPagination.maxPage}">&gt;&gt;</a></li>
+					<c:if test="${blogPostPagination.endPage != blogPostPagination.nextPage}">
+						<li><a class = "page-link" href = "${post.memberName}?cp=${blogPostPagination.nextPage}">&gt;</a></li>
+						<li><a class = "page-link" href = "${post.memberName}?cp=${blogPostPagination.maxPage}">&gt;&gt;</a></li>
 					</c:if>
 
 			</ul>

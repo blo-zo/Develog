@@ -348,8 +348,12 @@ function reportReply(replyNo){
 
 
 
-
-
+// 수정 클릭 시 동작
+function updateForm(){
+  document.requestForm.action = "updateForm";
+  document.requestForm.method = "POST";
+  document.requestForm.submit();
+};
 
 
 

@@ -155,7 +155,6 @@
 	          <div style="display: flex; justify-content: space-between; align-items: center;">
 	            <div class="post-menu">
 	            
-<!-- memberName으로 변경 예정 -->
 					<table style="margin: 5px;">
 		                <tr>
 		                  <td colspan="2">
@@ -175,16 +174,22 @@
 	                </table>
 
 	            </div>
+	            <c:choose>
+	            	<c:when test="${loginMember.memberNo == post.memberNo}">
+			            <div class="post-menu">
+			              	<a href="#">통계</a> /
+			              	<a onclick="updateForm();">수정</a> /
+		              		<a href="#">삭제</a>
+			            </div>
+	            	</c:when>
+	            	
+	            	<c:otherwise>
+			            <div class="post-menu" style="display: none;">
+			            	<a href="#">신고하기</a>
+		            	</div>
+	            	</c:otherwise>
+	            </c:choose>
 	            
-	            <div class="post-menu">
-	              	<a href="#">통계</a> /
-	              	<a href="#">수정</a> /
-              		<a href="#">삭제</a>
-	            </div>
-	            
-	            <div class="post-menu" style="display: none;">
-	            	<a href="#">신고하기</a>
-            	</div>
 	            
 	            <%-- <c:choose>
 		            <!-- 작성자 == 로그인 회원 번호인 경우 -->
@@ -483,7 +488,7 @@
 	
 	  </main>
 
-
+		<%-- 수정에 사용할 pno , cp 파라미터 --%>
 		<form action="#" method="post" name="requestForm" >
 		<input type="hidden" name = "cp" value="${param.cp }">
 		<input type="hidden" name = "pno" value="${param.pno}">

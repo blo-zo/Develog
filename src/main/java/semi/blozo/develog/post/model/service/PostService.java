@@ -70,6 +70,7 @@ public class PostService {
 		
 		// 포스트 조회하기
 		Post post = dao.selectPost(postNo, conn);
+		// 프로필 이미지도 얻어오기
 		
 		// 포스트 이미지 조회
 		List<PostImage> postImgList = dao.selectPostImageList(postNo, conn);
@@ -91,6 +92,35 @@ public class PostService {
 		
 		return post;
 	}
+
+
+	/** 수정 화면으로 전환하기
+	 * @param postNo
+	 * @return post
+	 * @throws Exception
+	 */
+	public Post updateView(int postNo) throws Exception{
+		
+		Connection conn = getConnection();
+		
+		Post post = dao.selectPost(postNo, conn);
+		
+		// 이미지 정보 조회
+		List<PostImage> postImgList = dao.selectPostImageList(postNo, conn);
+		// 이미지를 post에 추가
+		post.setPostImgList(postImgList);
+		
+		// 줄바꿈 다시 원래대로 돌리기
+		post.setPostContent(post.getPostContent().replaceAll("<br>", "\r\n"));
+		
+		close(conn);
+		
+		return post;
+		
+	}
+	
+	
+	
 
 
 

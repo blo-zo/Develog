@@ -421,6 +421,8 @@ html, body{
   margin: 5px;
   text-decoration: none;
   color: #323232;
+  cursor: pointer;
+  
 }
 .post-menu td{
   padding: 3px;

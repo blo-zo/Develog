@@ -74,7 +74,7 @@ public class PostController extends HttpServlet{
 					// 메인페이지에서 blog 제목(글쓴이 memberName)을 파라미터로 받아오기
 					
 					
-					// 블로그 메인 페이지
+					// 블로그 메인 페이지 ( + 정렬, 검색)
 					if(arr.length == 1) {	
 						
 						// 특정 블로그에 있는 전체 게시글 수 카운트
@@ -108,6 +108,8 @@ public class PostController extends HttpServlet{
 						
 						
 					}else {
+						
+						// 포스트 상세 조회
 						
 						if(arr[1].equals("view")) {
 							
@@ -147,6 +149,34 @@ public class PostController extends HttpServlet{
 								
 								resp.sendRedirect("뚱이");
 							}
+							
+							
+						}
+						
+						
+						// 포스트 수정 화면 전환
+						else if(arr[1].equals("updateForm")) {
+							
+							int postNo = Integer.parseInt(req.getParameter("pno"));
+							
+							// 1. 수정할 게시글 조회하기
+							Post post = service.updateView(postNo);
+							
+							// 2. 카테고리 목록 조회
+							// List<Category> category = service.selectCategory();
+							
+							req.setAttribute("post", post);
+							// req.setAttribute("category", category);
+							
+							path = "/WEB-INF/views/post/postUpdate.jsp";
+							dispatcher = req.getRequestDispatcher(path);
+							dispatcher.forward(req, resp);
+							
+						}
+						
+						
+						// 포스트 삭제
+						else if(arr[1].equals("delete")) {
 							
 						}
 						
