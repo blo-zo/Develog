@@ -178,7 +178,11 @@ public class AdminService {
 		
 		int result = dao.updateViolationPlus(memberNo, conn);
 		
-		if(result > 0) conn.commit();
+		if(result > 0) {
+			
+			result = dao.updateViolationChangePlus(conn);
+			conn.commit();
+		}
 		else	       conn.rollback();
 		
 		return result;
@@ -191,11 +195,67 @@ public class AdminService {
 		
 		int result = dao.updateViolationMinus(memberNo, conn);
 		
-		if(result > 0) conn.commit();
+		if(result > 0) {
+			result = dao.updateViolationChangeMinus(conn);
+			conn.commit();
+		}
 		else	       conn.rollback();
 		
 		return result;
 		
+	
+	}
+
+	public Member adminLogin(String adminPw) throws Exception {
+
+		Connection conn = getConnection();
+
+		Member adminMember = dao.adminLogin(adminPw, conn);
+
+		conn.close();
+
+		return adminMember;
+
+	}
+
+	public int insertViolationPlus(int memberNo, String content) throws Exception {
+
+		Connection conn = getConnection();
+		
+		int result = dao.insertViolationPlus(memberNo, content, conn);
+		
+		if(result > 0) conn.commit();
+		else		   conn.rollback();
+		
+		conn.close();
+		
+		return result;
+	
+	}
+
+	public List<Report> selectViolation(int memberNo) throws Exception {
+
+		Connection conn = getConnection();
+		
+		List<Report> violationList = dao.selectViolation(memberNo, conn);
+		
+		conn.close();
+		
+		return violationList;
+	}
+
+	public int deleteViolation(int violationNo) throws Exception{
+		Connection conn = getConnection();
+		
+		int result = dao.deleteViolation(violationNo, conn);
+		
+		// 트랜잭션 제어 깜빡했내
+		if(result >0) conn.commit();
+		else		  conn.rollback();
+		
+		conn.close();
+		
+		return result;
 	
 	}
 

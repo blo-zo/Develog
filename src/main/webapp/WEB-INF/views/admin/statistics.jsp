@@ -76,7 +76,9 @@
 
     <body>
         <header id="header">  
-            <div id="logout" style="position: absolute;">Logout</div>
+            <div id="logout" style="position: absolute;"
+            onclick="location.href='${pageContext.servletContext.contextPath}/admin/logout'"
+            >Logout</div>
             <nav id="nav">
                 <div>
                     <a href="${pageContext.servletContext.contextPath}/admin/member" class="category">Member</a>

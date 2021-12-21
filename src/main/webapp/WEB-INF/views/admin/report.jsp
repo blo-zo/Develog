@@ -102,7 +102,9 @@ section>div:nth-child(4) {
 </head>
 <body>
 <body>
-	<header id="header">
+	<header id="header"
+	onclick="location.href='${pageContext.servletContext.contextPath}/admin/logout'"
+	>
 		<div id="logout">Logout</div>
 		<nav id="nav">
 			<div>
@@ -190,7 +192,6 @@ XSS 방지 처리도 해야하내
 					<option value="">확인여부</option>
 				</select>
 			</div>
-				${pagination}
       <div class="my-5">
 		<ul class="pagination" style="justify-content: center;">
 			<c:if test="${pagination.startPage != 1}">
