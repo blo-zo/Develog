@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
+
+	<!-- 관리자 로그인 -->
+	<entry key="adminLogin">
+		SELECT * FROM MEMBER WHERE MEMBER_NO = 0 AND MEMBER_PW = ? AND GRADE_CD = 101
+	</entry>
+	
 	<!-- 게시글 수 조회 -->
 	<entry key="memberListCount">
 		SELECT COUNT(*) FROM MEMBER
@@ -11,9 +17,11 @@
 		SELECT * FROM(
 		SELECT ROWNUM RNUM, A.* FROM
 		(SELECT MEMBER_NO, MEMBER_NM, MEMBER_EMAIL, 
-			TO_CHAR(ENROLL_DT, 'YYYY-MM-DD'), INTRO, VIOLATION_COUNT,
-			TO_CHAR(MODIFY_DT, 'YYYY-MM-DD'), STATUS_NM,GRADE_NM
-		FROM MEMBER
+			TO_CHAR(ENROLL_DT, 'YYYY-MM-DD') ENROLL_DT, INTRO, (SELECT COUNT(*)
+                                                      FROM VIOLATION A
+                                                      WHERE A.MEMBER_NO = B.MEMBER_NO) VIOLATION_COUNT,
+			TO_CHAR(MODIFY_DT, 'YYYY-MM-DD') MODIFY_DT, STATUS_NM,GRADE_NM
+		FROM MEMBER B
 		JOIN MEMBER_STATUS USING(STATUS_CD)
 		JOIN GRADE USING(GRADE_CD)
 		ORDER BY MEMBER_NO DESC) A)
@@ -25,8 +33,8 @@
 		SELECT * FROM(
 		SELECT ROWNUM RNUM, A.* FROM
 		(SELECT POST_NO, POST_TITLE, POST_CONTENT, 
-			TO_CHAR(CREATE_DT, 'YYYY-MM-DD'), READ_COUNT, VIOLATION_COUNT, LIKE_COUNT,
-			TO_CHAR(MODIFY_DT, 'YYYY-MM-DD'), BLOG_NO, CATEGORY_CD, POST_STATUS_NM, REPORT_COUNT
+			TO_CHAR(CREATE_DT, 'YYYY-MM-DD') ENROLL_DT, READ_COUNT, VIOLATION_COUNT, LIKE_COUNT,
+			TO_CHAR(MODIFY_DT, 'YYYY-MM-DD') MODIFY_DT, BLOG_NO, CATEGORY_CD, POST_STATUS_NM, REPORT_COUNT
 		FROM POST
         JOIN POST_STATUS USING (POST_STATUS_CD)
 		ORDER BY POST_NO DESC) A)
@@ -124,7 +132,30 @@
 		ORDER BY 1
 	</entry>
 
-	<!-- 회원 경고  -->
-	<entry key="updateViolation">
+	<!-- 경고 증가 시 회원 상태 변환  -->
+	<entry key="updateViolationChangePlus">
+		UPDATE MEMBER SET STATUS_CD = 202 WHERE VIOLATION_COUNT >= 3
 	</entry>
+
+	<!-- 경고 감소 시 회원 상태 변환  -->
+	<entry key="updateViolationChangeMinus">
+		UPDATE MEMBER SET STATUS_CD = 200 WHERE VIOLATION_COUNT &lt; 3
+	</entry>
+
+	<!-- 경고 내용 삽입  -->
+	<entry key="insertViolationPlus">
+		INSERT INTO VIOLATION VALUES(SEQ_VIOLATION.NEXTVAL, ?, ?)	
+	</entry>
+
+	<!-- 경고 내용 출력  -->
+	<entry key="selectViolation">
+		SELECT * FROM VIOLATION WHERE MEMBER_NO = ?
+	</entry>
+
+	<!-- 경고 삭제  -->
+	<entry key="deleteViolation">
+		DELETE FROM VIOLATION WHERE VIOLATION_NO = ?
+	</entry>
+
+
 </properties>

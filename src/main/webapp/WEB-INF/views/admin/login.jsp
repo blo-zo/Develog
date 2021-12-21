@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -21,6 +22,7 @@
             height: 40px;
             border: 1px solid #D6D6D6;
             border-radius: 5px;
+            margin-top: 10px;
         }
 
         input::placeholder{
@@ -31,13 +33,27 @@
     </style>
 </head>
 <body>
-<div>
-	<a href="${pageContext.servletContext.contextPath}/admin/member">go admin</a>
-        <span style="font-size: 40px; font-weight: bold;">Admin</span>
-        <br><br>
-        <input type="text" placeholder="비밀번호를 입력하세요">
-        <br><br>
-        <span style="font-size: 30px; font-weight: bold;">Login</span>
-   		 </div>
+    <div>
+        <form action="${pageContext.servletContext.contextPath}/admin/login/try" method="post">
+            <span style="font-size: 40px; font-weight: bold;">Admin</span>
+            <br><br>
+            <input name="adminPw" type="password" placeholder="비밀번호를 입력하세요">
+            <br><br>
+            <span style="font-size: 30px; font-weight: bold; cursor: pointer;" onclick="document.getElementsByTagName('form')[0].submit()">Login</span>
+        </form>
+    </div>
+    <script>
+        document.getElementsByTagName("input")[0].addEventListener("keyup", function(){
+            if(e.key == "Enter"){
+                document.getElementsByTagName('form')[0].submit()
+            }
+        })
+    </script>
+    <c:if test="${ !empty message}">
+	<script>
+		alert("${message}")
+	</script>
+	<c:remove var="message"/>
+</c:if>
 </body>
 </html>
