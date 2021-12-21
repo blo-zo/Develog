@@ -8,6 +8,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 import semi.blozo.develog.board.model.dao.PostingDAO;
+import semi.blozo.develog.board.model.vo.Category;
 import semi.blozo.develog.board.model.vo.PostImageVO;
 import semi.blozo.develog.board.model.vo.PostVO;
 import semi.blozo.develog.common.XSS;
@@ -62,6 +63,15 @@ public class PostingService {
 		
 				
 		return postNo;
+	}
+
+	/** 카테고리 조회
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Category> selectCategory() throws Exception{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

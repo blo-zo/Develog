@@ -17,6 +17,8 @@ public class PostVO {
 	private int boardStatusCode;
 	private int categoryCode;
 	
+	private int tagCode;		// 태그 코드 
+	private String tagName;		// 태그명 
 	
 	// join하면서 가져온것들(화면에 필요한것들)
 	private int blogNo;			// 블로그 번호
@@ -146,16 +148,41 @@ public class PostVO {
 		this.postStatusCode = postStatusCode;
 	}
 
+	
+	
+	
+
+	public int getTagCode() {
+		return tagCode;
+	}
+
+
+	public void setTagCode(int tagCode) {
+		this.tagCode = tagCode;
+	}
+
+
+	public String getTagName() {
+		return tagName;
+	}
+
+
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
+	}
+
 
 	@Override
 	public String toString() {
 		return "PostVO [postNo=" + postNo + ", postTitle=" + postTitle + ", postContent=" + postContent
 				+ ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", readCount=" + readCount
 				+ ", memberNo=" + memberNo + ", boardStatusCode=" + boardStatusCode + ", categoryCode=" + categoryCode
-				+ ", blogNo=" + blogNo + ", categoryName=" + categoryName + ", postStatusCode=" + postStatusCode + "]";
+				+ ", tagCode=" + tagCode + ", tagName=" + tagName + ", blogNo=" + blogNo + ", categoryName="
+				+ categoryName + ", postStatusCode=" + postStatusCode + "]";
 	}
 
 
+	
 	
 	
 	

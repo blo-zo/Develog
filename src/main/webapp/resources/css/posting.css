@@ -4,7 +4,6 @@ body { font-family: 'Noto Sans KR', sans-serif; }
 
 
 body{
-    
     margin: auto;
     padding-top: 30px;
 }
@@ -13,6 +12,7 @@ body{
 .wrapper{
     display: flex;
     flex-wrap : wrap;
+    margin-bottom: 80px;
 }
 .write-area{
     margin: auto;
@@ -24,7 +24,7 @@ body{
     margin: auto;
     height: 80px;
 }
-.head-textarea{
+#head-textarea{
     border: none; 
     resize:none; 
     outline: none;  
@@ -41,23 +41,57 @@ body{
     padding: 10px;
 }
 /* content 영역 */
-.content{
+.summernote{
     margin: auto;
-    height: 1000px;
+    height: 900px;
     font-size: 1.125rem;
     line-height: 1.5;
 }
 
 /* tag-area 영역 */
 .tag-area{
-    margin: auto;
-    height: 50px;
+    width: 100%;
 }
-.inputTag{
-    border: none; outline: none;
+
+/* 태그 묶어놓은 영역 */
+.postTags{
+    margin: 10px 0px 10px 0px; 
+    line-height: 30px;
+    display: inline;
+}
+
+/* 태그 */
+.post-tag{
+    background-color: #EEEEEE; 
+    color: #3278FE; 
+    font-weight: 500; 
+    height: 30px; 
+    margin: 5px; 
+    border-radius:15px;   
+    align-items: center; 
+    padding: 0 15px;
+
+    opacity: 0.8;
+    
+    display: inline-block;
+    margin-right: 10px;
+}
+
+
+
+.post-tag:hover{
+    opacity: 1; 
+    color:#EEEEEE; 
+    background-color: #3278FE;
+}
+
+
+.inputText{
+    border: none; 
+    outline: none;
     font-size: 15px;
-    width: -webkit-fill-available;
-    padding: 0;     
+    /* width: -webkit-fill-available; */
+    padding: 10px 0px 10px 0px;     
     margin: 10px;
 }
 
@@ -67,10 +101,10 @@ footer{
     margin: auto;
     width: -webkit-fill-available;
     height: 80px;
-    display: flex;
+    display: flex !important;
     position: fixed;
     padding: 0px 30px;
-
+	
     justify-content: space-between;
     align-items: center;
     box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
@@ -78,32 +112,19 @@ footer{
     z-index: 10; 
 }
 .out-area{  border: none;}
-.out-image{ display: inline-block; }
-.img-arrow{
+#out-image{ display: inline-block; }
+#img-arrow{
     width: 15px;
     text-align: center;
 }
 
-.out-span{  
+#out-span{  
     display:inline-block;
     vertical-align:middle;
     font-size: 15px;
     margin-left: 5px;
 }
-.btn-temp{
-    background: #EEEEEE;
-    color: #323232;
-    width: 80px;
-    height: 30px;
-    line-height: 28px;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: bold;
-    outline: none;
-    border: none;
-    font-size: 15px;
-    margin-right: 10px;
-}
+
 .btn-pre-submit{
     background: #3278FE;
     color: white;
@@ -116,34 +137,18 @@ footer{
     outline: none;
     border: none;
     font-size: 15px;
-    text-decoration: none;
-}
-/* 태그 묶어놓은 영역 */
-.post-tags{
-    padding: 10px; display: flex; flex-wrap: wrap
-}
-
-/* 태그 */
-.post-tag{
-    background-color: #EEEEEE; 
-    color: #3278FE; 
-    font-weight: 500; 
-    height: 30px; 
-    padding: 10px; 
-    margin: 5px; 
-    border-radius:15px; 
-    display: flex; 
-    align-items: center; 
     cursor: pointer; 
-    opacity: 0.8;
 }
 
-.post-tag:hover{
-    opacity: 1; 
-    color:#EEEEEE; 
-    background-color: #3278FE;
-}
 
+
+.del{
+    margin-left: 5px;
+    padding : 0 5px ;
+    color:black;
+    display: inline-block;
+    cursor: pointer;
+}
 
 
 /* 모달 영역----------------------------------------------------- */
@@ -211,13 +216,12 @@ footer{
     background-color: #ffffff; 
     color: #3278FE; 
     /* width: 85px; */
-    width: 100px;
+    width: 120px;
     height: 35px;
     border-radius: 5px;
     text-align: center;
     line-height: 33px;
     margin-right: 5px;
-    
 }
 
 .lock-btn{
@@ -229,6 +233,14 @@ footer{
     font-size: 15px;
     font-weight: bold;
     display: inline-block;
+}
+
+.all-btn.active, .lock-btn.active{ 
+	
+	opacity: 1; 
+    background-color:#EEEEEE; 
+    color: #3278FE;
+    
 }
 
 .img-earth, .img-lock{
