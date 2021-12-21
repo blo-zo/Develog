@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Properties;
 
 import semi.blozo.develog.post.model.vo.Post;
+import semi.blozo.develog.post.model.vo.PostImage;
 import semi.blozo.develog.post.model.vo.PostPagination;
 
 public class PostDAO {
@@ -48,13 +49,13 @@ public class PostDAO {
 	 * @return
 	 * @throws Exception
 	 */
-	public int getBlogListCount(Connection conn, String blogTitle) throws Exception{
+	public int getBlogListCount(Connection conn, String memberName) throws Exception{
 
 		int blogListCount = 0;
 		try {
 			String sql = prop.getProperty("getBlogListCount");
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, blogTitle);
+			pstmt.setString(1, memberName);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				blogListCount = rs.getInt(1);
@@ -75,7 +76,7 @@ public class PostDAO {
 	 * @return postList
 	 * @throws Exception
 	 */
-	public List<Post> selectBlogPostList(PostPagination blogPostPagination, String blogTitle, Connection conn) throws Exception{
+	public List<Post> selectBlogPostList(PostPagination blogPostPagination, String memberName, Connection conn) throws Exception{
 		
 		List<Post> postList = new ArrayList<Post>();
 		
@@ -85,7 +86,7 @@ public class PostDAO {
 			int startRow =(blogPostPagination.getCurrentPage() - 1)* blogPostPagination.getLimit() +1;
 			int endRow = startRow + blogPostPagination.getLimit() -1;
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, blogTitle);
+			pstmt.setString(1, memberName);
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
 			rs = pstmt.executeQuery();
@@ -104,7 +105,7 @@ public class PostDAO {
 				post.setBlogNo(rs.getInt("BLOG_NO"));
 				post.setBlogTitle(rs.getString("BLOG_TITLE"));
 				post.setMemberNo(rs.getInt("MEMBER_NO"));
-//				post.setMemberName();
+				post.setMemberName(rs.getString("MEMBER_NM"));
 				post.setCategoryCode(rs.getInt("CATEGORY_CD"));
 				post.setCategoryName(rs.getString("CATEGORY_NM"));
 				post.setPostStatusCode(rs.getInt("POST_STATUS_CD"));
@@ -155,7 +156,8 @@ public class PostDAO {
 				post.setBlogNo(rs.getInt("BLOG_NO"));
 				post.setBlogTitle(rs.getString("BLOG_TITLE"));
 				post.setMemberNo(rs.getInt("MEMBER_NO"));
-//				post.setMemberName();
+				post.setMemberName(rs.getString("MEMBER_NM"));
+				post.setIntro(rs.getString("INTRO"));
 				post.setCategoryCode(rs.getInt("CATEGORY_CD"));
 				post.setCategoryName(rs.getString("CATEGORY_NM"));
 				post.setPostStatusCode(rs.getInt("POST_STATUS_CD"));
@@ -194,6 +196,48 @@ public class PostDAO {
 		}
 		
 		return result;
+	}
+
+
+	/** 포스트 이미지 조회 DAO
+	 * @param postNo
+	 * @param conn
+	 * @return postImgList
+	 * @throws Exception
+	 */
+	public List<PostImage> selectPostImageList(int postNo, Connection conn) throws Exception{
+		
+		List<PostImage> postImgList = new ArrayList<PostImage>();
+		
+		try {
+			
+			String sql = prop.getProperty("selectPostImageList");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				PostImage img = new PostImage();
+				
+				img.setPostImgNo(rs.getInt(1));
+				img.setPostImgPath(rs.getString(2));
+				img.setPostImgName(rs.getString(3));
+				img.setPostImgDate(rs.getString(4));
+				img.setPostImgOriginal(rs.getString(5));
+				img.setPostImgLevel(rs.getInt(6));
+				img.setPostNo(postNo);
+				
+				postImgList.add(img);
+				
+			}
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return postImgList;
 	}
 	
 	

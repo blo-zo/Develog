@@ -47,11 +47,10 @@
             </li>
             
             <!-- 프로필 -->
-            <%-- 내블로그 -> loginMember.blotTitle로 설정하기 memberVO에 blogTitle 변수 얻기 --%>
             <li>
               <div class="dropdown">
                 <a href="#" class="nav-link d-block text-decoration-none " id="userID" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img src="images/profile-small.png" width="30" height="30" class="rounded-circle">
+                  <img src="${contextPath}/resources/images/common/profile-small.png" width="30" height="30" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="userID">
                   <li><a class="dropdown-item" href="${contextPath}/blog/sample">내 블로그</a></li>
@@ -150,19 +149,19 @@
           <img id="blog-profile-img" src="https://via.placeholder.com/200x200" alt="">
         </div>
         <div class="blog-profile-text">
-          <h1>ID</h1>
-          <p>Introduction</p>
+          <h1>${post.memberName}</h1>
+          <p>${post.intro}</p>
         </div>
       </div>
 
       <!-- 소셜 계정 정보 영역 -->
       <div class="social-account-area">
 	  <%-- 소셜 정보 링크 삽입 c:when 사용해서 값이 있으면 보여주기 --%>
-          <a href="#"><img class="social-icon" src="images/hompage.png"></a>
-          <a href="#"><img class="social-icon" src="images/facebook.png"></a>
-          <a href="#"><img class="social-icon" src="images/twitter.png"></a>
-          <a href="#"><img class="social-icon" src="images/github.png"></a>
-          <a href="#"><img class="social-icon" src="images/mail.png"></a>
+          <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/hompage.png"></a>
+          <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/facebook.png"></a>
+          <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/twitter.png"></a>
+          <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/github.png"></a>
+          <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/mail.png"></a>
 
       </div>
 
@@ -230,7 +229,7 @@
   					
 			            <!-- 블로그 본문 내용 -->
 			            <div class="card blog-post-card">
-			              <a href="view?blog=${post.blogTitle}&pno=${post.postNo}&cp=${blogPostPagination.currentPage}" class="card-link">
+			              <a href="${post.memberName}/view?pno=${post.postNo}&cp=${blogPostPagination.currentPage}" class="card-link">
 			  
 			                <div class="card-img-top blog-post-img">
 			                  <!-- 이미지 영역 -->
@@ -254,7 +253,7 @@
 			                  </div>
 <!-- memberName으로 변경 예정 -->
 			                  <div class="blog-post-author">
-			                    by. <span>${post.memberNo} </span>
+			                    by. <span>${post.memberName} </span>
 			                  </div>
 			                  <div class="blog-post-date">
 			                    <span>${post.createDate}</span>
@@ -274,13 +273,12 @@
     	
     	
     	
-    	
     	<!-- 페이지 -->
     	<div class="pageSelector">
-			<ul class="pagination">
+			<ul class="pagination" style="justify-content:center;">
 				<c:if test="${blogPostPagination.startPage != 1}">
-					<li><a class = "page-link" href = "${post.blogTitle}?cp=1">&lt;&lt;</a></li>
-					<li><a class = "page-link" href = "${post.blogTitle}?cp=${blogPostPagination.prevPage}">&lt;</a></li>
+					<li><a class = "page-link" href = "${post.memberName}?cp=1">&lt;&lt;</a></li>
+					<li><a class = "page-link" href = "${post.memberName}?cp=${blogPostPagination.prevPage}">&lt;</a></li>
 				</c:if>
 				
 				<%-- 페이지네이션 번호 목록 --%>
@@ -291,14 +289,14 @@
 						</c:when>
 						
 						<c:otherwise>
-							<li><a class = "page-link" href = "${post.blogTitle}?cp=${i}">${i}</a></li>
+							<li><a class = "page-link" href = "${post.memberName}?cp=${i}">${i}</a></li>
 						</c:otherwise>
 					</c:choose>
 					
 				</c:forEach>
-					<c:if test="${pagination.endPage != pagination.nextPage}">
-						<li><a class = "page-link" href = "${post.blogTitle}?cp=${blogPostPagination.nextPage}">&gt;</a></li>
-						<li><a class = "page-link" href = "${post.blogTitle}?cp=${blogPostPagination.maxPage}">&gt;&gt;</a></li>
+					<c:if test="${blogPostPagination.endPage != blogPostPagination.nextPage}">
+						<li><a class = "page-link" href = "${post.memberName}?cp=${blogPostPagination.nextPage}">&gt;</a></li>
+						<li><a class = "page-link" href = "${post.memberName}?cp=${blogPostPagination.maxPage}">&gt;&gt;</a></li>
 					</c:if>
 
 			</ul>

@@ -155,11 +155,10 @@
 	          <div style="display: flex; justify-content: space-between; align-items: center;">
 	            <div class="post-menu">
 	            
-<!-- memberName으로 변경 예정 -->
 					<table style="margin: 5px;">
 		                <tr>
 		                  <td colspan="2">
-		                    By.<a href="${post.blogTitle}"><span id="post-author">${post.memberNo}</span></a> 
+		                    By.<a href="${contextPath}/blog/${post.memberName}"><span id="post-author">${post.memberName}</span></a> 
 		                  </td>
 		                </tr>
 		                <tr>
@@ -175,16 +174,22 @@
 	                </table>
 
 	            </div>
+	            <c:choose>
+	            	<c:when test="${loginMember.memberNo == post.memberNo}">
+			            <div class="post-menu">
+			              	<a href="#">통계</a> /
+			              	<a onclick="updateForm();">수정</a> /
+		              		<a href="#">삭제</a>
+			            </div>
+	            	</c:when>
+	            	
+	            	<c:otherwise>
+			            <div class="post-menu" style="display: none;">
+			            	<a href="#">신고하기</a>
+		            	</div>
+	            	</c:otherwise>
+	            </c:choose>
 	            
-	            <div class="post-menu">
-	              	<a href="#">통계</a> /
-	              	<a href="#">수정</a> /
-              		<a href="#">삭제</a>
-	            </div>
-	            
-	            <div class="post-menu" style="display: none;">
-	            	<a href="#">신고하기</a>
-            	</div>
 	            
 	            <%-- <c:choose>
 		            <!-- 작성자 == 로그인 회원 번호인 경우 -->
@@ -209,10 +214,10 @@
 	        </div>
 	
 	        <!-- 포스트 중간(게시글 내용) -->
-	        <div class="post-body" style="min-height: 200px;">
+	        <div class="post-body" style="min-height: 200px; word-break:break-all;">
 				
 				${post.postContent}
-		
+				
 	        </div>
 	
 	        <!-- 게시글 하단 태그 버튼, 이전 글 다음 글 버튼 -->
@@ -241,7 +246,7 @@
 	          <div class="post-prev-next-btn">
 	            <div class="post-prev-btn">이전 글</div>
                 <div class="goList">
-	              <a href="${post.blogTitle}?cp=${param.cp}">목록으로</a>
+	              <a href="${contextPath}/blog/${post.memberName}?cp=${param.cp}">목록으로</a>
                 </div>
 	            <div class="post-next-btn">다음 글</div>
 	          </div>
@@ -258,8 +263,8 @@
 	              <img id="post-profile-img" src="https://via.placeholder.com/200x200" alt="">
 	            </div>
 	            <div class="post-profile-text">
-	              <h1>${post.memberNo}</h1>
-	              <p>Introduction</p>
+	              <h1>${post.memberName}</h1>
+	              <p>${post.intro}</p>
 	            </div>
 	          </div>
 	
@@ -483,11 +488,38 @@
 	
 	  </main>
 
-
+		<%-- 수정에 사용할 pno , cp 파라미터 --%>
 		<form action="#" method="post" name="requestForm" >
 		<input type="hidden" name = "cp" value="${param.cp }">
-		<input type="hidden" name = "pno" value="${param.pno }">
+		<input type="hidden" name = "pno" value="${param.pno}">
 		</form>
+		
+<script>
+
+// 전역 변수로 댓글 관련 기능에 사용될 변수를 미리 선언
+// -> 이 때 JSP에서만 사용 가능한 EL 값을 전역 변수로 선언하면
+//    아래 쪽에 추가된 js파일에서 사용 가능
+
+const contextPath = "${contextPath}";
+
+// 로그인한 회원의 회원 번호, 비로그인 시 "" (빈문자열) (따옴표 안붙이면 아예 빈 공간이라 오류 발생)
+const loginMemberNo = "${loginMember.memberNo}";
+
+// 포스트 작성자의 회원번호
+const postMemberNo = "${post.memberNo}";
+
+// 현재 게시글 번호
+const postNo = "${post.postNo}";
+
+// 현재 게시글 작성자명
+const memberName = "${post.memberName}";
+
+// 수정 전 댓글 요소를 저장할 변수 (댓글 수정 시 사용)
+let beforeReplyRow;
+
+</script>
+		
+		
 
 
 
