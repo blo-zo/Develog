@@ -136,6 +136,7 @@ public class AdminController extends HttpServlet {
 					
 				resp.getWriter().print(message);
 				
+				
 			}else if(command.equals("member/warningMinus")) {
 				System.out.println("연결");
 				int violationNo = Integer.parseInt(req.getParameter("violationNo"));
