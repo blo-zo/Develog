@@ -52,6 +52,8 @@ function enquiryDetailContent(e){
 }
 
 function warningPlus(){
+    const textarea = document.getElementsByTagName("textarea")[0];
+    const content = textarea.value;
     let memberNo = []
   for(const items of checkBox){
       if(items.checked){
@@ -59,14 +61,43 @@ function warningPlus(){
           
                   }
   }
-  console.log(memberNo)
+  memberNo.push(content)
+  console.log(memberNo);
   $.ajax({
       url : contextPath + "/admin/member/warningPlus",
       traditional : true, //이게 뭔지는 모르겠는데 배열을 넘겨준데
       data : {"memberNo" : memberNo},
       type : "GET",
+      async : false, // 비동기 방식을 동기 방식으로 변환 // 결과적으로 페이지를 새로고침하게 해준다.
+      success : function(message){
+        location.reload()
+        alert(message)
+        },
+                  
+      error : function(req, status, error){
+                  console.log("ajax 실패");
+                  console.log(req.responseText);
+                  console.log(status);
+                  console.log(error);
+              }
+                  
+  })
+
+}
+
+function warningMinus(e){
+    const violationNo = e.previousElementSibling.innerText
+    console.log(violationNo);
+    const memberNo = e.nextElementSibling.innerText
+    console.log(memberNo);
+  $.ajax({
+      url : contextPath + "/admin/member/warningMinus",
+      traditional : true, //이게 뭔지는 모르겠는데 배열을 넘겨준데
+      data : {"violationNo" : violationNo},
+      type : "GET",
       success : function(){
-                  },
+                warningContent(memberNo)
+                },
                   
       error : function(req, status, error){
                   console.log("ajax 실패");
@@ -78,31 +109,31 @@ function warningPlus(){
   })
 }
 
-function warningMinus(){
-    let memberNo = []
-    console.log("warning");
-  for(const items of checkBox){
-      if(items.checked){
-          memberNo.push(items.parentElement.nextElementSibling.innerText) 
-          console.log("확인")
-          
-                  }
-  }
-  console.log(memberNo)
-  $.ajax({
-      url : contextPath + "/admin/member/warningMinus",
-      traditional : true, //이게 뭔지는 모르겠는데 배열을 넘겨준데
-      data : {"memberNo" : memberNo},
-      type : "GET",
-      success : function(){
-                  },
-                  
-      error : function(req, status, error){
-                  console.log("ajax 실패");
-                  console.log(req.responseText);
-                  console.log(status);
-                  console.log(error);
-              }
-                  
-  })
+function warningContent(memberNo){
+
+    //const container = document.getElementsByClassName("container")[0]
+    // const memberNo = e.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText
+    const container = $(".container").eq(0); //jQuery js랑 섞여서 문제가 생겼다
+//     const inputModal = document.getElementsByClassName("input-modal");
+console.log(memberNo);
+    $.ajax({
+        url : contextPath + "/admin/violation",// 절대 경로로 해야 하나?
+        data : {"memberNo" : memberNo},
+        type : "GET",
+        dataType : "JSON",
+        success : function(violation){
+            container.html("")
+            $.each(violation, function(index, item){
+                const str = '<span>'+item.reportNo+'</span>' + ' : ' + item.reportContent + '<span onclick="warningMinus(this)" class="removeViolation" style="float:right; font-weight: bold;">-</span> <span style="display:none">'+item.memberNo+'</span>'
+                const div = $('<div class="col">')
+                            .html(str)
+                container.append(div)
+            })
+        },
+        error : function(req, status, error){
+            console.log("ajax 실패");
+            console.log(req.responseText);
+     }
+
+    })
 }

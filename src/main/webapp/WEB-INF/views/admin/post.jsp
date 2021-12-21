@@ -17,7 +17,9 @@
 </head>
 <body>
 	<header id="header">
-		<div id="logout">Logout</div>
+		<div id="logout"
+		onclick="location.href='${pageContext.servletContext.contextPath}/admin/logout'"
+		>Logout</div>
 		<nav id="nav">
 			<div>
 				<a href="${pageContext.servletContext.contextPath}/admin/member"
@@ -106,7 +108,6 @@
 					<option value="">가입상태</option>
 				</select>
 			</div>
-			${pagination}
       <div class="my-5">
 		<ul class="pagination" style="justify-content: center;">
 			<c:if test="${pagination.startPage != 1}">
