@@ -531,14 +531,17 @@ public class AdminDAO {
 	}
 
 	public Member adminLogin(String adminPw, Connection conn) throws Exception {
-		Member loginMember = new Member();
+		Member loginMember = null;
+		// 처음에 null로 했어야 했내. 객체에 저장하면 member의 int값이 0 처리되서 넘어가내
+		// 아 여기서 loginMember가 null값이 나오는게아니라 int 값은 0처리되서 값이 넘어가지내
 		try {
 			String sql = prop.getProperty("adminLogin");
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, adminPw);
-			
+
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
+				loginMember = new Member();
 				loginMember.setMemberNo(rs.getInt("MEMBER_NO"));
 				loginMember.setMemberPw(rs.getString("MEMBER_PW"));
 				loginMember.setMemberName(rs.getString("MEMBER_NM"));

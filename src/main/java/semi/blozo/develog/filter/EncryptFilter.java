@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import semi.blozo.develog.wrapper.EncryptWrapper;
 
 @WebFilter(filterName = "encryptFilter" , 
-urlPatterns = {"/member/login" , "/member/signup", "/member/searchpw" , "/member/updatepw", "/admin/login"})
+urlPatterns = {"/member/login" , "/member/signup", "/member/searchpw" , "/member/updatepw", "/admin/login/try"})
 public class EncryptFilter implements Filter {
 
 	public void init(FilterConfig fConfig) throws ServletException {

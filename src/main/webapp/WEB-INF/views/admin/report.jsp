@@ -102,7 +102,9 @@ section>div:nth-child(4) {
 </head>
 <body>
 <body>
-	<header id="header">
+	<header id="header"
+	onclick="location.href='${pageContext.servletContext.contextPath}/admin/logout'"
+	>
 		<div id="logout">Logout</div>
 		<nav id="nav">
 			<div>

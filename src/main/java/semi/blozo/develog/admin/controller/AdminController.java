@@ -41,7 +41,7 @@ public class AdminController extends HttpServlet {
 		String message = null;
 		HttpSession session = req.getSession();
 		AdminService service = new AdminService();
-		System.out.println(command);
+		System.out.println("controller : " + command);
 		try{
 			int cp = req.getParameter("cp") == null ? 1: Integer.parseInt(req.getParameter("cp"));
 			
@@ -51,21 +51,37 @@ public class AdminController extends HttpServlet {
 			// 그러니 문제가 생긴 것
 			
 			if(command.equals("login")) {
-				path = "/WEB-INF/views/admin/login.jsp";
-				dispatcher = req.getRequestDispatcher(path);
-				dispatcher.forward(req, resp);
-			}else if(command.equals("test")){
-				System.out.println("연결 확인");
-				String a = req.getParameter("adminId");
-				String b = req.getParameter("adminPw");
-				System.out.println(a);
-				System.out.println(b);
-				path = "/WEB-INF/views/admin/test.jsp";
-				dispatcher = req.getRequestDispatcher(path);
-				dispatcher.forward(req, resp);
+				if(session.getAttribute("admin") == null) {
+					path = "/WEB-INF/views/admin/login.jsp";
+					dispatcher = req.getRequestDispatcher(path);
+					dispatcher.forward(req, resp);					
+				}else {
+					resp.sendRedirect(req.getContextPath()+ "/admin/member");
+				}
+			}else if(command.equals("login/try")) {
+				
+					
+					String adminPw = req.getParameter("adminPw");
+					System.out.println(adminPw);
+					Member admin = service.adminLogin(adminPw);
+					session.setAttribute("admin", admin);
+					System.out.println(admin == null);
+				if(admin !=null) {
+					resp.sendRedirect(req.getContextPath()+ "/admin/member");
+				
+				}else {
+					message = "비밀번호가 틀렸습니다.";
+					session.setAttribute("message", message);
+					resp.sendRedirect(req.getContextPath()+ "/admin/login");
+				}
+				
+			}else if(command.equals("logout")) {
+				session.removeAttribute("admin");
+				message = "관리자 로그아웃";
+				session.setAttribute("message", message);
+				resp.sendRedirect(req.getContextPath()+"/admin/login");
 			}
-			
-			else if(command.equals("member")) {
+				else if(command.equals("member")) {
 				Pagination pagination = service.getPagination(cp);
 				List<Member> memberList = new ArrayList<Member>();
 				if(req.getParameter("searchWord") ==  null) {
@@ -83,14 +99,7 @@ public class AdminController extends HttpServlet {
 				
 				if(req.getParameterValues("check") != null) {
 					String[] checked = req.getParameterValues("check");
-					System.out.println(checked);
-					System.out.println(checked[0]);
-					System.out.println(checked[1]);
-					System.out.println(checked[2]);
-					System.out.println(checked[3]);
 				}
-				System.out.println(pagination);
-				System.out.println(memberList);
 				
 				req.setAttribute("pagination", pagination);
 				req.setAttribute("memberList", memberList);
@@ -105,11 +114,9 @@ public class AdminController extends HttpServlet {
 					memberNo[i] = Integer.parseInt(temp[i]);
 				}
 				int result = service.updateViolationPlus(memberNo);
-				System.out.println(result);
 				
 				
 			}else if(command.equals("member/warningMinus")) {
-				System.out.println("연결 확인");
 				String[] temp = req.getParameterValues("memberNo"); // 언제 부터 values였지? 자동으로 되어있내
 				int[] memberNo = new int[temp.length];
 				System.out.println(temp.length);
@@ -117,7 +124,6 @@ public class AdminController extends HttpServlet {
 					memberNo[i] = Integer.parseInt(temp[i]);
 				}
 				int result = service.updateViolationMinus(memberNo);
-				System.out.println(result);
 				
 				
 			}

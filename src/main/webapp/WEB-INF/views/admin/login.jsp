@@ -33,19 +33,15 @@
     </style>
 </head>
 <body>
-    
-    <form action="${pageContext.servletContext.contextPath}/admin/test"  method="post">
-        <input type="text" name="adminId">
-        <input type="text" name="adminPw">
-        <button>제출</button>
-    </form>
-    <!-- <span style="font-size: 40px; font-weight: bold;">Admin</span>
-    <br><br>
-        <input name="adminPassword" type="password" placeholder="비밀번호를 입력하세요">
-        <br><br>
-        <span style="font-size: 30px; font-weight: bold; cursor: pointer;" onclick="document.getElementsByTagName('form')[0].submit()">Login</span>
-    </div> -->
-    ${message}
+    <div>
+        <form action="${pageContext.servletContext.contextPath}/admin/login/try" method="post">
+            <span style="font-size: 40px; font-weight: bold;">Admin</span>
+            <br><br>
+            <input name="adminPw" type="password" placeholder="비밀번호를 입력하세요">
+            <br><br>
+            <span style="font-size: 30px; font-weight: bold; cursor: pointer;" onclick="document.getElementsByTagName('form')[0].submit()">Login</span>
+        </form>
+    </div>
     <script>
         document.getElementsByTagName("input")[0].addEventListener("keyup", function(){
             if(e.key == "Enter"){
