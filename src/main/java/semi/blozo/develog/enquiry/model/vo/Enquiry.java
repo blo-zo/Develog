@@ -6,7 +6,7 @@ public class Enquiry {
 	private String enquiryContent; // 문의 내용
 	private String createDt; // 작성일
 	private String modifyDt; // 수정일
-	private String parentEnquriy; // 부모문의 fk 회원번호 memberNo
+	private int parentEnquriy; // 부모문의 fk 회원번호 memberNo
 
 	
 	public Enquiry() {
@@ -16,12 +16,9 @@ public class Enquiry {
 
 
 	
-
-
 	public int getEnquiryNo() {
 		return enquiryNo;
 	}
-
 
 
 
@@ -33,13 +30,9 @@ public class Enquiry {
 
 
 
-
 	public String getEnquiryTitle() {
 		return enquiryTitle;
 	}
-
-
-
 
 
 	public void setEnquiryTitle(String enquiryTitle) {
@@ -48,19 +41,15 @@ public class Enquiry {
 
 
 
-
-
 	public String getEnquiryContent() {
 		return enquiryContent;
 	}
 
 
-
-
-
 	public void setEnquiryContent(String enquiryContent) {
 		this.enquiryContent = enquiryContent;
 	}
+
 
 
 
@@ -72,13 +61,9 @@ public class Enquiry {
 
 
 
-
-
 	public void setCreateDt(String createDt) {
 		this.createDt = createDt;
 	}
-
-
 
 
 
@@ -89,16 +74,13 @@ public class Enquiry {
 
 
 
-
 	public void setModifyDt(String modifyDt) {
 		this.modifyDt = modifyDt;
 	}
 
 
 
-
-
-	public String getParentEnquriy() {
+	public int getParentEnquriy() {
 		return parentEnquriy;
 	}
 
@@ -106,10 +88,9 @@ public class Enquiry {
 
 
 
-	public void setParentEnquriy(String parentEnquriy) {
+	public void setParentEnquriy(int parentEnquriy) {
 		this.parentEnquriy = parentEnquriy;
 	}
-
 
 
 
@@ -120,9 +101,6 @@ public class Enquiry {
 				+ enquiryContent + ", createDt=" + createDt + ", modifyDt=" + modifyDt + ", parentEnquriy="
 				+ parentEnquriy + "]";
 	}
-
-
-
 
 
 	

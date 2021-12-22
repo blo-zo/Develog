@@ -69,7 +69,7 @@ public class EnquriyDAO {
 	public List<Enquiry> selectEnquiryList(Pagination pagination, int memberNo , Connection conn )throws Exception {
 		List<Enquiry> enquiryList = new ArrayList<Enquiry>();
 		try {
-			String sql = prop.getProperty("selectEnquriyList");
+			String sql = prop.getProperty("selectEnquiryList");
 			int startRow =(pagination.getCurrentPage() - 1)* pagination.getLimit() +1;
 			int endRow = startRow + pagination.getLimit() -1;
 			pstmt = conn.prepareStatement(sql);
@@ -87,7 +87,7 @@ public class EnquriyDAO {
 				enquiry.setEnquiryContent(rs.getString("ENQUIRY_CONTENT"));
 				enquiry.setCreateDt(rs.getString("CREATE_DT"));
 				enquiry.setModifyDt(rs.getString("MODIFY_DT"));
-				enquiry.setParentEnquriy(rs.getString("PARENT_ENQUIRY"));
+				enquiry.setParentEnquriy(rs.getInt("PARENT_ENQUIRY"));
 				
 				enquiryList.add(enquiry);
 				
@@ -102,6 +102,68 @@ public class EnquriyDAO {
 		
 		
 		return enquiryList;
+	}
+
+
+	/** 목록 상세조회
+	 * @param enquiryNo
+	 * @param conn
+	 * @return enquiry
+	 * @throws Exception
+	 */
+	public Enquiry selectEnquiry(int enquiryNo, Connection conn)throws Exception {
+		Enquiry enquiry = new Enquiry();
+		try {
+			String sql = prop.getProperty("selectEnquiry");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, enquiryNo);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				
+				enquiry.setEnquiryNo(enquiryNo);
+				enquiry.setEnquiryTitle(rs.getString("ENQUIRY_TITLE"));
+				enquiry.setEnquiryContent(rs.getString("ENQUIRY_CONTENT"));
+				enquiry.setCreateDt(rs.getString("CREATE_DT"));
+				enquiry.setModifyDt(rs.getString("MODIFY_DT"));
+				enquiry.setParentEnquriy(rs.getInt("PARENT_ENQUIRY"));
+				
+			
+			}
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+			
+			
+		}
+		
+		
+		
+		return enquiry;
+	}
+
+
+	public int insertEnquiry(String enquiryTitle, String enquiryContent, int memberNo,Connection conn)throws Exception{
+		
+		int result = 0;
+		// 변수 초기화
+		
+		try {
+			String sql = prop.getProperty("insertEnquiry");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, enquiryTitle);
+			pstmt.setString(2, enquiryContent);
+			pstmt.setInt(3, memberNo);
+			result = pstmt.executeUpdate();
+			
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
 	}
 	
 }

@@ -1,0 +1,113 @@
+html , body {
+    width: 1440px;
+   
+    margin: auto;
+    padding: 0;
+    background-color: #ffffff;
+}
+/* 1:1 문의 작성 */
+.enquiryInsert-head{
+	border-bottom: 1px solid  black;
+	width: 1200px;
+	margin: auto;
+	margin-top: 30px
+}
+/*문의작성 글자  */
+.enquiryInsert-head > p {
+    font-weight: bold;
+    font-size: 40px;
+   
+   
+}
+
+main {
+    margin: auto;
+   
+    margin-top: 10px;
+}
+section > div{
+	
+   	width: 1200px;
+    height : 100px;
+    text-align: right;
+    margin: auto;
+    margin-top: 30px;
+
+}
+section > div > p{
+	
+    margin-top: 0px;
+    font-size: 20px;
+}
+form{
+	width : 1200px;
+	margin: auto;
+}
+form > div> textarea{
+   display: inline-block;
+   border-radius : 5px;
+   margin-left: 60px;
+   width: 1000px;
+   height: 285px;
+   outline: none;
+   font-size: 20px;
+  
+}
+.entitle{
+	width: 1000px;
+	height : 70px;
+	margin: auto;
+	margin-top : 40px
+}
+.entitle > label{
+	margin-left : 90px;
+	font-size: 	20px;
+	margin-right : 10px;
+}
+.entitle > input{
+	width : 400px;
+	height : 30px;
+	font-size : 15px;
+	outline: none;
+	border: none;
+	border-bottom: 1px solid black;
+	
+}
+form > div >  p {
+    display: inline-block;
+    float: left;
+    font-size: 40px;
+    font-weight: bold;
+ 
+    margin-left: 50px;
+}
+
+main > div > button:first-child {
+   float: left;
+   border: none;
+   color: #ffffff;
+   background-color: #3278FE;
+   width: 60px;
+   height: 37px;
+   border-radius: 5px;
+}
+.btn-wrap > button{
+    float: left;
+    border: none;
+    color: #ffffff;
+    background-color: #3278FE;
+    width: 60px;
+    height: 37px;
+    border-radius: 5px;
+    margin: 0px;
+   cursor: pointer;
+}
+.btn-wrap > button:nth-child(2){
+	float : right;
+}
+.btn-wrap{
+    width: 1000px;
+    margin-top: 30px;
+    margin-left: 190px;
+    height: 50px;
+}

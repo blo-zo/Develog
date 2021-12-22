@@ -4,6 +4,7 @@ import static semi.blozo.develog.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.List;
 
+import semi.blozo.develog.common.XSS;
 import semi.blozo.develog.enquiry.model.dao.EnquriyDAO;
 import semi.blozo.develog.enquiry.model.vo.Enquiry;
 import semi.blozo.develog.enquiry.model.vo.Pagination;
@@ -46,4 +47,52 @@ public class EnquiryService {
 		close(conn);
 		return enquriyList;
 	}
+
+
+
+	/** 문의사항 상세조회
+	 * @param enquiryNo
+	 * @return enquiry
+	 * @throws Exception
+	 */
+	public Enquiry selectEnquiry(int enquiryNo)throws Exception{
+		Connection conn = getConnection();
+		Enquiry enquiry = dao.selectEnquiry(enquiryNo , conn);
+		
+		close(conn);
+		
+		
+		return enquiry;
+	}
+
+
+
+	/** 문의사항 등록
+	 * @param enquiryTitle
+	 * @param enquiryContent
+	 * @return result
+	 */
+	public int insertEnquiry(String enquiryTitle, String enquiryContent , int memberNo)throws Exception {
+		Connection conn = getConnection();
+		enquiryTitle = XSS.replaceParameter(enquiryTitle);
+		enquiryTitle = enquiryTitle.replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
+		
+		enquiryContent = XSS.replaceParameter(enquiryContent);
+		enquiryContent = enquiryContent.replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
+		
+		
+		int result = dao.insertEnquiry(enquiryTitle , enquiryContent , memberNo,conn);
+		
+		if(result>0) { 
+			
+			commit(conn);}
+		else {		   rollback(conn);}
+		
+		
+		close(conn);
+		return result;
+	}
+
+
+
 }
