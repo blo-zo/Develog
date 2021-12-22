@@ -96,7 +96,7 @@
   					
 			            <!-- 블로그 본문 내용 -->
 			            <div class="card blog-post-card">
-			              <a href="${post.memberName}/view?pno=${post.postNo}" 
+			              <a href="${post.memberName}/view?pno=${post.postNo}&cp=${blogPostPagination.currentPage}" 
 			              onclick="sendBlog(event, ${post.postNo}, '${post.memberName}', '${post.intro}', '${post.blogTitle}')" class="card-link">
 			  
 			                <div class="card-img-top blog-post-img">
@@ -207,7 +207,7 @@
     
     
     <!-- 블로그 -->
-	<form action="${contextPath}/blog/${post.memberName}/view" method="post" name="sendBlogInfo" >
+	<form action="${contextPath}/blog/${post.memberName}/view" method="POST" name="sendBlogInfo" >
 	<input type="hidden" name = "blogMemberName" value="">
 	<input type="hidden" name = "blogIntro" value="">
 	<input type="hidden" name = "blogTitle" value="">
