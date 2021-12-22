@@ -54,16 +54,10 @@ function enquiryDetailContent(e){
 function warningPlus(){
     const textarea = document.getElementsByTagName("textarea")[0];
     const content = textarea.value;
-    let memberNo = []
-  for(const items of checkBox){
-      if(items.checked){
-          memberNo.push(items.parentElement.nextElementSibling.innerText) 
-          
-                  }
-  }
-  memberNo.push(content)
-  console.log(memberNo);
-  $.ajax({
+    
+     memberNo.push(content)
+    console.log(memberNo);
+     $.ajax({
       url : contextPath + "/admin/member/warningPlus",
       traditional : true, //이게 뭔지는 모르겠는데 배열을 넘겨준데
       data : {"memberNo" : memberNo},
@@ -137,3 +131,16 @@ console.log(memberNo);
 
     })
 }
+
+function postStatusChange(){
+    console.log(checkBox);
+    let postNo = []
+  	for(const items of checkBox){
+    if(items.checked){
+        console.log(items.parentElement);
+        postNo.push(items.parentElement.nextElementSibling.innerText) 
+          
+                 }
+  	}
+          console.log(postNo);
+    }

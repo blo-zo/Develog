@@ -101,7 +101,7 @@
 		<div id="search-area">
 			<input type="text" name="searchWord" placeholder="검색어를 입력해주세요">
 			<img id="search" src="image/search-solid.svg" style="width: 20px; height: 20px;">
-			<select name="searchTag">
+			<select name="searchTag" onchange="changeSelect()">
 				<option value="no">회원 번호</option>
 				<option value="email">이메일</option>
 				<option value="name">닉네임</option>
@@ -111,15 +111,15 @@
 				<option value="status">회원 상태</option>
 			</select>
 		</div>
-	</form>
+	</form> (${pagination.currentPage}-1) x ${pagination.limit} + 1
 	<div class="my-5">
 		<ul class="pagination" style="justify-content: center;">
 			<c:if test="${pagination.startPage != 1}">
 				<li>
-					<a class="page-link" href="member?cp=1">&lt;&lt;</a>
+					<a class="page-link" href="member?cp=1&searchWord=${searchWord}&searchTag=${searchTag}">&lt;&lt;</a>
 				</li>
 			<li>
-				<a class="page-link" href="member?cp=${pagination.prevPage}">&lt;</a>
+				<a class="page-link" href="member?cp=${pagination.prevPage}&searchWord=${searchWord}&searchTag=${searchTag}">&lt;</a>
 			</li>
 			
 		</c:if>
@@ -143,7 +143,7 @@
 				<a class="page-link" href="member?cp=${pagination.nextPage}&searchWord=${searchWord}&searchTag=${searchTag}">&gt;</a>
 			</li>
 			<li>
-				<a class="page-link" href="member?cp=${pagination.maxPage}">&gt;&gt;</a>
+				<a class="page-link" href="member?cp=${pagination.maxPage}&searchWord=${searchWord}&searchTag=${searchTag}">&gt;&gt;</a>
 			</li>
 		</c:if>
 		
@@ -173,16 +173,10 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
 				</div>
 				<div>
 					<div class="content" input-modal style="float: right;">
-						<form action="">
 							<textarea name="" id="" cols="90" rows="7" style="border: none; margin-left: 1%; outline: none; resize: none;"></textarea>
-							<div class="button" onclick="warningMinus(), location.reload()"
-							style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px; float: right;">
-							경고 -</div>
-							
 							<div class="button" onclick="warningPlus()"
 							  style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px; float: right; margin-right: 10px; ">
-							  경고 +</div>
-						</form>
+							  경고</div>
 					</div>
 				</div>
 			</section>
@@ -231,6 +225,14 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  const contextPath = "${pageContext.servletContext.contextPath}"
 	  const checkBox = document.getElementsByClassName("check")
 
+	  let memberNo = []
+  		for(const items of checkBox){
+      if(items.checked){
+          memberNo.push(items.parentElement.nextElementSibling.innerText) 
+          
+                  }
+  		}
+
 	  inputSearch.addEventListener("keyup", function(){
 		  if(e.key =="Enter"){
 			 refresh1()
@@ -240,6 +242,17 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  function refresh1(){
 		  return true
 	  }
+	  function changeSelect(){
+		  const select = document.getElementsByTagName("select")[0]
+		  const placeholder = document.getElementById("search-area").firstElementChild
+		  const val = select.options[select.selectedIndex].value
+		  if(val == 'enrollDate'){
+			placeholder.setAttribute("placeholder", 'YYMMDD - YYMMDD OR YYMMDD')
+		  }else{
+			placeholder.setAttribute("placeholder", '검색어를 입력해주세요')
+		  }
+		}
+	  
   </script>
   <script src="${pageContext.servletContext.contextPath}/resources/js/modal.js"></script>
 </body>

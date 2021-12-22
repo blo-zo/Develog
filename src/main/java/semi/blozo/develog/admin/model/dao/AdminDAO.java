@@ -52,7 +52,6 @@ public class AdminDAO {
 			pstmt.setInt(2, endRow);
 			
 			rs = pstmt.executeQuery();
-			System.out.println(sql);
 			while(rs.next()) {
 				Member member = new Member();
 //				MEMBER_NM, MEMBER_EMAIL, ENROLL_DT, INTRO, VIOLATION_COUNT, MODIFY_DT, STATUS_CD,GRADE_CD
@@ -113,18 +112,20 @@ public class AdminDAO {
 			
 			while(rs.next()) {
 				Post post = new Post();
-				post.setPostNo(rs.getInt(2));
-				post.setPostTitle(rs.getString(3));
-				post.setPostContent(rs.getString(4));
-				post.setCreateDate(rs.getString(5));
-				post.setReadCount(rs.getInt(6));
-				post.setViolationCount(rs.getInt(7));
-				post.setLikeCount(rs.getInt(8));
-				post.setModifyDate(rs.getString(9));
-				post.setBlogNo(rs.getInt(10));
-				post.setCategoryCode(rs.getInt(11));
-				post.setPostStatusName(rs.getString(12));
-				post.setReportCount(rs.getInt(13));
+				post.setPostNo(rs.getInt("POST_NO"));
+				post.setPostTitle(rs.getString("POST_TITLE"));
+				post.setPostContent(rs.getString("POST_CONTENT"));
+				post.setCreateDate(rs.getString("ENROLL_DT"));
+				post.setReadCount(rs.getInt("READ_COUNT"));
+				post.setViolationCount(rs.getInt("VIOLATION_COUNT"));
+				// READCONTET가 길어지면 SUBsTRING으로 줄이고 ...을 붙이자
+				post.setLikeCount(rs.getInt("LIKE_COUNT"));
+				post.setModifyDate(rs.getString("MODIFY_DT"));
+				post.setBlogNo(rs.getInt("BLOG_NO"));
+				post.setCategoryCode(rs.getInt("CATEGORY_CD"));
+				post.setPostStatusName(rs.getString("POST_STATUS_NM"));
+				post.setReportCount(rs.getInt("REPORT_COUNT"));
+				post.setMemberNo(rs.getInt("MEMBER_NO"));
 				postList.add(post);
 			}
 			
@@ -449,7 +450,6 @@ public class AdminDAO {
 			pstmt.setInt(2, endRow);
 			
 			rs = pstmt.executeQuery();
-			System.out.println(sql1);
 			while(rs.next()) {
 				Member member = new Member();
 				member.setMemberNo(rs.getInt("MEMBER_NO"));
@@ -472,51 +472,66 @@ public class AdminDAO {
 		
 		return memberList;
 	}
-
-	public int updateViolationPlus(int[] memberNo, Connection conn) throws Exception {
-		int result = 0;
+	
+	public int memberSearchListCount(String searchWord, String searchTag, Connection conn) throws Exception {
+		int memberSearchListCount = 0;
 		try {
-//			String sql = prop.getProperty("updateViolation");
-			String str = "";
-			for(int i = 0; i < memberNo.length; i++) {
-				if(i != memberNo.length-1) {
-					str += "MEMBER_NO = "+memberNo[i]+" OR ";
-				}else {
-					str += "MEMBER_NO = "+memberNo[i];					
-				}
+			String sql2 = null;
+			switch(searchTag) {
+			case "no": sql2 = "WHERE MEMBER_NO LIKE '%"+searchWord +"%'"; break;
+			case "email": sql2 = "WHERE MEMBER_EMAIL LIKE '%"+searchWord +"%'";break;
+			case "name" : sql2 = "WHERE MEMBER_NM LIKE '%"+searchWord +"%'"; break;
+			case "enrollDate" : if(searchWord.length() == 15) {
+									String str1 = searchWord.substring(0,6);
+									String str2 = searchWord.substring(9,15);
+									str1 = stringToDate(str1);
+									str2 = stringToDate(str2);
+									
+									sql2 = "WHERE TO_DATE(ENROLL_DT) BETWEEN '"+ str1 +"' AND '"+str2+"'"; break;
+
+								}else if(searchWord.length() == 6) {
+									String str = searchWord.substring(0, 6);
+									sql2 = "WHERE TO_DATE(ENROLL_DT) = '"+ str +"'"; break;
+									
+								}
+//			case "report" : sql2 = "WHERE MEMBER_ LIKE '%"+searchWord +"%'"; break;
+			case "violation" : sql2 = "WHERE VIOLATION_COUNT = "+searchWord; break;
+			case "status" : sql2 = "WHERE SATATUS_NM LIKE '%"+searchWord +"%'"; break;
 			}
-			String temp = "UPDATE MEMBER SET VIOLATION_COUNT = VIOLATION_COUNT + 1 WHERE ";
-			String sql = temp + str;
-			pstmt = conn.prepareStatement(sql);
-			
-			result = pstmt.executeUpdate();
-			
-		}finally {
-			pstmt.close();
-		}
-		
-		return result;
-	
-	}
 
-	public int updateViolationMinus(int[] memberNo, Connection conn) throws Exception {
-		int result = 0;
-		try {
-//			String sql = prop.getProperty("updateViolation");
-			String str = "";
-			for(int i = 0; i < memberNo.length; i++) {
-				if(i != memberNo.length-1) {
-					str += "MEMBER_NO = "+memberNo[i]+" OR ";
-				}else {
-					str += "MEMBER_NO = "+memberNo[i];					
-				}
+			String sql1 = "SELECT COUNT(*) FROM(\r\n"
+					+ "		SELECT ROWNUM RNUM, A.* FROM\r\n"
+					+ "		(SELECT MEMBER_NO, MEMBER_NM, MEMBER_EMAIL, \r\n"
+					+ "			TO_CHAR(ENROLL_DT, 'YYYY-MM-DD') ENROLL_DT, INTRO, (SELECT COUNT(*)\r\n"
+					+ "                                                      FROM VIOLATION A\r\n"
+					+ "                                                      WHERE A.MEMBER_NO = B.MEMBER_NO) VIOLATION_COUNT,\r\n"
+					+ "			TO_CHAR(MODIFY_DT, 'YYYY-MM-DD') MODIFY_DT, STATUS_NM,GRADE_NM\r\n"
+					+ "		FROM MEMBER B\r\n"
+					+ "		JOIN MEMBER_STATUS USING(STATUS_CD)\r\n"
+					+ "		JOIN GRADE USING(GRADE_CD)\r\n"
+					+sql2 +"\r\n"
+					+ "		ORDER BY MEMBER_NO DESC) A)";
+			
+			pstmt = conn.prepareStatement(sql1);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				memberSearchListCount = rs.getInt(1);
 			}
-			String temp = "UPDATE MEMBER SET VIOLATION_COUNT = VIOLATION_COUNT - 1 WHERE ";
-			String sql = temp + str;
+		}finally {
+			pstmt.close();
+			rs.close();
+		}
+		return memberSearchListCount;
+	}
+	
+	public int updateViolationPlus(Connection conn) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("updateViolationPlus");
 			pstmt = conn.prepareStatement(sql);
-			
 			result = pstmt.executeUpdate();
-			
 		}finally {
 			pstmt.close();
 		}
@@ -525,32 +540,20 @@ public class AdminDAO {
 	
 	}
 
-	public int updateViolationChangePlus(Connection conn) throws Exception {
+	public int updateViolationMinus(Connection conn) throws Exception {
 		int result = 0;
 		
 		try {
-			String sql = prop.getProperty("updateViolationChangePlus");
+			String sql = prop.getProperty("updateViolationMinus");
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeUpdate();
+			System.out.println(sql);
 		}finally {
 			pstmt.close();
 		}
-	
-		return result;
-	}
-
-	public int updateViolationChangeMinus(Connection conn) throws Exception {
-		int result = 0;
 		
-		try {
-			String sql = prop.getProperty("updateViolationChangeMinus");
-			pstmt = conn.prepareStatement(sql);
-			result = pstmt.executeUpdate();
-		}finally {
-			pstmt.close();
-		}
-	
 		return result;
+	
 	}
 
 	public Member adminLogin(String adminPw, Connection conn) throws Exception {
@@ -642,4 +645,6 @@ public class AdminDAO {
 		return result;
 	
 	}
+
+
 }

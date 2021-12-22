@@ -63,10 +63,8 @@ public class AdminController extends HttpServlet {
 				
 					
 					String adminPw = req.getParameter("adminPw");
-					System.out.println(adminPw);
 					Member admin = service.adminLogin(adminPw);
 					session.setAttribute("admin", admin);
-					System.out.println(admin == null);
 				if(admin !=null) {
 					resp.sendRedirect(req.getContextPath()+ "/admin/member");
 				
@@ -94,6 +92,8 @@ public class AdminController extends HttpServlet {
 					
 					req.setAttribute("searchWord", searchWord);
 					req.setAttribute("searchTag", searchTag);
+					
+					pagination = service.getSearchPagination(searchWord, searchTag, cp);
 					memberList = service.selectMemberSearch(searchWord, searchTag, pagination);
 					
 				}
@@ -108,6 +108,8 @@ public class AdminController extends HttpServlet {
 				req.getRequestDispatcher(path).forward(req, resp);
 
 			}else if(command.equals("member/warningPlus")) {
+				
+				
 				
 				String[] arr = req.getParameterValues("memberNo"); // 언제 부터 values였지? 자동으로 되어있내
 				int[] memberNo = new int[arr.length-1];
@@ -127,7 +129,8 @@ public class AdminController extends HttpServlet {
 						}
 				}
 				if(result>0) {
-					message = "경고 기능이 수행되었습니다.";					
+					message = "경고 기능이 수행되었습니다.";
+					int updateStatus = service.updateViolationPlus();
 				}else {
 					
 					message = "경고 기능이 수행되지 않았습니다.\r\n"
@@ -138,11 +141,11 @@ public class AdminController extends HttpServlet {
 				
 				
 			}else if(command.equals("member/warningMinus")) {
-				System.out.println("연결");
 				int violationNo = Integer.parseInt(req.getParameter("violationNo"));
 				
 				int result = service.deleteViolation(violationNo);
-				System.out.println(result);
+				int updateStatus = service.updateViolationMinus();
+				System.out.println(updateStatus);
 			}
 			
 			else if(command.equals("post")) {
@@ -215,11 +218,9 @@ public class AdminController extends HttpServlet {
 				int enquiryNo = Integer.parseInt(req.getParameter("enquiryNo"));
 				
 				Enquiry enquiry = service.selectDetailEnquiry(enquiryNo);
-				System.out.println(enquiry);
 				
 				new Gson().toJson(enquiry, resp.getWriter());
 			}else if(command.equals("violation")) {
-				System.out.println("경고 서블렛 확인");
 				
 				int memberNo = Integer.parseInt(req.getParameter("memberNo"));
 				

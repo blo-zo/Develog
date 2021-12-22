@@ -32,7 +32,6 @@ public class LoginFilter implements Filter {
 		String contextPath = req.getContextPath();
 		
 		String command = uri.substring( (contextPath + "/admin/").length());
-		System.out.println(command);
 		if(command.equals("member")     ||
 		   command.equals("statistics") ||		
 		   command.equals("enquiry")    ||		
@@ -41,9 +40,10 @@ public class LoginFilter implements Filter {
 		   command.equals("logout")
 		) {
 			HttpSession session = req.getSession();
-			System.out.println(session.getAttribute("admin"));
 			Member admin = (Member)session.getAttribute("admin");
 			if(admin == null){
+				String message = "관리자 로그인이 필요합니다.";
+				session.setAttribute("message", message);
 				resp.sendRedirect(req.getContextPath() + "/admin/login");
 			}else {
 				chain.doFilter(request, response); // 관리자면 다시 보내야지
