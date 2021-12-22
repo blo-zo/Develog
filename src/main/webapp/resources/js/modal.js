@@ -81,9 +81,7 @@ function warningPlus(){
 
 function warningMinus(e){
     const violationNo = e.previousElementSibling.innerText
-    console.log(violationNo);
     const memberNo = e.nextElementSibling.innerText
-    console.log(memberNo);
   $.ajax({
       url : contextPath + "/admin/member/warningMinus",
       traditional : true, //이게 뭔지는 모르겠는데 배열을 넘겨준데
@@ -132,15 +130,33 @@ console.log(memberNo);
     })
 }
 
-function postStatusChange(){
-    console.log(checkBox);
+function postStatusChange() {
     let postNo = []
-  	for(const items of checkBox){
-    if(items.checked){
-        console.log(items.parentElement);
-        postNo.push(items.parentElement.nextElementSibling.innerText) 
-          
-                 }
-  	}
-          console.log(postNo);
+    for (const items of checkBox) {
+        if (items.checked) {
+            postNo.push(items.parentElement.nextElementSibling.innerText)
+
+        }
     }
+    postNo.push(content)
+    console.log(postNo);
+    $.ajax({
+        url: contextPath + "/admin/post/remove",
+        traditional: true, //이게 뭔지는 모르겠는데 배열을 넘겨준데
+        data: { "postNo": postNo },
+        type: "GET",
+        async: false, // 비동기 방식을 동기 방식으로 변환 // 결과적으로 페이지를 새로고침하게 해준다.
+        success: function (message) {
+            location.reload()
+            alert(message)
+        },
+
+        error: function (req, status, error) {
+            console.log("ajax 실패");
+            console.log(req.responseText);
+            console.log(status);
+            console.log(error);
+        }
+
+    })
+}

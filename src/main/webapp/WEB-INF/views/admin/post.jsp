@@ -71,7 +71,7 @@
 						<c:otherwise>
 							<c:forEach items="${postList}" var="post">
 								<tr>
-									<td class="check"><input type="checkbox"></td>
+									<td><input class="check" name="check" type="checkbox" ></td>
 									<td>${post.postNo}</td>
 									<td>${post.postTitle}</td>
 									<td>${post.postContent}</td>

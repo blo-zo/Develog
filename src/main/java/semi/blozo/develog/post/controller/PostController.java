@@ -252,9 +252,13 @@ public class PostController extends HttpServlet{
 							
 							// 댓글 삽입
 							else if(arr[2].equals("insert")) {
-								
+								Member loginMember = (Member)req.getSession().getAttribute("loginMember");
+			                     
+			                     int memberNo = 0;
+			                     
+			                     if(loginMember != null) memberNo = loginMember.getMemberNo();
 								//int memberNo = Integer.parseInt(req.getParameter("memberNo"));
-								int memberNo = 1;	// 테스트용
+								//int memberNo = 1;	// 테스트용
 								
 								int postNo = Integer.parseInt(req.getParameter("postNo"));
 								String replyContent = req.getParameter("replyContent");
