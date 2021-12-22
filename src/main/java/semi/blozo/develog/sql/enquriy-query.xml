@@ -5,6 +5,8 @@
 	<!-- 문의 전체 수 조회 -->
 	<entry key="getListCount">
 	SELECT COUNT(*) FROM ENQUIRY
+	JOIN MEMBER USING(MEMBER_NO)
+	WHERE MEMBER_NO = ?
 	</entry>
 	
 	<!-- 문의 목록 조회  -->

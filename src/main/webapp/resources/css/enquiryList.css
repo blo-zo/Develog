@@ -3,7 +3,9 @@ html , body{
     height: 100%;
 }
 
-
+main{
+	width : 100%;
+}
 .offcanvas{
     height: 40vh;
   }
@@ -123,4 +125,9 @@ main>section>a>div>p:last-child{
 	 border: 1px solid #F6F6F6;
 	 background-color: #3278FE;
 	 color: white;
+}
+
+.pagination{
+	justify-content: center;	
+	
 }
