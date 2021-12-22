@@ -31,6 +31,19 @@ $(".blog-menu > div").on("click",function(){
   
 });
 
+//  블로그 포스트 클릭 시 동작(파라미터 넘기기)
+function sendBlog(e, pno, blogMemberName, blogIntro, blogTitle){
+  
+  e.preventDefault(); // a태그 기본이벤트 제거
+
+  $("input[name=pno]").val(pno);
+  $("input[name=blogMemberName]").val(blogMemberName);
+  $("input[name=blogIntro]").val(blogIntro);
+  $("input[name=blogTitle]").val(blogTitle);
+  
+
+	document.sendBlogInfo.submit();
+}
 
 
 

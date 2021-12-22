@@ -48,6 +48,8 @@ public class PostController extends HttpServlet{
 				RequestDispatcher dispatcher = null;
 				String message = null;
 				
+				HttpSession session = req.getSession();
+				
 				//-----------------------------------------------------------------------
 				// 샘플 로그인 데이터 세팅
 				
@@ -56,7 +58,6 @@ public class PostController extends HttpServlet{
 //				loginMember.setStatusCd(200);
 //				loginMember.setGradeCd(100);
 //				
-//				HttpSession session = req.getSession();
 //				session.setAttribute("loginMember", loginMember);
 //				session.setMaxInactiveInterval(1800);
 				//-----------------------------------------------------------------------
@@ -64,24 +65,37 @@ public class PostController extends HttpServlet{
 				
 				try {
 					
-					PostService service = new PostService();
 					
-//					HttpSession session = req.getSession();
+					PostService service = new PostService();
 					
 					int cp = req.getParameter("cp") == null ? 1 : Integer.parseInt(req.getParameter("cp"));
 					
+					
+					
+					
+					
+//					Member loginMember = (Member)req.getSession().getAttribute("loginMember");
 
-					// 메인페이지에서 blog 제목(글쓴이 memberName)을 파라미터로 받아오기
 					
 					
-					// 블로그 메인 페이지 ( + 정렬, 검색)
+					// 블로그 메인 페이지 ( + 정렬, 검색 만들어야함)
 					if(arr.length == 1) {	
 						
+						
+						//포스트를 클릭하면 이름,소개,블로그제목을 얻어온다.
+						String memberName = req.getParameter("blogMemberName");
+						String intro = req.getParameter("blogIntro");
+						String blogTitle = req.getParameter("blogTitle");
+						
+						System.out.println(memberName);
+						System.out.println(intro);
+						System.out.println(blogTitle);
+						
+						
+						memberName = "뚱이";
+						
+						
 						// 특정 블로그에 있는 전체 게시글 수 카운트
-						
-						/* req.getParameter("blog"); */
-						String memberName = "뚱이";
-						
 						PostPagination blogPostPagination = service.getPostPagination(cp, memberName);
 						
 						
@@ -116,8 +130,16 @@ public class PostController extends HttpServlet{
 							// pno, cp
 							int postNo = Integer.parseInt(req.getParameter("pno"));
 							
+							String memberName = req.getParameter("blogMemberName");
+							String intro = req.getParameter("blogIntro");
+							String blogTitle = req.getParameter("blogTitle");
 							
-							// 게시글 수정 삭제에 사용예정
+							System.out.println(memberName);
+							System.out.println(intro);
+							System.out.println(blogTitle);
+							
+							
+							// 조회수에 사용
 							Member loginMember = (Member)req.getSession().getAttribute("loginMember");
 							
 							int memberNo = 0;
@@ -126,6 +148,7 @@ public class PostController extends HttpServlet{
 							
 							
 							Post post = service.selectPost(postNo, memberNo);
+							
 							
 							if(post != null) {
 								
@@ -154,7 +177,7 @@ public class PostController extends HttpServlet{
 						}
 						
 						
-						// 포스트 수정 화면 전환
+						// 포스트 수정 화면 전환 (로그인회원 == 작성자일 경우에만 수정버튼 노출)
 						else if(arr[1].equals("updateForm")) {
 							
 							int postNo = Integer.parseInt(req.getParameter("pno"));
@@ -175,7 +198,13 @@ public class PostController extends HttpServlet{
 						}
 						
 						
-						// 포스트 삭제
+						// 포스트 수정하기
+						else if(arr[1].equals("update")) {
+							
+							
+						}
+						
+						// 포스트 삭제하기
 						else if(arr[1].equals("delete")) {
 							
 						}
