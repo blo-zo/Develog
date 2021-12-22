@@ -92,6 +92,8 @@ public class AdminController extends HttpServlet {
 					
 					req.setAttribute("searchWord", searchWord);
 					req.setAttribute("searchTag", searchTag);
+					
+					pagination = service.getSearchPagination(searchWord, searchTag, cp);
 					memberList = service.selectMemberSearch(searchWord, searchTag, pagination);
 					
 				}

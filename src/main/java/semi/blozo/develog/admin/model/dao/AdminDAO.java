@@ -470,7 +470,59 @@ public class AdminDAO {
 		
 		return memberList;
 	}
+	
+	public int memberSearchListCount(String searchWord, String searchTag, Connection conn) throws Exception {
+		int memberSearchListCount = 0;
+		try {
+			String sql2 = null;
+			switch(searchTag) {
+			case "no": sql2 = "WHERE MEMBER_NO LIKE '%"+searchWord +"%'"; break;
+			case "email": sql2 = "WHERE MEMBER_EMAIL LIKE '%"+searchWord +"%'";break;
+			case "name" : sql2 = "WHERE MEMBER_NM LIKE '%"+searchWord +"%'"; break;
+			case "enrollDate" : if(searchWord.length() == 15) {
+									String str1 = searchWord.substring(0,6);
+									String str2 = searchWord.substring(9,15);
+									str1 = stringToDate(str1);
+									str2 = stringToDate(str2);
+									
+									sql2 = "WHERE TO_DATE(ENROLL_DT) BETWEEN '"+ str1 +"' AND '"+str2+"'"; break;
 
+								}else if(searchWord.length() == 6) {
+									String str = searchWord.substring(0, 6);
+									sql2 = "WHERE TO_DATE(ENROLL_DT) = '"+ str +"'"; break;
+									
+								}
+//			case "report" : sql2 = "WHERE MEMBER_ LIKE '%"+searchWord +"%'"; break;
+			case "violation" : sql2 = "WHERE VIOLATION_COUNT = "+searchWord; break;
+			case "status" : sql2 = "WHERE SATATUS_NM LIKE '%"+searchWord +"%'"; break;
+			}
+
+			String sql1 = "SELECT COUNT(*) FROM(\r\n"
+					+ "		SELECT ROWNUM RNUM, A.* FROM\r\n"
+					+ "		(SELECT MEMBER_NO, MEMBER_NM, MEMBER_EMAIL, \r\n"
+					+ "			TO_CHAR(ENROLL_DT, 'YYYY-MM-DD') ENROLL_DT, INTRO, (SELECT COUNT(*)\r\n"
+					+ "                                                      FROM VIOLATION A\r\n"
+					+ "                                                      WHERE A.MEMBER_NO = B.MEMBER_NO) VIOLATION_COUNT,\r\n"
+					+ "			TO_CHAR(MODIFY_DT, 'YYYY-MM-DD') MODIFY_DT, STATUS_NM,GRADE_NM\r\n"
+					+ "		FROM MEMBER B\r\n"
+					+ "		JOIN MEMBER_STATUS USING(STATUS_CD)\r\n"
+					+ "		JOIN GRADE USING(GRADE_CD)\r\n"
+					+sql2 +"\r\n"
+					+ "		ORDER BY MEMBER_NO DESC) A)";
+			
+			pstmt = conn.prepareStatement(sql1);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				memberSearchListCount = rs.getInt(1);
+			}
+		}finally {
+			pstmt.close();
+			rs.close();
+		}
+		return memberSearchListCount;
+	}
+	
 	public int updateViolationPlus(Connection conn) throws Exception {
 		int result = 0;
 		
@@ -591,4 +643,6 @@ public class AdminDAO {
 		return result;
 	
 	}
+
+
 }

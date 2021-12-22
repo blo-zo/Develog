@@ -252,4 +252,14 @@ public class AdminService {
 	
 	}
 
+	public Pagination getSearchPagination(String searchWord, String searchTag, int cp) throws Exception {
+		Connection conn = getConnection();
+		
+		int listCount = dao.memberSearchListCount(searchWord, searchTag, conn);
+		
+		conn.close();
+		
+		return new Pagination(listCount, cp);
+	}
+
 }
