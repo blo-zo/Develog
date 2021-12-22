@@ -42,53 +42,28 @@ public class PostingController extends HttpServlet {
 		String message = null;
 		
 		try {
-			path  = "/WEB-INF/views/board/posting.jsp";
-			dispatcher = req.getRequestDispatcher(path);
-			dispatcher.forward(req, resp);
-			
+
 			PostingService service = new PostingService();
-			System.out.println("@여깅오니?");
 			
+			System.out.println(command);
 			
 			// 게시글 삽입
 			if(command.equals("insert")) {
 				System.out.println("@insert일때: "+method);
 				//GET 방식 요청 -> 게시글 등록 화면 전환
 				if(method.equals("GET")) {
+					// 카테고리 테이블 내용 조회하기 // VO에 카테고리 
+					List<Category> category = service.selectCategory();
 					
+					req.setAttribute("category", category);
 					System.out.println("@get일때");
 					
 					path  = "/WEB-INF/views/board/posting.jsp";
 					dispatcher = req.getRequestDispatcher(path);
 					dispatcher.forward(req, resp);
-					
-					
+				
 				} else { // POST 방식 요청
-					System.out.println("@post일때"+method); //POST까지는 잘 오는데  MultipartRequest가 문제다
-					
-					// 이미지 처리하는 controller와의 연결 필요!
-					
-					
-					// 2. 업로드 되는 파일을 서버 컴퓨터 어디에 저장할지 경로 지정
-					HttpSession session = req.getSession();
-					
-					String root =  session.getServletContext().getRealPath("/");
-					
-					// 나머지 파일 경로(DB에 저장되어 주소경로로 사용할 예정)
-					String filePath = "/resources/images/board/";
-					
-					// 실제 경로
-					String realPath = root + filePath;
-					
-					
-					
-					// 왜  int가 필요한지
-					MultipartRequest mReq 
-					= new MultipartRequest(req, realPath, (Integer)0, new MyRenamePolicy());
-					// ( 기존 req, 파일 저장할 곳, 파일 용량(지금x), (title, content같이 파일 아닌것들) 변환(지금x) , 파일인경우)
-
 					System.out.println("@post일때" + method); 
-
 					
 					// 1) 텍스트 형식의 파라미터
 	
