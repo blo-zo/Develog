@@ -60,7 +60,7 @@ public class EnquriyController extends HttpServlet {
 				// 4. 화면 출력
 				req.setAttribute("pagination", pagination);
 				req.setAttribute("enquiryList", enquiryList);
-				path = "/WEB-INF/views/enquriy/enquriyList.jsp";
+				path = "/WEB-INF/views/enquriy/enquiryList.jsp";
 				req.getRequestDispatcher(path).forward(req, resp);
 			
 			
