@@ -173,16 +173,12 @@ public class AdminService {
 	
 	}
 
-	public int updateViolationPlus(int[] memberNo) throws Exception {
+	public int updateViolationPlus() throws Exception {
 		Connection conn = getConnection();
 		
-		int result = dao.updateViolationPlus(memberNo, conn);
+		int result = dao.updateViolationPlus(conn);
 		
-		if(result > 0) {
-			
-			result = dao.updateViolationChangePlus(conn);
-			conn.commit();
-		}
+		if(result > 0) conn.commit();
 		else	       conn.rollback();
 		
 		return result;
@@ -190,15 +186,12 @@ public class AdminService {
 	
 	}
 	
-	public int updateViolationMinus(int[] memberNo) throws Exception {
+	public int updateViolationMinus() throws Exception {
 		Connection conn = getConnection();
 		
-		int result = dao.updateViolationMinus(memberNo, conn);
+		int result = dao.updateViolationMinus(conn);
 		
-		if(result > 0) {
-			result = dao.updateViolationChangeMinus(conn);
-			conn.commit();
-		}
+		if(result > 0) conn.commit();
 		else	       conn.rollback();
 		
 		return result;

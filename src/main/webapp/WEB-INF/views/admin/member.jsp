@@ -173,16 +173,10 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
 				</div>
 				<div>
 					<div class="content" input-modal style="float: right;">
-						<form action="">
 							<textarea name="" id="" cols="90" rows="7" style="border: none; margin-left: 1%; outline: none; resize: none;"></textarea>
-							<div class="button" onclick="warningMinus(), location.reload()"
-							style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px; float: right;">
-							경고 -</div>
-							
 							<div class="button" onclick="warningPlus()"
 							  style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px; float: right; margin-right: 10px; ">
 							  경고 +</div>
-						</form>
 					</div>
 				</div>
 			</section>

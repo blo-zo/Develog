@@ -471,24 +471,13 @@ public class AdminDAO {
 		return memberList;
 	}
 
-	public int updateViolationPlus(int[] memberNo, Connection conn) throws Exception {
+	public int updateViolationPlus(Connection conn) throws Exception {
 		int result = 0;
+		
 		try {
-//			String sql = prop.getProperty("updateViolation");
-			String str = "";
-			for(int i = 0; i < memberNo.length; i++) {
-				if(i != memberNo.length-1) {
-					str += "MEMBER_NO = "+memberNo[i]+" OR ";
-				}else {
-					str += "MEMBER_NO = "+memberNo[i];					
-				}
-			}
-			String temp = "UPDATE MEMBER SET VIOLATION_COUNT = VIOLATION_COUNT + 1 WHERE ";
-			String sql = temp + str;
+			String sql = prop.getProperty("updateViolationPlus");
 			pstmt = conn.prepareStatement(sql);
-			
 			result = pstmt.executeUpdate();
-			
 		}finally {
 			pstmt.close();
 		}
@@ -497,58 +486,20 @@ public class AdminDAO {
 	
 	}
 
-	public int updateViolationMinus(int[] memberNo, Connection conn) throws Exception {
+	public int updateViolationMinus(Connection conn) throws Exception {
 		int result = 0;
+		
 		try {
-//			String sql = prop.getProperty("updateViolation");
-			String str = "";
-			for(int i = 0; i < memberNo.length; i++) {
-				if(i != memberNo.length-1) {
-					str += "MEMBER_NO = "+memberNo[i]+" OR ";
-				}else {
-					str += "MEMBER_NO = "+memberNo[i];					
-				}
-			}
-			String temp = "UPDATE MEMBER SET VIOLATION_COUNT = VIOLATION_COUNT - 1 WHERE ";
-			String sql = temp + str;
+			String sql = prop.getProperty("updateViolationMinus");
 			pstmt = conn.prepareStatement(sql);
-			
 			result = pstmt.executeUpdate();
-			
+			System.out.println(sql);
 		}finally {
 			pstmt.close();
 		}
 		
 		return result;
 	
-	}
-
-	public int updateViolationChangePlus(Connection conn) throws Exception {
-		int result = 0;
-		
-		try {
-			String sql = prop.getProperty("updateViolationChangePlus");
-			pstmt = conn.prepareStatement(sql);
-			result = pstmt.executeUpdate();
-		}finally {
-			pstmt.close();
-		}
-	
-		return result;
-	}
-
-	public int updateViolationChangeMinus(Connection conn) throws Exception {
-		int result = 0;
-		
-		try {
-			String sql = prop.getProperty("updateViolationChangeMinus");
-			pstmt = conn.prepareStatement(sql);
-			result = pstmt.executeUpdate();
-		}finally {
-			pstmt.close();
-		}
-	
-		return result;
 	}
 
 	public Member adminLogin(String adminPw, Connection conn) throws Exception {

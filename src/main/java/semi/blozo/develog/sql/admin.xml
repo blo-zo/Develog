@@ -133,13 +133,19 @@
 	</entry>
 
 	<!-- 경고 증가 시 회원 상태 변환  -->
-	<entry key="updateViolationChangePlus">
-		UPDATE MEMBER SET STATUS_CD = 202 WHERE VIOLATION_COUNT >= 3
+	<entry key="updateViolationPlus">
+		UPDATE MEMBER SET STATUS_CD = 202 WHERE MEMBER_NO IN (SELECT MEMBER_NO
+		FROM VIOLATION 
+		GROUP BY MEMBER_NO
+		HAVING COUNT(MEMBER_NO) >=3)
 	</entry>
 
 	<!-- 경고 감소 시 회원 상태 변환  -->
-	<entry key="updateViolationChangeMinus">
-		UPDATE MEMBER SET STATUS_CD = 200 WHERE VIOLATION_COUNT &lt; 3
+	<entry key="updateViolationMinus">
+		UPDATE MEMBER SET STATUS_CD = 200 WHERE MEMBER_NO IN (SELECT MEMBER_NO
+		FROM VIOLATION 
+		GROUP BY MEMBER_NO
+		HAVING COUNT(MEMBER_NO) &lt; 3)
 	</entry>
 
 	<!-- 경고 내용 삽입  -->

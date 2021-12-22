@@ -107,6 +107,8 @@ public class AdminController extends HttpServlet {
 
 			}else if(command.equals("member/warningPlus")) {
 				
+				
+				
 				String[] arr = req.getParameterValues("memberNo"); // 언제 부터 values였지? 자동으로 되어있내
 				int[] memberNo = new int[arr.length-1];
 				for(int i=0; i<arr.length-1; i++) {
@@ -125,7 +127,8 @@ public class AdminController extends HttpServlet {
 						}
 				}
 				if(result>0) {
-					message = "경고 기능이 수행되었습니다.";					
+					message = "경고 기능이 수행되었습니다.";
+					int updateStatus = service.updateViolationPlus();
 				}else {
 					
 					message = "경고 기능이 수행되지 않았습니다.\r\n"
@@ -139,6 +142,8 @@ public class AdminController extends HttpServlet {
 				int violationNo = Integer.parseInt(req.getParameter("violationNo"));
 				
 				int result = service.deleteViolation(violationNo);
+				int updateStatus = service.updateViolationMinus();
+				System.out.println(updateStatus);
 			}
 			
 			else if(command.equals("post")) {
