@@ -86,9 +86,9 @@ public class PostingController extends HttpServlet {
 					MultipartRequest mReq 
 					= new MultipartRequest(req, realPath, (Integer)0, new MyRenamePolicy());
 					// ( 기존 req, 파일 저장할 곳, 파일 용량(지금x), (title, content같이 파일 아닌것들) 변환(지금x) , 파일인경우)
-=======
+
 					System.out.println("@post일때" + method); 
->>>>>>> 3594aa63d4f0ba7b18b875db6366064bdd16e65a
+
 					
 					// 1) 텍스트 형식의 파라미터
 	
