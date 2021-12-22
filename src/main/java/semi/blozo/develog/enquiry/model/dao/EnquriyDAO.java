@@ -36,20 +36,21 @@ public class EnquriyDAO {
 	 * @return result
 	 * @throws Exception
 	 */
-	public int getListCount(Connection conn)throws Exception {
+	public int getListCount(Connection conn , int memberNo)throws Exception {
 			
 		
 		int listCount = 0;
 			try {
 				String sql = prop.getProperty("getListCount");
 				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, memberNo);
 				rs = pstmt.executeQuery();
 				if(rs.next()) {
 					listCount = rs.getInt(1);
 					
 					
 				}
-				
+				//System.out.println(listCount);
 			}finally {
 				close(rs);
 				close(pstmt);

@@ -13,10 +13,28 @@ public class Member {
 	private Date modifyDt; // 수정일
 	private int statusCd;// 회원상태코드
 	private int gradeCd; // 회원 등급 코드
+	private int blogNo; //블로그넘버
+	private String blogTitle; // 블로그제목
 	public Member() {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public int getBlogNo() {
+		return blogNo;
+	}
+
+	public void setBlogNo(int blogNo) {
+		this.blogNo = blogNo;
+	}
+
+	public String getBlogTitle() {
+		return blogTitle;
+	}
+
+	public void setBlogTitle(String blogTitle) {
+		this.blogTitle = blogTitle;
+	}
+
 	public Member(String memberPw, String memberNm, String memberEmail) {
 		super();
 		this.memberPw = memberPw;
@@ -91,8 +109,11 @@ public class Member {
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", memberPw=" + memberPw + ", memberNm=" + memberNm + ", memberEmail="
 				+ memberEmail + ", enrollDt=" + enrollDt + ", intro=" + intro + ", vlolationCount=" + vlolationCount
-				+ ", modifyDt=" + modifyDt + ", statusCd=" + statusCd + ", gradeCd=" + gradeCd + "]";
+				+ ", modifyDt=" + modifyDt + ", statusCd=" + statusCd + ", gradeCd=" + gradeCd + ", blogNo=" + blogNo
+				+ ", blogTitle=" + blogTitle + "]";
 	}
+
+	
 	
 	
 	

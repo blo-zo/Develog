@@ -45,12 +45,14 @@ public class EnquriyController extends HttpServlet {
 				// 1. DB에 저장된 조회 가능한 게시글 전체 수 카운트
 				// 2. 전체 게시글 수 + 현재 페이지를 이용해서
 					
-				Pagination pagination = service.getPagination(cp);
-			
 				Member loginMember = (Member)req.getSession().getAttribute("loginMember");
-				int memberNo = 0;
-				if(loginMember != null) memberNo = loginMember.getMemberNo();
-					
+				//int memberNo = (int)req.getSession().getAttribute("memberNo");;
+				int memberNo = loginMember.getMemberNo();
+				System.out.println(memberNo);
+				Pagination pagination = service.getPagination(cp,memberNo);
+				
+				if(loginMember != null) { memberNo = loginMember.getMemberNo();
+				
 				//    페이징 처리에 필요 숫자들을 만들어냄
 				// 3. 죄회 되어지는 게시글의 번호를 계산하여 DB에서 조회해옴
 				List<Enquiry> enquiryList = service.selectEnquiryList(pagination,memberNo);
@@ -60,14 +62,18 @@ public class EnquriyController extends HttpServlet {
 				req.setAttribute("enquiryList", enquiryList);
 				path = "/WEB-INF/views/enquriy/enquriyList.jsp";
 				req.getRequestDispatcher(path).forward(req, resp);
-			// (조건식 ? 참인 경우 : 거짓인 경우)
+			
 			
 			
 			
 				
+				
+				}
+			}else if(command.equals("view")){
+				
+			}else if(command.equals("insert")){
 				
 			}
-	
 		}catch(Exception e){
 			e.printStackTrace();
 	}
