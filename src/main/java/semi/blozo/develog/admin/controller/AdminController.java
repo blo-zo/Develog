@@ -63,10 +63,8 @@ public class AdminController extends HttpServlet {
 				
 					
 					String adminPw = req.getParameter("adminPw");
-					System.out.println(adminPw);
 					Member admin = service.adminLogin(adminPw);
 					session.setAttribute("admin", admin);
-					System.out.println(admin == null);
 				if(admin !=null) {
 					resp.sendRedirect(req.getContextPath()+ "/admin/member");
 				
@@ -138,11 +136,9 @@ public class AdminController extends HttpServlet {
 				
 				
 			}else if(command.equals("member/warningMinus")) {
-				System.out.println("연결");
 				int violationNo = Integer.parseInt(req.getParameter("violationNo"));
 				
 				int result = service.deleteViolation(violationNo);
-				System.out.println(result);
 			}
 			
 			else if(command.equals("post")) {
@@ -215,11 +211,9 @@ public class AdminController extends HttpServlet {
 				int enquiryNo = Integer.parseInt(req.getParameter("enquiryNo"));
 				
 				Enquiry enquiry = service.selectDetailEnquiry(enquiryNo);
-				System.out.println(enquiry);
 				
 				new Gson().toJson(enquiry, resp.getWriter());
 			}else if(command.equals("violation")) {
-				System.out.println("경고 서블렛 확인");
 				
 				int memberNo = Integer.parseInt(req.getParameter("memberNo"));
 				

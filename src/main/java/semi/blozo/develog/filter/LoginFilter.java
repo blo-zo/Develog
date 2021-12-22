@@ -32,7 +32,6 @@ public class LoginFilter implements Filter {
 		String contextPath = req.getContextPath();
 		
 		String command = uri.substring( (contextPath + "/admin/").length());
-		System.out.println(command);
 		if(command.equals("member")     ||
 		   command.equals("statistics") ||		
 		   command.equals("enquiry")    ||		
@@ -41,7 +40,6 @@ public class LoginFilter implements Filter {
 		   command.equals("logout")
 		) {
 			HttpSession session = req.getSession();
-			System.out.println(session.getAttribute("admin"));
 			Member admin = (Member)session.getAttribute("admin");
 			if(admin == null){
 				resp.sendRedirect(req.getContextPath() + "/admin/login");

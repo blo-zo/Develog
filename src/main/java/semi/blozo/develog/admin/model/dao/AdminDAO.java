@@ -52,7 +52,6 @@ public class AdminDAO {
 			pstmt.setInt(2, endRow);
 			
 			rs = pstmt.executeQuery();
-			System.out.println(sql);
 			while(rs.next()) {
 				Member member = new Member();
 //				MEMBER_NM, MEMBER_EMAIL, ENROLL_DT, INTRO, VIOLATION_COUNT, MODIFY_DT, STATUS_CD,GRADE_CD
@@ -449,7 +448,6 @@ public class AdminDAO {
 			pstmt.setInt(2, endRow);
 			
 			rs = pstmt.executeQuery();
-			System.out.println(sql1);
 			while(rs.next()) {
 				Member member = new Member();
 				member.setMemberNo(rs.getInt("MEMBER_NO"));
