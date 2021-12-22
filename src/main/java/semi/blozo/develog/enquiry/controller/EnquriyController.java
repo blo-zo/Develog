@@ -60,7 +60,7 @@ public class EnquriyController extends HttpServlet {
 				// 4. 화면 출력
 				req.setAttribute("pagination", pagination);
 				req.setAttribute("enquiryList", enquiryList);
-				path = "/WEB-INF/views/enquriy/enquiryList.jsp";
+				path = "/WEB-INF/views/enquiry/enquiryList.jsp";
 				req.getRequestDispatcher(path).forward(req, resp);
 			
 			
@@ -70,10 +70,39 @@ public class EnquriyController extends HttpServlet {
 				
 				}
 			}else if(command.equals("view")){
+				int enquiryNo = Integer.parseInt(req.getParameter("no"));
 				
+				// 로그인한 회원의 번호를 조회
+				Member loginMember = (Member)req.getSession().getAttribute("loginMember");
+				int memberNo = 0;
+				if(loginMember != null) memberNo = loginMember.getMemberNo();
+				
+				// 게시글 상세 조회 서비스 호출 후 결과 반환 받기
+				//Enquiry enquiry = service.selectEnquiry(enquiryNo);
+				//if(enquiry !=  null) { //조회 성공
+					// + 댓글 목록 조회하기
+					
+					
+								
+					
+					//req.setAttribute("enquiry", enquiry);
+					path = "/WEB-INF/views/enquiry/enquiryView.jsp";
+					dispatcher = req.getRequestDispatcher(path);
+					dispatcher.forward(req, resp);
+				//}
 			}else if(command.equals("insert")){
+				if(method.equals("GET")) {
+					
+					
+					path = "/WEB-INF/views/enquiry/enquiryInsert.jsp";
+					dispatcher = req.getRequestDispatcher(path);
+					dispatcher.forward(req, resp);
+					
+					}
 				
+			
 			}
+			
 		}catch(Exception e){
 			e.printStackTrace();
 	}

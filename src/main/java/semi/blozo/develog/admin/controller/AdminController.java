@@ -109,8 +109,6 @@ public class AdminController extends HttpServlet {
 
 			}else if(command.equals("member/warningPlus")) {
 				
-				
-				
 				String[] arr = req.getParameterValues("memberNo"); // 언제 부터 values였지? 자동으로 되어있내
 				int[] memberNo = new int[arr.length-1];
 				for(int i=0; i<arr.length-1; i++) {
@@ -158,6 +156,34 @@ public class AdminController extends HttpServlet {
 				 path = "/WEB-INF/views/admin/post.jsp";
 				 req.getRequestDispatcher(path).forward(req, resp);
 				
+			}else if(command.equals("post/remove")) {
+				String[] arr = req.getParameterValues("postNo"); 
+				int[] memberNo = new int[arr.length-1];
+				for(int i=0; i<arr.length-1; i++) {
+						memberNo[i] = Integer.parseInt(arr[i]);
+				}
+				String content = arr[arr.length-1];
+				int result = 0;
+				String str ="";
+				for(int i=0; i < memberNo.length; i++) {
+					if(!content.equals("")) {
+						result = service.insertViolationPlus(memberNo[i], content);						
+					}
+						if(result != 1) {
+							str += memberNo[i]+" ";
+						}else {
+						}
+				}
+				if(result>0) {
+					message = "경고 기능이 수행되었습니다.";
+					int updateStatus = service.updateViolationPlus();
+				}else {
+					
+					message = "경고 기능이 수행되지 않았습니다.\r\n"
+							+ "경고 실패 회원 번호" + str;
+				}
+					
+				resp.getWriter().print(message);
 			}
 			
 			else if(command.equals("statistics")) {
