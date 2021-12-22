@@ -64,12 +64,47 @@ public class MemberService {
 		
 		Connection conn = getConnection();
 		int result = dao.emailDupCheck(inputEmail , conn);
-		System.out.println(inputEmail);
 		close(conn);
 		
 		return result;
 	}
+	
+	
+	
+	
+	
+	/** 비밀번호 찾기 (업데이트)
+	 * @param email
+	 * @param searchPw
+	 * @return result
+	 * @throws Exception
+	 */
+	public int searchPw(String email, String searchPw)throws Exception{
+		Connection conn = getConnection();
+		
+		int result = dao.searchPw(email,searchPw, conn);
+		
+		if(result > 0) commit(conn);
+		else			rollback(conn);
+		
+		close(conn);
+		
+		
+		
+		return result;
+	}
 
+	
+	
+	
+	
+	/** 비밀번호 변경
+	 * @param currentPw
+	 * @param newPw
+	 * @param memberNo
+	 * @return result
+	 * @throws Exception
+	 */
 	public int updatePw(String currentPw, String newPw, int memberNo)throws Exception{
 		Connection conn  = getConnection();
 		
@@ -81,6 +116,7 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
+
 
 	
 }

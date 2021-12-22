@@ -3,8 +3,6 @@
 
 
 
-
-
 <main class="b-container">
 
 	<form action="signup" method="POST" name="signUpForm" onsubmit="return validate();">

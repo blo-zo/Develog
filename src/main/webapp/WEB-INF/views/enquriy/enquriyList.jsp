@@ -15,36 +15,35 @@
   <main>
     <b>1:1 문의</b>
  	<div class="enquriy_insertBtn_wrap">
-    <button class="enquriy_insertBtn">등록</button>
+    <button class="enquriy_insertBtn" onclick="location.href = '${contextPath}/enquiry/insert">등록</button>
  	</div>												
     <section>
       
       <c:choose>
       <c:when test="${empty enquiryList}">
-      
-      <p>문의내용 없다~</p>
+     <tr>
+	<td colspan="6">문의사항이 존재하지 않습니다</td>
+	</tr>
       </c:when>
       <c:otherwise>
       
       <c:forEach items = "${enquiryList}" var = "enquiry">
       <a href="">
-	
         <div>
+	
           <p>${enquiry.enquiryTitle}</p>
           <p>${enquiry.enquiryContent}</p>
           <p>${enquiry.createDt}</p>
 
-        </div>
        
+        </div>
       </a>
     
       </c:forEach>
-      </c:otherwise>
- 
-      </c:choose>
  
     
       <div class="my-5">
+        <div class="pagination-num">
         <ul class="pagination">
           <c:if test="${pagination.startPage != 1}">
           <li><a class = "page-link" href = "list?cp=1">&lt;&lt;</a></li>
@@ -69,8 +68,12 @@
   
         </ul>
         
+        </div>
       </div>
 
+      </c:otherwise>
+ 
+      </c:choose>
 
     </section>
   </main>
