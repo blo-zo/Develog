@@ -92,7 +92,7 @@ public class PostController extends HttpServlet{
 						System.out.println(blogTitle);
 						
 						
-						memberName = "뚱이";
+						memberName = "유동";
 						
 						
 						// 특정 블로그에 있는 전체 게시글 수 카운트
@@ -139,6 +139,7 @@ public class PostController extends HttpServlet{
 							System.out.println(blogTitle);
 							
 							
+							
 							// 조회수에 사용
 							Member loginMember = (Member)req.getSession().getAttribute("loginMember");
 							
@@ -170,7 +171,7 @@ public class PostController extends HttpServlet{
 								
 								// 경로 동적 요소로 바꾸기
 								
-								resp.sendRedirect("뚱이");
+								resp.sendRedirect("유동");
 							}
 							
 							
@@ -206,6 +207,21 @@ public class PostController extends HttpServlet{
 						
 						// 포스트 삭제하기
 						else if(arr[1].equals("delete")) {
+							
+							int postNo = Integer.parseInt(req.getParameter("pno"));
+							
+//							int result = service.deletePost(postNo);
+//							
+//							if(result > 0) { // 삭제 성공
+//								
+//								path = "뚱이";
+//								
+//							}else { // 실패
+//								
+//								path = "view";
+//								
+//							}
+							
 							
 						}
 						

@@ -207,7 +207,7 @@
     
     
     <!-- 블로그 -->
-	<form action="${contextPath}/blog/${post.memberName}/view" method="POST" name="sendBlogInfo" >
+	<form action="${contextPath}/blog/${post.memberName}/view" method="post" name="sendBlogInfo" >
 	<input type="hidden" name = "blogMemberName" value="">
 	<input type="hidden" name = "blogIntro" value="">
 	<input type="hidden" name = "blogTitle" value="">
@@ -222,7 +222,7 @@
   <%-- 전역 변수로 이름 지정해서 블로그 주소 넘기기 --%>
   <script>
   	const postMemberName = "${post.memberName}";
-  
+    const contextPath = "${contextPath}";
   </script>
 
   
