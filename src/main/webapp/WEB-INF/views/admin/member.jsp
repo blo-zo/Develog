@@ -176,7 +176,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
 							<textarea name="" id="" cols="90" rows="7" style="border: none; margin-left: 1%; outline: none; resize: none;"></textarea>
 							<div class="button" onclick="warningPlus()"
 							  style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px; float: right; margin-right: 10px; ">
-							  경고 +</div>
+							  경고</div>
 					</div>
 				</div>
 			</section>
@@ -224,6 +224,14 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  const warningBtn = document.getElementsByClassName("button");
 	  const contextPath = "${pageContext.servletContext.contextPath}"
 	  const checkBox = document.getElementsByClassName("check")
+
+	  let memberNo = []
+  		for(const items of checkBox){
+      if(items.checked){
+          memberNo.push(items.parentElement.nextElementSibling.innerText) 
+          
+                  }
+  		}
 
 	  inputSearch.addEventListener("keyup", function(){
 		  if(e.key =="Enter"){

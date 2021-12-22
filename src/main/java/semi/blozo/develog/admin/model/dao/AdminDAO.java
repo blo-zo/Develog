@@ -112,18 +112,20 @@ public class AdminDAO {
 			
 			while(rs.next()) {
 				Post post = new Post();
-				post.setPostNo(rs.getInt(2));
-				post.setPostTitle(rs.getString(3));
-				post.setPostContent(rs.getString(4));
-				post.setCreateDate(rs.getString(5));
-				post.setReadCount(rs.getInt(6));
-				post.setViolationCount(rs.getInt(7));
-				post.setLikeCount(rs.getInt(8));
-				post.setModifyDate(rs.getString(9));
-				post.setBlogNo(rs.getInt(10));
-				post.setCategoryCode(rs.getInt(11));
-				post.setPostStatusName(rs.getString(12));
-				post.setReportCount(rs.getInt(13));
+				post.setPostNo(rs.getInt("POST_NO"));
+				post.setPostTitle(rs.getString("POST_TITLE"));
+				post.setPostContent(rs.getString("POST_CONTENT"));
+				post.setCreateDate(rs.getString("ENROLL_DT"));
+				post.setReadCount(rs.getInt("READ_COUNT"));
+				post.setViolationCount(rs.getInt("VIOLATION_COUNT"));
+				// READCONTET가 길어지면 SUBsTRING으로 줄이고 ...을 붙이자
+				post.setLikeCount(rs.getInt("LIKE_COUNT"));
+				post.setModifyDate(rs.getString("MODIFY_DT"));
+				post.setBlogNo(rs.getInt("BLOG_NO"));
+				post.setCategoryCode(rs.getInt("CATEGORY_CD"));
+				post.setPostStatusName(rs.getString("POST_STATUS_NM"));
+				post.setReportCount(rs.getInt("REPORT_COUNT"));
+				post.setMemberNo(rs.getInt("MEMBER_NO"));
 				postList.add(post);
 			}
 			

@@ -2,6 +2,7 @@ package semi.blozo.develog.admin.model.vo;
 
 public class Post {
 	private int postNo;
+	private int memberNo;
 	private  String postTitle;
 	private  String postContent;
 	private String createDate;
@@ -19,6 +20,12 @@ public class Post {
 	private String readCountDate;
 	
 	
+	public int getMemberNo() {
+		return memberNo;
+	}
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
+	}
 	public String getReadCountDate() {
 		return readCountDate;
 	}

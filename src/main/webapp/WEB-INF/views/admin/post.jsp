@@ -53,13 +53,13 @@
 						<td>&nbsp;&nbsp;</td>
 						<th>No</th>
 						<th>글제목</th>
-						<th>회원번호</th>
 						<th>글 내용</th>
+						<th>회원번호</th>
 						<th>조회수</th>
 						<th>좋아요</th>
 						<th>작성일</th>
-						<th>신고횟수</th>
-						<th>경고횟수</th>
+						<th>신고수</th>
+						<th>경고수</th>
 						<th>글 상태</th>
 					</tr>
 				</thead>
@@ -71,16 +71,16 @@
 						<c:otherwise>
 							<c:forEach items="${postList}" var="post">
 								<tr>
-									<td><input type="checkbox"></td>
+									<td class="check"><input type="checkbox"></td>
 									<td>${post.postNo}</td>
 									<td>${post.postTitle}</td>
-									<td>13</td>
 									<td>${post.postContent}</td>
+									<td>${post.memberNo}</td>
 									<td>${post.readCount}</td>
 									<td>${post.likeCount}</td>
 									<td>${post.createDate}</td>
-									<td>${post.violationCount}</td>
 									<td>${post.reportCount}</td>
+									<td>${post.violationCount}</td>
 									<td>${post.postStatusName}</td>
 								</tr>
 							</c:forEach>
@@ -90,12 +90,14 @@
 
 			</table>
 			<div class="button-area">
-				<div class="button"
-					style="background-color: #3278FE; color: white; width: 70px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px;">
-					상태변경</div>
-				<div class="button"
+				<div class="button" data-bs-toggle="modal"	data-bs-target="#postModal1"
 					style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px;">
-					경고</div>
+					경고
+				</div>
+				<div class="button" onclick="postStatusChange()"
+					style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px;">
+					삭제
+				</div>
 			</div>
 			<div id="search-area">
 				<input type="text" placeholder="검색어를 입력해주세요"> <img
@@ -147,6 +149,36 @@
 	</div>
 		</section>
 	</main>
-	<script src="js/AdminCommonJs.js"></script>
+	<!-- Modal -->
+	<div class="modal" id="postModal1" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+	<div class="modal-content">
+		<div class="modal-header">
+			<span style="font-size: 30px; font-weight: bold;">경고 내용</span>
+			<button type="button" class="btn-close" data-bs-dismiss="modal"
+			aria-label="Close"></button>
+					
+		</div>
+		<div class="modal-body">
+			<section id="modal-section">
+				
+			</section>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		const checkBox = document.getElementsByClassName("check")
+		
+	  	let memberNo = []
+  		for(const items of checkBox){
+      	if(items.checked){
+          memberNo.push(items.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerText) 
+          
+                  }
+  		}
+	</script>
+	<script src="${pageContext.servletContext.contextPath}/resources/js/modal.js"></script>
 </body>
 </html>
