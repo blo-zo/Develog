@@ -36,7 +36,6 @@ public class PostingService {
 		postVO.setPostTitle(XSS.replaceParameter( postVO.getPostTitle()) );
 		postVO.setPostContent(XSS.replaceParameter( postVO.getPostContent()) );
 		
-//		tagList.setTagName(XSS.replaceParameter( tagList.getTagName()) );
 	
 		
 		// 2-2) 개행문자 -> <br> 태그로 변경
@@ -51,7 +50,8 @@ public class PostingService {
 			Boolean flag = true;
 		   
 		   for(TagVO tagVO : tagVOList) {
-	        	 
+			   tagVO.setTagName(XSS.replaceParameter( tagVO.getTagName()) );  
+			   
 			   result = dao.insertTag(tagVO.getTagName(), postVO.getPostNo(), conn);
 	        	 
 			   if(result == 0) {
