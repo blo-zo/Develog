@@ -29,7 +29,7 @@
 	<div class="wrapper">
 		<div class="write-area" style="max-width: 80%;">
 			<div class="head-title">
-				<textarea id="head-textarea" class="head-textarea" name="postTitle" placeholder="제목을 입력하세요"></textarea>
+				<textarea id="head-textarea" class="head-textarea" name="postTitle" placeholder="제목을 입력하세요" maxlength="200" ></textarea>
 			</div><!-- head title -->
 
 			<div class="line"></div>
@@ -39,7 +39,7 @@
 
 			<div class="tag-area">
                 <div class="postTags" id="postTags"></div>  <!-- 태그 생성될 영역 -->
-                <input type="text" class="inputTag" id="inputTag" placeholder="태그를 입력하세요">
+                <input type="text" class="inputTag" id="inputTag" placeholder="태그를 입력하세요" maxlength="15" >
             </div> <!-- tag-area -->
             
 		</div>
