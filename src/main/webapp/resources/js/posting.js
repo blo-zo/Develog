@@ -96,7 +96,8 @@ document.getElementById("inputTag").addEventListener("keyup", function(e){
     // e : 발생된 이벤트와 관련된 정보가 모두 담겨있음.
     console.log(e.code);
     if(e.code  == "Enter"){ //엔터키 입력 시 
-        postTags(); // 함수를 호출하여 입력한 내용을 추가
+       	XssCheck();
+		postTags(); // 함수를 호출하여 입력한 내용을 추가
     }
 	else if(e.code == "Space"){
 		changeSpace();
@@ -137,9 +138,24 @@ function postTags(){
 	
 }
 // 화면 XSS처리 
-function XSSCheck(postTags){
-	const input = document.getElementById("inputTag");
+function XSSCheck(){
+	const input = document.getElementById("inputTag").value;
 	
+	
+	input 
+}
+
+function XSSCheck2(input, level) {
+	const input = document.getElementById("inputTag").value;
+	
+	
+    if (level == undefined || level == 0) {
+        input = input.replace(/\<|\>|\"|\'|\%|\;|\(|\)|\&|\+|\-/g,"");
+    } else if (level != undefined && level == 1) {
+        input = input.replace(/\</g, "&lt;");
+        input = input.replace(/\>/g, "&gt;");
+    }
+    return input;
 }
 
 
