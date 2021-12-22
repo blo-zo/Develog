@@ -23,6 +23,7 @@ public class Post {
 	private int memberNo;
 	private String memberName;
 	private String blogTitle;
+	private String intro;	// 한 줄 소개
 	private String categoryName;
 	private String postStatusName;
 	
@@ -142,6 +143,14 @@ public class Post {
 		this.blogTitle = blogTitle;
 	}
 
+	public String getIntro() {
+		return intro;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
+
 	public String getCategoryName() {
 		return categoryName;
 	}
@@ -172,9 +181,11 @@ public class Post {
 				+ createDate + ", modifyDate=" + modifyDate + ", readCount=" + readCount + ", reportCount="
 				+ reportCount + ", favoriteCount=" + favoriteCount + ", blogNo=" + blogNo + ", categoryCode="
 				+ categoryCode + ", postStatusCode=" + postStatusCode + ", memberNo=" + memberNo + ", memberName="
-				+ memberName + ", blogTitle=" + blogTitle + ", categoryName=" + categoryName + ", postStatusName="
-				+ postStatusName + ", postImgList=" + postImgList + "]";
+				+ memberName + ", blogTitle=" + blogTitle + ", intro=" + intro + ", categoryName=" + categoryName
+				+ ", postStatusName=" + postStatusName + ", postImgList=" + postImgList + "]";
 	}
 
+	
+	
 	
 }

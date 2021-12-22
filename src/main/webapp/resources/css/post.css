@@ -421,6 +421,8 @@ html, body{
   margin: 5px;
   text-decoration: none;
   color: #323232;
+  cursor: pointer;
+  
 }
 .post-menu td{
   padding: 3px;
@@ -528,7 +530,7 @@ border-bottom-right-radius: 10px;}
 
 .post-profile-text{
   margin-left: 50px;
-  width: 650px;
+  width: 550px;
   height: 150px;
   display: flex;
   flex-direction: column;
@@ -538,13 +540,13 @@ border-bottom-right-radius: 10px;}
 /* 포스트 하단 댓글 영역 */
 
 /* 댓글 수 */
-.reply-count{ margin: auto; margin-bottom: 30px; margin-top: 30px; width: 600px; font-weight: 500; }
+.reply-count{ margin: auto; margin-bottom: 30px; margin-top: 30px; width: 500px; font-weight: 500; }
 
 /* 댓글 작성 영역 */
-.post-reply-write-area{ margin: auto; width: 600px; }
+.post-reply-write-area{ margin: auto; width: 500px; }
 /* 댓글 textarea */
 #post-reply{
-  width: 100%; height: 150px; resize: none; background-color: #eeeeee; outline: none;
+  width: 100%; height: 100px; resize: none; background-color: #eeeeee50; outline: none;
 }
 /* 제출 버튼 */
 #post-reply-btn{ float: right; }
@@ -717,7 +719,25 @@ border-bottom-right-radius: 10px;}
 }
 
 
-
+.post-reply-box{
+  margin: auto; margin-top: 100px; margin-bottom: 100px; clear: both; width: 600px; min-height: 300px;
+}
+.post-reply-wrap{
+  width:600px; padding: 10px; margin-top: 30px;
+}
+.reply-header{
+  display: flex; justify-content: space-between; align-items: center;
+}
+.reply-menu > span{
+  margin-right: 10px;
+}
+.reply-writer a{text-decoration: none; color: #323232; margin-left: 10px; font-size: 20px; font-weight: bold; opacity: 0.7;}
+.reply-menu span{cursor: pointer; text-decoration: none; color: #3278FE; opacity: 0.8;}
+.reply-header a:hover{opacity: 1; font-weight: bold;}
+.reply-menu span:hover{opacity: 1; font-weight: bold;}
+.reply-body{
+  width: 500px; min-height: 100px; margin: auto; margin-top: 10px; margin-bottom: 5px; padding: 10px; 
+}
 
 
 

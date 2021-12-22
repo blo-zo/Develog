@@ -52,19 +52,19 @@ public class AdminDAO {
 			pstmt.setInt(2, endRow);
 			
 			rs = pstmt.executeQuery();
-			
+			System.out.println(sql);
 			while(rs.next()) {
 				Member member = new Member();
 //				MEMBER_NM, MEMBER_EMAIL, ENROLL_DT, INTRO, VIOLATION_COUNT, MODIFY_DT, STATUS_CD,GRADE_CD
-				member.setMemberNo(rs.getInt(2));
-				member.setMemberName(rs.getString(3));
-				member.setMemberEmail(rs.getString(4));
-				member.setEnrollDate(rs.getString(5));
-				member.setIntro(rs.getString(6));
-				member.setViolationCount(rs.getInt(7));
-				member.setModifyDate(rs.getString(8));
-				member.setStatusName(rs.getString(9));
-				member.setGradeName(rs.getString(10));
+				member.setMemberNo(rs.getInt("MEMBER_NO"));
+				member.setMemberName(rs.getString("MEMBER_NM"));
+				member.setMemberEmail(rs.getString("MEMBER_EMAIL"));
+				member.setEnrollDate(rs.getString("ENROLL_DT"));
+				member.setIntro(rs.getString("INTRO"));
+				member.setViolationCount(rs.getInt("VIOLATION_COUNT"));
+				member.setModifyDate(rs.getString("MODIFY_DT"));
+				member.setStatusName(rs.getString("STATUS_NM"));
+				member.setGradeName(rs.getString("GRADE_NM"));
 				
 				memberList.add(member);
 			}
@@ -391,7 +391,15 @@ public class AdminDAO {
 		return listCounts;
 	
 	}
-
+	private static String stringToDate(String searchWord) {
+		// 211231 ==> 21/12/31
+		StringBuffer input1 = new StringBuffer();
+		
+		input1.append(searchWord);
+		input1.insert(2, "/");
+		input1.insert(5, "/");
+		return input1.toString();
+	}
 	public List<Member> selectMemberSearch(String searchWord, String searchTag, Pagination pagination,
 			Connection conn) throws Exception {
 		List<Member> memberList = new ArrayList<Member>();
@@ -399,32 +407,49 @@ public class AdminDAO {
 			String sql2 = null;
 			switch(searchTag) {
 			case "no": sql2 = "WHERE MEMBER_NO LIKE '%"+searchWord +"%'"; break;
+			case "email": sql2 = "WHERE MEMBER_EMAIL LIKE '%"+searchWord +"%'";break;
+			case "name" : sql2 = "WHERE MEMBER_NM LIKE '%"+searchWord +"%'"; break;
+			case "enrollDate" : if(searchWord.length() == 15) {
+									String str1 = searchWord.substring(0,6);
+									String str2 = searchWord.substring(9,15);
+									str1 = stringToDate(str1);
+									str2 = stringToDate(str2);
+									
+									sql2 = "WHERE TO_DATE(ENROLL_DT) BETWEEN '"+ str1 +"' AND '"+str2+"'"; break;
+
+								}else if(searchWord.length() == 6) {
+									String str = searchWord.substring(0, 6);
+									sql2 = "WHERE TO_DATE(ENROLL_DT) = '"+ str +"'"; break;
+									
+								}
+//			case "report" : sql2 = "WHERE MEMBER_ LIKE '%"+searchWord +"%'"; break;
+			case "violation" : sql2 = "WHERE VIOLATION_COUNT = "+searchWord; break;
+			case "status" : sql2 = "WHERE SATATUS_NM LIKE '%"+searchWord +"%'"; break;
 			}
 
 			String sql1 = "SELECT * FROM(\r\n"
 					+ "		SELECT ROWNUM RNUM, A.* FROM\r\n"
 					+ "		(SELECT MEMBER_NO, MEMBER_NM, MEMBER_EMAIL, \r\n"
-					+ "			TO_CHAR(ENROLL_DT, 'YYYY-MM-DD') ENROLL_DT, INTRO, VIOLATION_COUNT,\r\n"
+					+ "			TO_CHAR(ENROLL_DT, 'YYYY-MM-DD') ENROLL_DT, INTRO, (SELECT COUNT(*)\r\n"
+					+ "                                                      FROM VIOLATION A\r\n"
+					+ "                                                      WHERE A.MEMBER_NO = B.MEMBER_NO) VIOLATION_COUNT,\r\n"
 					+ "			TO_CHAR(MODIFY_DT, 'YYYY-MM-DD') MODIFY_DT, STATUS_NM,GRADE_NM\r\n"
-					+ "		FROM MEMBER\r\n"
+					+ "		FROM MEMBER B\r\n"
 					+ "		JOIN MEMBER_STATUS USING(STATUS_CD)\r\n"
 					+ "		JOIN GRADE USING(GRADE_CD)\r\n"
-					+ sql2 +"\r\n"
+					+sql2 +"\r\n"
 					+ "		ORDER BY MEMBER_NO DESC) A)\r\n"
 					+ "		WHERE RNUM BETWEEN ? AND ?";
 			
 			int startRow = (pagination.getCurrentPage() -1) * pagination.getLimit() + 1;
 			
 			int endRow = startRow + pagination.getLimit() -1;
-//			System.out.println(searchWord);
-//			System.out.println(searchTag);
-			System.out.println(sql1);
 			pstmt = conn.prepareStatement(sql1);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
 			
 			rs = pstmt.executeQuery();
-			
+			System.out.println(sql1);
 			while(rs.next()) {
 				Member member = new Member();
 				member.setMemberNo(rs.getInt("MEMBER_NO"));
@@ -462,7 +487,6 @@ public class AdminDAO {
 			}
 			String temp = "UPDATE MEMBER SET VIOLATION_COUNT = VIOLATION_COUNT + 1 WHERE ";
 			String sql = temp + str;
-			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
 			
 			result = pstmt.executeUpdate();
@@ -489,7 +513,6 @@ public class AdminDAO {
 			}
 			String temp = "UPDATE MEMBER SET VIOLATION_COUNT = VIOLATION_COUNT - 1 WHERE ";
 			String sql = temp + str;
-			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
 			
 			result = pstmt.executeUpdate();
@@ -498,6 +521,124 @@ public class AdminDAO {
 			pstmt.close();
 		}
 		
+		return result;
+	
+	}
+
+	public int updateViolationChangePlus(Connection conn) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("updateViolationChangePlus");
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+	
+		return result;
+	}
+
+	public int updateViolationChangeMinus(Connection conn) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("updateViolationChangeMinus");
+			pstmt = conn.prepareStatement(sql);
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+	
+		return result;
+	}
+
+	public Member adminLogin(String adminPw, Connection conn) throws Exception {
+		Member loginMember = null;
+		// 처음에 null로 했어야 했내. 객체에 저장하면 member의 int값이 0 처리되서 넘어가내
+		// 아 여기서 loginMember가 null값이 나오는게아니라 int 값은 0처리되서 값이 넘어가지내
+		try {
+			String sql = prop.getProperty("adminLogin");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, adminPw);
+
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				loginMember = new Member();
+				loginMember.setMemberNo(rs.getInt("MEMBER_NO"));
+				loginMember.setMemberPw(rs.getString("MEMBER_PW"));
+				loginMember.setMemberName(rs.getString("MEMBER_NM"));
+				loginMember.setMemberEmail(rs.getString("MEMBER_EMAIL"));
+//				loginMember.setEnrollDate(rs.getString("EMROLL_DT"));
+//				loginMember.setIntro(rs.getString("INTRO"));
+				loginMember.setViolationCount(rs.getInt("VIOLATION_COUNT"));
+//				loginMember.setModifyDate(rs.getString("MODIFY_DT"));
+				loginMember.setStatusCode(rs.getInt("STATUS_CD"));
+				loginMember.setGradeCode(rs.getInt("GRADE_CD"));
+				
+			}
+		}finally {
+			pstmt.close();
+		}
+		
+		return loginMember;
+	}
+
+	public int insertViolationPlus(int memberNo, String content, Connection conn) throws Exception{
+		int result = 0;
+		try {
+			String sql = prop.getProperty("insertViolationPlus");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			pstmt.setString(2, content);
+			
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+		return result;
+	
+	
+	
+	}
+
+	public List<Report> selectViolation(int memberNo, Connection conn) throws Exception {
+		List<Report> violationList = new ArrayList<Report>();
+		
+		try {
+			String sql = prop.getProperty("selectViolation");
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memberNo);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				Report violation = new Report();
+				violation.setReportNo(rs.getInt(1));
+				violation.setMemberNo(rs.getInt(2));
+				violation.setReportContent(rs.getString(3));
+				violationList.add(violation);
+			}
+		}finally {
+			
+		}
+		return violationList;
+	}
+
+	public int deleteViolation(int violationNo, Connection conn) throws Exception{
+		int result = 0;
+		try {
+			String sql = prop.getProperty("deleteViolation");
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, violationNo);
+			
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
 		return result;
 	
 	}

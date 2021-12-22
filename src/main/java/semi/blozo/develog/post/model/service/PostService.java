@@ -9,6 +9,7 @@ import semi.blozo.develog.post.model.dao.PostDAO;
 import semi.blozo.develog.post.model.vo.Post;
 import semi.blozo.develog.post.model.vo.PostImage;
 import semi.blozo.develog.post.model.vo.PostPagination;
+import semi.blozo.develog.post.model.vo.PostReply;
 
 public class PostService {
 	
@@ -22,11 +23,11 @@ public class PostService {
 	 * @return PostPagination
 	 * @throws Exception
 	 */
-	public PostPagination getPostPagination(int cp, String blogTitle) throws Exception{
+	public PostPagination getPostPagination(int cp, String memberName) throws Exception{
 		
 		Connection conn = getConnection();
 		
-		int blogListCount = dao.getBlogListCount(conn, blogTitle);
+		int blogListCount = dao.getBlogListCount(conn, memberName);
 		
 		close(conn);
 		
@@ -40,10 +41,10 @@ public class PostService {
 	 * @return postList
 	 * @throws Exception
 	 */
-	public List<Post> selectBlogPostList(PostPagination blogPostPagination, String blogTitle) throws Exception{
+	public List<Post> selectBlogPostList(PostPagination blogPostPagination, String memberName) throws Exception{
 
 		Connection conn = getConnection();
-		List<Post> postList = dao.selectBlogPostList(blogPostPagination, blogTitle, conn);
+		List<Post> postList = dao.selectBlogPostList(blogPostPagination, memberName, conn);
 		
 //		for(Post temp : postList) {
 //			
@@ -69,12 +70,15 @@ public class PostService {
 		
 		// 포스트 조회하기
 		Post post = dao.selectPost(postNo, conn);
+		// 프로필 이미지도 얻어오기
 		
 		// 포스트 이미지 조회
+		List<PostImage> postImgList = dao.selectPostImageList(postNo, conn);
 		
+		post.setPostImgList(postImgList);
 		
 		// 조회수
-		if(post != null /* && post.getMemberNo() != memberNo */) {
+		if(post != null && post.getMemberNo() != memberNo ) {
 			
 			int result = dao.plusReadCount(postNo, conn);
 			if(result > 0) {
@@ -88,6 +92,37 @@ public class PostService {
 		
 		return post;
 	}
+
+
+	/** 수정 화면으로 전환하기
+	 * @param postNo
+	 * @return post
+	 * @throws Exception
+	 */
+	public Post updateView(int postNo) throws Exception{
+		
+		Connection conn = getConnection();
+		
+		Post post = dao.selectPost(postNo, conn);
+		
+		// 이미지 정보 조회
+		List<PostImage> postImgList = dao.selectPostImageList(postNo, conn);
+		// 이미지를 post에 추가
+		post.setPostImgList(postImgList);
+		
+		// 줄바꿈 다시 원래대로 돌리기
+		post.setPostContent(post.getPostContent().replaceAll("<br>", "\r\n"));
+		
+		close(conn);
+		
+		return post;
+		
+	}
+	
+	
+	
+
+
 
 	
 	
