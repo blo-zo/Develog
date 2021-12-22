@@ -130,10 +130,9 @@ document.getElementById("inputTag").addEventListener("keyup", function(e){
     // e : 발생된 이벤트와 관련된 정보가 모두 담겨있음.
     console.log(e.code);
     if(e.key == "Enter"){ //엔터키 입력 시 
-        postTags(); // 함수를 호출하여 입력한 내용을 추가
+        postTags(); // 함 수를 호출하여 입력한 내용을 추가
     }
-
-    else if(e.code == "Backspace"){
+	else if(e.code == "Backspace"){
         if(e.target.value.length == 0){
             $("#postTags > span:last-child").remove();
         }
