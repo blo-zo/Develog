@@ -36,8 +36,6 @@ public class PostingService {
 		postVO.setPostTitle(XSS.replaceParameter( postVO.getPostTitle()) );
 		postVO.setPostContent(XSS.replaceParameter( postVO.getPostContent()) );
 		
-	
-		
 		// 2-2) 개행문자 -> <br> 태그로 변경
 		String content = postVO.getPostContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
 		postVO.setPostContent(content); 
