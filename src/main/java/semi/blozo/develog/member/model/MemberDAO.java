@@ -151,6 +151,32 @@ public class MemberDAO {
 	}
 
 	
+	/** 비밀번호 찾기
+	 * @param email
+	 * @param searchPw
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int searchPw(String email, String searchPw, Connection conn)throws Exception {
+		int result = 0;
+		try {
+			String sql = prop.getProperty("searchPw");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1,searchPw);
+			pstmt.setString(2, email);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		
+		return result;
+	}
 	
 	/**비밀번호 변경
 	 * @param currentPw
@@ -181,6 +207,7 @@ public class MemberDAO {
 		
 		return result;
 	}
+
 
 	
 	

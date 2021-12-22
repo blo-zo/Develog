@@ -18,11 +18,11 @@ public class EnquiryService {
 	 * @return pagination
 	 * @throws Exception
 	 */
-	public Pagination getPagination(int cp)throws Exception {
+	public Pagination getPagination(int cp , int memberNo)throws Exception {
 		// 전체 게시글 수 필요 -> Connection 얻어오기 DBCP 에서~
 		Connection conn = getConnection();
 		// 전체 게시글 조회 DAO 호출
-		int listCount =  dao.getListCount(conn);
+		int listCount =  dao.getListCount(conn , memberNo);
 		
 			
 		close(conn);

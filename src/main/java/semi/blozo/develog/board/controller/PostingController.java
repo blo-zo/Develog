@@ -77,9 +77,9 @@ public class PostingController extends HttpServlet{
 					
 					
 					
-					// 왜  int가 필요한ㄱ지
+					// 왜  int가 필요한지
 					MultipartRequest mReq 
-					= new MultipartRequest(req, realPath, (Integer) null, new MyRenamePolicy());
+					= new MultipartRequest(req, realPath, (Integer)0, new MyRenamePolicy());
 					// ( 기존 req, 파일 저장할 곳, 파일 용량(지금x), (title, content같이 파일 아닌것들) 변환(지금x) , 파일인경우)
 					
 					
