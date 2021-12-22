@@ -88,50 +88,19 @@ function postValidate() {
 
 
 
-
-/* 글 삽입 - insert -- 얘는 사용 x*/
-/*function createInsert(){
-	
-	
-	$.ajax({
-        url : contextPath + "/board/insert",
-        data : {
-				"postTitle" : $(".head-textarea").val(), 
-				"postContent": $("#summernote").val(),
-				"categoryCode" : $("select[name='categoryCode'] option:selected").text(),
-				"postStatusCode" : 001
-				},
-        type : "POST",
-        success : function(result){
-            // console.log(result);
-
-            if(result > 0) {
-                alert("글 삽입 성공");
-                $("#replyContent").val(""); // 작성한 댓글 내용 삭제 
-
-                selectReplyList(); // 댓글 조회 함수를 호출하여 댓글 화면 다시 만들기
-            } else{
-                alert("글 삽입 실패");
-
-            }
-        },
-        error : function(req, status, error){
-            alert("글 삽입 실패");
-            console.log(req.responseText);
-        }});
-}
-*/
-
 // 1. 입력 버튼이 클릭 되었을 때
 document.getElementById("inputTag").addEventListener("click", postTags);
 
-// 2. input태그에서 엔터가 눌러졌을때
+// 2. input태그에서 키보드가 눌러졌을때
 document.getElementById("inputTag").addEventListener("keyup", function(e){
     // e : 발생된 이벤트와 관련된 정보가 모두 담겨있음.
     console.log(e.code);
-    if(e.key == "Enter"){ //엔터키 입력 시 
-        postTags(); // 함 수를 호출하여 입력한 내용을 추가
+    if(e.code  == "Enter"){ //엔터키 입력 시 
+        postTags(); // 함수를 호출하여 입력한 내용을 추가
     }
+	else if(e.code == "Space"){
+		changeSpace();
+	}
 	else if(e.code == "Backspace"){
         if(e.target.value.length == 0){
             $("#postTags > span:last-child").remove();
@@ -140,32 +109,52 @@ document.getElementById("inputTag").addEventListener("keyup", function(e){
 });
 
 
+
 //3. 1,2 번의 공통 동작을 작성해둔 function 생성
 function postTags(){
     // #input-text에 작성된 값을 읽어오기
     const input = document.getElementById("inputTag");
-
-    //입력된 값이 있을 때만 추가
+	
+    //입력된 값이 있을 때만 추가 (space도 추가된값)
     if(input.value.trim().length != 0){   
-        // p태그 형식으로 추가
+        
+		// p태그 형식으로 추가
         document.getElementById("postTags").innerHTML 
             += "<span class='tags post-tag' >#" + input.value +"<b class='del' onclick='deleteTag(this)'>X</b></span>";
-
-
-        //3) input 태그에 작성된 내용을 삭제
-        input.value = "";
-
+		
+		//3) input 태그에 작성된 내용을 삭제
+		input.value = "";
+		
+		
+		if(document.getElementsByClassName("post-tag").length > 10){ // 태그 갯수 변경하기 // post-tag가 10개넘어가면 삭제
+			$("#postTags > span:last-child").remove();
+		}
+		
+	
         // 4) input에 포커스 맞추기
         input.focus();
-    }
-
+    } 
+	
 }
+// 화면 XSS처리 
+function XSSCheck(postTags){
+	const input = document.getElementById("inputTag");
+	
+}
+
+
+
 
 /* 태그 x버튼 선택했을때*/
 function deleteTag(xBtn){
     $(xBtn).parent().remove();
 }
 
+// 공백제거
+function changeSpace(){
+	const input = document.getElementById("inputTag");
+	input.value = input.value.slice(0, -1);
+}
 
 /* 게시글 상태 코드*/
 $(".postStatusBtn").on("click", function () {

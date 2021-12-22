@@ -80,6 +80,8 @@ public class PostingController extends HttpServlet {
 					postVO.setPostStatusCode(postStatusCode);
 					postVO.setBlogNo(blogNo);
 					
+					System.out.println(postVO);
+					
 					String[] tags = req.getParameterValues("tags");
 					
 					List<TagVO> tagVOList = new ArrayList<TagVO>();
