@@ -17,8 +17,6 @@ public class PostVO {
 	private int boardStatusCode;
 	private int categoryCode;
 	
-//	private int tagCode;		// 태그 코드 
-//	private String tagName;		// 태그 내용 
 	
 	// join하면서 가져온것들(화면에 필요한것들)
 	private int blogNo;			// 블로그 번호
