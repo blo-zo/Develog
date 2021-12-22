@@ -5,7 +5,6 @@ public class PostReply {
 	private int replyNo;
 	private String replyContent;  
 	private String replyCreateDate;
-	private int reportCount;
 	
 	private int parentReply;
 	
@@ -37,12 +36,6 @@ public class PostReply {
 	}
 	public void setReplyCreateDate(String replyCreateDate) {
 		this.replyCreateDate = replyCreateDate;
-	}
-	public int getReportCount() {
-		return reportCount;
-	}
-	public void setReportCount(int reportCount) {
-		this.reportCount = reportCount;
 	}
 	public int getParentReply() {
 		return parentReply;
@@ -83,7 +76,7 @@ public class PostReply {
 	@Override
 	public String toString() {
 		return "PostReply [replyNo=" + replyNo + ", replyContent=" + replyContent + ", replyCreateDate="
-				+ replyCreateDate + ", reportCount=" + reportCount + ", parentReply=" + parentReply
+				+ replyCreateDate + ", parentReply=" + parentReply
 				+ ", replyStatusCode=" + replyStatusCode + ", replyStatusName=" + replyStatusName + ", postNo=" + postNo
 				+ ", memberNo=" + memberNo + ", memberName=" + memberName + "]";
 	}

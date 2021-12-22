@@ -100,12 +100,12 @@ public class PostDAO {
 				post.setPostContent(rs.getString("POST_CONTENT"));
 				post.setCreateDate(rs.getString("CREATE_DT"));
 				post.setReadCount(rs.getInt("READ_COUNT"));
-				post.setReportCount(rs.getInt("REPORT_COUNT"));
 				post.setFavoriteCount(rs.getInt("LIKE_COUNT"));
 				post.setBlogNo(rs.getInt("BLOG_NO"));
 				post.setBlogTitle(rs.getString("BLOG_TITLE"));
 				post.setMemberNo(rs.getInt("MEMBER_NO"));
 				post.setMemberName(rs.getString("MEMBER_NM"));
+				post.setIntro(rs.getString("INTRO"));
 				post.setCategoryCode(rs.getInt("CATEGORY_CD"));
 				post.setCategoryName(rs.getString("CATEGORY_NM"));
 				post.setPostStatusCode(rs.getInt("POST_STATUS_CD"));
@@ -151,7 +151,6 @@ public class PostDAO {
 				post.setCreateDate(rs.getString("CREATE_DT"));
 				post.setModifyDate(rs.getString("MODIFY_DT"));
 				post.setReadCount(rs.getInt("READ_COUNT"));
-				post.setReportCount(rs.getInt("REPORT_COUNT"));
 				post.setFavoriteCount(rs.getInt("LIKE_COUNT"));
 				post.setBlogNo(rs.getInt("BLOG_NO"));
 				post.setBlogTitle(rs.getString("BLOG_TITLE"));

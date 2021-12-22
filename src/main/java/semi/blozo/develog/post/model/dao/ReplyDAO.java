@@ -63,7 +63,6 @@ public class ReplyDAO {
 				reply.setReplyNo(rs.getInt("REPLY_NO"));
 				reply.setReplyContent(rs.getString("REPLY_CONTENT"));
 	            reply.setReplyCreateDate(rs.getString("REPLY_CREATE_DT"));
-	            reply.setReportCount(rs.getInt("REPORT_COUNT"));
 	            reply.setPostNo(rs.getInt("POST_NO"));
 	            reply.setMemberNo(rs.getInt("MEMBER_NO"));
 	            reply.setMemberName(rs.getString("MEMBER_NM"));
