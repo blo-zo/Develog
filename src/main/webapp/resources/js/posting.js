@@ -96,7 +96,11 @@ document.getElementById("inputTag").addEventListener("keyup", function(e){
     // e : 발생된 이벤트와 관련된 정보가 모두 담겨있음.
     console.log(e.code);
     if(e.code  == "Enter"){ //엔터키 입력 시 
-        postTags(); // 함수를 호출하여 입력한 내용을 추가
+       let input = XSSCheck(e.target.value, 1);
+		console.log(input);
+
+
+		postTags(input); // 함수를 호출하여 입력한 내용을 추가
     }
 	else if(e.code == "Space"){
 		changeSpace();
@@ -111,19 +115,18 @@ document.getElementById("inputTag").addEventListener("keyup", function(e){
 
 
 //3. 1,2 번의 공통 동작을 작성해둔 function 생성
-function postTags(){
+function postTags(input){
     // #input-text에 작성된 값을 읽어오기
-    const input = document.getElementById("inputTag");
-	
+    
     //입력된 값이 있을 때만 추가 (space도 추가된값)
-    if(input.value.trim().length != 0){   
+    if(input.trim().length != 0){   
         
 		// p태그 형식으로 추가
         document.getElementById("postTags").innerHTML 
-            += "<span class='tags post-tag' >#" + input.value +"<b class='del' onclick='deleteTag(this)'>X</b></span>";
+            += "<span class='tags post-tag' >#" + input +"<b class='del' onclick='deleteTag(this)'>X</b></span>";
 		
 		//3) input 태그에 작성된 내용을 삭제
-		input.value = "";
+		input = "";
 		
 		
 		if(document.getElementsByClassName("post-tag").length > 10){ // 태그 갯수 변경하기 // post-tag가 10개넘어가면 삭제
@@ -132,14 +135,20 @@ function postTags(){
 		
 	
         // 4) input에 포커스 맞추기
-        input.focus();
+        document.getElementById("inputTag").focus();
     } 
 	
 }
 // 화면 XSS처리 
-function XSSCheck(postTags){
-	const input = document.getElementById("inputTag");
-	
+function XSSCheck(str, level) {
+		
+    if (level == undefined || level == 0) {
+        str = str.replace(/\<|\>|\"|\'|\%|\;|\(|\)|\&|\+|\-/g,"");
+    } else if (level != undefined && level == 1) {
+        str = str.replace(/\</g, "&lt;");
+        str = str.replace(/\>/g, "&gt;");
+    }
+    return str;
 }
 
 
