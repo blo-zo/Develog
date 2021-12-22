@@ -12,7 +12,6 @@ public class Post {
 	private String modifyDate;
 	
 	private int readCount;			// 조회 수
-	private int reportCount;		// 신고 수
 	private int favoriteCount;		// 좋아요 수
 	// 변수명 이야기 해보고 likeCount로 변경하기
 	
@@ -77,14 +76,6 @@ public class Post {
 
 	public void setReadCount(int readCount) {
 		this.readCount = readCount;
-	}
-
-	public int getReportCount() {
-		return reportCount;
-	}
-
-	public void setReportCount(int reportCount) {
-		this.reportCount = reportCount;
 	}
 
 	public int getFavoriteCount() {
@@ -179,7 +170,7 @@ public class Post {
 	public String toString() {
 		return "Post [postNo=" + postNo + ", postTitle=" + postTitle + ", postContent=" + postContent + ", createDate="
 				+ createDate + ", modifyDate=" + modifyDate + ", readCount=" + readCount + ", reportCount="
-				+ reportCount + ", favoriteCount=" + favoriteCount + ", blogNo=" + blogNo + ", categoryCode="
+				+ favoriteCount + ", blogNo=" + blogNo + ", categoryCode="
 				+ categoryCode + ", postStatusCode=" + postStatusCode + ", memberNo=" + memberNo + ", memberName="
 				+ memberName + ", blogTitle=" + blogTitle + ", intro=" + intro + ", categoryName=" + categoryName
 				+ ", postStatusName=" + postStatusName + ", postImgList=" + postImgList + "]";
