@@ -46,6 +46,23 @@ function sendBlog(e, pno, blogMemberName, blogIntro, blogTitle){
 }
 
 
+// ************* 포스트 *************
+
+// 포스트 삭제
+function deletePost(){
+  
+  if(confirm("정말 삭제하시겠습니까?")){
+
+    document.requestForm.action = "delete";
+    document.requestForm.method = "POST";
+    document.requestForm.submit();
+    
+    // location.href = "delete";
+
+  }
+};
+
+
 
 // ************* 댓글 *************
 
@@ -367,6 +384,8 @@ function updateForm(){
   document.requestForm.method = "POST";
   document.requestForm.submit();
 };
+
+
 
 
 

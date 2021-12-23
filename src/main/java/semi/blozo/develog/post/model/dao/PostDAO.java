@@ -42,7 +42,38 @@ public class PostDAO {
 		}
 	
 	}
-
+	
+	/** 게시글 전체 조회 DAO
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Post> selectPostListAll(Connection conn) throws Exception{
+		
+		List<Post> allPostList = new ArrayList<Post>();
+		
+		try {
+			
+			String sql = prop.getProperty("selectPostListAll");
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				
+				
+			}
+			
+		}finally {
+			
+			close(rs);
+			close(stmt);
+			
+		}
+		
+		return allPostList;
+	}
+	
 
 	/** 특정 블로그의 전체 게시물 수 조회
 	 * @param conn
@@ -277,6 +308,33 @@ public class PostDAO {
 		
 		return blog;
 	}
+
+
+	/** 포스트 삭제 DAO
+	 * @param postNo
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int deletePost(int postNo, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("deletePost");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			result = pstmt.executeUpdate();
+			
+		}finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
 	
 	
 	
