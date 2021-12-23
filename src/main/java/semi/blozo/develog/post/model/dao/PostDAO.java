@@ -334,6 +334,108 @@ public class PostDAO {
 		return result;
 	}
 
+	
+	
+	// -------------------------------- 좋아요 ------------------------------------
+	
+	
+	/** 좋아요 삽입 DAO
+	 * @param postNo
+	 * @param memberNo
+	 * @param conn
+	 * @return likePost(int)
+	 * @throws Exception
+	 */
+	public int likePost(int postNo, int memberNo, Connection conn) throws Exception{
+		
+		int likePost = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("likePost");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			pstmt.setInt(2, memberNo);
+			likePost = pstmt.executeUpdate();
+			
+		}finally {
+			
+			close(pstmt);
+			
+		}
+		
+		return likePost;
+	}
+	
+	
+	
+	/** 좋아요 취소 DAO
+	 * @param postNo
+	 * @param memberNo
+	 * @param conn
+	 * @return likePost
+	 * @throws Exception
+	 */
+	public int likeCancel(int postNo, int memberNo, Connection conn) throws Exception{
+
+		int likePost = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("likePost");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			pstmt.setInt(2, memberNo);
+			likePost = pstmt.executeUpdate();
+			
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return likePost;
+	}
+	
+	
+
+	/** 좋아요 수 조회 DAO
+	 * @param memberNo
+	 * @param postNo
+	 * @param conn
+	 * @return postLikeCount
+	 * @throws Exception
+	 */
+	public int selectPostLikeCount(int memberNo, int postNo, Connection conn) throws Exception{
+
+		int postLikeCount = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("likePost");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			pstmt.setInt(2, memberNo);
+			postLikeCount = pstmt.executeUpdate();
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				postLikeCount = rs.getInt(1);
+			}
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return postLikeCount;
+	}
+
+	
+
 
 	
 	

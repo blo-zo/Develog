@@ -46,17 +46,13 @@
             <div class="dropdown">
               <a href="#" class="nav-link d-block text-decoration-none " id="userID" data-bs-toggle="dropdown" aria-expanded="false">
 						<P>${sessionScope.loginMember.memberNm}</P>						
-	              </a>
+              </a>
+              
               <ul class="dropdown-menu text-small" aria-labelledby="userID">
-                <li"><a class="dropdown-item" href="#">내 블로그</a></li>
+              
+                <li"><a class="dropdown-item" href="${contextPath}/blog/${loginMember.memberNm}">내 블로그</a></li>
                 
-                <li><a class="dropdown-item" href="#">새 글작성</a></li>
-            
-                
-                <li><a class="dropdown-item" href="#">임시 글</a></li>
-                
-               
-                <li><a class="dropdown-item" href="#">설정</a></li>
+                <li><a class="dropdown-item" href="${contextPath}/memberProfile/profile">설정</a></li>
            
                 <li><a class="dropdown-item" href="${contextPath}/enquiry/list">1:1문의</a></li>
              

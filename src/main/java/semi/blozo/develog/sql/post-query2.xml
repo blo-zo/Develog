@@ -26,7 +26,11 @@
 		WHERE MEMBER_NM = ?
 	</entry>
 	
+	
 	<!-- 블로그 태그 조회는 따로 빼야할듯 -->
+	
+	
+	
 	
 	<!-- 특정 블로그의 전체 게시물 수 조회 (삭제가 아닌 게시글) -->
 	<entry key="getBlogListCount">
@@ -145,6 +149,28 @@
 	</entry>
 	
 	
+	<!-- ************************ 좋아요 ******************************** -->
+	
+	
+	<!-- 좋아요 추가 -->
+	<entry key="likePost">
+		INSERT INTO LIKE 
+		VALUES( ?, ? )
+	</entry>
+	
+	<!-- 좋아요 취소 -->
+	<entry key="likeCancel">
+		DELETE FROM LIKE 
+		WHERE MEMBER_NO = ?
+		AND POST_NO = ?
+	</entry>
+	
+	<!-- 좋아요 수 조회 -->
+	<entry key="selectPostLikeCount">
+		SELECT COUNT(*) FROM LIKE
+		WHERE MEMBER_NO = ?
+		AND POST_NO = ?
+	</entry>
 	
 	
 	
