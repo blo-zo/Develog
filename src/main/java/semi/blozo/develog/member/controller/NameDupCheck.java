@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import semi.blozo.develog.member.model.MemberService;
+import semi.blozo.develog.member.model.service.MemberService;
 
 @WebServlet("/member/nameDupCheck")
 public class NameDupCheck extends HttpServlet{

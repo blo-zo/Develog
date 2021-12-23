@@ -1,4 +1,4 @@
-package semi.blozo.develog.member.model;
+package semi.blozo.develog.member.model.dao;
 import static semi.blozo.develog.common.JDBCTemplate.*;
 
 import java.io.FileInputStream;
@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
+
+import semi.blozo.develog.member.model.vo.Member;
 public class MemberDAO {
 
 	private Statement stmt;

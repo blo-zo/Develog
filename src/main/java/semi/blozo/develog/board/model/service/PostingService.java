@@ -1,6 +1,5 @@
 package semi.blozo.develog.board.model.service;
 
-
 import static semi.blozo.develog.common.JDBCTemplate.*;
 
 import java.sql.Connection;
@@ -9,7 +8,7 @@ import java.util.List;
 
 import semi.blozo.develog.board.model.dao.PostingDAO;
 import semi.blozo.develog.board.model.vo.Category;
-import semi.blozo.develog.board.model.vo.PostImageVO;
+import semi.blozo.develog.board.model.vo.ThumbImgVO;
 import semi.blozo.develog.board.model.vo.PostVO;
 import semi.blozo.develog.board.model.vo.TagVO;
 import semi.blozo.develog.common.XSS;
@@ -42,6 +41,10 @@ public class PostingService {
 				
 		// 2-3) 2-1,2-2를 거친 게시글 삽입 진행
 		int result = dao.insertPost(postVO, conn);
+		System.out.println("post result : " + result);
+		System.out.println("post postNo : " + postNo);
+		
+		
 		
 		if(result > 0) {
 		
@@ -49,8 +52,9 @@ public class PostingService {
 		   
 		   for(TagVO tagVO : tagVOList) {
 			   tagVO.setTagName(XSS.replaceParameter( tagVO.getTagName()) );  
-			   
-			   result = dao.insertTag(tagVO.getTagName(), postVO.getPostNo(), conn);
+			   tagVO.setPostNo(postNo);
+			   System.out.println("tagVO : " +tagVO);
+			   result = dao.insertTag(tagVO, conn);
 	        	 
 			   if(result == 0) {
 				   rollback(conn);
@@ -64,15 +68,6 @@ public class PostingService {
 			   result = postNo;
 		   }
 	   }
-
-		
-		
-//		if(result>0) {
-//			commit(conn);		
-//			result = postNo;
-//		} else {
-//			rollback(conn);
-//		}
 				
 		return result;
 	}
@@ -81,16 +76,19 @@ public class PostingService {
 	
 	
 	/** 카테고리 조회
-	 * @return
+	 * @param blogNo 
+	 * @return category
 	 * @throws Exception
 	 */
-	public List<Category> selectCategory() throws Exception{
-		// TODO Auto-generated method stub
-		return null;
+	public List<Category> selectCategory(int blogNo) throws Exception{
+		Connection conn = getConnection();
+		
+		List<Category> category = dao.selectCategory(blogNo, conn);
+		
+		close(conn);
+		
+		return category;
 	}
 
-
-	
-	
 	
 }

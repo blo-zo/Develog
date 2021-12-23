@@ -2,11 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>posting</title>
 <link rel="stylesheet" href="../resources/css/posting.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -75,17 +70,20 @@
 				<div class="thumbnail-title">
 					<h4>썸네일 설정</h4>
 				</div>
-				<div class="thumb-img">
-					<img src="https://via.placeholder.com/350x200" alt="샘플이미지">
+				<div class="thumb-img-area">
+					<img name="thumbimg" src="https://via.placeholder.com/350x200" alt="샘플이미지">
 				</div>
-				
+				<!--썸네일 값 -->
+				<div id="fileArea">
+					<input type="file" name="img" onchange="loadImg(this)">
+				</div>
 			</div> <!-- /thumbnail-area -->
 
 			<div class="modalLine"></div>
 
 			<div class="set-area">
 				<div class="open">
-
+ 
 					<div class="open-title">
 						<h4>공개 설정</h4>
 					</div>
@@ -109,17 +107,13 @@
 					<div class="category-input">
 						<div class="sort-post dropstart border" data-bs-toggle="dropdown"
 							aria-expanded="false">
-							<select name="categoryCode">
-								<option value="">선택하세요</option>
-								<option value="4">일상</option>
-								<option value="4">영어</option>
+							<select name="categoryCode" id="categoryCode">
+								<c:forEach items = "${category}" var="c">
+								
+									<option value="${c.categoryCode}">${c.categoryName}</option>
+								
+								</c:forEach> 
 							</select>
-							<!-- <button type="button" class="btn dropdown-toggle"
-								data-bs-toggle="dropdown" aria-expanded="false">정렬 방식</button>
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#">날짜(오름차순)</a></li>
-								<li><a class="dropdown-item" href="#">날짜(내림차순)</a></li>
-							</ul> -->
 						</div>
 					</div>
 

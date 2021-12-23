@@ -257,6 +257,8 @@ footer{
     display: table-cell;
 }
 
+
+
 /* set-area */
 .open, .open-title{
     margin-bottom: 20px;
@@ -294,6 +296,22 @@ footer{
 }
 
 
+#fileArea{
+	width : 350px;
+	height :200px;
+	/* display : flex; */
+	justify-content :  center;
+	align-items : center;
+	
+	display: none;
+	 
+}
+/* 썸네일 사이즈 지정 후 조절  */
+.thumb-img-size{ 
+	width: 350px;
+	max-height : 200px;
+	
+}
 /* 카테고리 버튼 */
 .sort-post{
     float: right;

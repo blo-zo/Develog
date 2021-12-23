@@ -115,7 +115,7 @@
               <ul class="dropdown-menu text-small" aria-labelledby="userID">
                 <li"><a class="dropdown-item" href="${contextPath}/blog/${loginMember.memberNm}">내 블로그</a></li>
                 
-                <li><a class="dropdown-item" href="${contextPath}/memberProfile/profile">설정</a></li>
+                <li><a class="dropdown-item" href="${contextPath}/member/profile">설정</a></li>
            
                 <li><a class="dropdown-item" href="${contextPath}/enquiry/list">1:1문의</a></li>
              
