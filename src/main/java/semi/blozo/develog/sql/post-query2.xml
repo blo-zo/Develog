@@ -77,15 +77,9 @@
 		WHERE POST_NO = ?
 	</entry>
 	
-	
-	<!-- 게시글 이미지 조회 -->
-	<entry key="selectPostImageList">
-		SELECT * FROM POST_IMG
-		WHERE POST_NO = ?
-		ORDER BY POST_IMG_LEV
-	</entry>
-	
 	<!-- 썸네일 이미지 조회 -->
+	
+	
 	
 	
 	

@@ -18,11 +18,13 @@ public class PostService {
 	private PostDAO dao = new PostDAO();
 	
 	
-	/** 전체 포스트 조회 (최신순) Service
+	/** 전체 포스트 조회 (최신순, 트렌딩) Service
 	 * @return allPostList
 	 * @throws Exception
 	 */
 	public List<Post> selectPostListAll() throws Exception{
+		
+		// 최신, 트렌딩 매개변수 넣어서 위치홀더로 지정할 수 있도록
 		
 		Connection conn = getConnection();
 				
@@ -91,9 +93,9 @@ public class PostService {
 		// 프로필 이미지도 얻어오기
 		
 		// 포스트 이미지 조회
-		List<PostImage> postImgList = dao.selectPostImageList(postNo, conn);
-		
-		post.setPostImgList(postImgList);
+//		List<PostImage> postImgList = dao.selectPostImageList(postNo, conn);
+//		
+//		post.setPostImgList(postImgList);
 		
 		// 조회수
 		if(post != null && post.getMemberNo() != memberNo ) {

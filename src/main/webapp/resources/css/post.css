@@ -749,7 +749,19 @@ border-bottom-right-radius: 10px;}
 }
 
 
+/* 블로그 메인페이지 카드 이미지 */
+.blog-post-img{
+  width: 800px;
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.blog-post-img > img{
+  max-width: 800px;
+  max-height: 350px;
+}
 
 
 

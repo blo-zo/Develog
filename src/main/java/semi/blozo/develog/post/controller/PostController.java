@@ -146,12 +146,10 @@ public class PostController extends HttpServlet{
 								
 							}else {
 								
-								req.getSession().setAttribute("message", "삭제되었거나 존재하지 않는 포스트입니다.");
-								
-								
-								// 경로 동적 요소로 바꾸기
+								req.getSession().setAttribute("message", "존재하지 않는 포스트입니다.");
 								
 								resp.sendRedirect( req.getContextPath() + "/blog/" + post.getMemberName() );
+								
 							}
 							
 							
@@ -192,8 +190,6 @@ public class PostController extends HttpServlet{
 							int postNo = Integer.parseInt(req.getParameter("pno"));
 							String memberName = req.getParameter("memberName");
 							
-							System.out.println(memberName);
-							
 							int result = service.deletePost(postNo);
 							
 							if(result > 0) {
@@ -201,14 +197,14 @@ public class PostController extends HttpServlet{
 								message = "포스트가 삭제되었습니다.";
 								
 								// 포스트 리스트 페이지로 돌아가기
-								path = "view?cp=" + req.getParameter("cp");
+								path = req.getContextPath() + "/blog/" + memberName + "/?cp=" + req.getParameter("cp");
 								
 							}else {
 								
 								message = "포스트 삭제 중 문제가 발생했습니다.";
 								
 								// 포스트 리스트 페이지로 돌아가기
-								path = "view?cp=" + req.getParameter("cp");
+								path = req.getContextPath() + "/blog/" + memberName + "/?cp=" + req.getParameter("cp");
 								
 							}
 							
@@ -309,6 +305,8 @@ public class PostController extends HttpServlet{
 		}catch(Exception e) {
 			
 			e.printStackTrace();
+			session.setAttribute("message", "오류가 발생했습니다. 메인페이지로 이동합니다.");
+			resp.sendRedirect(req.getContextPath() + "/main");
 			
 		}
 		
