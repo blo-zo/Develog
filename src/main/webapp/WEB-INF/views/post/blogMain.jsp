@@ -111,7 +111,7 @@
   					
 			            <!-- 블로그 본문 내용 -->
 			            <div class="card blog-post-card">
-			              <a href="${post.memberName}/view?pno=${post.postNo}&cp=${blogPostPagination.currentPage}" class="card-link">
+			              <a href="${contextPath}/blog/${post.memberName}/view?pno=${post.postNo}&cp=${blogPostPagination.currentPage}" class="card-link">
 			  
 			                <div class="card-img-top blog-post-img">
 			                  <!-- 이미지 영역 -->

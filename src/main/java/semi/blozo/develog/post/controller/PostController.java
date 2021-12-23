@@ -71,6 +71,7 @@ public class PostController extends HttpServlet{
 					// 블로그 메인 페이지 ( + 정렬, 검색 만들어야함)
 					if(arr.length == 1) {	
 						
+						// /blog/memberName 값
 						String memberName = URLDecoder.decode(arr[0],"UTF-8");
 						
 						// memberName을 통해 블로그 객체 생성 (해당 이름의 블로그가 있는지 찾음) 
