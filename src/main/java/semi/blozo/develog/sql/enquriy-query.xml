@@ -10,7 +10,7 @@
 	</entry>
 	
 	<!-- 문의 목록 조회  -->
-	<entry key="selectEnquriyList">
+	<entry key="selectEnquiryList">
  			SELECT * FROM 
                (SELECT ROWNUM RNUM, A.* FROM(
                SELECT * FROM ENQUIRY 
@@ -19,5 +19,19 @@
                WHERE RNUM BETWEEN ? AND ?
                AND MEMBER_NO = ?
 	</entry>
+	<!-- 문의 상세 조회  -->
+	<entry key="selectEnquiry">
 	
+ 	 SELECT ENQUIRY_NO ,ENQUIRY_TITLE , ENQUIRY_CONTENT , PARENT_ENQUIRY,
+ 	 TO_CHAR(CREATE_DT , 'YYYY"년" MM"월" DD"일" HH24"시" MI"분" ' ) CREATE_DT,
+ 	 TO_CHAR(MODIFY_DT , 'YYYY"년" MM"월" DD"일" HH24"시" MI"분" ' ) MODIFY_DT
+   	 FROM
+ 	 ENQUIRY
+ 	 WHERE ENQUIRY_NO = ?
+	</entry>
+	<!-- 문의 등록 -->
+	<entry key="insertEnquiry">
+	INSERT INTO "ENQUIRY" VALUES(SEQ_ENQUIRY_NO.NEXTVAL ,
+	? , ? , SEQ_PARENT_ENQUIRY.NEXTVAL,DEFAULT, DEFAULT ,?)
+	</entry>
 </properties>

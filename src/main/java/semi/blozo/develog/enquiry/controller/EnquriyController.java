@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import semi.blozo.develog.enquiry.model.service.EnquiryService;
 import semi.blozo.develog.enquiry.model.vo.Enquiry;
@@ -48,7 +49,7 @@ public class EnquriyController extends HttpServlet {
 				Member loginMember = (Member)req.getSession().getAttribute("loginMember");
 				//int memberNo = (int)req.getSession().getAttribute("memberNo");;
 				int memberNo = loginMember.getMemberNo();
-				System.out.println(memberNo);
+				//System.out.println(memberNo);
 				Pagination pagination = service.getPagination(cp,memberNo);
 				
 				if(loginMember != null) { memberNo = loginMember.getMemberNo();
@@ -56,7 +57,7 @@ public class EnquriyController extends HttpServlet {
 				//    페이징 처리에 필요 숫자들을 만들어냄
 				// 3. 죄회 되어지는 게시글의 번호를 계산하여 DB에서 조회해옴
 				List<Enquiry> enquiryList = service.selectEnquiryList(pagination,memberNo);
-				System.out.println(enquiryList);
+				//System.out.println(enquiryList);
 				// 4. 화면 출력
 				req.setAttribute("pagination", pagination);
 				req.setAttribute("enquiryList", enquiryList);
@@ -70,34 +71,68 @@ public class EnquriyController extends HttpServlet {
 				
 				}
 			}else if(command.equals("view")){
+				// 문의 넘버 받아오기
 				int enquiryNo = Integer.parseInt(req.getParameter("no"));
-				
-				// 로그인한 회원의 번호를 조회
-				Member loginMember = (Member)req.getSession().getAttribute("loginMember");
-				int memberNo = 0;
-				if(loginMember != null) memberNo = loginMember.getMemberNo();
-				
-				// 게시글 상세 조회 서비스 호출 후 결과 반환 받기
-				//Enquiry enquiry = service.selectEnquiry(enquiryNo);
-				//if(enquiry !=  null) { //조회 성공
-					// + 댓글 목록 조회하기
+	
+				// 문의 상세 조회 서비스 호출 후 결과 반환 받기
+				Enquiry enquiry = service.selectEnquiry(enquiryNo);
+				if(enquiry !=  null) { //조회 성공
 					
+					req.setAttribute("enquiry", enquiry);
 					
-								
-					
-					//req.setAttribute("enquiry", enquiry);
 					path = "/WEB-INF/views/enquiry/enquiryView.jsp";
 					dispatcher = req.getRequestDispatcher(path);
 					dispatcher.forward(req, resp);
-				//}
+				}
+				else { //문의사항 없는 경우
+					
+					message = "문의사항이 존재하지 않습니다";
+					req.getSession().setAttribute("message", message);
+					resp.sendRedirect("list");
+					
+				}
 			}else if(command.equals("insert")){
 				if(method.equals("GET")) {
-					
 					
 					path = "/WEB-INF/views/enquiry/enquiryInsert.jsp";
 					dispatcher = req.getRequestDispatcher(path);
 					dispatcher.forward(req, resp);
 					
+					}else {
+						
+						Member loginMember = (Member)req.getSession().getAttribute("loginMember");
+						int memberNo = 0;
+						if(loginMember != null) memberNo = loginMember.getMemberNo();
+						
+						// POST 방식 삽입시
+						String enquiryTitle = req.getParameter("enquiryTitle");
+						String enquiryContent = req.getParameter("enquiryContent");
+						//System.out.println(enquiryTitle);
+						//System.out.println(enquiryContent);
+						HttpSession session = req.getSession();
+						try {
+							int result = service.insertEnquiry(enquiryTitle , enquiryContent,memberNo);
+							
+							if(result > 0) {// 성공시
+								message = "문의사항이 등록되었습니다.";
+								// 상세 조회 redirect 
+								path = "list";
+							}else{// 실패
+								
+								message = "문의사항 등록 중 오류입니다.";
+								path = "insert";
+							}
+							
+							
+						
+							session.setAttribute("message", message);
+							resp.sendRedirect(path);
+						
+						}catch(Exception e) {
+							e.printStackTrace();
+							
+						}
+						
 					}
 				
 			

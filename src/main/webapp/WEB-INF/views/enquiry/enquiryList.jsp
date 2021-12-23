@@ -15,7 +15,7 @@
   <main>
     <b>1:1 문의</b>
  	<div class="enquriy_insertBtn_wrap">
-    <button class="enquriy_insertBtn" onclick="location.href = '${contextPath}/enquiry/insert">등록</button>
+    <button type="submit" class="enquriy_insertBtn" onclick="location.href = '${contextPath}/enquiry/insert';">등록</button>
  	</div>												
     <section>
       
@@ -28,7 +28,7 @@
       <c:otherwise>
       
       <c:forEach items = "${enquiryList}" var = "enquiry">
-      <a href="">
+      <a href="${contextPath}/enquiry/view?no=${enquiry.enquiryNo}&cp=${pagination.currentPage}">
         <div>
 	
           <p>${enquiry.enquiryTitle}</p>

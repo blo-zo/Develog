@@ -30,7 +30,7 @@ public class SendMailServlet extends HttpServlet {
 		
 		String host = "smtp.gmail.com";
 		String user = "donghoon4879@gmail.com"; // 자신의  계정
-		String password = "ehdgnsdlek!";// 자신의 네이버 패스워드
+		String password = "ehdgnsdlek!";// 비밀번호
 
 		// 메일 받을 주소
 		/* String to_email = m.getEmail(); */

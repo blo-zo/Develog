@@ -31,7 +31,14 @@ public class MemberService {
 	public int signUp(Member member)throws Exception {
 		Connection conn = getConnection();
 		int result = dao.signUp(member,conn);
-		if(result>0) commit(conn);
+		
+		
+		
+		if(result>0) { 
+			
+			
+			
+			commit(conn);}
 		else		 rollback(conn);
 		close(conn);		
 		return result;
