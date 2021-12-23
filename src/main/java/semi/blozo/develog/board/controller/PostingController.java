@@ -71,7 +71,7 @@ public class PostingController extends HttpServlet {
 					String postContent =  req.getParameter("postContent");
 					int categoryCode = Integer.parseInt(req.getParameter("categoryCode"));
 					int postStatusCode = Integer.parseInt(req.getParameter("postStatusCode"));
-					int blogNo = 3; //((Member)req.getSession().getAttribute("loginMember")).getMemberNo();
+					int blogNo = ((Member)req.getSession().getAttribute("loginMember")).getMemberNo();
 					
 					PostVO postVO = new PostVO();
 					postVO.setPostTitle(postTitle);

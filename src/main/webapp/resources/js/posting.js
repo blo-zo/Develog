@@ -97,9 +97,7 @@ document.getElementById("inputTag").addEventListener("keyup", function(e){
     console.log(e.code);
     if(e.code  == "Enter"){ //엔터키 입력 시 
        let input = XSSCheck(e.target.value, 1);
-		console.log(input);
-
-
+		
 		postTags(input); // 함수를 호출하여 입력한 내용을 추가
     }
 	else if(e.code == "Space"){
@@ -159,7 +157,7 @@ function deleteTag(xBtn){
     $(xBtn).parent().remove();
 }
 
-// 공백제거
+// 공백제거 (애매...)
 function changeSpace(){
 	const input = document.getElementById("inputTag");
 	input.value = input.value.slice(0, -1);

@@ -17,7 +17,7 @@
 	<!-- 게시글 삽입 -->
 	<entry key="insertPost">
 		INSERT INTO POST 
-		VALUES(SEQ_POST.NEXTVAL, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT,DEFAULT, ?, ?, ?)
+		VALUES(SEQ_POST.NEXTVAL, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?, ?)
 	</entry>
 	
 	<!-- 게시글 이미지 정보 삽입 -->

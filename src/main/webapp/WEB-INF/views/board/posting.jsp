@@ -111,8 +111,8 @@
 							aria-expanded="false">
 							<select name="categoryCode">
 								<option value="">선택하세요</option>
-								<option value="1">일상</option>
-								<option value="2">영어</option>
+								<option value="4">일상</option>
+								<option value="4">영어</option>
 							</select>
 							<!-- <button type="button" class="btn dropdown-toggle"
 								data-bs-toggle="dropdown" aria-expanded="false">정렬 방식</button>
