@@ -150,16 +150,22 @@ public class AdminController extends HttpServlet {
 			}
 			
 			else if(command.equals("post")) {
-				if(req.getParameter("searchWord") != null) {
-					String searchWord = req.getParameter("searchWord");
-					String searchTag = req.getParameterValues("searchTag")[0];
-					String rankTag = req.getParameterValues("rankTag")[0];
+				String searchWord ="";
+				String searchTag = "";
+				String orderTag = "";
+				if(req.getParameter("searchWord") != null && !req.getParameter("searchWord").equals("")) {
+					searchWord = req.getParameter("searchWord");
+					searchTag = req.getParameterValues("searchTag")[0];
 				}
+				if(req.getParameter("orderTag") != null) {
+					orderTag = req.getParameterValues("orderTag")[0];					
+				}
+				Pagination pagination = service.getPaginationPost(searchWord, searchTag, orderTag, cp);
 				
-				Pagination pagination = service.getPagination(cp);
-				
-				List<Post> postList = service.selectPost(pagination);
-				
+				List<Post> postList = service.selectPost(searchWord, searchTag, orderTag, pagination);
+				req.setAttribute("searchWord", searchWord);
+				req.setAttribute("searchTag", searchTag);
+				req.setAttribute("orderTag", orderTag);
 				req.setAttribute("pagination", pagination);
 				req.setAttribute("postList", postList);
 				 path = "/WEB-INF/views/admin/post.jsp";

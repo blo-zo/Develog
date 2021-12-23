@@ -132,10 +132,15 @@
 						<option value="createDate">작성일</option>
 						<option value="status">글 상태</option>
 					</select>
-					<select  name="rankTag" onchange="changeSelect()">
-						<option value="no">조회수</option>
-						<option value="title">좋아요</option>
-						<option value="title">신고수</option>
+					<select  name="orderTag" onchange="changeSelect()">
+						<option value="ascNo">글번호 오름</option>
+						<option value="descNo" selected>글번호 내림</option>
+						<option value="ascViews">조회수 오름</option>
+						<option value="descViews">조회수 내림</option>
+						<option value="ascLikes">좋아요 오름</option>
+						<option value="descLikes">좋아요 내림</option>
+						<option value="ascReports">신고수 오름</option>
+						<option value="descReports">신고수 내림</option>
 					</select>
 				</div>
 			</form>
@@ -143,10 +148,10 @@
 		<ul class="pagination" style="justify-content: center;">
 			<c:if test="${pagination.startPage != 1}">
 			<li>
-				<a class="page-link" href="post?cp=1">&lt;&lt;</a>
+				<a class="page-link" href="post?cp=1&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">&lt;&lt;</a>
 			</li>
 			<li>
-				<a class="page-link" href="post?cp=${pagination.prevPage}">&lt;</a>
+				<a class="page-link" href="post?cp=${pagination.prevPage}&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">&lt;</a>
 			</li>
 			
 			</c:if>
@@ -160,17 +165,17 @@
 					</c:when>
 					<c:otherwise>
 						<li>
-							<a class="page-link" href="post?cp=${i}">${i}</a>
+							<a class="page-link" href="post?cp=${i}&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">${i}</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			<c:if test="${pagination.endPage != pagination.maxPage}">
 			<li>
-				<a class="page-link" href="post?cp=${pagination.nextPage}">&gt;</a>
+				<a class="page-link" href="post?cp=${pagination.nextPage}&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">&gt;</a>
 			</li>
 			<li>
-				<a class="page-link" href="post?cp=${pagination.maxPage}">&gt;&gt;</a>
+				<a class="page-link" href="post?cp=${pagination.maxPage}&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">&gt;&gt;</a>
 			</li>
 			</c:if>
 

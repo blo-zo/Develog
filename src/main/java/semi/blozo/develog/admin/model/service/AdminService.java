@@ -37,10 +37,10 @@ public class AdminService {
 		return new Pagination(listCount, cp);
 	}
 
-	public List<Post> selectPost(Pagination pagination) throws Exception {
+	public List<Post> selectPost(String searchWord, String searchTag, String orderTag, Pagination pagination) throws Exception {
 		Connection conn = getConnection();
 		
-		List<Post> listPost = dao.selectPost(pagination, conn);
+		List<Post> listPost = dao.selectPost(pagination, searchWord, searchTag, orderTag, conn);
 		
 		conn.close();
 		
@@ -304,6 +304,16 @@ public class AdminService {
 		else		   conn.rollback();
 	
 		return result;
+	}
+
+	public Pagination getPaginationPost(String searchWord, String searchTag, String orderTag, int cp) throws Exception {
+		Connection conn = getConnection();
+		
+		int listCount = dao.postListCount(searchWord, searchTag, orderTag, conn);
+		
+		conn.close();
+		
+		return new Pagination(listCount, cp);
 	}
 
 
