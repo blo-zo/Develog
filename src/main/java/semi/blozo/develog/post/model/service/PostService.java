@@ -16,6 +16,25 @@ public class PostService {
 	
 	
 	private PostDAO dao = new PostDAO();
+	
+	
+	/** 전체 포스트 조회 (최신순, 트렌딩) Service
+	 * @return allPostList
+	 * @throws Exception
+	 */
+	public List<Post> selectPostListAll() throws Exception{
+		
+		// 최신, 트렌딩 매개변수 넣어서 위치홀더로 지정할 수 있도록
+		
+		Connection conn = getConnection();
+				
+		List<Post> allPostList = dao.selectPostListAll(conn);
+		
+		close(conn);
+				
+		return allPostList;
+	}
+	
 
 	
 	/** 블로그 페이지 처리용 객체
@@ -74,9 +93,9 @@ public class PostService {
 		// 프로필 이미지도 얻어오기
 		
 		// 포스트 이미지 조회
-		List<PostImage> postImgList = dao.selectPostImageList(postNo, conn);
-		
-		post.setPostImgList(postImgList);
+//		List<PostImage> postImgList = dao.selectPostImageList(postNo, conn);
+//		
+//		post.setPostImgList(postImgList);
 		
 		// 조회수
 		if(post != null && post.getMemberNo() != memberNo ) {
@@ -132,6 +151,26 @@ public class PostService {
 		Blog blog = dao.selectBlog(memberName, conn);
 		close(conn);
 		return blog;
+	}
+
+
+	/** 포스트 삭제 service
+	 * @param postNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int deletePost(int postNo) throws Exception{
+
+		Connection conn = getConnection();
+		
+		int result = dao.deletePost(postNo, conn);
+		
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		
+		return result;
 	}
 	
 	

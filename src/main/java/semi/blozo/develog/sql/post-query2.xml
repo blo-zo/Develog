@@ -4,7 +4,7 @@
 
 
 	<!-- 모든 블로그 게시물 리스트 조회 -->
-	<!-- 게시글 상태가 정상 + 캐러셀 -->
+	<!-- 게시글 상태가 정상 + 캐러셀 최신순 -->
 	<entry key="selectPostListAll">
 		SELECT  POST_NO, POST_TITLE, POST_CONTENT,
         TO_CHAR( CREATE_DT, 'YYYY-MM-DD' ) CREATE_DT,
@@ -12,8 +12,8 @@
         READ_COUNT, LIKE_COUNT, BLOG_NO, BLOG_TITLE, MEMBER_NO
 		FROM POST
 		JOIN BLOG USING(BLOG_NO)
-		WHERE POST_STATUS_CD IN (500, 505)
-		ORDER BY POST_NO DESC
+		WHERE POST_STATUS_CD IN (500, 504)
+		ORDER BY CREATE_DT DESC
 	</entry>
 	
 	
@@ -77,19 +77,23 @@
 		WHERE POST_NO = ?
 	</entry>
 	
-	
-	<!-- 게시글 이미지 조회 -->
-	<entry key="selectPostImageList">
-		SELECT * FROM POST_IMG
-		WHERE POST_NO = ?
-		ORDER BY POST_IMG_LEV
-	</entry>
-	
 	<!-- 썸네일 이미지 조회 -->
 	
 	
 	
 	
+	
+	<!-- 포스트 수정 -->
+	
+	
+	
+	
+	<!-- 포스트 삭제 -->
+	<entry key="deletePost">
+		UPDATE POST SET
+		POST_STATUS_CD = 501
+		WHERE POST_NO = ?
+	</entry>
 
 
 
