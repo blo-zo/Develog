@@ -16,6 +16,23 @@ public class PostService {
 	
 	
 	private PostDAO dao = new PostDAO();
+	
+	
+	/** 전체 포스트 조회 (최신순) Service
+	 * @return allPostList
+	 * @throws Exception
+	 */
+	public List<Post> selectPostListAll() throws Exception{
+		
+		Connection conn = getConnection();
+				
+		List<Post> allPostList = dao.selectPostListAll(conn);
+		
+		close(conn);
+				
+		return allPostList;
+	}
+	
 
 	
 	/** 블로그 페이지 처리용 객체
@@ -132,6 +149,26 @@ public class PostService {
 		Blog blog = dao.selectBlog(memberName, conn);
 		close(conn);
 		return blog;
+	}
+
+
+	/** 포스트 삭제 service
+	 * @param postNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int deletePost(int postNo) throws Exception{
+
+		Connection conn = getConnection();
+		
+		int result = dao.deletePost(postNo, conn);
+		
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		
+		return result;
 	}
 	
 	

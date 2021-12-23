@@ -158,6 +158,7 @@ public class PostController extends HttpServlet{
 						}
 						
 						
+						
 						// 포스트 수정 화면 전환 (로그인회원 == 작성자일 경우에만 수정버튼 노출)
 						else if(arr[1].equals("updateForm")) {
 							
@@ -189,18 +190,30 @@ public class PostController extends HttpServlet{
 						else if(arr[1].equals("delete")) {
 							
 							int postNo = Integer.parseInt(req.getParameter("pno"));
+							String memberName = req.getParameter("memberName");
 							
-//							int result = service.deletePost(postNo);
-//							
-//							if(result > 0) { // 삭제 성공
-//								
-//								path = "뚱이";
-//								
-//							}else { // 실패
-//								
-//								path = "view";
-//								
-//							}
+							System.out.println(memberName);
+							
+							int result = service.deletePost(postNo);
+							
+							if(result > 0) {
+								
+								message = "포스트가 삭제되었습니다.";
+								
+								// 포스트 리스트 페이지로 돌아가기
+								path = "view?cp=" + req.getParameter("cp");
+								
+							}else {
+								
+								message = "포스트 삭제 중 문제가 발생했습니다.";
+								
+								// 포스트 리스트 페이지로 돌아가기
+								path = "view?cp=" + req.getParameter("cp");
+								
+							}
+							
+							session.setAttribute("message", message);
+							resp.sendRedirect(path);
 							
 							
 						}
