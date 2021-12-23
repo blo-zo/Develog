@@ -257,9 +257,7 @@ footer{
     display: table-cell;
 }
 
-#fileArea{
-	    display: none;
-}
+
 
 /* set-area */
 .open, .open-title{
@@ -297,10 +295,22 @@ footer{
     font-size: 15px;
 }
 
+
+#fileArea{
+	width : 350px;
+	height :200px;
+	/* display : flex; */
+	justify-content :  center;
+	align-items : center;
+	
+	display: none;
+	 
+}
 /* 썸네일 사이즈 지정 후 조절  */
 .thumb-img-size{ 
 	width: 350px;
-	height : 200px;
+	max-height : 200px;
+	
 }
 /* 카테고리 버튼 */
 .sort-post{
