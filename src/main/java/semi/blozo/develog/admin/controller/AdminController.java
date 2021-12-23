@@ -108,15 +108,17 @@ public class AdminController extends HttpServlet {
 				req.getRequestDispatcher(path).forward(req, resp);
 
 			}else if(command.equals("member/warningPlus")) {
-				
 				String[] arr = req.getParameterValues("memberNo"); // 언제 부터 values였지? 자동으로 되어있내
 				int[] memberNo = new int[arr.length-1];
+				System.out.println(arr);
 				for(int i=0; i<arr.length-1; i++) {
 						memberNo[i] = Integer.parseInt(arr[i]);
 				}
+				
 				String content = arr[arr.length-1];
 				int result = 0;
 				String str ="";
+				
 				for(int i=0; i < memberNo.length; i++) {
 					if(!content.equals("")) {
 						result = service.insertViolationPlus(memberNo[i], content);						
@@ -126,6 +128,7 @@ public class AdminController extends HttpServlet {
 						}else {
 						}
 				}
+				
 				if(result>0) {
 					message = "경고 기능이 수행되었습니다.";
 					int updateStatus = service.updateViolationPlus();
@@ -158,28 +161,26 @@ public class AdminController extends HttpServlet {
 				
 			}else if(command.equals("post/remove")) {
 				String[] arr = req.getParameterValues("postNo"); 
-				int[] memberNo = new int[arr.length-1];
+				int[] postNo = new int[arr.length-1];
 				for(int i=0; i<arr.length-1; i++) {
-						memberNo[i] = Integer.parseInt(arr[i]);
+						postNo[i] = Integer.parseInt(arr[i]);
 				}
 				String content = arr[arr.length-1];
 				int result = 0;
 				String str ="";
-				for(int i=0; i < memberNo.length; i++) {
+				for(int i=0; i < postNo.length; i++) {
 					if(!content.equals("")) {
-						result = service.insertViolationPlus(memberNo[i], content);						
+						result = service.insertViolationPlus(postNo[i], content);						
 					}
 						if(result != 1) {
-							str += memberNo[i]+" ";
+							str += postNo[i]+" ";
 						}else {
 						}
 				}
 				if(result>0) {
-					message = "경고 기능이 수행되었습니다.";
-					int updateStatus = service.updateViolationPlus();
+					message = "삭제 되었습니다.";
 				}else {
-					
-					message = "경고 기능이 수행되지 않았습니다.\r\n"
+					message = "삭제를 실패하였습니다.\r\n"
 							+ "경고 실패 회원 번호" + str;
 				}
 					

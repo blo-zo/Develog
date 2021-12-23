@@ -224,14 +224,8 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  const warningBtn = document.getElementsByClassName("button");
 	  const contextPath = "${pageContext.servletContext.contextPath}"
 	  const checkBox = document.getElementsByClassName("check")
-
-	  let memberNo = []
-  		for(const items of checkBox){
-      if(items.checked){
-          memberNo.push(items.parentElement.nextElementSibling.innerText) 
-          
-                  }
-  		}
+	 	
+	 
 
 	  inputSearch.addEventListener("keyup", function(){
 		  if(e.key =="Enter"){
