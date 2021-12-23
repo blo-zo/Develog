@@ -60,8 +60,21 @@ public class PostDAO {
 			
 			while(rs.next()) {
 				
-				
-				
+				// 값 세팅하기
+				Post post = new Post();
+				post.setPostNo(rs.getInt("POST_NO"));
+				post.setPostTitle(rs.getString("POST_TITLE"));
+				post.setPostContent(rs.getString("POST_CONTENT"));
+				post.setPostTitle(rs.getString("POST_TITLE"));
+				post.setCreateDate(rs.getString("CREATE_DT"));
+				post.setModifyDate(rs.getString("MODIFY_DT"));
+				post.setReadCount(rs.getInt("READ_COUNT"));
+				post.setFavoriteCount(rs.getInt("LIKE_COUNT"));
+				post.setBlogNo(rs.getInt("BLOG_NO"));
+				post.setBlogTitle(rs.getString("BLOG_TITLE"));
+				post.setMemberNo(rs.getInt("MEMBER_NO"));
+				post.setMemberName(rs.getString("MEMBER_NM"));
+				allPostList.add(post);
 			}
 			
 		}finally {
