@@ -105,7 +105,7 @@ public class PostController extends HttpServlet{
 						}else { // 블로그가 없는 경우
 							
 							req.getSession().setAttribute("message", "존재하지 않는 블로그입니다.");
-							resp.sendRedirect(req.getContextPath()+"/main");
+							resp.sendRedirect(req.getContextPath());
 							
 						}
 						
@@ -119,6 +119,8 @@ public class PostController extends HttpServlet{
 							
 							// pno, cp
 							int postNo = Integer.parseInt(req.getParameter("pno"));
+							
+							String memberName = URLDecoder.decode(arr[0],"UTF-8");
 							
 							
 							// 조회수에 사용
@@ -148,7 +150,7 @@ public class PostController extends HttpServlet{
 								
 								req.getSession().setAttribute("message", "존재하지 않는 포스트입니다.");
 								
-								resp.sendRedirect( req.getContextPath() + "/blog/" + post.getMemberName() );
+								resp.sendRedirect( req.getContextPath() + "/blog/" + memberName );
 								
 							}
 							
@@ -209,7 +211,8 @@ public class PostController extends HttpServlet{
 							}
 							
 							session.setAttribute("message", message);
-							resp.sendRedirect(path);
+							req.getRequestDispatcher(path);
+							dispatcher.forward(req, resp);
 							
 							
 						}
@@ -251,8 +254,6 @@ public class PostController extends HttpServlet{
 								int postNo = Integer.parseInt(req.getParameter("postNo"));
 								String replyContent = req.getParameter("replyContent");
 								String secretReply = req.getParameter("secretReply");	// 비밀글 여부
-								
-								System.out.println(secretReply);
 								
 								PostReply reply = new PostReply();
 								
@@ -296,7 +297,8 @@ public class PostController extends HttpServlet{
 						// 좋아요 입력/삭제
 						else if(arr[1].equals("like")) {
 							
-							int memberNo = loginMember.getMemberNo();
+							int memberNo = 0;
+							if(loginMember != null) memberNo = loginMember.getMemberNo();
 							int postNo = Integer.parseInt(req.getParameter("pno"));
 							
 							int favoriteCount = service.likePost(memberNo, postNo);
@@ -309,7 +311,8 @@ public class PostController extends HttpServlet{
 						// 좋아요 수 조회하기
 						else if(arr[1].equals("selectPostLike")) {
 							
-							int memberNo = loginMember.getMemberNo();
+							int memberNo = 0;
+							if(loginMember != null) memberNo = loginMember.getMemberNo();
 							int postNo = Integer.parseInt(req.getParameter("pno"));
 							
 							int postLikeCount = service.selectPostLikeCount(memberNo, postNo);

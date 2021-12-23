@@ -174,8 +174,7 @@
 	<!-- 좋아요 수 조회 -->
 	<entry key="selectPostLikeCount">
 		SELECT COUNT(*) FROM LIKE
-		WHERE MEMBER_NO = ?
-		AND POST_NO = ?
+		WHERE POST_NO = ?
 	</entry>
 	
 	
