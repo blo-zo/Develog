@@ -1,4 +1,4 @@
-package semi.blozo.develog.member.model;
+package semi.blozo.develog.member.model.vo;
 
 import java.sql.Date;
 

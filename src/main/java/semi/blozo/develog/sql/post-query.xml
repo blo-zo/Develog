@@ -3,10 +3,7 @@
  <!-- properties 객체 안에 작성하기 -->
 <properties>
  
-	<!--  -->
-	<entry key="">
-		
-	</entry>
+	
 	
 	<!-- 게시글 삽입 + 이미지 정보 삽입 총 3번 -->
 	<!-- 다음 게시글 번호 조회 -->
@@ -17,7 +14,7 @@
 	<!-- 게시글 삽입 -->
 	<entry key="insertPost">
 		INSERT INTO POST 
-		VALUES(SEQ_POST.NEXTVAL, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?, ?)
+		VALUES(?, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?, ?)
 	</entry>
 	
 	<!-- 게시글 이미지 정보 삽입 -->
@@ -32,5 +29,9 @@
 		VALUES (SEQ_TAG.NEXTVAL, ?, ?)
 	</entry>
 	
-	
+	<!-- 카테고리 조회-->
+	<entry key="selectCategory">
+		SELECT * FROM CATEGORY
+		WHERE BLOG_NO =? 
+	</entry>
 </properties>

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import semi.blozo.develog.enquiry.model.service.EnquiryService;
 import semi.blozo.develog.enquiry.model.vo.Enquiry;
 import semi.blozo.develog.enquiry.model.vo.Pagination;
-import semi.blozo.develog.member.model.Member;
+import semi.blozo.develog.member.model.vo.Member;
 
 
 @WebServlet("/enquiry/*")

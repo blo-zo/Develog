@@ -1,6 +1,6 @@
 /* Noto Sans KR font 적용 */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-body { font-family: 'Noto Sans KR', sans-serif; }
+.category, .main, .footer { font-family: 'Noto Sans KR', sans-serif; }
 
 /* 헤더 */
 .jun-header{
@@ -161,6 +161,15 @@ margin: 5px;
     justify-content: center;
     object-fit: cover;
 }
+
+.thumb-img{
+	cursor: pointer;
+	display: none;
+}
+#fileArea{
+	display: none;
+}
+
 .p-btn{
     display: inline-block;
     height: 100%;

@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import semi.blozo.develog.member.model.Member;
-import semi.blozo.develog.member.model.MemberService;
+import semi.blozo.develog.member.model.service.MemberService;
+import semi.blozo.develog.member.model.vo.Member;
 @WebServlet("/member/searchpw")
 public class SearchPwServlet extends HttpServlet {
 	

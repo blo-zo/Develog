@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-import semi.blozo.develog.member.model.Member;
+import semi.blozo.develog.member.model.vo.Member;
 import semi.blozo.develog.post.model.service.PostService;
 import semi.blozo.develog.post.model.service.ReplyService;
 import semi.blozo.develog.post.model.vo.Blog;

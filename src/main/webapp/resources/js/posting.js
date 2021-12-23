@@ -34,22 +34,14 @@ function sendFile(file, editor){
       //dataType: "json",
       enctype: "multipart/form-data",
       cache : false,
-        contentType : false,
-        // contentType : 서버로 전송되는 데이터의 형식 설정
-        // 기본값  : application/x-www-form-urlencoded; charset=UTF-8
-        // 파일 전송 시 multipart/form-data 형식으로 데이터를 전송해야 하므로
-        // 데이터의 형식이 변경되지 않도록 false로 지정.
-        
-        processData : false,
-        // processData : 서버로 전달되는 값을 쿼리스트링으로 보낼경우 true(기본값), 아니면 false
-        //            파일 전송 시 false로 지정 해야 함.
-        
+      contentType : false,
+      processData : false,
+     
       success : function(result){
            var contextPath = location.pathname.substring(0, window.location.pathname.indexOf("/",2));
 		console.log
          
          // 저장된 이미지를 에디터에 삽입
-         //$(editor).summernote('editor.insertImage', contextPath + result.filePath + result.changeFileName);
          $(editor).summernote('editor.insertImage', result);
          
 
@@ -81,22 +73,18 @@ function postValidate() {
 		$("[name=insertForm]").append(input);
 	})
 	
-	
-	
 	document.insertForm.submit();// form태그 name값이 제출이 되게 지정
 }
 
 
 
-// 1. 입력 버튼이 클릭 되었을 때
-document.getElementById("inputTag").addEventListener("click", postTags);
-
-// 2. input태그에서 키보드가 눌러졌을때
+//  input태그에서 키보드가 눌러졌을때
 document.getElementById("inputTag").addEventListener("keyup", function(e){
     // e : 발생된 이벤트와 관련된 정보가 모두 담겨있음.
     console.log(e.code);
     if(e.code  == "Enter"){ //엔터키 입력 시 
-       let input = XSSCheck(e.target.value, 1);
+       	let input = e.target;
+		input.value = XSSCheck(input.value, 1);
 		
 		postTags(input); // 함수를 호출하여 입력한 내용을 추가
     }
@@ -117,21 +105,20 @@ function postTags(input){
     // #input-text에 작성된 값을 읽어오기
     
     //입력된 값이 있을 때만 추가 (space도 추가된값)
-    if(input.trim().length != 0){   
+    if(input.value.trim().length != 0){   
         
 		// p태그 형식으로 추가
         document.getElementById("postTags").innerHTML 
-            += "<span class='tags post-tag' >#" + input +"<b class='del' onclick='deleteTag(this)'>X</b></span>";
+            += "<span class='tags post-tag' >#" + input.value +"<b class='del' onclick='deleteTag(this)'>X</b></span>";
 		
 		//3) input 태그에 작성된 내용을 삭제
-		input = "";
+		input.value = "";
 		
-		
-		if(document.getElementsByClassName("post-tag").length > 10){ // 태그 갯수 변경하기 // post-tag가 10개넘어가면 삭제
+		// post-tag가 10개넘어가면 삭제
+		if(document.getElementsByClassName("post-tag").length > 10){ 
 			$("#postTags > span:last-child").remove();
 		}
 		
-	
         // 4) input에 포커스 맞추기
         document.getElementById("inputTag").focus();
     } 
@@ -141,7 +128,7 @@ function postTags(input){
 function XSSCheck(str, level) {
 		
     if (level == undefined || level == 0) {
-        str = str.replace(/\<|\>|\"|\'|\%|\;|\(|\)|\&|\+|\-/g,"");
+        str = str.replace(/\<|\>|\"|\'|\%|\;|\(|\)|\&|\+|\-|\s/g,"");
     } else if (level != undefined && level == 1) {
         str = str.replace(/\</g, "&lt;");
         str = str.replace(/\>/g, "&gt;");
@@ -157,7 +144,7 @@ function deleteTag(xBtn){
     $(xBtn).parent().remove();
 }
 
-// 공백제거 (애매...)
+// 공백제거
 function changeSpace(){
 	const input = document.getElementById("inputTag");
 	input.value = input.value.slice(0, -1);
@@ -189,3 +176,47 @@ $(".modal-content-area .btn-cancel").on("click", function () {
 })
 
 
+// 썸네일 영역파일이 클릭되었을때 
+$(function() {
+   $(".thumb-img").on("click", function() {
+
+      $("[type=file]").click();
+      // 타입이 file인 요소 중 몇번 인덱스 요소를 선택하여 클릭
+   });
+
+});
+
+
+// 각각의 영역에 파일을 첨부 했을 경우 미리 보기가 가능하도록 하는 함수
+function loadImg(value) {
+   // 매개변수 value == 클릭된 input 요소
+
+   // 파일이 선택된 경우 true
+   if (value.files && value.files[0]) { // 확실하게 하기 위해  && value.files[0]
+
+      var reader = new FileReader();
+      // 자바스크립트 FileReader
+      // 웹 애플리케이션이 비동기적으로 데이터를 읽기 위하여 읽을 파일을 가리키는 File 혹은 Blob객체를 이용해 파일의 내용을 읽고 사용자의 컴퓨터에 저장하는 것을 가능하게 해주는 객체
+
+      // 선택된 파일 읽기 시작
+      reader.readAsDataURL(value.files[0]);
+      // FileReader.readAsDataURL()
+      // 지정된의 내용을 읽기 시작합니다. Blob완료되면 result속성 data:에 파일 데이터를 나타내는 URL이 포함 됩니다.
+
+      // FileReader.onload
+      // load 이벤트의 핸들러. 이 이벤트는 읽기 동작이 성공적으로 완료 되었을 때마다 발생합니다.
+
+      // 다 읽은 경우
+      reader.onload = function(e) {
+         //console.log(e.target.result);
+         // e.target.result
+         // -> 파일 읽기 동작을 성공한 객체에(fileTag) 올라간 결과(이미지 또는 파일)
+// 사이즈 지정 필요  
+		 $(".thumb-img > img").addClass('thumb-img-size');
+         $(".thumb-img").children("img").attr("src", e.target.result);
+
+         // div 박스.                              이벤트가 발생한 결과값 뱉어 내라 src="여기에 넣어라"
+      }
+
+   }
+}

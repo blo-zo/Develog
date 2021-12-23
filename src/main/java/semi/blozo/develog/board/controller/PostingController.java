@@ -19,11 +19,11 @@ import com.oreilly.servlet.MultipartRequest;
 
 import semi.blozo.develog.board.model.vo.Category;
 import semi.blozo.develog.board.model.service.PostingService;
-import semi.blozo.develog.board.model.vo.PostImageVO;
+import semi.blozo.develog.board.model.vo.ThumbImgVO;
 import semi.blozo.develog.board.model.vo.PostVO;
 import semi.blozo.develog.board.model.vo.TagVO;
 import semi.blozo.develog.common.MyRenamePolicy;
-import semi.blozo.develog.member.model.Member;
+import semi.blozo.develog.member.model.vo.Member;
 
 @WebServlet("/board/*")
 public class PostingController extends HttpServlet {
@@ -45,18 +45,19 @@ public class PostingController extends HttpServlet {
 
 			PostingService service = new PostingService();
 			
-			System.out.println(command);
-			
 			// 게시글 삽입
 			if(command.equals("insert")) {
 				System.out.println("@insert일때: "+method);
 				//GET 방식 요청 -> 게시글 등록 화면 전환
 				if(method.equals("GET")) {
+					
+					int blogNo = ((Member)req.getSession().getAttribute("loginMember")).getMemberNo();
 					// 카테고리 테이블 내용 조회하기 // VO에 카테고리 
-					List<Category> category = service.selectCategory();
+					List<Category> category = service.selectCategory(blogNo);
 					
 					req.setAttribute("category", category);
-					System.out.println("@get일때");
+					
+					System.out.println(category);
 					
 					path  = "/WEB-INF/views/board/posting.jsp";
 					dispatcher = req.getRequestDispatcher(path);
@@ -80,19 +81,45 @@ public class PostingController extends HttpServlet {
 					postVO.setPostStatusCode(postStatusCode);
 					postVO.setBlogNo(blogNo);
 					
-					System.out.println(postVO);
 					
+//					// 썸네일 이미지
+//					HttpSession session = req.getSession();
+//					
+//					int maxSize = 1024 * 1024 * 100;
+//					String root =  session.getServletContext().getRealPath("/");
+//					String filePath = "/resources/images/board/";
+//					String realPath = root + filePath;
+//					
+//					MultipartRequest mReq 
+//					= new MultipartRequest( req, realPath, maxSize, "UTF-8", new MyRenamePolicy() );
+					
+					// 썸네일
+					/*
+					 * if( mReq.getFilesystemName(name) != null) {
+					 * 
+					 * 
+					 * 
+					 * }
+					 * 
+					 */
+					
+				
 					String[] tags = req.getParameterValues("tags");
 					
 					List<TagVO> tagVOList = new ArrayList<TagVO>();
-					
-					for(String vo : tags) {
-						TagVO tagvo = new TagVO();
-						tagvo.setTagName(vo);
-						tagVOList.add(tagvo);
+					if(tags != null) {
+						for(String vo : tags) {
+							TagVO tagvo = new TagVO();
+							tagvo.setTagName(vo);
+							
+							tagVOList.add(tagvo);
+						}
 					}
 					
-					int result = service.insertPost(postVO, tagVOList );
+					int result = service.insertPost(postVO, tagVOList);
+					
+					System.out.println("test : " + result);
+					
 					
 					if (result > 0) {
 						message = "게시글이 작성되었습니다.";
@@ -106,6 +133,8 @@ public class PostingController extends HttpServlet {
 					req.getSession().setAttribute("message", message);
 					resp.sendRedirect(path);
 				  
+					
+					
 				}
 				
 			}// insert if end
