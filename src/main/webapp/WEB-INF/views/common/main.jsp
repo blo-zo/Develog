@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- header include -->
 	<jsp:include page="header.jsp"/>
 	<%-- include할 jsp 파일 경로 작성 --%>
@@ -10,54 +11,18 @@
     <!---------------------------------------------------- Swiper 캐러셀 ------------------------------------->
     <div class="swiper mySwiper"> <!-- active 클래스 넣기 -->
         <div class="swiper-wrapper">
+          
+         <c:forEach items="${postListAll}" var="postList" begin="1" end="6">
           <div class="swiper-slide wrapper">
           <a href="">
               <img src="https://via.placeholder.com/420x250" alt="" class="carousel-imgbox">
                <div class="bg">
-                 <p>테스트입니다</p>
+                 <p>${postList.postTitle}</p>
                 </div>
               </a>
             </div>
-          <div class="swiper-slide wrapper">
-          <a href="">
-              <img src="https://via.placeholder.com/420x250" alt="" class="carousel-imgbox">
-               <div class="bg">
-                 <p>테스트입니다</p>
-                </div>
-              </a>
-            </div>
-          <div class="swiper-slide wrapper">
-          <a href="">
-              <img src="https://via.placeholder.com/420x250" alt="" class="carousel-imgbox">
-               <div class="bg">
-                 <p>테스트입니다</p>
-                </div>
-              </a>
-            </div>
-          <div class="swiper-slide wrapper">
-          <a href="">
-              <img src="https://via.placeholder.com/420x250" alt="" class="carousel-imgbox">
-               <div class="bg">
-                 <p>테스트입니다</p>
-                </div>
-              </a>
-            </div>
-          <div class="swiper-slide wrapper">
-          <a href="">
-              <img src="https://via.placeholder.com/420x250" alt="" class="carousel-imgbox">
-               <div class="bg">
-                 <p>테스트입니다</p>
-                </div>
-              </a>
-            </div>
-          <div class="swiper-slide wrapper">
-          <a href="">
-              <img src="https://via.placeholder.com/420x250" alt="" class="carousel-imgbox">
-               <div class="bg">
-                 <p>테스트입니다</p>
-                </div>
-              </a>
-            </div>
+          </c:forEach>
+          
          
          
      
@@ -115,8 +80,9 @@
           
         <section class="card-bord">
        
-   
-         <div class="wrapper-card">
+  	 <c:forEach items="${postListAll}" var="postList">
+  	 
+          <div class="wrapper-card">
             
    
    
@@ -125,21 +91,26 @@
                      
                      <div class="card">
                          
-                         <div class="image"><img src="https://via.placeholder.com/280x150" id="img-size"></div>  
+                         <div class="image"><img src="https://via.placeholder.com/280x150"  id="img-size"></div>  
                          
                          <div class="title-box">
-                             <p  class="title">제목입니다</p>
+                             <p  class="title">${postList.postTitle}</p>
                          </div>  
                          <div class="user-div sub-div">
                              
-                             <span class="by_name">by <b>유동훈</b></span><div class="likes"><svg id="ht"viewBox="0 0 24 24"><path fill="currentColor" d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path>
-                             </svg>155</div>
+                             <span class="by_name">by <b>${postList.memberName}</b></span><div class="likes"><svg id="ht"viewBox="0 0 24 24"><path fill="currentColor" d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path>
+                             </svg>${postList.favoriteCount}</div>
                          </div>
                          
                      </div>
                  </a>
              </div>
       
+      
+    
+  	 </c:forEach>
+      
+
       
      
    		</section>

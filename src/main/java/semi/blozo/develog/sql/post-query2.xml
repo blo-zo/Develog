@@ -6,14 +6,20 @@
 	<!-- 모든 블로그 게시물 리스트 조회 -->
 	<!-- 게시글 상태가 정상 + 캐러셀 최신순 -->
 	<entry key="selectPostListAll">
-		SELECT  POST_NO, POST_TITLE, POST_CONTENT,
-        TO_CHAR( CREATE_DT, 'YYYY-MM-DD' ) CREATE_DT,
-        TO_CHAR( MODIFY_DT, 'YYYY-MM-DD' ) MODIFY_DT,
-        READ_COUNT, LIKE_COUNT, BLOG_NO, BLOG_TITLE, MEMBER_NO
-		FROM POST
-		JOIN BLOG USING(BLOG_NO)
-		WHERE POST_STATUS_CD IN (500, 504)
-		ORDER BY CREATE_DT DESC
+	 	 SELECT  POST_NO, POST_TITLE, 
+                POST_CONTENT,
+                TO_CHAR(CREATE_DT ,'YYYY"년" MM"월" DD"일" HH24":"MI":"SS') CREATE_DT,
+	        	TO_CHAR(POST.MODIFY_DT ,'YYYY"년" MM"월" DD"일" HH24":"MI":"SS') MODIFY_DT,
+	        	READ_COUNT, LIKE_COUNT, BLOG.BLOG_NO, 
+	        	BLOG_TITLE, MEMBER.MEMBER_NO, MEMBER_NM, 
+               
+                POST.POST_STATUS_CD, POST_STATUS_NM
+                FROM POST
+                JOIN BLOG ON(BLOG.BLOG_NO = POST.BLOG_NO)
+                JOIN MEMBER ON(BLOG.MEMBER_NO = MEMBER.MEMBER_NO)
+                JOIN POST_STATUS ON(POST.POST_STATUS_CD = POST_STATUS.POST_STATUS_CD)
+                WHERE POST.POST_STATUS_CD IN (500, 504)
+                ORDER BY CREATE_DT DESC
 	</entry>
 	
 	
