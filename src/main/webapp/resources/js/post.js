@@ -41,7 +41,7 @@ function sendBlog(e, pno, blogMemberName, blogIntro, blogTitle){
   $("input[name=blogIntro]").val(blogIntro);
   $("input[name=blogTitle]").val(blogTitle);
   
-
+  document.sendBlogInfo.action = contextPath + "/blog/" + postMemberName + "/view";
 	document.sendBlogInfo.submit();
 }
 

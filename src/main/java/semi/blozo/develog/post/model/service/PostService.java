@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import semi.blozo.develog.post.model.dao.PostDAO;
+import semi.blozo.develog.post.model.vo.Blog;
 import semi.blozo.develog.post.model.vo.Post;
 import semi.blozo.develog.post.model.vo.PostImage;
 import semi.blozo.develog.post.model.vo.PostPagination;
@@ -117,6 +118,20 @@ public class PostService {
 		
 		return post;
 		
+	}
+
+
+	/** 블로그 조회
+	 * @param memberName
+	 * @return blog
+	 * @throws Exception
+	 */
+	public Blog selectBlog(String memberName) throws Exception{
+
+		Connection conn = getConnection();
+		Blog blog = dao.selectBlog(memberName, conn);
+		close(conn);
+		return blog;
 	}
 	
 	

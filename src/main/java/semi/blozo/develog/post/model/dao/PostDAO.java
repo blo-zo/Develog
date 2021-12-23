@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import semi.blozo.develog.post.model.vo.Blog;
 import semi.blozo.develog.post.model.vo.Post;
 import semi.blozo.develog.post.model.vo.PostImage;
 import semi.blozo.develog.post.model.vo.PostPagination;
@@ -237,6 +238,44 @@ public class PostDAO {
 		}
 		
 		return postImgList;
+	}
+
+
+	/** 블로그 조회 dao
+	 * @param memberName
+	 * @param conn
+	 * @return blog정보
+	 * @throws Exception
+	 */
+	public Blog selectBlog(String memberName, Connection conn) throws Exception{
+		
+		Blog blog = null;
+		
+		try {
+			
+			String sql = prop.getProperty("selectBlog");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberName);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				
+				blog = new Blog();
+				blog.setBlogNo(rs.getInt("BLOG_NO"));
+				blog.setBlogName(rs.getString("BLOG_TITLE"));
+				blog.setMemberNo(rs.getInt("MEMBER_NO"));
+				blog.setMemberName(rs.getString("MEMBER_NM"));
+				blog.setIntro(rs.getString("INTRO"));
+				
+			}
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return blog;
 	}
 	
 	

@@ -1,6 +1,8 @@
 package semi.blozo.develog.post.controller;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -29,8 +31,9 @@ public class PostController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		// 요청 방식
+				// 요청 방식
 				String method = req.getMethod();
+				
 				
 				// requestUrI에서 '/' 개수를 찾아서 1개인 경우 : 블로그 메인
 				// 2개인 경우 : 마지막 부분을 잘라서 명령어(command : insert/update/delete)로  사용한다 -> split
@@ -38,6 +41,10 @@ public class PostController extends HttpServlet{
 				String contextPath = req.getContextPath();
 				
 				String command = uri.substring( (contextPath + "/blog/" ).length());
+				
+				
+				// String을 직접 인코딩->디코딩하면 한글로 잘 돌아온다.
+				// command(uri 주소 맨 뒤 한글값)에서 인코딩->디코딩 하면 한글로 나오지 않는다.
 				
 				
 				String[] arr = uri.substring( (contextPath + "/blog/" ).length()).split("/");	
@@ -50,17 +57,7 @@ public class PostController extends HttpServlet{
 				
 				HttpSession session = req.getSession();
 				
-				//-----------------------------------------------------------------------
-				// 샘플 로그인 데이터 세팅
-				
-//				Member loginMember = new Member("123123!", "뚱이", "ddong2@gmail.com");
-//				loginMember.setMemberNo(1);
-//				loginMember.setStatusCd(200);
-//				loginMember.setGradeCd(100);
-//				
-//				session.setAttribute("loginMember", loginMember);
-//				session.setMaxInactiveInterval(1800);
-				//-----------------------------------------------------------------------
+				Member loginMember = (Member)req.getSession().getAttribute("loginMember");
 				
 				
 				try {
@@ -71,53 +68,46 @@ public class PostController extends HttpServlet{
 					int cp = req.getParameter("cp") == null ? 1 : Integer.parseInt(req.getParameter("cp"));
 					
 					
-					
-					
-					
-//					Member loginMember = (Member)req.getSession().getAttribute("loginMember");
-
-					
-					
 					// 블로그 메인 페이지 ( + 정렬, 검색 만들어야함)
 					if(arr.length == 1) {	
 						
+						// /blog/memberName 값
+						String memberName = URLDecoder.decode(arr[0],"UTF-8");
 						
-						//포스트를 클릭하면 이름,소개,블로그제목을 얻어온다.
-						String memberName = req.getParameter("blogMemberName");
-						String intro = req.getParameter("blogIntro");
-						String blogTitle = req.getParameter("blogTitle");
+						// memberName을 통해 블로그 객체 생성 (해당 이름의 블로그가 있는지 찾음) 
+						Blog blog = service.selectBlog(memberName);
 						
-						System.out.println(memberName);
-						System.out.println(intro);
-						System.out.println(blogTitle);
-						
-						
-						memberName = "유동";
-						
-						
-						// 특정 블로그에 있는 전체 게시글 수 카운트
-						PostPagination blogPostPagination = service.getPostPagination(cp, memberName);
-						
-						
-						// 카테고리 메뉴 추가, 삭제에 사용
-						// 로그인 회번 번호 조회
-						Member loginMember = (Member)req.getSession().getAttribute("loginMember");
-						
-//						int memberNo = 0;
-						int memberNo = 1;
-						if(loginMember != null) memberNo = loginMember.getMemberNo();
-						
-						List<Post> postList = service.selectBlogPostList(blogPostPagination, memberName);
-						
-						
-						// 화면 출력하기
-						req.setAttribute("blogPostPagination", blogPostPagination);
-						req.setAttribute("postList", postList);
-						
-						
-						path = "/WEB-INF/views/post/blogMain.jsp";
-						dispatcher = req.getRequestDispatcher(path);
-						dispatcher.forward(req, resp);
+						if(blog != null) {	// 해당 블로그가 있는 경우
+							
+							// 특정 블로그에 있는 전체 게시글 수 카운트
+							PostPagination blogPostPagination = service.getPostPagination(cp, memberName);
+							
+							
+							// 카테고리 메뉴 추가, 삭제에 사용
+							// 로그인 회번 번호 조회
+							
+							int memberNo = 0;
+							if(loginMember != null) memberNo = loginMember.getMemberNo();
+							
+							List<Post> postList = service.selectBlogPostList(blogPostPagination, memberName);
+							
+							
+							// 화면 출력하기
+							req.setAttribute("blog", blog);
+							req.setAttribute("blogPostPagination", blogPostPagination);
+							req.setAttribute("postList", postList);
+							
+							
+							path = "/WEB-INF/views/post/blogMain.jsp";
+							dispatcher = req.getRequestDispatcher(path);
+							dispatcher.forward(req, resp);
+							
+						}else { // 블로그가 없는 경우
+							
+							req.getSession().setAttribute("message", "존재하지 않는 블로그입니다.");
+							resp.sendRedirect(req.getContextPath()+"/main");
+							
+						}
 						
 						
 						
@@ -130,18 +120,8 @@ public class PostController extends HttpServlet{
 							// pno, cp
 							int postNo = Integer.parseInt(req.getParameter("pno"));
 							
-							String memberName = req.getParameter("blogMemberName");
-							String intro = req.getParameter("blogIntro");
-							String blogTitle = req.getParameter("blogTitle");
-							
-							System.out.println(memberName);
-							System.out.println(intro);
-							System.out.println(blogTitle);
-							
 							
 							// 조회수에 사용
-							Member loginMember = (Member)req.getSession().getAttribute("loginMember");
-							
 							int memberNo = 0;
 							
 							if(loginMember != null) memberNo = loginMember.getMemberNo();
@@ -165,12 +145,13 @@ public class PostController extends HttpServlet{
 								
 								
 							}else {
-//								req.getSession().setAttribute("message", "삭제되었거나 존재하지 않는 포스트입니다.");
+								
+								req.getSession().setAttribute("message", "삭제되었거나 존재하지 않는 포스트입니다.");
 								
 								
 								// 경로 동적 요소로 바꾸기
 								
-								resp.sendRedirect("유동");
+								resp.sendRedirect( req.getContextPath() + "/blog/" + post.getMemberName() );
 							}
 							
 							
@@ -207,6 +188,21 @@ public class PostController extends HttpServlet{
 						// 포스트 삭제하기
 						else if(arr[1].equals("delete")) {
 							
+							int postNo = Integer.parseInt(req.getParameter("pno"));
+							
+//							int result = service.deletePost(postNo);
+//							
+//							if(result > 0) { // 삭제 성공
+//								
+//								path = "뚱이";
+//								
+//							}else { // 실패
+//								
+//								path = "view";
+//								
+//							}
+							
+							
 						}
 						
 						
@@ -236,7 +232,6 @@ public class PostController extends HttpServlet{
 							
 							// 댓글 삽입
 							else if(arr[2].equals("insert")) {
-								Member loginMember = (Member)req.getSession().getAttribute("loginMember");
 			                     
 			                     int memberNo = 0;
 			                     

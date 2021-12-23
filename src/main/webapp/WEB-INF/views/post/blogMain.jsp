@@ -1,6 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:set var="contextPath" value="${pageContext.servletContext.contextPath}" scope="application" />
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>${blog.blogName}</title>
+	<!-- Bootstrap5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="${contextPath}/resources/css/post.css">
+	
+</head>
+
 	<!-- header include -->
 	<jsp:include page="blogHeader.jsp"/>
 	<%-- include할 jsp 파일 경로 작성 --%>
@@ -15,10 +29,11 @@
           <img id="blog-profile-img" src="https://via.placeholder.com/200x200" alt="">
         </div>
         <div class="blog-profile-text">
-          <h1>${param.blogMemberName}</h1>
-          <p>${param.blogIntro}</p>
+          <h1>${blog.memberName}</h1>
+          <p>${blog.intro}</p>
         </div>
       </div>
+      
 
       <!-- 소셜 계정 정보 영역 -->
       <div class="social-account-area">
@@ -96,8 +111,7 @@
   					
 			            <!-- 블로그 본문 내용 -->
 			            <div class="card blog-post-card">
-			              <a href="${post.memberName}/view?pno=${post.postNo}" 
-			              onclick="sendBlog(event, ${post.postNo}, '${post.memberName}', '${post.intro}', '${post.blogTitle}')" class="card-link">
+			              <a href="${contextPath}/blog/${post.memberName}/view?pno=${post.postNo}&cp=${blogPostPagination.currentPage}" class="card-link">
 			  
 			                <div class="card-img-top blog-post-img">
 			                  <!-- 이미지 영역 -->
@@ -206,24 +220,9 @@
     </div>
     
     
-    <!-- 블로그 -->
-	<form action="${contextPath}/blog/${post.memberName}/view" method="post" name="sendBlogInfo" >
-	<input type="hidden" name = "blogMemberName" value="">
-	<input type="hidden" name = "blogIntro" value="">
-	<input type="hidden" name = "blogTitle" value="">
-	<input type="hidden" name = "cp" value="${blogPostPagination.currentPage}">
-	<input type="hidden" name = "pno" value="">
-	</form>
 
 
   </main>
-  
-  
-  <%-- 전역 변수로 이름 지정해서 블로그 주소 넘기기 --%>
-  <script>
-  	const postMemberName = "${post.memberName}";
-  
-  </script>
 
   
 

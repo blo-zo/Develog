@@ -17,6 +17,17 @@
 	</entry>
 	
 	
+	<!-- 블로그 조회 후 결과가 있으면 메인페이지 출력 -->
+	<!-- SNS 정보는 후순위로.. -->
+	<entry key="selectBlog">
+		SELECT BLOG_NO, BLOG_TITLE, MEMBER_NO, MEMBER_NM, INTRO
+		FROM BLOG
+		JOIN MEMBER USING(MEMBER_NO)
+		WHERE MEMBER_NM = ?
+	</entry>
+	
+	<!-- 블로그 태그 조회는 따로 빼야할듯 -->
+	
 	<!-- 특정 블로그의 전체 게시물 수 조회 (삭제가 아닌 게시글) -->
 	<entry key="getBlogListCount">
 		SELECT COUNT(*) FROM POST
@@ -103,14 +114,14 @@
 	<!-- 포스트 댓글 삽입 -->
 	<entry key="insertPostReply">
 		INSERT INTO REPLY 
-		VALUES( SEQ_REPLY_NO.NEXTVAL, ?, DEFAULT, 
-	    DEFAULT, DEFAULT, ?, ?, 600) 
+		VALUES( SEQ_REPLY.NEXTVAL, ?, DEFAULT, 
+	    DEFAULT, ?, ?, 600) 
 	</entry>
 	
 	<entry key="insertSecretReply">
 		INSERT INTO REPLY
-		VALUES( SEQ_REPLY_NO.NEXTVAL, ?, DEFAULT,
-		DEFAULT, DEFAULT, ?, ?, 602)
+		VALUES( SEQ_REPLY.NEXTVAL, ?, DEFAULT,
+		DEFAULT, ?, ?, 602)
 	</entry>
 	
 	
