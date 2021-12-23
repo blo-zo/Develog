@@ -170,7 +170,7 @@ public class AdminController extends HttpServlet {
 				String str ="";
 				for(int i=0; i < postNo.length; i++) {
 					if(!content.equals("")) {
-						result = service.insertViolationPlus(postNo[i], content);						
+							result = service.insertDeletePost(postNo[i], content);													
 					}
 						if(result != 1) {
 							str += postNo[i]+" ";
@@ -181,7 +181,7 @@ public class AdminController extends HttpServlet {
 					message = "삭제 되었습니다.";
 				}else {
 					message = "삭제를 실패하였습니다.\r\n"
-							+ "경고 실패 회원 번호" + str;
+							+ "삭제 실패 게시글 번호" + str;
 				}
 					
 				resp.getWriter().print(message);

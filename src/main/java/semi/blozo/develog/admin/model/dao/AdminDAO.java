@@ -645,5 +645,39 @@ public class AdminDAO {
 	
 	}
 
+	public int insertDeletePost(int postNo, String content, Connection conn) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("insertDeletePost");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, content);
+			pstmt.setInt(2, postNo);
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+	
+	
+	}
+
+	public int updatePostStatus(int postNo, Connection conn) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("updatePostStatus");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+	
+	}
+
 
 }

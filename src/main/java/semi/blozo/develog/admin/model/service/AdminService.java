@@ -262,4 +262,21 @@ public class AdminService {
 		return new Pagination(listCount, cp);
 	}
 
+	public int insertDeletePost(int postNo, String content) throws Exception {
+		Connection conn = getConnection();
+		
+		int result = dao.updatePostStatus(postNo, conn);
+		if(result >0) {
+			result = dao.insertDeletePost(postNo, content, conn);			
+		}
+		if(result >0) conn.commit();
+		else		  conn.rollback();
+		
+		conn.close();
+		
+		return result;
+	
+	}
+
+
 }
