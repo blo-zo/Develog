@@ -168,12 +168,27 @@
 	
 	<!-- 게시글 삭제 -->
 	<entry key="updatePostStatus">
-		UPDATE POST SET POST_STATUS_CD = 501 WHERE POST_NO = ?
+		UPDATE POST SET POST_STATUS_CD = 502 WHERE POST_NO = ?
 	</entry>
 
 	<!-- 게시글 삭제 이유 삽입 -->
 	<entry key="insertDeletePost">
-		INSERT INTO DELETE_POST VALUES (SEQ_DELETE_POST.NEXTVAL, ?, ?)
+		INSERT INTO DELETE_POST VALUES (SEQ_DELETE_POST.NEXTVAL, ?, DEFAULT, ?)
+	</entry>
+
+	<!-- 게시글 삭제 이유 테이블 조회 -->
+	<entry key="selectDeletePost">
+		SELECT DELETE_POST_NO, DELETE_POST_CONTENT, TO_CHAR(DELETE_POST_DT, 'YYYY-MM-DD') DELETE_POST_DT, POST_NO FROM DELETE_POST WHERE POST_NO = ?
+	</entry>
+
+	<!-- 게시글 삭제 이유 테이블 삭제 -->
+	<entry key="deletePostContent">
+		DELETE FROM DELETE_POST WHERE POST_NO = ?
+	</entry>
+
+	<!-- 게시글 삭제 이유 테이블 삭제 -->
+	<entry key="updateResotrePostStatus">
+		UPDATE POST SET POST_STATUS_CD = 500 WHERE POST_NO = ?
 	</entry>
 
 

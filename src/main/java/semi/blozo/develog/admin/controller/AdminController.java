@@ -251,10 +251,22 @@ public class AdminController extends HttpServlet {
 				
 				int memberNo = Integer.parseInt(req.getParameter("memberNo"));
 				
-				// vo report 이용
+				// Violation 내용을 report vo로 재활용
 				List<Report> violation = service.selectViolation(memberNo);
 				
 				new Gson().toJson(violation, resp.getWriter());
+				
+			}else if(command.equals("post/removeContent")) {
+				int postNo = Integer.parseInt(req.getParameter("postNo"));
+				
+				Post removeContent = service.selectDeletePost(postNo);
+				
+				new Gson().toJson(removeContent, resp.getWriter());
+			}else if(command.equals("post/restorePost")) {
+				int postNo = Integer.parseInt(req.getParameter("postNo"));
+				
+				
+				int result = service.deletePostContent(postNo);
 				
 			}
 			

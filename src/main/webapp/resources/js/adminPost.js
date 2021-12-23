@@ -68,3 +68,54 @@ function postStatusChange() {
 
     })
 }
+
+function removeContent(postNo){
+
+    const container = $(".container").eq(0); //jQuery js랑 섞여서 문제가 생겼다 
+    console.log(container);
+    $.ajax({
+        url : contextPath + "/admin/post/removeContent",// 절대 경로로 해야 하나?
+        data : {"postNo" : postNo},
+        type : "GET",
+        dataType : "JSON",
+        success : function(post){
+            container.html("")
+            console.log(post);// 여기서 memberNo는 DELETE_POST_NO 즉, 고유번호를 가리킨다.
+                const str = 'No. <span>'+post.postNo+'</span>' +' ('+post.createDate+')'+ '  :  ' +post.postContent+ '<span onclick="restorePost(this)" class="removeViolation" style="float:right;">복구</span> <span style="display:none">'+post.memberNo+'</span>'
+                const div = $('<div class="col">')
+                            .html(str)
+                container.append(div)
+           
+        },
+        error : function(req, status, error){
+            console.log("ajax 실패");
+            console.log(req.responseText);
+     }
+
+    })
+}
+
+function restorePost(e){
+    const postNo = e.previousElementSibling.innerText
+    console.log(postNo);
+    $.ajax({
+        url : contextPath + "/admin/post/restorePost",
+        traditional : true, //이게 뭔지는 모르겠는데 배열을 넘겨준데
+        data : {"postNo" : postNo},
+        type : "GET",
+        async : false, // 동기 방식으로 변환
+        success : function(){
+            alert("게시글이 복구 되었습니다.")
+            location.reload()
+                  },
+                    
+        error : function(req, status, error){
+                    console.log("ajax 실패");
+                    console.log(req.responseText);
+                    console.log(status);
+                    console.log(error);
+                }
+                    
+    })
+
+}

@@ -278,5 +278,35 @@ public class AdminService {
 	
 	}
 
+	public Post selectDeletePost(int postNo) throws Exception {
+		Connection conn = getConnection();
+		
+		Post removeContent = dao.selectDeletePost(postNo, conn);
+		
+		conn.close();
+		
+		return removeContent;
+	
+	
+	}
+
+	public int deletePostContent(int postNo) throws Exception {
+		Connection conn = getConnection();
+		
+		int result = dao.deletePostContent(postNo, conn);
+		
+		if(result >0 ) {
+			result = dao.updateResotrePostStatus(postNo, conn);
+			if(result>0) {
+				conn.commit();				
+			}
+		}
+		else		   conn.rollback();
+	
+		return result;
+	}
+
+
+
 
 }

@@ -619,8 +619,8 @@ public class AdminDAO {
 			while(rs.next()) {
 				Report violation = new Report();
 				violation.setReportNo(rs.getInt(1));
-				violation.setMemberNo(rs.getInt(2));
-				violation.setReportContent(rs.getString(3));
+				violation.setReportContent(rs.getString(2));
+				violation.setMemberNo(rs.getInt(3));
 				violationList.add(violation);
 			}
 		}finally {
@@ -668,6 +668,62 @@ public class AdminDAO {
 		
 		try {
 			String sql = prop.getProperty("updatePostStatus");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+	
+	}
+
+	public Post selectDeletePost(int postNo, Connection conn) throws Exception {
+		Post removeContent = new Post();
+		
+		try {
+			String sql = prop.getProperty("selectDeletePost");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				removeContent.setMemberNo(rs.getInt(1));
+				removeContent.setPostContent(rs.getString(2));
+				removeContent.setCreateDate(rs.getString(3));
+				removeContent.setPostNo(rs.getInt(4));
+			}
+		}finally {
+			rs.close();
+			pstmt.close();
+		}
+		
+		return removeContent;
+	}
+
+	public int deletePostContent(int postNo, Connection conn) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("deletePostContent");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+	
+	}
+
+	public int updateResotrePostStatus(int postNo, Connection conn) throws Exception{
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("updateResotrePostStatus");
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, postNo);
 			result = pstmt.executeUpdate();

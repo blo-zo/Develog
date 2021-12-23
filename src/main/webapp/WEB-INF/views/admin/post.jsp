@@ -14,6 +14,18 @@
 	crossorigin="anonymous">
 <link rel="stylesheet"
 	href="${pageContext.servletContext.contextPath}/resources/css/adminCss.css">
+<style>
+	.remove-status:hover{
+		cursor : pointer;
+		color: #3278FE;
+	}
+	.col{
+			font-size: 25px;
+		}
+	.removeViolation:hover{
+			cursor: pointer;
+	}
+</style>
 </head>
 <body>
 	<header id="header">
@@ -81,7 +93,16 @@
 									<td>${post.createDate}</td>
 									<td>${post.reportCount}</td>
 									<td>${post.violationCount}</td>
-									<td>${post.postStatusName}</td>
+									<c:choose>
+										<c:when test="${post.postStatusName eq '관리자 삭제'}">
+											<td class="remove-status" onclick="removeContent(${post.postNo})"
+											data-bs-toggle="modal"	data-bs-target="#postModal3"
+											>${post.postStatusName}</td>
+										</c:when>
+										<c:otherwise>
+											<td>${post.postStatusName}</td>
+										</c:otherwise>
+									</c:choose>
 								</tr>
 							</c:forEach>
 						</c:otherwise>
@@ -96,7 +117,7 @@
 				</div>
 				<div class="button" data-bs-toggle="modal"	data-bs-target="#postModal2"
 					style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px;">
-					삭제
+					상태변경
 				</div>
 			</div>
 			<div id="search-area">
@@ -181,7 +202,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- remoce modal -->
+	<!-- remove modal -->
 	<div class="modal" id="postModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -207,6 +228,37 @@
 								<div class="button" onclick="postStatusChange()"
 									style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px; float: right; margin-right: 10px; ">
 									삭제</div>
+								<div class="button" onclick=""
+									style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px; float: right; margin-right: 10px; ">
+									일반</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- remove content modal -->
+	<div class="modal" id="postModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<span style="font-size: 30px; font-weight: bold;">삭제 내용</span>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<section id="modal-section">
+						<!-- <div>
+						<div class="info input-modal">
+						</div>
+						<div class="info input-modal">
+						</div>
+					</div> -->
+						<div>
+							<div class="content" input-modal>
+								<div class="container">
+								</div>
+	
 							</div>
 						</div>
 					</section>
