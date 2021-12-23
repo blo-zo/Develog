@@ -55,6 +55,14 @@ function warningPlus(){
     const textarea = document.getElementsByTagName("textarea")[0];
     const content = textarea.value;
     
+    // 아 이게 있어야 실행이 되는 거네 왜냐하면 클릭한 순간에 함수가 발동하니까
+    let memberNo = []
+    for(const items of checkBox){
+      if(items.checked){
+         memberNo.push(items.parentElement.nextElementSibling.innerText) 
+      }
+    }
+
      memberNo.push(content)
     console.log(memberNo);
      $.ajax({

@@ -153,32 +153,45 @@
 	<div class="modal" id="postModal1" tabindex="-1"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
-	<div class="modal-content">
-		<div class="modal-header">
-			<span style="font-size: 30px; font-weight: bold;">경고 내용</span>
-			<button type="button" class="btn-close" data-bs-dismiss="modal"
-			aria-label="Close"></button>
-					
-		</div>
-		<div class="modal-body">
-			<section id="modal-section">
-				
-			</section>
+		<div class="modal-content">
+			<div class="modal-header">
+				<span style="font-size: 30px; font-weight: bold;">경고 내용</span>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+				aria-label="Close"></button>
+						
+			</div>
+			<div class="modal-body">
+				<section id="modal-section">
+					<div>
+						<div class="info input-modal">
+							<!-- nn번 게시글 <br> 유형 : <span>홍보</span> -->
+						</div>
+						<div class="info input-modal">
+							<!-- userid@email.com <br> 2021-11-10 <br> 미해결 -->
+						</div>
+					</div>
+					<div>
+						<div class="content" input-modal style="float: right;">
+								<textarea name="" id="" cols="90" rows="7" style="border: none; margin-left: 1%; outline: none; resize: none;"></textarea>
+								<div class="button" onclick="postWarningPlus()"
+								  style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px; float: right; margin-right: 10px; ">
+								  경고</div>
+						</div>
+					</div>
+				</section>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script>
+		const contextPath = "${pageContext.servletContext.contextPath}"
 		const checkBox = document.getElementsByClassName("check")
 		
-	  	let memberNo = []
-  		for(const items of checkBox){
-      	if(items.checked){
-          memberNo.push(items.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerText) 
-          
-                  }
-  		}
+	  	
 	</script>
-	<script src="${pageContext.servletContext.contextPath}/resources/js/modal.js"></script>
+	<script src="${pageContext.servletContext.contextPath}/resources/js/adminPost.js"></script>
 </body>
 </html>

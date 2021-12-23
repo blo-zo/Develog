@@ -592,9 +592,8 @@ public class AdminDAO {
 		try {
 			String sql = prop.getProperty("insertViolationPlus");
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, memberNo);
-			pstmt.setString(2, content);
-			
+			pstmt.setString(1, content);
+			pstmt.setInt(2, memberNo);
 			result = pstmt.executeUpdate();
 		}finally {
 			pstmt.close();
