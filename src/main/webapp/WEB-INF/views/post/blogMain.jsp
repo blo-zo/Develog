@@ -26,7 +26,7 @@
 
       <div class="blog-profile-area">
         <div class="blog-profile-photo">
-          <img id="blog-profile-img" src="https://via.placeholder.com/200x200" alt="">
+          <img id="blog-profile-img" src="${contextPath}/resources/images/KYJ/eyeOfPine-profile-image.jpg" alt="">
         </div>
         <div class="blog-profile-text">
           <h1>${blog.memberName}</h1>
