@@ -26,7 +26,7 @@
 
       <div class="blog-profile-area">
         <div class="blog-profile-photo">
-          <img id="blog-profile-img" src="https://via.placeholder.com/200x200" alt="">
+          <img id="blog-profile-img" src="${contextPath}/resources/images/KYJ/eyeOfPine-profile-image.jpg" alt="">
         </div>
         <div class="blog-profile-text">
           <h1>${blog.memberName}</h1>
@@ -109,49 +109,173 @@
   				
   					<c:forEach items="${postList}" var="post">
   					
-			            <!-- 블로그 본문 내용 -->
-			            <div class="card blog-post-card">
-			              <a href="${contextPath}/blog/${post.memberName}/view?pno=${post.postNo}&cp=${blogPostPagination.currentPage}" class="card-link">
-			  
-			                <div class="card-img-top blog-post-img">
-			                  <!-- 이미지 영역 -->
-			                  <img src="https://via.placeholder.com/800x350" alt="">
-			                </div>
-			    
-			                <div class="card-body blog-post-body border">
-			                
-			                  <!-- 제목 -->
-			                  <h2 class="cart-title">${post.postTitle}</h2>
-			                  
-			                  <!-- 내용 4~5줄 영역 -->
-			                  <p class="card-text">${post.postContent}</p>
-			                </div>
-			    
-			                <div class="card-footer blog-post-footer border">
-			                  
-			                  <!-- 작성자, 좋아요, 날짜 영역 -->
-			                  <div class="blog-post-like">
-			                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"><path d="M12 9.229c.234-1.12 1.547-6.229 5.382-6.229 2.22 0 4.618 1.551 4.618 5.003 0 3.907-3.627 8.47-10 12.629-6.373-4.159-10-8.722-10-12.629 0-3.484 2.369-5.005 4.577-5.005 3.923 0 5.145 5.126 5.423 6.231zm-12-1.226c0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-7.962-9.648-9.028-12-3.737-2.338-5.262-12-4.27-12 3.737z"/></svg>
-			                    <span>${post.favoriteCount}</span>
-			                  </div>
-			                  
-			                  <div class="blog-post-author">
-			                    by. <span>${post.memberName} </span>
-			                  </div>
-			                  <div class="blog-post-date">
-			                    <span>${post.createDate}</span>
-			                  </div>
-			  
-			                </div>
-			  
-			              </a>
-			            </div>
+  						<c:choose>
+  							
+  							<%-- 로그인 회원과 포스트 작성자가 같고, 상태가 비공개인 경우 --%>
+  							<c:when test="${(post.postStatusCode == 503) && (loginMember.memberNo == post.memberNo)}">
+  							
+		  						<!-- 블로그 본문 내용 -->
+					            <div class="card blog-post-card">
+					              <a href="${contextPath}/blog/${post.memberName}/view?pno=${post.postNo}&cp=${blogPostPagination.currentPage}" class="card-link">
+					  
+					                <div class="card-img-top blog-post-img">
+					                  <!-- 이미지 영역 -->
+					                  <img src="https://via.placeholder.com/800x350" alt="">
+					                </div>
+					    
+					                <div class="card-body blog-post-body border">
+					                
+					                  <!-- 제목 -->
+					                  <h2 class="cart-title">${post.postTitle}</h2>
+					                  
+					                  <!-- 내용 4~5줄 영역 -->
+					                  <p class="card-text">${post.postContent}</p>
+					                </div>
+					    
+					                <div class="card-footer blog-post-footer border">
+					                  
+					                  <!-- 작성자, 좋아요, 날짜 영역 -->
+					                  <div class="blog-post-like">
+					                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"><path d="M12 9.229c.234-1.12 1.547-6.229 5.382-6.229 2.22 0 4.618 1.551 4.618 5.003 0 3.907-3.627 8.47-10 12.629-6.373-4.159-10-8.722-10-12.629 0-3.484 2.369-5.005 4.577-5.005 3.923 0 5.145 5.126 5.423 6.231zm-12-1.226c0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-7.962-9.648-9.028-12-3.737-2.338-5.262-12-4.27-12 3.737z"/></svg>
+					                    <span>${post.favoriteCount}</span>
+					                  </div>
+					                  
+					                  <div class="blog-post-author">
+					                    by. <span>${post.memberName} </span>
+					                  </div>
+					                  <div class="blog-post-date">
+					                    <span>${post.createDate}</span>
+					                  </div>
+					  
+					                </div>
+					  
+					              </a>
+					            </div>
+  								
+  							</c:when>
+  							
+  							<%-- 비공개글을 읽을 수 없는 사람 --%>
+  							<c:when test="${(post.postStatusCode == 503) && (loginMember.memberNo != post.memberNo)}">
+  								
+  								<!-- 블로그 본문 내용 -->
+					            <div class="card blog-post-card" style="opacity:0.8;">
+					              <a onclick="alert('비공개 포스트 입니다.');" style="cursor:pointer;">
+					  
+					                <div class="card-img-top blog-post-img">
+					                  <!-- 이미지 영역 -->
+					                  <img src="${contextPath}/resources/images/KYJ/secretPostIMG.png" alt="">
+					                </div>
+					    
+					                <div class="card-body blog-post-body border">
+					                
+					                  <!-- 제목 -->
+					                  <h2 class="cart-title" style="text-align:center;">비공개 포스트입니다.</h2>
+					                  
+					                  <!-- 내용 4~5줄 영역 -->
+					                  <p class="card-text" style="text-align:center;">비공개 포스트입니다.</p>
+					                </div>
+					    
+					                <div class="card-footer blog-post-footer border">
+					                  
+					                  <!-- 작성자, 좋아요, 날짜 영역 -->
+					                  <div class="blog-post-like">
+					                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"><path d="M12 9.229c.234-1.12 1.547-6.229 5.382-6.229 2.22 0 4.618 1.551 4.618 5.003 0 3.907-3.627 8.47-10 12.629-6.373-4.159-10-8.722-10-12.629 0-3.484 2.369-5.005 4.577-5.005 3.923 0 5.145 5.126 5.423 6.231zm-12-1.226c0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-7.962-9.648-9.028-12-3.737-2.338-5.262-12-4.27-12 3.737z"/></svg>
+					                    <span>${post.favoriteCount}</span>
+					                  </div>
+					                  
+					                  <div class="blog-post-author">
+					                    by. <span>${post.memberName} </span>
+					                  </div>
+					                  <div class="blog-post-date">
+					                    <span>${post.createDate}</span>
+					                  </div>
+					  
+					                </div>
+					  
+					              </a>
+					            </div>
+  								
+  							</c:when>
+  							
+  							
+  							<%-- 관리자 삭제글인 경우 --%>
+  							<c:when test="${post.postStatusCode == 502}">
+  								
+  								<!-- 블로그 본문 내용 -->
+					            <div class="card blog-post-card" style="opacity:0.8;">
+					              <a onclick="alert('관리자가 블라인드 처리한 포스트입니다.');" style="cursor:pointer;">
+					  
+					                <div class="card-img-top blog-post-img">
+					                  <!-- 이미지 영역 -->
+					                  <img src="${contextPath}/resources/images/KYJ/blindPostIMG.png" alt="">
+					                </div>
+					    
+					                <div class="card-body blog-post-body border">
+					                
+					                  <!-- 제목 -->
+					                  <h2 class="cart-title" style="color:red; text-align:center;">관리자에의해 블라인드 처리되었습니다.</h2>
+					                  
+					                </div>
+					  
+					              </a>
+					            </div>
+  								
+  							</c:when>
+  							
+  							<c:otherwise>
+  							
+  								<%-- 일반 포스트 --%>
+								<!-- 블로그 본문 내용 -->
+					            <div class="card blog-post-card">
+					              <a href="${contextPath}/blog/${post.memberName}/view?pno=${post.postNo}&cp=${blogPostPagination.currentPage}" class="card-link">
+					  
+					                <div class="card-img-top blog-post-img">
+					                  <!-- 이미지 영역 -->
+					                  <img src="https://via.placeholder.com/800x350" alt="">
+					                </div>
+					    
+					                <div class="card-body blog-post-body border">
+					                
+					                  <!-- 제목 -->
+					                  <h2 class="cart-title">${post.postTitle}</h2>
+					                  
+					                  <!-- 내용 4~5줄 영역 -->
+					                  <p class="card-text">${post.postContent}</p>
+					                </div>
+					    
+					                <div class="card-footer blog-post-footer border">
+					                  
+					                  <!-- 작성자, 좋아요, 날짜 영역 -->
+					                  <div class="blog-post-like">
+					                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"><path d="M12 9.229c.234-1.12 1.547-6.229 5.382-6.229 2.22 0 4.618 1.551 4.618 5.003 0 3.907-3.627 8.47-10 12.629-6.373-4.159-10-8.722-10-12.629 0-3.484 2.369-5.005 4.577-5.005 3.923 0 5.145 5.126 5.423 6.231zm-12-1.226c0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-7.962-9.648-9.028-12-3.737-2.338-5.262-12-4.27-12 3.737z"/></svg>
+					                    <span>${post.favoriteCount}</span>
+					                  </div>
+					                  
+					                  <div class="blog-post-author">
+					                    by. <span>${post.memberName} </span>
+					                  </div>
+					                  <div class="blog-post-date">
+					                    <span>${post.createDate}</span>
+					                  </div>
+					  
+					                </div>
+					  
+					              </a>
+					            </div>
+  								
+  							</c:otherwise>
+  						
+  						</c:choose>
+  					
+			            
 			            
   					</c:forEach>
 		            
   				</c:otherwise>
   			</c:choose>
-        
+        	
+        	<%-- ------------------------------------------포스트 카드 부분 끝------------------------------------------------------------ --%>
+        	
     	</div>
     	
     	

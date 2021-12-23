@@ -60,38 +60,19 @@
 	            </div>
 	            <c:choose>
 	            	<c:when test="${loginMember.memberNo == post.memberNo}">
-			            <div class="post-menu">
-			              	<a href="#">통계</a> /
-			              	<a onclick="updateForm();">수정</a> /
-		              		<a href="#">삭제</a>
+			            <div class="post-menu2">
+			              	<span onclick="showStatistic();">통계</span> /
+			              	<span onclick="updateForm();">수정</span> /
+		              		<span onclick="deletePost();">삭제</span>
 			            </div>
 	            	</c:when>
 	            	
 	            	<c:otherwise>
-			            <div class="post-menu" style="display: none;">
+			            <div class="post-menu2" style="display: none;">
 			            	<a href="#">신고하기</a>
 		            	</div>
 	            	</c:otherwise>
 	            </c:choose>
-	            
-	            
-	            <%-- <c:choose>
-		            <!-- 작성자 == 로그인 회원 번호인 경우 -->
-	            	<c:when test="${loginMember.memberNo == post.memberNo}">
-			            <div class="post-menu">
-			              <a href="#">통계</a> /
-			              <a href="#">수정</a> /
-			              <a href="#">삭제</a>
-			            </div>
-	            	</c:when>
-					
-					<c:otherwise>
-			            <div class="post-menu">
-			            	<a href="#">신고하기</a>
-		            	</div>
-					</c:otherwise>	            	
-	            </c:choose> --%>
-	            
             	
 	          </div>
 	
@@ -372,10 +353,11 @@
 	
 	  </main>
 
-		<%-- 수정에 사용할 pno , cp 파라미터 --%>
+		<%-- 수정, 삭제에 사용할 pno , cp 파라미터 --%>
 		<form action="#" method="post" name="requestForm" >
 		<input type="hidden" name = "cp" value="${param.cp }">
 		<input type="hidden" name = "pno" value="${param.pno}">
+		<input type="hidden" name = "memberName" value="${post.memberName}">
 		</form>
 		
 <script>
