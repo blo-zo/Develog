@@ -151,7 +151,7 @@ public class PostController extends HttpServlet{
 								
 								// 경로 동적 요소로 바꾸기
 								
-								resp.sendRedirect("유동");
+								resp.sendRedirect( req.getContextPath() + "/blog/" + post.getMemberName() );
 							}
 							
 							
