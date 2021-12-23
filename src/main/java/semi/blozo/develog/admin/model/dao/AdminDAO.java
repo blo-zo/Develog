@@ -94,11 +94,64 @@ public class AdminDAO {
 		return memberListCount;
 	}
 
-	public List<Post> selectPost(Pagination pagination, Connection conn) throws Exception {
+	public List<Post> selectPost(Pagination pagination, String searchWord, String searchTag, String orderTag, Connection conn) throws Exception {
 		List<Post> postList = new ArrayList<Post>();
 		
 		try {
-			String sql = prop.getProperty("selectPost");
+			String where = "";
+			String order = "ORDER BY POST_NO DESC";
+			
+			switch(searchTag) {
+			case "no" : where = "WHERE POST_NO LIKE '%"+searchWord +"%'"; break;
+			case "title" : where = "WHERE POST_TITLE LIKE '%"+searchWord +"%'"; break;
+			case "content" : where = "WHERE POST_CONTENT LIKE '%"+searchWord +"%'"; break;
+			case "memberNo" : where = "WHERE MEMBER_NO LIKE '%"+searchWord +"%'"; break;
+			case "createDate" : if(searchWord.length() == 15) {
+											String str1 = searchWord.substring(0,6);
+											String str2 = searchWord.substring(9,15);
+											str1 = stringToDate(str1);
+											str2 = stringToDate(str2);
+											
+											where = "WHERE TO_DATE(CREATE_DT) BETWEEN '"+ str1 +"' AND '"+str2+"'"; break;
+							
+										}else if(searchWord.length() == 6) {
+											String str = searchWord.substring(0, 6);
+											where = "WHERE TO_DATE(CREATE_DT) = '"+ str +"'"; break;
+											
+										}
+			case "status" : where = "WHERE POST_STATUS_NM LIKE '%"+searchWord +"%'"; break;
+			default : where = "";
+			}
+			
+			switch(orderTag) {
+			case "ascNo" : order ="ORDER BY POST_NO"; break;
+			case "descNo" : order ="ORDER BY POST_NO DESC"; break;
+			case "ascViews" : order ="ORDER BY READ_COUNT"; break;
+			case "descViews" : order ="ORDER BY READ_COUNT DESC"; break;
+			case "ascLikes" : order ="ORDER BY LIKE_COUNT "; break;
+			case "descLikes" : order ="ORDER BY LIKE_COUNT DESC"; break;
+			case "ascReports" : order ="ORDER BY REPORT_COUNT"; break;
+			case "descReports" : order ="ORDER BY REPORT_COUNT DESC"; break;
+			default : order ="ORDER BY POST_NO DESC";
+			}
+			
+			String sql = "SELECT * FROM(\r\n"
+					+ "		SELECT ROWNUM RNUM, A.* FROM\r\n"
+					+ "			(SELECT POST_NO, POST_TITLE, POST_CONTENT,\r\n"
+					+ "					TO_CHAR(CREATE_DT, 'YYYY-MM-DD') ENROLL_DT,   C.MEMBER_NO, READ_COUNT, LIKE_COUNT, \r\n"
+					+ "					TO_CHAR(A.MODIFY_DT, 'YYYY-MM-DD') MODIFY_DT,\r\n"
+					+ "		       		BLOG_NO, CATEGORY_CD, POST_STATUS_NM,(SELECT COUNT(POST_NO) FROM POST_REPORT B GROUP BY POST_NO HAVING B.POST_NO = A.POST_NO) REPORT_COUNT, \r\n"
+					+ "		       		(SELECT COUNT(*) FROM VIOLATION A WHERE A.MEMBER_NO = B.MEMBER_NO) VIOLATION_COUNT, C.MEMBER_NM\r\n"
+					+ "			FROM POST A\r\n"
+					+ "			JOIN BLOG B  USING(BLOG_NO)\r\n"
+					+ "			JOIN POST_STATUS USING (POST_STATUS_CD)\r\n"
+					+ "            JOIN MEMBER C ON(B.MEMBER_NO = C.MEMBER_NO)\r\n"
+					+ where + "\r\n"
+					+ order + ")\r\n"
+					+ "					 A)\r\n"
+					+ "		WHERE RNUM BETWEEN ? AND ?"
+					+ "ORDER BY RNUM DESC";
+					
 			
 			int startRow = (pagination.getCurrentPage() -1) * pagination.getLimit() + 1;
 			
@@ -126,6 +179,7 @@ public class AdminDAO {
 				post.setPostStatusName(rs.getString("POST_STATUS_NM"));
 				post.setReportCount(rs.getInt("REPORT_COUNT"));
 				post.setMemberNo(rs.getInt("MEMBER_NO"));
+				post.setMemberName(rs.getString("MEMBER_NM"));
 				postList.add(post);
 			}
 			
@@ -135,6 +189,76 @@ public class AdminDAO {
 		}
 		
 		return postList;
+	
+	}
+	
+	public int postListCount(String searchWord, String searchTag, String orderTag, Connection conn) throws Exception{
+		int postSearchListCount = 0;
+		try {
+			String where = "";
+			String order = "ORDER BY POST_NO DESC";
+			
+			switch(searchTag) {
+			case "no" : where = "WHERE POST_NO LIKE '%"+searchWord +"%'"; break;
+			case "title" : where = "WHERE POST_TITLE LIKE '%"+searchWord +"%'"; break;
+			case "content" : where = "WHERE POST_CONTENT LIKE '%"+searchWord +"%'"; break;
+			case "memberNo" : where = "WHERE MEMBER_NO LIKE '%"+searchWord +"%'"; break;
+			case "createDate" : if(searchWord.length() == 15) {
+								String str1 = searchWord.substring(0,6);
+								String str2 = searchWord.substring(9,15);
+								str1 = stringToDate(str1);
+								str2 = stringToDate(str2);
+								
+								where = "WHERE TO_DATE(CREATE_DT) BETWEEN '"+ str1 +"' AND '"+str2+"'"; break;
+				
+								}else if(searchWord.length() == 6) {
+									String str = searchWord.substring(0, 6);
+									where = "WHERE TO_DATE(CREATE_DT) = '"+ str +"'"; break;
+									
+								}
+			case "status" : where = "WHERE POST_STATUS_NM LIKE '%"+searchWord +"%'"; break;
+			default : where = "";
+			}
+			
+			switch(orderTag) {
+			case "ascNo" : order ="ORDER BY POST_NO"; break;
+			case "descNo" : order ="ORDER BY POST_NO DESC"; break;
+			case "ascViews" : order ="ORDER BY READ_COUNT"; break;
+			case "descViews" : order ="ORDER BY READ_COUNT DESC"; break;
+			case "ascLikes" : order ="ORDER BY LIKE_COUNT "; break;
+			case "descLikes" : order ="ORDER BY LIKE_COUNT DESC"; break;
+			case "ascReports" : order ="ORDER BY REPORT_COUNT"; break;
+			case "descReports" : order ="ORDER BY REPORT_COUNT DESC"; break;
+			default : order ="ORDER BY POST_NO DESC";
+			}
+			
+			String sql = "SELECT COUNT(*) FROM(\r\n"
+					+ "		SELECT ROWNUM RNUM, A.* FROM\r\n"
+					+ "			(SELECT POST_NO, POST_TITLE, POST_CONTENT,\r\n"
+					+ "					TO_CHAR(CREATE_DT, 'YYYY-MM-DD') ENROLL_DT, C.MEMBER_NO, READ_COUNT, LIKE_COUNT, \r\n"
+					+ "					TO_CHAR(A.MODIFY_DT, 'YYYY-MM-DD') MODIFY_DT,\r\n"
+					+ "		       		BLOG_NO, CATEGORY_CD, POST_STATUS_NM,(SELECT COUNT(POST_NO) FROM POST_REPORT B GROUP BY POST_NO HAVING B.POST_NO = A.POST_NO) REPORT_COUNT, \r\n"
+					+ "		       		(SELECT COUNT(*) FROM VIOLATION A WHERE A.MEMBER_NO = B.MEMBER_NO) VIOLATION_COUNT, C.MEMBER_NM\r\n"
+					+ "			FROM POST A\r\n"
+					+ "			JOIN BLOG B  USING(BLOG_NO)\r\n"
+					+ "			JOIN POST_STATUS USING (POST_STATUS_CD)\r\n"
+					+ "            JOIN MEMBER C ON(B.MEMBER_NO = C.MEMBER_NO)\r\n"
+					+ where + "\r\n"
+					+ order + ")\r\n"
+					+ "					 A)\r\n";
+			
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				postSearchListCount = rs.getInt(1);
+			}
+		}finally {
+			pstmt.close();
+			rs.close();
+		}
+		return postSearchListCount;
+	
 	
 	}
 
@@ -619,8 +743,8 @@ public class AdminDAO {
 			while(rs.next()) {
 				Report violation = new Report();
 				violation.setReportNo(rs.getInt(1));
-				violation.setMemberNo(rs.getInt(2));
-				violation.setReportContent(rs.getString(3));
+				violation.setReportContent(rs.getString(2));
+				violation.setMemberNo(rs.getInt(3));
 				violationList.add(violation);
 			}
 		}finally {
@@ -644,6 +768,98 @@ public class AdminDAO {
 		return result;
 	
 	}
+
+	public int insertDeletePost(int postNo, String content, Connection conn) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("insertDeletePost");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, content);
+			pstmt.setInt(2, postNo);
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+	
+	
+	}
+
+	public int updatePostStatus(int postNo, Connection conn) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("updatePostStatus");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+	
+	}
+
+	public Post selectDeletePost(int postNo, Connection conn) throws Exception {
+		Post removeContent = new Post();
+		
+		try {
+			String sql = prop.getProperty("selectDeletePost");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				removeContent.setMemberNo(rs.getInt(1));
+				removeContent.setPostContent(rs.getString(2));
+				removeContent.setCreateDate(rs.getString(3));
+				removeContent.setPostNo(rs.getInt(4));
+			}
+		}finally {
+			rs.close();
+			pstmt.close();
+		}
+		
+		return removeContent;
+	}
+
+	public int deletePostContent(int postNo, Connection conn) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("deletePostContent");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+	
+	}
+
+	public int updateResotrePostStatus(int postNo, Connection conn) throws Exception{
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("updateResotrePostStatus");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+	
+	}
+
+
 
 
 }

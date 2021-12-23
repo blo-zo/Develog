@@ -111,13 +111,21 @@ body * {
     position: relative;
   }
 
-  #search-area > select{
+  #search-area > select:nth-of-type(1){
         height: 40px;
         font-size: 15px;
         position:absolute;
         right:-100px;
         top:15px
   }
+
+  #search-area > select:nth-of-type(2){
+    height: 40px;
+    font-size: 15px;
+    position:absolute;
+    right:-200px;
+    top:15px
+}
 
   input{
     /* background-color: #ccc; */

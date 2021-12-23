@@ -150,10 +150,22 @@ public class AdminController extends HttpServlet {
 			}
 			
 			else if(command.equals("post")) {
-				Pagination pagination = service.getPagination(cp);
+				String searchWord ="";
+				String searchTag = "";
+				String orderTag = "";
+				if(req.getParameter("searchWord") != null && !req.getParameter("searchWord").equals("")) {
+					searchWord = req.getParameter("searchWord");
+					searchTag = req.getParameterValues("searchTag")[0];
+				}
+				if(req.getParameter("orderTag") != null) {
+					orderTag = req.getParameterValues("orderTag")[0];					
+				}
+				Pagination pagination = service.getPaginationPost(searchWord, searchTag, orderTag, cp);
 				
-				List<Post> postList = service.selectPost(pagination);
-				
+				List<Post> postList = service.selectPost(searchWord, searchTag, orderTag, pagination);
+				req.setAttribute("searchWord", searchWord);
+				req.setAttribute("searchTag", searchTag);
+				req.setAttribute("orderTag", orderTag);
 				req.setAttribute("pagination", pagination);
 				req.setAttribute("postList", postList);
 				 path = "/WEB-INF/views/admin/post.jsp";
@@ -170,7 +182,7 @@ public class AdminController extends HttpServlet {
 				String str ="";
 				for(int i=0; i < postNo.length; i++) {
 					if(!content.equals("")) {
-						result = service.insertViolationPlus(postNo[i], content);						
+							result = service.insertDeletePost(postNo[i], content);													
 					}
 						if(result != 1) {
 							str += postNo[i]+" ";
@@ -181,7 +193,7 @@ public class AdminController extends HttpServlet {
 					message = "삭제 되었습니다.";
 				}else {
 					message = "삭제를 실패하였습니다.\r\n"
-							+ "경고 실패 회원 번호" + str;
+							+ "삭제 실패 게시글 번호" + str;
 				}
 					
 				resp.getWriter().print(message);
@@ -251,10 +263,22 @@ public class AdminController extends HttpServlet {
 				
 				int memberNo = Integer.parseInt(req.getParameter("memberNo"));
 				
-				// vo report 이용
+				// Violation 내용을 report vo로 재활용
 				List<Report> violation = service.selectViolation(memberNo);
 				
 				new Gson().toJson(violation, resp.getWriter());
+				
+			}else if(command.equals("post/removeContent")) {
+				int postNo = Integer.parseInt(req.getParameter("postNo"));
+				
+				Post removeContent = service.selectDeletePost(postNo);
+				
+				new Gson().toJson(removeContent, resp.getWriter());
+			}else if(command.equals("post/restorePost")) {
+				int postNo = Integer.parseInt(req.getParameter("postNo"));
+				
+				
+				int result = service.deletePostContent(postNo);
 				
 			}
 			

@@ -37,10 +37,10 @@ public class AdminService {
 		return new Pagination(listCount, cp);
 	}
 
-	public List<Post> selectPost(Pagination pagination) throws Exception {
+	public List<Post> selectPost(String searchWord, String searchTag, String orderTag, Pagination pagination) throws Exception {
 		Connection conn = getConnection();
 		
-		List<Post> listPost = dao.selectPost(pagination, conn);
+		List<Post> listPost = dao.selectPost(pagination, searchWord, searchTag, orderTag, conn);
 		
 		conn.close();
 		
@@ -261,5 +261,62 @@ public class AdminService {
 		
 		return new Pagination(listCount, cp);
 	}
+
+	public int insertDeletePost(int postNo, String content) throws Exception {
+		Connection conn = getConnection();
+		
+		int result = dao.updatePostStatus(postNo, conn);
+		if(result >0) {
+			result = dao.insertDeletePost(postNo, content, conn);			
+		}
+		if(result >0) conn.commit();
+		else		  conn.rollback();
+		
+		conn.close();
+		
+		return result;
+	
+	}
+
+	public Post selectDeletePost(int postNo) throws Exception {
+		Connection conn = getConnection();
+		
+		Post removeContent = dao.selectDeletePost(postNo, conn);
+		
+		conn.close();
+		
+		return removeContent;
+	
+	
+	}
+
+	public int deletePostContent(int postNo) throws Exception {
+		Connection conn = getConnection();
+		
+		int result = dao.deletePostContent(postNo, conn);
+		
+		if(result >0 ) {
+			result = dao.updateResotrePostStatus(postNo, conn);
+			if(result>0) {
+				conn.commit();				
+			}
+		}
+		else		   conn.rollback();
+	
+		return result;
+	}
+
+	public Pagination getPaginationPost(String searchWord, String searchTag, String orderTag, int cp) throws Exception {
+		Connection conn = getConnection();
+		
+		int listCount = dao.postListCount(searchWord, searchTag, orderTag, conn);
+		
+		conn.close();
+		
+		return new Pagination(listCount, cp);
+	}
+
+
+
 
 }
