@@ -150,6 +150,12 @@ public class AdminController extends HttpServlet {
 			}
 			
 			else if(command.equals("post")) {
+				if(req.getParameter("searchWord") != null) {
+					String searchWord = req.getParameter("searchWord");
+					String searchTag = req.getParameterValues("searchTag")[0];
+					String rankTag = req.getParameterValues("rankTag")[0];
+				}
+				
 				Pagination pagination = service.getPagination(cp);
 				
 				List<Post> postList = service.selectPost(pagination);

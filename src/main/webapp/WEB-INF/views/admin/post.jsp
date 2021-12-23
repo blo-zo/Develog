@@ -120,17 +120,25 @@
 					상태변경
 				</div>
 			</div>
-			<div id="search-area">
-				<input type="text" placeholder="검색어를 입력해주세요"> <img
-					id="search" src="image/search-solid.svg"
-					style="width: 20px; height: 20px;"> <select name="" id="">
-					<option value="">회원번호</option>
-					<option value="">이메일</option>
-					<option value="">닉네임</option>
-					<option value="">가입일</option>
-					<option value="">가입상태</option>
-				</select>
-			</div>
+			<form action="post?cp=1" method="GET" onsubmit="return refresh()">
+				<div id="search-area">
+					<input type="text" name="searchWord" placeholder="검색어를 입력해주세요">
+					<img id="search" src="image/search-solid.svg" style="width: 20px; height: 20px;">
+					<select name="searchTag" onchange="changeSelect()">
+						<option value="no">게시글 번호</option>
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+						<option value="memberNo">회원번호</option>
+						<option value="createDate">작성일</option>
+						<option value="status">글 상태</option>
+					</select>
+					<select  name="rankTag" onchange="changeSelect()">
+						<option value="no">조회수</option>
+						<option value="title">좋아요</option>
+						<option value="title">신고수</option>
+					</select>
+				</div>
+			</form>
       <div class="my-5">
 		<ul class="pagination" style="justify-content: center;">
 			<c:if test="${pagination.startPage != 1}">
@@ -270,10 +278,20 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script>
+		const inputSearch = document.getElementById("search-area").firstElementChild
 		const contextPath = "${pageContext.servletContext.contextPath}"
 		const checkBox = document.getElementsByClassName("check")
 		
-	  	
+		inputSearch.addEventListener("keyup", function(){
+		  if(e.key =="Enter"){
+			 refresh1()
+		  }
+	    })
+
+	  function refresh1(){
+		  return true
+	  }
+
 	</script>
 	<script src="${pageContext.servletContext.contextPath}/resources/js/adminPost.js"></script>
 </body>
