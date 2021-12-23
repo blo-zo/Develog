@@ -105,7 +105,7 @@ public class AdminDAO {
 			case "no" : where = "WHERE POST_NO LIKE '%"+searchWord +"%'"; break;
 			case "title" : where = "WHERE POST_TITLE LIKE '%"+searchWord +"%'"; break;
 			case "content" : where = "WHERE POST_CONTENT LIKE '%"+searchWord +"%'"; break;
-			case "memberNo" : where = "WHERE MEMBER_NO LIKE '%"+searchWord +"%'"; break;
+			case "memberNo" : where = "WHERE C.MEMBER_NO LIKE '%"+searchWord +"%'"; break;
 			case "createDate" : if(searchWord.length() == 15) {
 											String str1 = searchWord.substring(0,6);
 											String str2 = searchWord.substring(9,15);
@@ -149,8 +149,8 @@ public class AdminDAO {
 					+ where + "\r\n"
 					+ order + ")\r\n"
 					+ "					 A)\r\n"
-					+ "		WHERE RNUM BETWEEN ? AND ?"
-					+ "ORDER BY RNUM DESC";
+					+ "		WHERE RNUM BETWEEN ? AND ?";
+
 					
 			
 			int startRow = (pagination.getCurrentPage() -1) * pagination.getLimit() + 1;
@@ -164,6 +164,8 @@ public class AdminDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
+//				String content = rs.getString("POST_CONTENT").substring(0, 12);
+				// 15 글자 넘어가면 안되는 이유가 0~12글자를 자를수 없을 정도로 작은 게 있기 때문이다
 				Post post = new Post();
 				post.setPostNo(rs.getInt("POST_NO"));
 				post.setPostTitle(rs.getString("POST_TITLE"));
@@ -202,7 +204,7 @@ public class AdminDAO {
 			case "no" : where = "WHERE POST_NO LIKE '%"+searchWord +"%'"; break;
 			case "title" : where = "WHERE POST_TITLE LIKE '%"+searchWord +"%'"; break;
 			case "content" : where = "WHERE POST_CONTENT LIKE '%"+searchWord +"%'"; break;
-			case "memberNo" : where = "WHERE MEMBER_NO LIKE '%"+searchWord +"%'"; break;
+			case "memberNo" : where = "WHERE C.MEMBER_NO LIKE '%"+searchWord +"%'"; break;
 			case "createDate" : if(searchWord.length() == 15) {
 								String str1 = searchWord.substring(0,6);
 								String str2 = searchWord.substring(9,15);
