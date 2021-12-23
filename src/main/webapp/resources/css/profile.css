@@ -1,0 +1,467 @@
+/* Noto Sans KR font 적용 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+body { font-family: 'Noto Sans KR', sans-serif; }
+
+/* 헤더 */
+.jun-header{
+max-width: 1200px;
+margin: auto;
+}
+
+/* 검색창 오프캔버스 */
+.search-offcanvas{
+height: 40vh;
+}
+
+.search-offcanvas-body{
+text-align: center;
+}
+
+
+#search-input{
+border: none;
+border-bottom: #323232 solid 3px;
+outline: none;
+width: 375px;
+}
+
+#search-area{
+margin: auto;
+width: 400px;
+}
+
+#search-btn{
+width: 21px;
+height: 21px;
+border: none;
+}
+
+.recent-search{
+text-align: left;
+width: 380px;
+}
+.recent-search p > span:first-child:hover{
+color: #3278FE;
+}
+
+.recent-search p{
+margin: 5px;
+}
+
+/* 최근 검색어 전체 삭제 */
+#search-delete-all, .search-delete{
+    cursor: pointer;
+    color: #323232;
+}
+.search-delete{
+    margin-left: 20px;
+}
+#search-delete-all:hover, .search-delete:hover{
+    opacity: 70%;
+}
+
+/* ---- 헤더 공통 부분 끝 ---- */
+
+
+/* ----  카테고리 PROFILE ----  */
+.category {
+    max-width: 1000px;
+    margin: auto;
+    height: 200px;
+    line-height: 200px;
+
+    text-align: center;
+    font-weight: bold;
+    font-size: 60px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+
+
+
+/* ----  main ----  */
+.main{
+    margin: auto;
+    max-width: 1000px;
+    padding-top: 20px;
+    padding-bottom: 70px;
+    display: flex;
+    
+}
+
+
+
+/* tab영역  */
+.tab-area{
+    width: 150px;
+    font-size: 20px; 
+    float:left;
+    text-align: right;
+}
+.tab {
+    padding: 25px 0px 25px 0px;
+    cursor: pointer;
+}
+
+/* line영역 */
+.line{
+    width: 50px;
+    height: 300px; /* tab 하나당 컬러바 총 길이  80px */
+    display: inline-block;
+   
+    border-right: 2px solid #eeeeee;
+}
+
+
+
+
+/* content영역 */
+.content{
+    width: 700px;
+    height: 300px; 
+    float: right;
+    margin-left: 30px;
+  
+    background-color: #f6f6f6;
+    border-radius: 5px;
+
+    display: none;
+    clear: both;
+}
+
+/* tab */
+.select-tab{
+    color: #3278FE;
+    font-weight: bold;
+}
+
+/* 1- 프로필 */
+.profile{
+    height: 120px;
+    display: flex;
+    align-items: center;
+    
+}
+/* 왼쪽 영역 */
+.p-img, .int-title, .d-title{
+    width: 40%;
+}
+
+/* 오른쪽 영역 */
+.p-btn, .int-input, .d-input {
+    width: 60%;
+}
+
+.p-img{
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-fit: cover;
+}
+.p-btn{
+    display: inline-block;
+    height: 100%;
+    
+}
+.p-choose, .p-delete{
+    padding-left: 20px;
+    outline: none;
+    border: none;
+    width: 120px;
+    height: 30px;
+    line-height: 28px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    font-size: 15px;
+    padding: 0;
+}
+.p-choose{ 
+    background: #3278FE;
+    color: white;
+    margin: 30px 0px 10px 9px;             
+}
+.p-delete{ 
+    display: block;
+    color: #323232;
+    margin: 0px 0px 30px 9px;   
+}
+
+
+
+#nickname{
+    font-weight: bold; color: 323232 ;
+}
+
+#line-intro{
+    margin: 5px 0px 5px 9px;
+}
+
+/* 2- 자기소개 */            
+.intro{
+    height: 90px;
+    
+}
+.int-title{
+   text-align: center;
+   float: left; 
+   font-weight: bold;
+}
+.int-input{
+    height: 100%;
+    display: inline-block;
+    outline: none;
+}
+.int-input > input{
+    display: block;
+    margin: 9px;
+    outline: none;
+    height: 30px;
+}
+
+
+/* 3- 디벨로그 제목 */  
+.devel-intro{
+    height: 60px;
+    clear: both;
+
+}
+.devel-intro .d-title{
+   font-weight: bold;
+   text-align: center;
+   float: left;
+   height: 100%;
+   line-height: 58px;
+}
+.devel-intro .d-input{
+     height: 100%;
+    display: inline-block;
+    outline: none;
+    padding: 0;
+}
+.d-input > input{
+    display: block;  
+    outline: none;  
+    margin: 15px 0px 15px 9px;
+    height: 30px; 
+    padding: 0;
+}
+/* 4- 설명 */ 
+.explain{
+    height: 30px;
+    font-size: 12px; 
+    text-align: center;
+    color : darkgray;
+}
+.explain > p {
+    margin: auto;
+    font-size: 12px;
+    text-align: center;
+}
+
+
+
+
+
+/* ------------------------------------------------------------------------- */
+/*  소셜 정보 */
+.sns-email, .sns-github, .sns-twitter, .sns-facebook, .sns-homepage{
+    clear: both;
+    position: relative;
+}
+
+.sns-email{ position: relative; }
+
+.email-title, .github-title, .twitter-title , .facebook-title, .homepage-title {
+   width: 25%;
+   font-weight: bold;
+   text-align: center;
+   float: left;
+   height: 42px;
+   line-height: 58px;
+
+}
+
+.email-input, .github-input, .twitter-input, .facebook-input,.homepage-input {
+    width: 75%;
+    font-weight: bold;
+    text-align: center;
+    float: left;
+    height: 100%;
+    line-height: 58px;
+
+ }
+
+
+.email-img, .github-img, .twitter-img, .facebook-img , .homepage-img{
+    width: 20%; 
+    display: flex; 
+    object-fit: cover; 
+    float: right; 
+    margin: 3px 10px 3px 0px;
+}
+
+.line-intro{
+    display: block;
+    outline: none;
+    margin: 5px 0px 5px 10px;
+    height: 30px;
+    padding: 0;
+}
+
+.explain-sns{
+    color: darkgray;
+    font-size: 12px; 
+
+}
+
+
+/* 내 정보 */
+/* 이메일 주소 */
+.email-area{
+    height: 60px;
+}
+.email-addr-title{
+    width: 40%;
+   font-weight: bold;
+   text-align: center;
+   float: left;
+   height: 100%;
+    line-height: 58px
+}
+.email-addr{
+     width: 60%;
+     height: 100%;
+    display: inline-block;
+    outline: none;
+    padding: 0;
+}
+
+.email-span{
+    display: block;  
+    outline: none;  
+    margin: 15px 0px 15px 9px; 
+    height: 30px; 
+    padding: 0; 
+}
+
+
+
+#reply-span, #update-span {
+    display: block;  outline: none;  margin: 10px 0px 10px 9px; height: 30px; padding: 0; 
+}
+
+/* 이름 변경  */
+.pw-btn-area {
+    max-width: 930px;  
+    padding: 10px 0px 10px 9px;
+}
+.pw-btn{
+    background-color: #3278FE; 
+    color: white; 
+    width: 60px; 
+    height: 37px; 
+    border-radius: 5px; 
+    text-align: center; 
+    line-height: 35px;
+    outline: none;
+    border: none;
+}
+
+.ex-myInfo{
+    margin-top: 114px;
+}
+
+/* 이메일 수신 설정 */
+.email-set{
+    height: 90px;
+}
+.email-set-title{
+    width: 40%;
+    font-weight: bold;
+   text-align: center;
+   float: left; 
+}
+.email-set-chk{
+    width: 60%;
+    height: 100%;
+    display: inline-block;
+    outline: none;
+}
+
+
+/* 회원 탈퇴 */
+.secession{padding-top: 20px;  }
+.secessionForm{  
+    background-color:transparent;
+    border: none;
+    display: block;
+    resize: none;
+    outline: none;
+    margin: auto;
+    text-align: center;
+}
+
+
+.secession-chk{
+    width: 420px;
+    margin: auto; 
+}
+.form-chk{
+    margin: 20px;     
+    text-align: center;
+}
+.btn-secession-area{
+    max-width: 930px; padding-bottom: 20px; display: flex;
+    justify-content: center;
+}
+.btn-secession{
+    background-color: #FE3232;
+    color: white;
+    width: 85px;
+    height: 37px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 35px;
+    margin: auto;
+    outline: none;
+    border: none;
+}
+
+
+
+
+
+/* 저장버튼 */
+.footer{
+    max-width: 1000px;
+    margin: auto;
+    height: 50px;
+    
+    line-height: 200px;
+}
+.btn-area{
+    max-width: 930px;
+}
+.btn-area > a{
+    text-decoration : none;
+}
+.btn-submit{
+    background-color: #3278FE; 
+    color: white; 
+    width: 60px; 
+    height: 37px; 
+    border-radius: 5px; 
+    text-align: center; 
+    line-height: 35px;
+    float: right;
+    outline: none;
+    border: none;
+}
+
+

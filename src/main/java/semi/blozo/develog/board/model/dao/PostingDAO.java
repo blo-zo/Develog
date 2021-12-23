@@ -108,25 +108,27 @@ public class PostingDAO {
 			return result;
 		}
 
+		
+		
 		/** 게시글 이미지 정보 삽입
 		 * @param img
 		 * @param conn
 		 * @return result
 		 * @throws Exception
 		 */
-		public int insertPostImage(PostImageVO img, Connection conn)  throws Exception{
+		/* public int insertPostImage(PostImageVO img, Connection conn)  throws Exception{
 			int result =0;
 			
 		      try {
 		          String sql = prop.getProperty("insertBoardImage");
 		          pstmt = conn.prepareStatement(sql);
-		          /* POSTIMGVO에 필드 생성 
-		          pstmt.setString(1, img.getImgPath());
-		          pstmt.setString(2, img.getImgName());
-		          pstmt.setString(3, img.getImgOriginal());
-		          pstmt.setInt(4, img.getImgLevel());
-		          pstmt.setInt(5, img.getBoardNo());
-		           */
+		          // POSTIMGVO에 필드 생성 
+		          pstmt.setString(1, img.getPostImgPath());
+		          pstmt.setString(2, img.getPostImgName());
+		          pstmt.setString(3, img.getPostImgOriginal());
+		          pstmt.setInt(4, img.getPostImgLevel());
+		          pstmt.setInt(5, img.getPostNo());
+		           
 		          result = pstmt.executeUpdate();
 		          
 		       }finally {
@@ -134,8 +136,10 @@ public class PostingDAO {
 		       }   
 		       return result;
 		}
+		*/
 
-
+		
+		
 		/** 태그 삽입
 		 * @param postNo 
 		 * @param tagList
