@@ -291,6 +291,32 @@ public class PostController extends HttpServlet{
 						
 						
 						
+						// -------------------------- 좋아요 부분 ------------------------------------
+						
+						// 좋아요 입력/삭제
+						else if(arr[1].equals("like")) {
+							
+							int memberNo = loginMember.getMemberNo();
+							int postNo = Integer.parseInt(req.getParameter("pno"));
+							
+							int favoriteCount = service.likePost(memberNo, postNo);
+							
+							resp.getWriter().print(favoriteCount);
+							
+						}
+						
+						
+						// 좋아요 수 조회하기
+						else if(arr[1].equals("selectPostLike")) {
+							
+							int memberNo = loginMember.getMemberNo();
+							int postNo = Integer.parseInt(req.getParameter("pno"));
+							
+							int postLikeCount = service.selectPostLikeCount(memberNo, postNo);
+							
+							resp.getWriter().print(postLikeCount);
+							
+						}
 						
 						
 						

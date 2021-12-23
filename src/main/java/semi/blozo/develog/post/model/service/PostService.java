@@ -3,6 +3,7 @@ package semi.blozo.develog.post.model.service;
 import static semi.blozo.develog.common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import semi.blozo.develog.post.model.dao.PostDAO;
@@ -171,6 +172,60 @@ public class PostService {
 		close(conn);
 		
 		return result;
+	}
+
+
+	// --------------------------- 좋아요 --------------------------------------
+	
+	/** 좋아요 service
+	 * @param memberNo
+	 * @param postNo
+	 * @return likePost
+	 * @throws Exception
+	 */
+	public int likePost(int memberNo, int postNo) throws Exception{
+
+		Connection conn = getConnection();
+		
+		int likePost = 0;
+		
+		try {
+			
+			// 좋아요 증가(삽입)
+			likePost = dao.likePost(postNo, memberNo, conn);
+			
+		}catch(SQLException e) {
+			
+			// 좋아요 취소(삭제)
+			likePost = dao.likeCancel(postNo, memberNo, conn);
+			
+		}
+		
+		if(likePost > 0)commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		
+		return likePost;
+	}
+
+
+
+	/** 좋아요 수 조회하기
+	 * @param memberNo
+	 * @param postNo
+	 * @return postLikeCount
+	 * @throws Exception
+	 */
+	public int selectPostLikeCount(int memberNo, int postNo) throws Exception{
+
+		Connection conn = getConnection();
+		
+		int postLikeCount = dao.selectPostLikeCount(memberNo, postNo, conn);
+		
+		close(conn);
+		
+		return postLikeCount;
 	}
 	
 	

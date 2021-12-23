@@ -48,6 +48,13 @@ function sendBlog(e, pno, blogMemberName, blogIntro, blogTitle){
 
 // ************* 포스트 *************
 
+// 수정 클릭 시 동작
+function updateForm(){
+  document.requestForm.action = "updateForm";
+  document.requestForm.method = "POST";
+  document.requestForm.submit();
+};
+
 // 포스트 삭제
 function deletePost(){
   
@@ -378,16 +385,20 @@ function reportReply(replyNo){
 
 
 
-// 수정 클릭 시 동작
-function updateForm(){
-  document.requestForm.action = "updateForm";
-  document.requestForm.method = "POST";
-  document.requestForm.submit();
-};
+/* ------------ 블로그 ---------------- */
+
+
+/* 카테고리 메뉴 삽입, 수정, 삭제 */
 
 
 
 
+
+
+
+
+
+// --------------------------- 좋아요 -----------------------------
 
 
 
