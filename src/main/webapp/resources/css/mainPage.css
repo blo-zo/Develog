@@ -350,24 +350,18 @@ nav{
 }
 /* 타이틀박스 */
 .title-box{
-    width: 280px;
-    height: 60px;
-     text-overflow: ellipsis;
+    width: 230px;
+    height: 50px;
+    text-overflow: ellipsis;
     overflow: hidden;
-}
-/* 타이틀글자 */
-.title{
-    text-align: left;
-    margin: 0px;
-    margin-top: 15px;
-    margin-left: 15px;
+    white-space: nowrap;
+    margin-top: 10px;
+    margin-left: 20px;
     font-size: 20px;
-    /* 
-     text-overflow: ellipsis;
-    overflow: hidden;
-    
-     */
+
 }
+
+
 
 /* 아래박스 */
 
