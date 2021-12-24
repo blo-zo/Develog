@@ -34,7 +34,8 @@ function enquiryDetailContent(e){
         type : "GET",
         dataType : "JSON",
         success : function(enquiry){
-            inputModal[0].innerHTML = 'userid@email.com <br>  작성일 : ' + enquiry.createDate+ '<br> 미답장' 
+            console.log(enquiry);
+            inputModal[0].innerHTML = '제목 : '+enquiry.enquiryTitle+'<br>'+'userid@email.com <br>  작성일 : ' + enquiry.createDate+ '<br> 미답장' 
             inputModal[1].innerHTML = enquiry.enquiryContent
         },
         error : function(req, status, error){
