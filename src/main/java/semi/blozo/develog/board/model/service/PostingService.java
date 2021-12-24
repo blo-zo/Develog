@@ -50,8 +50,7 @@ public class PostingService {
 				tagVO.setTagName(XSS.replaceParameter( tagVO.getTagName()) );  
 				tagVO.setPostNo(postNo);
 				
-				System.out.println(tagVO);
-				System.out.println("tagVO의 " +postNo);
+				
 				
 				
 				result = dao.insertTag(tagVO, conn);//결과가 true면 태그가 잘들어갔다
@@ -74,8 +73,6 @@ public class PostingService {
 					thumbVO.setPostNo(postNo);
 					
 					result = dao.insertThumb(thumbVO, conn);
-		        	 
-					System.out.println("thumbVO의 " +postNo);
 	
 					if(result == 0) { 
 					   rollback(conn);

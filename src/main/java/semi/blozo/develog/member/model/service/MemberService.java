@@ -35,13 +35,20 @@ public class MemberService {
 		Connection conn = getConnection();
 		int result = dao.signUp(member,conn);
 		
-		
-		
 		if(result>0) { 
+			result = dao.insertSNS(member, conn);
+			
+			if(result >0) {
+				
+				result = dao.insertBlog(member, conn);
+				
+				if(result>0) {
+					commit(conn);}
+				}
+			}
 			
 			
 			
-			commit(conn);}
 		else		 rollback(conn);
 		close(conn);		
 		return result;

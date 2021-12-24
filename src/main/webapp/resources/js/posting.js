@@ -20,7 +20,7 @@ $('#summernote').summernote({
 
 // 섬머노트에서 업로드된 이미지를 ajax를 이용하여 서버로 전송하여 저장하는 함수
 function sendFile(file, editor) {
-	console.log(file);
+	
 
 	form_data = new FormData();
 	// FormData : form 태그 내부 값 전송을 위한  k:v 쌍을 쉽게 생성할 수 있는 객체
@@ -28,13 +28,10 @@ function sendFile(file, editor) {
 	form_data.append("uploadFile", file);
 	// FormData 객체에 새로운 K, V 를 추가
 	
-	console.log(form_data.uploadFile);
-
 	$.ajax({
 		url: "insertImage",
 		type: "post",
 		data: form_data,
-		dataType: "json",
 		enctype: "multipart/form-data",
 		cache: false,
 		contentType: false,
@@ -46,7 +43,6 @@ function sendFile(file, editor) {
 
 			// 저장된 이미지를 에디터에 삽입
 			$(editor).summernote('editor.insertImage', result);
-
 
 
 		}
