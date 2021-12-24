@@ -19,51 +19,32 @@ import semi.blozo.develog.post.model.vo.PostPagination;
 public class ManiServlet extends HttpServlet{
 		@Override
 		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-			//String method = req.getMethod();
-			//String uri = req.getRequestURI();
-			//String command = uri.substring( (contextPath + "/main/").length());
-			//String[] arr = uri.substring( (contextPath + "/main/" ).length()).split("/");
 			String contextPath = req.getContextPath();
 			
 			String path = null;
 			RequestDispatcher dispatcher = null;
 			String message = null;
 			
-			
 			try {
 				
-					
 				PostService service = new PostService();
 				
-				
-				int cp = req.getParameter("cp") == null ? 1 : Integer.parseInt(req.getParameter("cp"));
-				
+			//	int type = Integer.parseInt(req.getParameter("type"));
 				
 				
-//				if(arr.length == 1) {	
-//				}
+				
 					
-					
-					// String memberName = URLDecoder.decode(arr[0],"UTF-8");
-					
-				//PostPagination blogPostPagination = service.getPostPagination(cp, memberName);
-				//req.setAttribute("blogPostPagination", blogPostPagination);
 
-					
-				
-					
-				
 				List<Post> postListAll = service.selectPostListAll();
+				
+				
 				//화면출력
 				System.out.println(postListAll);
 				req.setAttribute("postListAll", postListAll);
 				path = "/WEB-INF/views/common/main.jsp";
 				req.getRequestDispatcher(path).forward(req, resp);
 				
-			// 최신순과 트랜드 순을 어떻게 나눠야될 것인가
 						
-						//String trend = req.getParameter("trend");
-						//System.out.print(trend);
 					
 					
 				
