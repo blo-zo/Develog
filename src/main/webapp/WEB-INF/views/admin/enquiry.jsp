@@ -143,9 +143,9 @@ section>div:nth-child(4) {
 			<table id="admin-table">
 				<thead>
 					<tr>
-						<td>&nbsp;</td>
 						<th>No</th>
 						<th>회원번호</th>
+						<th>닉네임</th>
 						<th>제목</th>
 						<th>내용</th>
 						<th>작성일</th>
@@ -160,9 +160,9 @@ section>div:nth-child(4) {
 						<c:otherwise>
 							<c:forEach items="${enquiryList}" var="enquiry">
 								<tr>
-									<td><input type="checkbox"></td>
 									<td>${enquiry.enquiryNo}</td>
 									<td>${enquiry.memberNo}</td>
+									<td>${enquiry.memberName}</td>
 									<td>${enquiry.enquiryTitle}</td>
 									<td>
 									<span class="report-content"
@@ -188,32 +188,34 @@ section>div:nth-child(4) {
 				</tbody>
 
 			</table>
-			<div class="button-area">
-				<div class="button"
-					style="background-color: #3278FE; color: white; width: 70px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px;">
-					답장여부</div>
+			<form action="enquiry?cp=1" method="GET" onsubmit="return refresh()">
+				<div id="search-area">
+					<input type="text" name="searchWord" placeholder="검색어를 입력해주세요">
+					<img id="search" src="image/search-solid.svg" style="width: 20px; height: 20px;">
+					<select name="searchTag" onchange="changeSelect()">
+						<option value="enquiryNo">문의 번호</option>
+						<option value="memberNo">회원 번호</option>
+						<option value="nickname">닉네임</option>
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+						<option value="createDate">작성일</option>
+					</select>
+					<select  name="orderTag" onchange="changeSelect()">
+						<option value="">답장 정렬</option>
+						<option value="answer">답장 완료</option>
+						<option value="noAnswer">미답장</option>
 
-
-			</div>
-			<div id="search-area">
-				<input type="text" placeholder="검색어를 입력해주세요"> <img
-					id="search" src="image/search-solid.svg"
-					style="width: 20px; height: 20px;"> <select name="" id="">
-					<option value="">회원번호</option>
-					<option value="">제목</option>
-					<option value="">내용</option>
-					<option value="">작성일</option>
-					<option value="">답장여부</option>
-				</select>
-			</div>
+					</select>
+				</div>
+			</form>
       <div class="my-5">
 		<ul class="pagination" style="justify-content: center;">
 			<c:if test="${pagination.startPage != 1}">
 			<li>
-				<a class="page-link" href="post?cp=1">&lt;&lt;</a>
+				<a class="page-link" href="enquiry?cp=1&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">&lt;&lt;</a>
 			</li>
 			<li>
-				<a class="page-link" href="post?cp=${pagination.prevPage}">&lt;</a>
+				<a class="page-link" href="enquiry?cp=${pagination.prevPage}&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">&lt;</a>
 			</li>
 			
 			</c:if>
@@ -227,17 +229,17 @@ section>div:nth-child(4) {
 					</c:when>
 					<c:otherwise>
 						<li>
-							<a class="page-link" href="post?cp=${i}">${i}</a>
+							<a class="page-link" href="enquiry?cp=${i}&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">${i}</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			<c:if test="${pagination.endPage != pagination.maxPage}">
 			<li>
-				<a class="page-link" href="post?cp=${pagination.nextPage}">&gt;</a>
+				<a class="page-link" href="enquiry?cp=${pagination.nextPage}&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">&gt;</a>
 			</li>
 			<li>
-				<a class="page-link" href="post?cp=${pagination.maxPage}">&gt;&gt;</a>
+				<a class="page-link" href="enquiry?cp=${pagination.maxPage}&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">&gt;&gt;</a>
 			</li>
 			</c:if>
 
@@ -318,6 +320,17 @@ section>div:nth-child(4) {
 		// function enquiryModal(e){
 		// 	enquiryNo = e.previousElementSibling.previousElementSibling.previousElementSibling.innerText
 		// }
+
+		const inputSearch = document.getElementById("search-area").firstElementChild
+		inputSearch.addEventListener("keyup", function(){
+		  if(e.key =="Enter"){
+			 refresh1()
+		  }
+	    })
+
+		function refresh1(){
+			return true
+		}
 	</script>
 	<script>
 		const contextPath = "${pageContext.servletContext.contextPath}"

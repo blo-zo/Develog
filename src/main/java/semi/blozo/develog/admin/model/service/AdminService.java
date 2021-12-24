@@ -48,20 +48,20 @@ public class AdminService {
 	
 	}
 	
-	public List<Report> selectReport(Pagination pagination) throws Exception {
+	public List<Report> selectReport(String searchWord, String searchTag, Pagination pagination) throws Exception {
 		Connection conn = getConnection();
 		
-		List<Report> listReport = dao.selectReport(pagination, conn);
+		List<Report> listReport = dao.selectReport(searchWord, searchTag, pagination, conn);
 		
 		conn.close();
 		
 		return listReport;
 	}
 
-	public List<Enquiry> selectEnquiry(Pagination pagination) throws Exception {
+	public List<Enquiry> selectEnquiry(String searchWord, String searchTag, String orderTag, Pagination pagination) throws Exception {
 		Connection conn = getConnection();
 		
-		List<Enquiry> enquiryList = dao.selectEnquiry(pagination, conn);
+		List<Enquiry> enquiryList = dao.selectEnquiry(searchWord, searchTag, orderTag, pagination, conn);
 		
 		conn.close();
 		
@@ -328,6 +328,26 @@ public class AdminService {
 		
 		return result;
 	
+	}
+
+	public Pagination getPaginationEnquiry(String searchWord, String searchTag, String orderTag, int cp) throws Exception {
+		Connection conn = getConnection();
+		
+		int listCount = dao.enquiryListCount(searchWord, searchTag, orderTag, conn);
+		
+		conn.close();
+		
+		return new Pagination(listCount, cp);
+	}
+
+	public Pagination getPaginationReport(String searchWord, String searchTag, int cp) throws Exception {
+		Connection conn = getConnection();
+		
+		int listCount = dao.reportListCount(searchWord, searchTag, conn);
+		
+		conn.close();
+		
+		return new Pagination(listCount, cp);
 	}
 
 
