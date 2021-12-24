@@ -26,19 +26,15 @@ function reportDetailContent(e){
 }
 
 function enquiryDetailContent(e){
-    const enquiryNo = e.previousElementSibling.previousElementSibling.previousElementSibling.innerText
-    console.log(enquiryNo);
-    const inputModal = document.getElementsByClassName("input-modal");
-   console.log(inputModal);
+    enquiryNo = e.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerText
+    const title = e.parentElement.previousElementSibling.innerText
     $.ajax({
         url : contextPath + "/admin/enquiry/modal", // 절대 경로로 해야 하나?
         data : {"enquiryNo" : enquiryNo},
         type : "GET",
         dataType : "JSON",
         success : function(enquiry){
-            console.log(enquiry)				
-            console.log(inputModal)				
-            inputModal[0].innerHTML = 'userid@email.com <br>  작성일 : ' + enquiry.createDate+ '<br> 수정일 : '+enquiry.modifyDate +'<br> 미답장' 
+            inputModal[0].innerHTML = 'userid@email.com <br>  작성일 : ' + enquiry.createDate+ '<br> 미답장' 
             inputModal[1].innerHTML = enquiry.enquiryContent
         },
         error : function(req, status, error){
@@ -46,8 +42,26 @@ function enquiryDetailContent(e){
             console.log(req.responseText);
             console.log(status);
             console.log(error);
-     }
+         }
 
+    })
+}
+
+function enquirySend(){
+    const content = inputModal[1].value
+    $.ajax({
+        url : contextPath + "/admin/enquiry/send",
+        data : {"enquiryNo" : enquiryNo, "content" : content},
+        type : "GET",
+        success : function(message){
+            alert(message)
+        },
+        error : function(req, status, error){
+            console.log("ajax 실패");
+            console.log(req.responseText);
+            console.log(status);
+            console.log(error);
+         }
     })
 }
 
@@ -138,33 +152,3 @@ console.log(memberNo);
     })
 }
 
-function postStatusChange() {
-    let postNo = []
-    for (const items of checkBox) {
-        if (items.checked) {
-            postNo.push(items.parentElement.nextElementSibling.innerText)
-
-        }
-    }
-    postNo.push(content)
-    console.log(postNo);
-    $.ajax({
-        url: contextPath + "/admin/post/remove",
-        traditional: true, //이게 뭔지는 모르겠는데 배열을 넘겨준데
-        data: { "postNo": postNo },
-        type: "GET",
-        async: false, // 비동기 방식을 동기 방식으로 변환 // 결과적으로 페이지를 새로고침하게 해준다.
-        success: function (message) {
-            location.reload()
-            alert(message)
-        },
-
-        error: function (req, status, error) {
-            console.log("ajax 실패");
-            console.log(req.responseText);
-            console.log(status);
-            console.log(error);
-        }
-
-    })
-}

@@ -35,6 +35,7 @@
 		cursor : pointer;
 		color: #3278FE;
 	}
+
 </style>
 </head>
 <body>
@@ -96,7 +97,7 @@
 									<td>${post.postNo}</td>
 									<td>${post.postTitle}</td>
 									<td>
-										<a  class="postContent"
+										<a  class="postContent" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 200px; display: inline-block; text-align: center;"
 											href="${pageContext.servletContext.contextPath}/blog/${post.memberName}/view?pno=${post.postNo}">
 											${post.postContent}
 										</a>

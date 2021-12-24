@@ -104,6 +104,22 @@ section>div:nth-child(4) {
 	color: #3278FE;
 	cursor: pointer;
 }
+
+.report-content{
+	width: 200px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	display: inline-block;
+	
+}
+
+#button-area > div{
+	float: right;
+	background-color: #3278FE; color: white; width: 70px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px;
+	margin-right: 10px;
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -133,7 +149,6 @@ section>div:nth-child(4) {
 						<th>제목</th>
 						<th>내용</th>
 						<th>작성일</th>
-						<th>수정일</th>
 						<th>답장여부</th>
 					</tr>
 				</thead>
@@ -149,13 +164,23 @@ section>div:nth-child(4) {
 									<td>${enquiry.enquiryNo}</td>
 									<td>${enquiry.memberNo}</td>
 									<td>${enquiry.enquiryTitle}</td>
-									<td class="report-content"
+									<td>
+									<span class="report-content"
 									data-bs-toggle="modal"
 									data-bs-target="#exampleModal"
-									onclick="enquiryDetailContent(this)" >${enquiry.enquiryContent}</td>
+									onclick="enquiryDetailContent(this)">
+										${enquiry.enquiryContent}
+									</span>
+									</td>
 									<td>${enquiry.createDate}</td>
-									<td>${enquiry.modifyDate}</td>
-									<td>${enquiry.parentEnquiry}</td>
+									<c:choose>
+										<c:when test="${enquiry.parentEnquiry == 0}">
+											<td>미답장</td>
+										</c:when>
+										<c:otherwise>
+											<td>답장 완료</td>
+										</c:otherwise>
+									</c:choose>
 								</tr>
 							</c:forEach>
 						</c:otherwise>
@@ -239,21 +264,20 @@ section>div:nth-child(4) {
 							</div>
 						</div>
 						<div>
-							<div class="content">&nbsp;내용</div>
-							<textarea class="content input-modal" name="" id="" cols="100" rows="10"
-								readonly style="resize: none; outline: none;"></textarea>
+							<div class="content">&nbsp;내용</div><!-- readonly 위치를 변경하니 적용이 됬다. -->
+							<textarea readonly class="content input-modal" name="" id="" cols="100" rows="10"
+								 style="resize: none; outline: none;"></textarea> 
 						</div>
 						<br>
-						<div class="modal-button"
-							style="background-color: #3278FE; color: white; width: 70px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px; float: right;">
-							답장</div>
-						<div id="modal-button2" style="text-align: right; display: none;">
-							<div
-								style="background-color: #3278FE; color: white; width: 70px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px; display: inline-block;">
-								보내기</div>
-							<div
-								style="background-color: #3278FE; color: white; width: 70px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px; display: inline-block;">
-								이전으로</div>
+						<div id="button-area" style="float: right;">
+							<div class="modal-button">
+								답장</div>
+							<div class="modal-button" style="display: none;"  onclick="enquirySend()">
+								보내기
+							</div>
+							<div class="modal-button" style="display: none;">
+								이전으로
+							</div>
 						</div>
 					</section>
 				</div>
@@ -266,12 +290,34 @@ section>div:nth-child(4) {
 	<script>
 		const button = document.getElementsByClassName("modal-button")
 		const textarea = document.getElementsByTagName("textarea");
-		const button2 = document.getElementById("modal-button2")
+		let content = ""
 		button[0].addEventListener("click", function() {
 			textarea[0].removeAttribute("readonly")
+			content = textarea[0].value
+			textarea[0].value = ""
 			this.style.display = "none";
-			button2.style.display = "block";
+			button[1].style.display = "block";
+			button[2].style.display = "block";
 		})
+		button[2].addEventListener("click", function() {
+			textarea[0].readOnly = true
+			console.log(content);
+			textarea[0].value = content
+
+			this.style.display = "none"
+			button[1].style.display = "none"
+			button[0].style.display = "block"
+		
+		})
+		button[1].addEventListener("click", function(){
+
+		})
+
+		let enquiryNo;
+		const inputModal = document.getElementsByClassName("input-modal");
+		// function enquiryModal(e){
+		// 	enquiryNo = e.previousElementSibling.previousElementSibling.previousElementSibling.innerText
+		// }
 	</script>
 	<script>
 		const contextPath = "${pageContext.servletContext.contextPath}"

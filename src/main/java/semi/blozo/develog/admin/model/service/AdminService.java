@@ -316,6 +316,20 @@ public class AdminService {
 		return new Pagination(listCount, cp);
 	}
 
+	public int insertEnquiry(Enquiry enquiry, String content) throws Exception {
+		Connection conn = getConnection();
+		
+		int result = dao.insertEnquiry(enquiry, content, conn);
+		
+		if(result >0) conn.commit();
+		else		  conn.rollback();
+		
+		conn.close();
+		
+		return result;
+	
+	}
+
 
 
 
