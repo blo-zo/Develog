@@ -319,7 +319,7 @@ public class PostController extends HttpServlet{
 							
 							int postLikeCount = service.selectPostLikeCount(memberNo, postNo);
 							
-							System.out.println(postLikeCount);
+							int likeCount = service.setLikeCount(postNo, postLikeCount);
 							
 							resp.getWriter().print(postLikeCount);
 							

@@ -164,14 +164,6 @@
 		VALUES( ?, ? )
 	</entry>
 	
-	<!-- 좋아요 후 포스트에 반영 -->
-	<entry key="setLikeCount">
-		UPDATE POST SET
-		LIKE_COUNT = LIKE_COUNT + 1
-		WHERE POST_NO = ?
-	</entry>
-	
-	
 	<!-- 좋아요 취소 -->
 	<entry key="likeCancel">
 		DELETE FROM "LIKE" 
@@ -182,6 +174,13 @@
 	<!-- 좋아요 수 조회 -->
 	<entry key="selectPostLikeCount">
 		SELECT COUNT(*) FROM "LIKE"
+		WHERE POST_NO = ?
+	</entry>
+	
+	<!-- 좋아요 후 포스트에 반영 -->
+	<entry key="setLikeCount">
+		UPDATE POST SET
+		LIKE_COUNT = ?
 		WHERE POST_NO = ?
 	</entry>
 	

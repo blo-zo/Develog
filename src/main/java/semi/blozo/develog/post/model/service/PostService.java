@@ -224,10 +224,31 @@ public class PostService {
 		Connection conn = getConnection();
 		
 		int postLikeCount = dao.selectPostLikeCount(memberNo, postNo, conn);
-		
+
 		close(conn);
 		
 		return postLikeCount;
+	}
+
+
+
+	/** 좋아요 결과 포스트에 반영하기
+	 * @param postNo
+	 * @param postLikeCount 
+	 * @return likeCount
+	 * @throws Exception
+	 */
+	public int setLikeCount(int postNo, int postLikeCount) throws Exception{
+
+		Connection conn = getConnection();
+		
+		int likeCount = dao.setLikeCount(postNo, postLikeCount, conn);
+		
+		if(likeCount > 0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		
+		return likeCount;
 	}
 	
 	

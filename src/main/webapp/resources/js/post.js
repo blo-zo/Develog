@@ -417,11 +417,11 @@ $("#like-btn").on("click", function() {
           
           if ($("#like-btn").hasClass("liked")) {
             $("#like-btn").removeClass("liked");
-            $("#like-btn > img").attr("src", contextPath+ "/resources/images/KYJ/filledHeart.svg");
+            $("#like-btn > img").attr("src", contextPath + "/resources/images/KYJ/emptyHeart.svg");
             
           } else { 
             $("#like-btn").addClass("liked");
-            $("#like-btn > img").attr("src", contextPath + "/resources/images/KYJ/emptyHeart.svg");
+            $("#like-btn > img").attr("src", contextPath+ "/resources/images/KYJ/filledHeart.svg");
           }
 
         }

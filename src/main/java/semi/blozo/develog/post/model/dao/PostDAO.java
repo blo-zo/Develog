@@ -447,27 +447,31 @@ public class PostDAO {
 
 	/** 포스트 테이블에 좋아요 반영
 	 * @param postNo
+	 * @param postLikeCount 
 	 * @param likePost
 	 * @param conn
 	 * @return postLike
 	 * @throws Exception
 	 */
-	public int setLikeCount(int postNo, Connection conn) throws Exception{
+	public int setLikeCount(int postNo, int postLikeCount, Connection conn) throws Exception{
 		
-		int postLike = 0;
+		int likeCount = 0;
 		
 		try {
 			
 			String sql = prop.getProperty("setLikeCount");
+			
 			pstmt = conn.prepareStatement(sql);
-			postLike = pstmt.executeUpdate();
-			pstmt.setInt(1, postNo);
+			pstmt.setInt(1, postLikeCount);
+			pstmt.setInt(2, postNo);
+			
+			likeCount = pstmt.executeUpdate();
 			
 		}finally {
 			close(pstmt);
 		}
 		
-		return postLike;
+		return likeCount;
 	}
 
 	
