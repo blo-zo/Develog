@@ -93,7 +93,7 @@
 							<img src="${contextPath}/resources/images/boardIcon/earth.png" class="img-earth" alt="">
 							<p>전체 공개</p>
 						</button>
-						<button class="lock-btn postStatusBtn openBtn" name="openBtn"  value="502" type="button">
+						<button class="lock-btn postStatusBtn openBtn" name="openBtn"  value="503" type="button">
 							<img src="${contextPath}/resources/images/boardIcon/padlock.png" class="img-lock" alt="">
 							<p>비공개</p>
 						</button>

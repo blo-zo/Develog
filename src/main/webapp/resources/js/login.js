@@ -6,13 +6,13 @@ function loginValidate(){
 
     if(memberEmail.value.trim().length == 0){
         alert("아이디를 입력해주세요");
-        memberEmail.focus;
+        memberEmail.focus();
         return false;
 
     }
     if(memberPw.value.trim().length == 0){
         alert("비밀번호를 입력해주세요");
-        memberPw.focus;
+        memberPw.focus();
         return false;
 
     }
@@ -25,3 +25,27 @@ function loginValidate(){
         return false;
     }
 }
+
+
+	function trend(){
+
+				const trend =  $("#trend").text();
+
+				$.ajax({
+
+
+					url:"/main/trend",
+
+					data:{"trend":trend}, 
+					type : "POST",
+				
+
+					success: function(data){						
+
+					}
+
+				}); 
+
+			 	
+
+			}; 

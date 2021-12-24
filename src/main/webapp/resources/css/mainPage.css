@@ -144,10 +144,8 @@ a{
   cursor: pointer;
  
 }
-/* ----------------------------------------------------캐러셀 ------------------------------------------------------------ */
 
 
-/* ----------------------------------------------------캐러셀 끝 ------------------------------------------------------------ */
 /* 전체 post box */
 .post-hr{
     width: 1200px;
@@ -354,15 +352,21 @@ nav{
 .title-box{
     width: 280px;
     height: 60px;
+     text-overflow: ellipsis;
+    overflow: hidden;
 }
 /* 타이틀글자 */
 .title{
     text-align: left;
     margin: 0px;
-    margin-top: 25px;
-    margin-left: 20px;
+    margin-top: 15px;
+    margin-left: 15px;
     font-size: 20px;
+    /* 
+     text-overflow: ellipsis;
+    overflow: hidden;
     
+     */
 }
 
 /* 아래박스 */
@@ -598,7 +602,7 @@ border-radius: 0px;
 .swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet, .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
 border-radius: 0px;
 margin: 0px;
-width: 100px;
+width: 30px;
 height: 3px;
 }
 /* -----------------------------------------------------------캐러셀 끝------------------------------------------------ */

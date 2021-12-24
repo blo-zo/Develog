@@ -49,16 +49,19 @@
    
             <div class="sort-menu">
               <div class="under-line-on">
-             <a href="/trend">
-                <span><svg id="tr-img" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"></path></svg>
-                 트랜드</span>
-             </a>
-               </div>
-               <div class="under-line-off">
-                 <a href="#">
+              
+              
+                 <a href="#" id="new" >
                  <span><svg id="tr-img2" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path></svg>
                    최신</span>
                  </a>
+              
+               </div>
+               <div class="under-line-off">
+             <a href="javascript:void(0)" onclick="trend();">
+                <span><svg id="tr-img" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"></path></svg>
+                 트랜드</span>
+             </a>
                  </div>
                  
                </div>
@@ -86,7 +89,7 @@
             
    
    
-                 <a href="" class="wrapper-a">
+                 <a href="blog/view?blog=${post.blogTitle}&pno=${post.postNo}" class="wrapper-a">
    
                      
                      <div class="card">
