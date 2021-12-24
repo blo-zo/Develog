@@ -4,8 +4,7 @@
 <properties>
  
 	
-	
-	<!-- 게시글 삽입 + 이미지 정보 삽입 총 3번 -->
+	<!-- 게시글 , 태그, 썸네일 정보 삽입 총 3번 -->
 	<!-- 다음 게시글 번호 조회 -->
 	<entry key="nextPostNo">
 		SELECT SEQ_POST.NEXTVAL FROM DUAL
@@ -18,9 +17,9 @@
 	</entry>
 	
 	<!-- 게시글 이미지 정보 삽입 -->
-	<entry key="insertPostImage">
-		INSERT INTO POST_IMG 
-		VALUES( SEQ_POST_IMG.NEXTVAL, ?, ?, DEFAULT, ?, ?, ?)
+	<entry key="insertThumbImg">
+		INSERT INTO THUMB_IMG 
+		VALUES( SEQ_THUMB_IMG.NEXTVAL, ?, ?, DEFAULT, ?, ?)
 	</entry>
 	
 	<!-- 태그 삽입 -->

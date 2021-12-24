@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%-- 
-<c:include page="../common/header.jsp" /> --%>
+ 
+<jsp:include page="../common/header.jsp"/>
 
 <link rel="stylesheet" href="../resources/css/profile.css">
+
 
 
 	<form action="profile" method="POST" name="profileForm" onsubmit="return validate();">
@@ -24,7 +25,7 @@
 	         <!-- 프로필 -->
 	        <div class="content" style=" display: block;" >
 	            <div class="profile">
-	                <div class="p-img"><img src="images/profile-small.png"></div>
+	                <div class="p-img"><img src="https://via.placeholder.com/50x50"></div>
 	                <div class="p-btn">
 	                    <button class="p-choose" id="p-choose" >이미지 업로드</button>
 	                    <button class="p-delete" id="p-delete" >이미지 제거</button>
@@ -58,7 +59,7 @@
 	          <!-- email -->
 	          <div class="sns-email" >
 	            <div class="email-title" >
-	              <img class="email-img" id="email-img" src="images/email.png">
+	              <img class="email-img" id="email-img" src="${contextPath}/resources/images/boardIcon/email.png">
 	            </div>
 	            <div class="email-input">
 	                <input type="text"  class="line-intro" id="emailContent" name="" placeholder="이메일을 입력해주세요." size=35 >
@@ -68,7 +69,7 @@
 	          <!-- github -->
 	          <div class="sns-github" >
 	            <div class="github-title" >
-	              <img  class="github-img"  id="github-img" src="images/github.png">
+	              <img  class="github-img"  id="github-img" src="${contextPath}/resources/images/boardIcon/github.png">
 	            </div>
 	            <div class="github-input">
 	                <input type="text"  class="line-intro" id="gitContent" name="" placeholder="Github 계정을 입력하세요." size=35 >
@@ -78,7 +79,7 @@
 	          <!-- twitter -->
 	          <div class="sns-twitter" >
 	            <div class="twitter-title" >
-	              <img class="twitter-img" id="twitter-img" src="images/twitter.png" >
+	              <img class="twitter-img" id="twitter-img" src="${contextPath}/resources/images/boardIcon/twitter.png" >
 	            </div>
 	            <div class="twitter-input">
 	                <input type="text" class="line-intro"  id="twitterContent" name="" placeholder="Twitter 계정을 입력하세요." 
@@ -90,7 +91,7 @@
 	          <!-- facebook -->
 	          <div class="sns-facebook">
 	            <div class="facebook-title" >
-	              <img  class="facebook-img"  src="images/facebook.png" 
+	              <img  class="facebook-img"  src="${contextPath}/resources/images/boardIcon/facebook.png" 
 	              >
 	            </div>
 	            <div class="facebook-input">
@@ -101,7 +102,7 @@
 	          <!-- homepage -->
 	          <div class="sns-homepage">
 	            <div class="homepage-title" >
-	              <img  class="homepage-img" id="homepage-img" src="images/home.png" alt="" >
+	              <img  class="homepage-img" id="homepage-img" src="${contextPath}/resources/images/boardIcon/home.png" alt="" >
 	            </div>
 	            <div class="homepage-input">
 	                <input type="text" class="line-intro" id="homeContent" name="" placeholder="홈페이지 주소를 입력하세요."  size=35 >

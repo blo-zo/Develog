@@ -19,56 +19,81 @@ public class PostingService {
 
 	/** 게시글 삽입 ( post + tagList)
 	 * @param postVO
+	 * @param thumbimgList 
 	 * @param tagList 
 	 * @return result
 	 * @throws Exception
 	 */
-	public int insertPost(PostVO postVO, List<TagVO> tagVOList) throws Exception{
+	public int insertPost(PostVO postVO, List<TagVO> tagVOList, List<ThumbImgVO> imgList) throws Exception{
 		Connection conn = getConnection();
 		
 		// 다음 게시글 번호를 미리 지정
 		int postNo = dao.nextPostNo(conn);
 		postVO.setPostNo(postNo);
 		
-		
 		// 2-1) XSS 방지 처리
 		postVO.setPostTitle(XSS.replaceParameter( postVO.getPostTitle()) );
-		postVO.setPostContent(XSS.replaceParameter( postVO.getPostContent()) );
-		
+
 		// 2-2) 개행문자 -> <br> 태그로 변경
-		String content = postVO.getPostContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
-		postVO.setPostContent(content); 
+//		String content = postVO.getPostContent().replaceAll("(\r\n|\r|\n|\n\r)", "<br>");
+//		postVO.setPostContent(content); 
 				
 		// 2-3) 2-1,2-2를 거친 게시글 삽입 진행
 		int result = dao.insertPost(postVO, conn);
-		System.out.println("post result : " + result);
-		System.out.println("post postNo : " + postNo);
-		
 		
 		
 		if(result > 0) {
-		
+			// 플래그 사용이유 혹시 모를 상황방지, 태그 입력중 하나가 잘못되면 못하게
 			Boolean flag = true;
 		   
-		   for(TagVO tagVO : tagVOList) {
-			   tagVO.setTagName(XSS.replaceParameter( tagVO.getTagName()) );  
-			   tagVO.setPostNo(postNo);
-			   System.out.println("tagVO : " +tagVO);
-			   result = dao.insertTag(tagVO, conn);
+			for(TagVO tagVO : tagVOList) {
+				tagVO.setTagName(XSS.replaceParameter( tagVO.getTagName()) );  
+				tagVO.setPostNo(postNo);
+				
+				System.out.println(tagVO);
+				System.out.println("tagVO의 " +postNo);
+				
+				
+				result = dao.insertTag(tagVO, conn);//결과가 true면 태그가 잘들어갔다
 	        	 
-			   if(result == 0) {
+				if(result == 0) { // 실패하면 false, for문 멈춘다
 				   rollback(conn);
 				   
 				   flag = false;
 	               break;
-			   }
-		   }
-		   if (flag) {
-			   commit(conn);
-			   result = postNo;
-		   }
-	   }
-				
+				}  
+		    }
+		    // for문이 끝나고 썸네일 과정 진행
+			
+			// result가 트루일 때 썸네일 넣기
+			// 썸네일이 끝나고 나서 결과가 
+			
+			// 썸네일 이미지  for문
+			if(flag) {
+				for(ThumbImgVO thumbVO : imgList) {
+					thumbVO.setPostNo(postNo);
+					
+					result = dao.insertThumb(thumbVO, conn);
+		        	 
+					System.out.println("thumbVO의 " +postNo);
+	
+					if(result == 0) { 
+					   rollback(conn);
+					   
+					   flag = false;
+		               break;
+					} else {
+						result = postNo; //썸네일 이미지 IF문 안에서 처리하기 
+					}
+			    }
+			}
+			
+			if(result > 0) commit(conn);
+			
+		} else {
+			rollback(conn);
+		}
+		
 		return result;
 	}
 
