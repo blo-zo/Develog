@@ -90,9 +90,14 @@
 	<!-- 썸네일 이미지 조회 -->
 	
 	
-	
-	
-	
+	<!-- 태그 조회 (수정폼) -->
+	<entry key="selectTagList">
+		SELECT TAG_CD, TAG_NM
+		FROM TAG
+		WHERE POST_NO = ?
+		ORDER BY TAG_CD
+	</entry>
+
 	<!-- 포스트 수정 -->
 	
 	
@@ -184,9 +189,21 @@
 		WHERE POST_NO = ?
 	</entry>
 	
+	<!-- 회원이 좋아요한 포스트인지 검사 -->
+	<entry key="likedPost">
+		SELECT COUNT(*)
+		FROM "LIKE"
+		WHERE POST_NO = ?
+		AND MEMBER_NO = ?
+	</entry>
 	
 	
 	
+	<!-- 조회수 증가 시간 -->
+	<entry key="insertStaticReadCount">
+		INSERT INTO STATIC_READ_COUNT
+		VALUES(SEQ_STATIC_READ_COUNT.NEXTVAL, DEFAULT, ?)
+	</entry>
 	
 
 </properties>

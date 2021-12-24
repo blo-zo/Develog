@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import semi.blozo.develog.board.model.vo.TagVO;
 import semi.blozo.develog.post.model.vo.Blog;
 import semi.blozo.develog.post.model.vo.Post;
 import semi.blozo.develog.post.model.vo.PostImage;
@@ -472,6 +473,103 @@ public class PostDAO {
 		}
 		
 		return likeCount;
+	}
+
+	/** 회원이 좋아한 포스트인지 확인하기
+	 * @param postNo
+	 * @param memberNo
+	 * @param conn
+	 * @return likeYN
+	 * @throws Exception
+	 */
+	public int likedPost(int postNo, int memberNo, Connection conn) throws Exception{
+
+		int likeYN = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("likedPost");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			pstmt.setInt(2, memberNo);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				likeYN = rs.getInt(1);
+			}
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return likeYN;
+	}
+
+	/** 수정폼 전환 시 기존 태그 조회
+	 * @param postNo
+	 * @param conn
+	 * @return tagList
+	 * @throws Exception
+	 */
+	public List<TagVO> selectTagList(int postNo, Connection conn) throws Exception{
+
+		List<TagVO> tagList = new ArrayList<TagVO>();
+		
+		try {
+			
+			String sql = prop.getProperty("selectTagList");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				TagVO tag = new TagVO();
+				tag.setTagCode(rs.getInt(1));
+				tag.setTagName(rs.getString(2));
+				tag.setPostNo(postNo);
+				
+				tagList.add(tag);
+				
+			}
+			
+		}finally {
+			
+			close(rs);
+			close(pstmt);
+			
+		}
+		
+		return tagList;
+	}
+
+	
+	
+	/** 조회수 증가 시간 입력 DAO
+	 * @param postNo
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertStaticReadCount(int postNo, Connection conn) throws Exception{
+		
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("insertStaticReadCount");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			
+			close(pstmt);
+			
+		}
+		
+		return result;
 	}
 
 	
