@@ -40,7 +40,7 @@
 		<!-- write area -->
 
 		<footer>
-            <button class="out-area" onclick="location.href='# 목록페이지' ">
+            <button class="out-area" type="button" onclick="location.href='${contextPath}/main'">
                 <div id="out-image">
                     <img src="${contextPath}/resources/images/boardIcon/arrow.png" id="img-arrow" >
                 </div>
@@ -52,7 +52,6 @@
                     <a style=" color: white; text-decoration : none;">출간하기</a>
                 </button>
             </div>    
-    
         </footer>
 	</div><!-- wrapper -->
 

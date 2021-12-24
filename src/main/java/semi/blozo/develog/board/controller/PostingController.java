@@ -48,7 +48,6 @@ public class PostingController extends HttpServlet {
 			
 			// 게시글 삽입
 			if(command.equals("insert")) {
-				System.out.println("@insert일때: "+method);
 				//GET 방식 요청 -> 게시글 등록 화면 전환
 				if(method.equals("GET")) {
 					
@@ -58,14 +57,12 @@ public class PostingController extends HttpServlet {
 					
 					req.setAttribute("category", category);
 					
-					System.out.println(category);
 					
 					path  = "/WEB-INF/views/board/posting.jsp";
 					dispatcher = req.getRequestDispatcher(path);
 					dispatcher.forward(req, resp);
 				
 				} else { // POST 방식 요청
-					System.out.println("@post일때" + method); 
 					
 					// 썸네일 이미지
 					HttpSession session = req.getSession();
@@ -103,7 +100,6 @@ public class PostingController extends HttpServlet {
 							tagvo.setTagName(vo);
 							tagVOList.add(tagvo);
 							
-							System.out.println(tagvo);
 						}
 					}
 					
@@ -132,7 +128,6 @@ public class PostingController extends HttpServlet {
 							temp.setThumbImgOriginal(mReq.getOriginalFileName(name));
 							temp.setThumbImgPath(filePath); // 파일이 있는 주소 경로
 							
-							System.out.println(temp.toString());
 							
 							
 							// imgList에 추가 
@@ -166,6 +161,30 @@ public class PostingController extends HttpServlet {
 			}
 
 			
+			
+			
+			else if(command.equals("insertImage")) {
+					
+				HttpSession session = req.getSession();
+				
+				int maxSize = 1024 * 1024 * 100;
+				String root =  session.getServletContext().getRealPath("/");
+				String filePath = "/resources/images/board/";
+				String realPath = root + filePath;
+				
+				MultipartRequest mReq 
+				= new MultipartRequest( req, realPath, maxSize, "UTF-8", new MyRenamePolicy() );
+				
+				Enumeration<String> files = mReq.getFileNames();
+				
+				if( files.hasMoreElements() ) {
+					String name = files.nextElement(); // 다음 요소값(name) 얻어오기
+					System.out.println(mReq.getOriginalFileName(name));
+					System.out.println(mReq.getFilesystemName(name));
+					resp.getWriter().print(req.getContextPath()+filePath+mReq.getFilesystemName(name));
+				}
+			}
+					
 			
 		}catch (Exception e) {
 			e.printStackTrace();

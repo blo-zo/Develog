@@ -162,7 +162,6 @@ public class PostingDAO {
 	          pstmt.setString(3, thumbVO.getThumbImgOriginal());
 	          pstmt.setInt(4, thumbVO.getPostNo());
 	          
-	          System.out.println("dao postNo" + thumbVO.getPostNo());
 
 	          result = pstmt.executeUpdate();
 	          
@@ -199,7 +198,6 @@ public class PostingDAO {
 				
 				category.add(c);
 				
-				System.out.println(c);
 			}
 			
 		}finally {

@@ -17,5 +17,14 @@ for(let i=0; i < tabArr.length ; i++){
             content.style.display = "none";
         }
         contentArr[i].style.display = "block";
+		
+		// 저장 버튼 없애버리기
+		if($(".tab").eq(3).hasClass("select-tab")){
+			$(".btn-submit").hide();
+		}else{
+			$(".btn-submit").show();
+		}
     });
 } 
+
+

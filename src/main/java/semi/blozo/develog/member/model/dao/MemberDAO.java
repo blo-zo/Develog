@@ -96,6 +96,20 @@ public class MemberDAO {
 		}
 		return result;
 	}
+	
+
+	public int insertSNS(Member member, Connection conn) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int insertBlog(Member member, Connection conn) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
+	
 
 	/** 닉네임 중복검사
 	 * @param inputName
@@ -210,6 +224,7 @@ public class MemberDAO {
 		return result;
 	}
 
+	
 
 	
 	
