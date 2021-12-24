@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import semi.blozo.develog.board.model.vo.TagVO;
 import semi.blozo.develog.post.model.dao.PostDAO;
 import semi.blozo.develog.post.model.vo.Blog;
 import semi.blozo.develog.post.model.vo.Post;
@@ -102,9 +103,22 @@ public class PostService {
 		if(post != null && post.getMemberNo() != memberNo ) {
 			
 			int result = dao.plusReadCount(postNo, conn);
+			
 			if(result > 0) {
-				commit(conn);
+				
+				// 조회수 증가 시간 기록
+				int result2 = dao.insertStaticReadCount(postNo, conn);
+				
+				if(result2 > 0) {
+					
+					commit(conn);
+				}else {
+					
+					rollback(conn);
+				}
+				
 				post.setReadCount(post.getReadCount() + 1);
+				
 			}else rollback(conn);
 			
 		}
@@ -126,10 +140,10 @@ public class PostService {
 		
 		Post post = dao.selectPost(postNo, conn);
 		
-		// 이미지 정보 조회
-		List<PostImage> postImgList = dao.selectPostImageList(postNo, conn);
+		// 썸네일 이미지 정보 조회
+//		List<PostImage> postImgList = dao.selectPostImageList(postNo, conn);
 		// 이미지를 post에 추가
-		post.setPostImgList(postImgList);
+//		post.setPostImgList(postImgList);
 		
 		// 줄바꿈 다시 원래대로 돌리기
 		post.setPostContent(post.getPostContent().replaceAll("<br>", "\r\n"));
@@ -193,11 +207,9 @@ public class PostService {
 			
 			// 좋아요 증가(삽입)
 			likePost = dao.likePost(postNo, memberNo, conn);
-			// 포스트 테이블에 좋아요 결과 반영하기
-			//int postLike = dao.setLikeCount(postNo, conn);
 			
 		}catch(SQLException e) {
-			e.printStackTrace();
+
 			// 좋아요 취소(삭제)
 			likePost = dao.likeCancel(postNo, memberNo, conn);
 			
@@ -249,6 +261,52 @@ public class PostService {
 		close(conn);
 		
 		return likeCount;
+	}
+
+
+	
+	/** 회원이 좋아한 포스트인지 확인하기
+	 * @param postNo
+	 * @param memberNo
+	 * @return likeYN
+	 * @throws Exception
+	 */
+	public int likedPost(int postNo, int memberNo) throws Exception{
+
+		Connection conn = getConnection();
+		
+		int likeYN = dao.likedPost(postNo, memberNo, conn);
+		
+		close(conn);
+		
+		return likeYN;
+	}
+
+
+
+	/** 수정폼 전환 시 기존 태그 목록 조회
+	 * @param postNo
+	 * @return tagList
+	 * @throws Exception
+	 */
+	public List<TagVO> selectTagList(int postNo) throws Exception{
+		
+		Connection conn = getConnection();
+		
+		List<TagVO> tagList = dao.selectTagList(postNo, conn);
+		
+		// 태그이름 맨 뒤 X 제거
+		for(int i = 0; i < tagList.size(); i++) {
+			
+			String tagName = tagList.get(i).getTagName();
+			tagName = tagName.substring(0, tagName.length()-1);
+			tagList.get(i).setTagName(tagName);
+			
+		}
+		
+		close(conn);
+		
+		return tagList;
 	}
 	
 	
