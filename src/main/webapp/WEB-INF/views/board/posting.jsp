@@ -14,12 +14,12 @@
      <!-- include summernote css/js-->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet"> 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-   <link rel="stylesheet" href="/css/summernote/summernote-lite.css"> 
+  <%--  <link rel="stylesheet" href="${contextPath}/css/summernote/summernote-lite.css">  --%>
 </head>
 
 <body>
 
-	<form action="insert" name="insertForm" method="post"  role="form" onsubmit="return false">
+	<form action="insert" enctype="multipart/form-data" name="insertForm" method="post"  role="form" onsubmit="return false">
 	<div class="wrapper">
 		<div class="write-area" style="max-width: 80%;">
 			<div class="head-title">
@@ -42,7 +42,7 @@
 		<footer>
             <button class="out-area" onclick="location.href='# 목록페이지' ">
                 <div id="out-image">
-                    <img src="../resources/images/board/arrow.png" id="img-arrow" >
+                    <img src="${contextPath}/resources/images/boardIcon/arrow.png" id="img-arrow" >
                 </div>
                  <span id="out-span" >나가기</span>
             </button> <!-- /out-area -->
@@ -75,7 +75,8 @@
 				</div>
 				<!--썸네일 값 -->
 				<div id="fileArea">
-					<input type="file" name="img" onchange="loadImg(this)">
+					 <input type="file" name="img" onchange="loadImg(this)" id="thumbImg"> 
+					
 				</div>
 			</div> <!-- /thumbnail-area -->
 
@@ -87,13 +88,13 @@
 					<div class="open-title">
 						<h4>공개 설정</h4>
 					</div>
-					<div class="open-btns">
-						<button class="all-btn postStatusBtn" value="500" type="button">
-							<img src="../resources/images/board/earth.png" class="img-earth" alt="">
+					<div class="open-btns" >
+						<button class="all-btn postStatusBtn openBtn" name="openBtn" value="500" type="button">
+							<img src="${contextPath}/resources/images/boardIcon/earth.png" class="img-earth" alt="">
 							<p>전체 공개</p>
 						</button>
-						<button class="lock-btn postStatusBtn" value="502" type="button">
-							<img src="../resources/images/board/padlock.png" class="img-lock" alt="">
+						<button class="lock-btn postStatusBtn openBtn" name="openBtn"  value="502" type="button">
+							<img src="${contextPath}/resources/images/boardIcon/padlock.png" class="img-lock" alt="">
 							<p>비공개</p>
 						</button>
 						<!-- 상태코드 넘어가는 input -->
@@ -105,8 +106,7 @@
 						<h4>카테고리 설정</h4>
 					</div>
 					<div class="category-input">
-						<div class="sort-post dropstart border" data-bs-toggle="dropdown"
-							aria-expanded="false">
+						<div class="sort-post dropstart border" data-bs-toggle="dropdown" aria-expanded="false">
 							<select name="categoryCode" id="categoryCode">
 								<c:forEach items = "${category}" var="c">
 								
@@ -120,7 +120,7 @@
 				</div>
 				<div class="set-btns">
 					<button class="btn-cancel" >취소</button>
-					<button class="btn-submit" onclick="postValidate();">출간하기</button>
+					<button class="btn-submit" onclick="return postValidate();">출간하기</button>
 				</div>
 
 			</div>
@@ -136,6 +136,6 @@
 <script src="https://unpkg.com/js-offcanvas@1.2.8/dist/_js/js-offcanvas.pkgd.min.js"></script> 
 <link href="https://unpkg.com/js-offcanvas@1.2.8/dist/_css/prefixed/js-offcanvas.css" rel="stylesheet">
 
-<script src="../resources/js/posting.js"></script>
+<script src="${contextPath}/resources/js/posting.js"></script>
 </body>
 </html>

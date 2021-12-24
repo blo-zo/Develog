@@ -600,9 +600,9 @@ border-bottom-right-radius: 10px;}
 .favorite-share{position: sticky; top: 50px;}
 .favorite-share-box{display: flex; background-color: #EEEEEE; border: 1px solid #CCCCCC; border-radius: 25px; width: 150px; height: 50px; margin: auto; margin-top: 100px;}
 .favorite-share-area{width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;}
-.favorite-share-icon{background-color: #FDFDFD; width: 40px; height: 40px; border: 0.5px solid black; border-radius: 60%; display: flex; align-items: center; justify-content: center; cursor: pointer;}
+.favorite-share-icon{background-color: #FDFDFD; width: 40px; height: 40px; border: 0.5px solid black; border-radius: 60%; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0.6;}
 .favorite-count{ font-size: 15px; font-weight: 500;}
-.favorite-share-icon:hover{background-color: #cccccc;}
+.favorite-share-icon:hover{opacity: 1;}
 
 /* 글 목차 */
 .post-index{position: -webkit-sticky; width: 180px; margin: auto; margin-top: 25px; border: 1px solid #cccccc; padding: 5px;}

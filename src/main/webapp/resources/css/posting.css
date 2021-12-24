@@ -296,22 +296,25 @@ footer{
 }
 
 
-#fileArea{
+/* 썸네일 영역 */
+.thumb-img-area{
 	width : 350px;
-	height :200px;
-	/* display : flex; */
-	justify-content :  center;
+	height : 200px;
+	display : flex; 
+	justify-content : center;
 	align-items : center;
-	
-	display: none;
-	 
 }
-/* 썸네일 사이즈 지정 후 조절  */
+
+/* 들어가는 썸네일 이미지 사이즈 지정  */
 .thumb-img-size{ 
-	width: 350px;
+	max-width: 350px;
 	max-height : 200px;
-	
 }
+
+#fileArea{
+	display: none; 
+}
+
 /* 카테고리 버튼 */
 .sort-post{
     float: right;

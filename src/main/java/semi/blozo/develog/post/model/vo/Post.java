@@ -13,7 +13,6 @@ public class Post {
 	
 	private int readCount;			// 조회 수
 	private int favoriteCount;		// 좋아요 수
-	// 변수명 이야기 해보고 likeCount로 변경하기
 	
 	private int blogNo;			// 블로그 번호
 	private int categoryCode;		// 카테고리 코드

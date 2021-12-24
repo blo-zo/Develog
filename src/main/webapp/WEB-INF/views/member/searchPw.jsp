@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="../common/header.jsp" /><!-- 상대 경로  -->
+<jsp:include page="../common/header.jsp"/><!-- 상대 경로  -->
 
 
    <div class="modal" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
