@@ -14,6 +14,7 @@ import java.util.Properties;
 import semi.blozo.develog.board.model.vo.Category;
 import semi.blozo.develog.board.model.vo.PostVO;
 import semi.blozo.develog.board.model.vo.TagVO;
+import semi.blozo.develog.board.model.vo.ThumbImgVO;
 
 
 
@@ -110,63 +111,8 @@ public class PostingDAO {
 
 	
 	
-	/** 썸네일 이미지 정보 삽입
-	 * @param img
-	 * @param conn
-	 * @return result
-	 * @throws Exception
-	 */
-	/* public int insertPostImage(PostImageVO img, Connection conn)  throws Exception{
-		int result =0;
-		
-	      try {
-	          String sql = prop.getProperty("insertBoardImage");
-	          pstmt = conn.prepareStatement(sql);
-	          // POSTIMGVO에 필드 생성 
-	          pstmt.setString(1, img.getPostImgPath());
-	          pstmt.setString(2, img.getPostImgName());
-	          pstmt.setString(3, img.getPostImgOriginal());
-	          pstmt.setInt(4, img.getPostImgLevel());
-	          pstmt.setInt(5, img.getPostNo());
-	           
-	          result = pstmt.executeUpdate();
-	          
-	       }finally {
-	          close(pstmt);
-	       }   
-	       return result;
-	}
-	*/
 
 	
-	
-	/** 태그 삽입
-	 * @param postNo 
-	 * @param tagList
-	 * @param conn
-	 * @return 
-	 * @throws Exception
-	 */
-//	public int insertTag(String tagName, int postNo, Connection conn) throws Exception{
-//
-//		int result = 0;
-//		
-//		try {
-//			String sql = prop.getProperty("insertTag");
-//			pstmt = conn.prepareStatement(sql);
-//			
-//			pstmt.setString(1, tagName);
-//			pstmt.setInt(2, postNo);
-//			
-//			result = pstmt.executeUpdate();
-//			
-//		} finally {
-//			close(pstmt);
-//			
-//		}
-//		
-//		return result;
-//	}
 	
 	/**
 	 * 태그 삽입
@@ -194,7 +140,37 @@ public class PostingDAO {
 		
 		return result;
 	}
+	
 
+	/** 썸네일 이미지 정보 삽입 
+	 * @param thumbVO
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int insertThumb(ThumbImgVO thumbVO, Connection conn) throws Exception {
+	
+		int result =0;
+		
+	      try {
+	          String sql = prop.getProperty("insertThumbImg");
+	          pstmt = conn.prepareStatement(sql);
+	          // POSTIMGVO에 필드 생성 
+	          
+	          pstmt.setString(1, thumbVO.getThumbImgPath());
+	          pstmt.setString(2, thumbVO.getThumbImgName());
+	          pstmt.setString(3, thumbVO.getThumbImgOriginal());
+	          pstmt.setInt(4, thumbVO.getPostNo());
+	          
+	          System.out.println("dao postNo" + thumbVO.getPostNo());
+
+	          result = pstmt.executeUpdate();
+	          
+	       }finally {
+	          close(pstmt);
+	       }   
+	       return result;
+	}
 
 	/** 카테고리 조회
 	 * @param blogNo 
