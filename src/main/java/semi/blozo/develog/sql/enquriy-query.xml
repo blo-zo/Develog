@@ -32,6 +32,6 @@
 	<!-- 문의 등록 -->
 	<entry key="insertEnquiry">
 	INSERT INTO "ENQUIRY" VALUES(SEQ_ENQUIRY_NO.NEXTVAL ,
-	? , ? , DEFAULT.NEXTVAL,DEFAULT, DEFAULT ,?)
+	? , ? ,DEFAULT, DEFAULT ,?)
 	</entry>
 </properties>

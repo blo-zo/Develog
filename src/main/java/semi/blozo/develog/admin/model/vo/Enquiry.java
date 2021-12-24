@@ -9,7 +9,16 @@ public class Enquiry {
 	private int memberNo;
 	private int parentEnquiry;
 	
+	// 회원 테이블
+	private String memberName;
 	
+	
+	public String getMemberName() {
+		return memberName;
+	}
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
 	public int getEnquiryNo() {
 		return enquiryNo;
 	}

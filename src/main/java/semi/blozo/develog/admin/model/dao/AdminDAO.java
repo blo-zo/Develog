@@ -196,6 +196,8 @@ public class AdminDAO {
 	
 	}
 	
+	
+	
 	public int postListCount(String searchWord, String searchTag, String orderTag, Connection conn) throws Exception{
 		int postSearchListCount = 0;
 		try {
@@ -266,12 +268,66 @@ public class AdminDAO {
 	
 	}
 
-	public List<Report> selectReport(Pagination pagination, Connection conn) throws Exception{
+	public List<Report> selectReport(String searchWord, String searchTag, Pagination pagination, Connection conn) throws Exception{
 		List<Report> listReport = new ArrayList<Report>();
 		
 		try {
-			String sql = prop.getProperty("selectReport");
+			String where = "";
+			String order = "ORDER BY POST_NO DESC";
 			
+			switch(searchTag) {
+			case "no" : where = "WHERE REPORT_NO LIKE '%"+searchWord +"%'"; break;
+			case "memberNo" : where = "WHERE MEMBER_NO LIKE '%"+searchWord +"%'"; break;
+			case "nickname" : where = "WHERE MEMBER_NM LIKE '%"+searchWord +"%'"; break;
+			case "target" : where = "WHERE REPORT_TYPE LIKE '%"+searchWord +"%'"; break;
+			case "targetNo" : where = "LIKE '%"+searchWord +"%'"; break;
+			case "content" : where = "WHERE REPORT_CONTENT LIKE '%"+searchWord +"%'"; break;
+			case "createDate" : if(searchWord.length() == 15) {
+											String str1 = searchWord.substring(0,6);
+											String str2 = searchWord.substring(9,15);
+											str1 = stringToDate(str1);
+											str2 = stringToDate(str2);
+											
+											where = "WHERE TO_DATE(CREATE_DT) BETWEEN '"+ str1 +"' AND '"+str2+"'"; break;
+							
+										}else if(searchWord.length() == 6) {
+											String str = searchWord.substring(0, 6);
+											where = "WHERE TO_DATE(CREATE_DT) = '"+ str +"'"; break;
+											
+										}
+			default : where = "";
+			}
+			String sql = "";
+			if(searchTag.equals("targetNo")) {
+				sql = "SELECT * FROM(\r\n"
+						+ "		SELECT ROWNUM RNUM, A.* FROM\r\n"
+						+ "		(SELECT REPORT_NO, REPORT_CONTENT,TO_CHAR(CREATE_DT, 'YYYY-MM-DD'), REPORT_TYPE, POST_NO,MEMBER_NO, MEMBER_NM\r\n"
+						+ "        FROM POST_REPORT\r\n"
+						+ "        JOIN MEMBER USING(MEMBER_NO)\r\n"
+						+ "WHERE POST_NO " +where 
+						+ "         UNION ALL   \r\n"
+						+ "       SELECT REPORT_NO,REPORT_CONTENT,TO_CHAR(CREATE_DT, 'YYYY-MM-DD'), REPORT_TYPE, REPLY_NO,MEMBER_NO, MEMBER_NM\r\n"
+						+ "        FROM REPLY_REPORT\r\n"
+						+ "        JOIN MEMBER USING(MEMBER_NO)"
+						+ "WHERE REPLY_NO "+where
+						+ ") A)\r\n"
+						+ "		WHERE RNUM BETWEEN ? AND ?";
+								
+			}else {
+				sql = "SELECT * FROM(\r\n"
+						+ "		SELECT ROWNUM RNUM, A.* FROM\r\n"
+						+ "		(SELECT REPORT_NO, REPORT_CONTENT,TO_CHAR(CREATE_DT, 'YYYY-MM-DD'), REPORT_TYPE, POST_NO,MEMBER_NO, MEMBER_NM\r\n"
+						+ "        FROM POST_REPORT\r\n"
+						+ "        JOIN MEMBER USING(MEMBER_NO)\r\n"
+						+ where
+						+ "         UNION ALL   \r\n"
+						+ "       SELECT REPORT_NO,REPORT_CONTENT,TO_CHAR(CREATE_DT, 'YYYY-MM-DD'), REPORT_TYPE, REPLY_NO,MEMBER_NO, MEMBER_NM\r\n"
+						+ "        FROM REPLY_REPORT\r\n"
+						+ "        JOIN MEMBER USING(MEMBER_NO)\r\n"
+						+ where
+						+ ") A)\r\n"
+						+ "		WHERE RNUM BETWEEN ? AND ?";
+			}
 			int startRow = (pagination.getCurrentPage() -1) * pagination.getLimit() + 1;
 			
 			int endRow = startRow + pagination.getLimit() -1;
@@ -287,11 +343,11 @@ public class AdminDAO {
 				
 				report.setReportNo(rs.getInt(2));
 				report.setReportContent(rs.getString(3));
-				report.setReportType(rs.getString(4));
-				report.setCreateDate(rs.getString(5));
+				report.setCreateDate(rs.getString(4));
+				report.setReportType(rs.getString(5));
 				report.setTargetNo(rs.getInt(6));
 				report.setMemberNo(rs.getInt(7));
-				report.setReportStatusName(rs.getString(8));
+				report.setMemberName(rs.getString(8));
 
 				listReport.add(report);
 			}
@@ -303,12 +359,120 @@ public class AdminDAO {
 		
 		return listReport;
 	}
+	
+	public int reportListCount(String searchWord, String searchTag, Connection conn) throws Exception {
+		int reportSearchListCount = 0;
+	try {
+		String where = "";
+		String order = "ORDER BY POST_NO DESC";
+		
+		switch(searchTag) {
+		case "no" : where = "WHERE REPORT_NO LIKE '%"+searchWord +"%'"; break;
+		case "memberNo" : where = "WHERE MEMBER_NO LIKE '%"+searchWord +"%'"; break;
+		case "nickname" : where = "WHERE MEMBER_NM LIKE '%"+searchWord +"%'"; break;
+		case "target" : where = "WHERE REPORT_TYPE LIKE '%"+searchWord +"%'"; break;
+		case "targetNo" : where = "LIKE '%"+searchWord +"%'"; break;
+		case "content" : where = "WHERE REPORT_CONTENT LIKE '%"+searchWord +"%'"; break;
+		case "createDate" : if(searchWord.length() == 15) {
+										String str1 = searchWord.substring(0,6);
+										String str2 = searchWord.substring(9,15);
+										str1 = stringToDate(str1);
+										str2 = stringToDate(str2);
+										
+										where = "WHERE TO_DATE(CREATE_DT) BETWEEN '"+ str1 +"' AND '"+str2+"'"; break;
+						
+									}else if(searchWord.length() == 6) {
+										String str = searchWord.substring(0, 6);
+										where = "WHERE TO_DATE(CREATE_DT) = '"+ str +"'"; break;
+										
+									}
+		default : where = "";
+		}
+		String sql = "";
+		if(searchTag.equals("targetNo")) {
+			sql = "SELECT COUNT(*) FROM(\r\n"
+					+ "		SELECT ROWNUM RNUM, A.* FROM\r\n"
+					+ "		(SELECT REPORT_NO, REPORT_CONTENT,TO_CHAR(CREATE_DT, 'YYYY-MM-DD'), REPORT_TYPE, POST_NO,MEMBER_NO, MEMBER_NM\r\n"
+					+ "        FROM POST_REPORT\r\n"
+					+ "        JOIN MEMBER USING(MEMBER_NO)\r\n"
+					+ "WHERE POST_NO " +where 
+					+ "         UNION ALL   \r\n"
+					+ "       SELECT REPORT_NO,REPORT_CONTENT,TO_CHAR(CREATE_DT, 'YYYY-MM-DD'), REPORT_TYPE, REPLY_NO,MEMBER_NO, MEMBER_NM\r\n"
+					+ "        FROM REPLY_REPORT\r\n"
+					+ "        JOIN MEMBER USING(MEMBER_NO)"
+					+ "WHERE REPLY_NO "+where
+					+ ") A)";
+							
+		}else {
+			sql = "SELECT COUNT(*) FROM(\r\n"
+					+ "		SELECT ROWNUM RNUM, A.* FROM\r\n"
+					+ "		(SELECT REPORT_NO, REPORT_CONTENT,TO_CHAR(CREATE_DT, 'YYYY-MM-DD'), REPORT_TYPE, POST_NO,MEMBER_NO, MEMBER_NM\r\n"
+					+ "        FROM POST_REPORT\r\n"
+					+ "        JOIN MEMBER USING(MEMBER_NO)\r\n"
+					+ where
+					+ "         UNION ALL   \r\n"
+					+ "       SELECT REPORT_NO,REPORT_CONTENT,TO_CHAR(CREATE_DT, 'YYYY-MM-DD'), REPORT_TYPE, REPLY_NO,MEMBER_NO, MEMBER_NM\r\n"
+					+ "        FROM REPLY_REPORT\r\n"
+					+ "        JOIN MEMBER USING(MEMBER_NO)"
+					+ where
+					+ ") A)";
+		}
+		pstmt = conn.prepareStatement(sql);
+		rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			reportSearchListCount = rs.getInt(1);
+		}
+	}finally {
+		pstmt.close();
+		rs.close();
+	}
+	return reportSearchListCount;
+	}
 
-	public List<Enquiry> selectEnquiry(Pagination pagination, Connection conn) throws Exception {
+	public List<Enquiry> selectEnquiry(String searchWord, String searchTag, String orderTag, Pagination pagination, Connection conn) throws Exception {
 		List<Enquiry> enquiryList = new ArrayList<Enquiry>();
 		// 커밋을 꼭 확인하자 
 		try {
-			String sql = prop.getProperty("selectEnquiry");
+			String where = "";
+			String order = "ORDER BY ENQUIRY_NO DESC";
+			
+			switch(searchTag) {
+			case "enquiryNo" : where = "WHERE ENQUIRY_NO LIKE '%"+searchWord +"%'"; break;
+			case "memberNo" : where = "WHERE MEMBER_NO LIKE '%"+searchWord +"%'"; break;
+			case "nickname" : where = "WHERE MEMBER_NM LIKE '%"+searchWord +"%'"; break;
+			case "title" : where = "WHERE ENQUIRY_TITLE LIKE '%"+searchWord +"%'"; break;
+			case "content" : where = "WHERE ENQUIRY_CONTENT LIKE '%"+searchWord +"%'"; break;
+			case "createDate" : if(searchWord.length() == 15) {
+											String str1 = searchWord.substring(0,6);
+											String str2 = searchWord.substring(9,15);
+											str1 = stringToDate(str1);
+											str2 = stringToDate(str2);
+											
+											where = "WHERE TO_DATE(CREATE_DT) BETWEEN '"+ str1 +"' AND '"+str2+"'"; break;
+							
+										}else if(searchWord.length() == 6) {
+											String str = searchWord.substring(0, 6);
+											where = "WHERE TO_DATE(CREATE_DT) = '"+ str +"'"; break;											
+										}
+			default : where = "";
+			}
+			
+			switch(orderTag) {
+			case "answer" : order ="ORDER BY PARENT_ENQUIRY "; break;
+			case "noAnswer" : order ="ORDER BY PARENT_ENQUIRY DESC"; break;
+			default : order ="ORDER BY ENQUIRY_NO DESC";
+			}
+			
+			String sql = "SELECT * FROM(\r\n"
+					+ "		SELECT ROWNUM RNUM, A.* FROM\r\n"
+					+ "		(SELECT ENQUIRY_NO,ENQUIRY_TITLE,ENQUIRY_CONTENT,TO_CHAR(CREATE_DT, 'YYYY-MM-DD') CREATE_DT, MEMBER_NO, PARENT_ENQUIRY, MEMBER_NM\r\n"
+					+ "		FROM ENQUIRY\r\n"
+					+ "        JOIN MEMBER USING(MEMBER_NO)\r\n"
+					+ where
+					+ order
+					+ ") A)\r\n"
+					+ "		WHERE RNUM BETWEEN ? AND ?";
 			
 			int startRow = (pagination.getCurrentPage() -1) * pagination.getLimit() + 1;
 			
@@ -329,6 +493,7 @@ public class AdminDAO {
 				enq.setCreateDate(rs.getString(5));
 				enq.setMemberNo(rs.getInt(6));
 				enq.setParentEnquiry(rs.getInt(7));
+				enq.setMemberName(rs.getString(8));
 				
 				enquiryList.add(enq);
 			}
@@ -339,6 +504,64 @@ public class AdminDAO {
 		}
 		
 		return enquiryList;
+	
+	}
+	
+	public int enquiryListCount(String searchWord, String searchTag, String orderTag, Connection conn) throws Exception{
+		int enquirySearchListCount = 0;
+		try {
+			String where = "";
+			String order = "ORDER BY ENQUIRY_NO DESC";
+			
+			switch(searchTag) {
+			case "enquiryNo" : where = "WHERE ENQUIRY_NO LIKE '%"+searchWord +"%'"; break;
+			case "memberNo" : where = "WHERE MEMBER_NO LIKE '%"+searchWord +"%'"; break;
+			case "nickname" : where = "WHERE MEMBER_NM LIKE '%"+searchWord +"%'"; break;
+			case "title" : where = "WHERE ENQUIRY_TITLE LIKE '%"+searchWord +"%'"; break;
+			case "content" : where = "WHERE ENQUIRY_CONTENT LIKE '%"+searchWord +"%'"; break;
+			case "createDate" : if(searchWord.length() == 15) {
+											String str1 = searchWord.substring(0,6);
+											String str2 = searchWord.substring(9,15);
+											str1 = stringToDate(str1);
+											str2 = stringToDate(str2);
+											
+											where = "WHERE TO_DATE(CREATE_DT) BETWEEN '"+ str1 +"' AND '"+str2+"'"; break;
+							
+										}else if(searchWord.length() == 6) {
+											String str = searchWord.substring(0, 6);
+											where = "WHERE TO_DATE(CREATE_DT) = '"+ str +"'"; break;											
+										}
+			default : where = "";
+			}
+			
+			switch(orderTag) {
+			case "answer" : order ="ORDER BY PARENT_ENQUIRY DESC"; break;
+			case "noAnswer" : order ="ORDER BY PARENT_ENQUIRY DESC"; break;
+			default : order ="ORDER BY ENQUIRY_NO DESC";
+			}
+			
+			String sql = "SELECT COUNT(*) FROM(\r\n"
+					+ "		SELECT ROWNUM RNUM, A.* FROM\r\n"
+					+ "		(SELECT ENQUIRY_NO,ENQUIRY_TITLE,ENQUIRY_CONTENT,TO_CHAR(CREATE_DT, 'YYYY-MM-DD') CREATE_DT, MEMBER_NO, PARENT_ENQUIRY, MEMBER_NM\r\n"
+					+ "		FROM ENQUIRY\r\n"
+					+ "        JOIN MEMBER USING(MEMBER_NO)\r\n"
+					+ where
+					+ order
+					+ ") A)";
+			
+			
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				enquirySearchListCount = rs.getInt(1);
+			}
+		}finally {
+			pstmt.close();
+			rs.close();
+		}
+		return enquirySearchListCount;
+	
 	
 	}
 
@@ -458,7 +681,7 @@ public class AdminDAO {
 				report.setCreateDate(rs.getString(4));
 				report.setTargetNo(rs.getInt(5));
 				report.setMemberNo(rs.getInt(6));
-				report.setReportStatusName(rs.getString(7));
+				report.setMemberName(rs.getString(7));
 			}
 		}finally {
 			close(rs);
@@ -877,6 +1100,10 @@ public class AdminDAO {
 		}
 		return result;
 	}
+
+	
+
+
 
 
 

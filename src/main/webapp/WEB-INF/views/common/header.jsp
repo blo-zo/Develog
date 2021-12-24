@@ -113,7 +113,7 @@
 						<P>${sessionScope.loginMember.memberNm}</P>						
 	              </a>
               <ul class="dropdown-menu text-small" aria-labelledby="userID">
-                <li"><a class="dropdown-item" href="${contextPath}/blog/${loginMember.memberNm}">내 블로그</a></li>
+                <li><a class="dropdown-item" href="${contextPath}/blog/${loginMember.memberNm}">내 블로그</a></li>
                 
                 <li><a class="dropdown-item" href="${contextPath}/member/profile">설정</a></li>
            

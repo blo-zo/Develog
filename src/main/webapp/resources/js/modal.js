@@ -13,8 +13,8 @@ function reportDetailContent(e){
         success : function(report){
             console.log(report)				
             console.log(inputModal)				
-            inputModal[0].innerHTML = report.reportNo +'번 ' + report.reportType + '<br> 유형 : <span>'+report.reportStatusName+'</span>' 
-            inputModal[1].innerHTML = 'userid@email.com <br>' +report.createDate+ '<br> 미해결'
+            inputModal[0].innerHTML = '신고 회원 : ' + report.memberName+'<br>'+ '신고 대상 : '+ report.reportNo +'번 ' + report.reportType
+            inputModal[1].innerHTML = report.createDate
             inputModal[2].innerText = report.reportContent 
         },
         error : function(req, status, error){
@@ -34,7 +34,8 @@ function enquiryDetailContent(e){
         type : "GET",
         dataType : "JSON",
         success : function(enquiry){
-            inputModal[0].innerHTML = 'userid@email.com <br>  작성일 : ' + enquiry.createDate+ '<br> 미답장' 
+            console.log(enquiry);
+            inputModal[0].innerHTML = '제목 : '+enquiry.enquiryTitle+'<br>'+'userid@email.com <br>  작성일 : ' + enquiry.createDate+ '<br> 미답장' 
             inputModal[1].innerHTML = enquiry.enquiryContent
         },
         error : function(req, status, error){

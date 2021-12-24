@@ -11,6 +11,18 @@ public class Report {
 	
 	// 신고 상태 테이블
 	private String reportStatusName;
+	
+	// 회원 테이블
+	private String memberName;
+	
+	
+
+	public String getMemberName() {
+		return memberName;
+	}
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
 	public String getReportStatusName() {
 		return reportStatusName;
 	}

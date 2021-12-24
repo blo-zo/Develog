@@ -131,19 +131,16 @@ section>div:nth-child(4) {
 		</nav>
 	</header>
 	<main id="main">
-아 더블클릭으로 내용을 확인 했다는 표시를 하면 되겠내 진짜 <br>
-XSS 방지 처리도 해야하내
 		<section id="section-table">
 
 			<table id="admin-table">
 				<thead>
 					<tr>
-						<td>&nbsp;</td>
 						<th>No</th>
 						<th>회원번호</th>
+						<th>닉네임</th>
 						<th>대상</th>
 						<th>번호</th>
-						<th>유형</th>
 						<th>내용</th>
 						<th>작성일</th>
 					</tr>
@@ -156,12 +153,11 @@ XSS 방지 처리도 해야하내
 						<c:otherwise>
 							<c:forEach items="${reportList}" var="report">
 								<tr>
-									<td><input type="checkbox"></td>
 									<td>${report.reportNo}</td>
 									<td>${report.memberNo}</td>
+									<td>${report.memberName}</td>
 									<td>${report.reportType}</td>
 									<td>${report.targetNo}</td>
-									<td>${report.reportStatusName}</td>
 									<td class="report-content"
 									    data-bs-toggle="modal"
 									    data-bs-target="#exampleModal"
@@ -174,32 +170,29 @@ XSS 방지 처리도 해야하내
 				</tbody>
 
 			</table>
-			<div class="button-area">
-				<div class="button"
-					style="background-color: #3278FE; color: white; width: 70px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px;">
-					확인</div>
-
-			</div>
-			<div id="search-area">
-				<input type="text" placeholder="검색어를 입력해주세요"> <img
-					id="search" src="image/search-solid.svg"
-					style="width: 20px; height: 20px;"> <select name="" id="">
-					<option value="">회원번호</option>
-					<option value="">대상</option>
-					<option value="">유형</option>
-					<option value="">내용</option>
-					<option value="">작성일</option>
-					<option value="">확인여부</option>
-				</select>
-			</div>
+			<form action="report?cp=1" method="GET" onsubmit="return refresh()">
+				<div id="search-area">
+					<input type="text" name="searchWord" placeholder="검색어를 입력해주세요">
+					<img id="search" src="image/search-solid.svg" style="width: 20px; height: 20px;">
+					<select name="searchTag" onchange="changeSelect()">
+						<option value="no">신고 번호</option>
+						<option value="memberNo">회원 번호</option>
+						<option value="nickname">닉네임</option>
+						<option value="target">대상</option>
+						<option value="targetNo">대상 번호</option>
+						<option value="content">내용</option>
+						<option value="createDate">작성일</option>
+					</select>
+				</div>
+			</form>
       <div class="my-5">
 		<ul class="pagination" style="justify-content: center;">
 			<c:if test="${pagination.startPage != 1}">
 			<li>
-				<a class="page-link" href="report?cp=1">&lt;&lt;</a>
+				<a class="page-link" href="report?cp=1&searchWord=${searchWord}&searchTag=${searchTag}">&lt;&lt;</a>
 			</li>
 			<li>
-				<a class="page-link" href="report?cp=${pagination.prevPage}">&lt;</a>
+				<a class="page-link" href="report?cp=${pagination.prevPage}&searchWord=${searchWord}&searchTag=${searchTag}">&lt;</a>
 			</li>
 			
 			</c:if>
@@ -213,17 +206,17 @@ XSS 방지 처리도 해야하내
 					</c:when>
 					<c:otherwise>
 						<li>
-							<a class="page-link" href="post?cp=${i}">${i}</a>
+							<a class="page-link" href="report?cp=${i}&searchWord=${searchWord}&searchTag=${searchTag}">${i}</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			<c:if test="${pagination.endPage != pagination.maxPage}">
 			<li>
-				<a class="page-link" href="report?cp=${pagination.nextPage}">&gt;</a>
+				<a class="page-link" href="report?cp=${pagination.nextPage}&searchWord=${searchWord}&searchTag=${searchTag}">&gt;</a>
 			</li>
 			<li>
-				<a class="page-link" href="report?cp=${pagination.maxPage}">&gt;&gt;</a>
+				<a class="page-link" href="report?cp=${pagination.maxPage}&searchWord=${searchWord}&searchTag=${searchTag}">&gt;&gt;</a>
 			</li>
 			</c:if>
 
@@ -254,7 +247,7 @@ XSS 방지 처리도 해야하내
 						<div>
 							<div class="content" input-modal>&nbsp;신고내용</div>
 							<div class="content">
-								<div class="input-modal">토토 홍보함</div>
+								<div class="input-modal"></div>
 							</div>
 						</div>
 					</section>
@@ -269,6 +262,18 @@ XSS 방지 처리도 해야하내
 		const contextPath = "${pageContext.servletContext.contextPath}" // 아니 스크립트에 EL표현식이 있으니까 ajax에 Syntax json에러가 나내 ㄷㄷ
 	</script>
 	<script src="${pageContext.servletContext.contextPath}/resources/js/modal.js"></script>
+	<script>
+			const inputSearch = document.getElementById("search-area").firstElementChild
+			inputSearch.addEventListener("keyup", function(){
+		  	if(e.key =="Enter"){
+			 refresh1()
+			  }
+	   	 		})
+
+	  		function refresh1(){
+			  return true
+	  }
+	</script>
 </body>
 </body>
 </html>

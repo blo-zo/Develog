@@ -122,13 +122,7 @@
                     <div class="static-info">${dailyMembers}</div>
                 </div>
             </section>
-            <section id="chart-section">
-                &nbsp;&nbsp;&nbsp;
-                <div class="button" id="chart-button">
-                    상세 통계
-                </div>
-            </section>
-            <div id="chart_div" style=" width : 1000px; height: 1000px;" ></div>
+           
             
                 
 
@@ -137,7 +131,7 @@
             integrity="sha512-GMGzUEevhWh8Tc/njS0bDpwgxdCJLQBWG3Z2Ct+JGOpVnEmjvNx6ts4v6A2XJf1HOrtOsfhv3hBKpK9kE5z8AQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://www.gstatic.com/charts/loader.js"></script>
-        <script>
+        <!-- <script>
             google.charts.load('current', { packages: ['corechart', 'line'] });
             google.charts.setOnLoadCallback(drawAxisTickColors);
             // 서버 동작 순서 JAVA -> JSTL -> HTML -> Javascript
@@ -194,7 +188,7 @@
                 var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
                 chart.draw(data, options);
             }
-        </script>
+        </script> -->
         <script>
             const chartArea = document.getElementById("chart_div");
             console.log(chartArea)
