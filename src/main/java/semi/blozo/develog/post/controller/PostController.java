@@ -105,7 +105,7 @@ public class PostController extends HttpServlet{
 						}else { // 블로그가 없는 경우
 							
 							req.getSession().setAttribute("message", "존재하지 않는 블로그입니다.");
-							resp.sendRedirect(req.getContextPath()+"/main");
+							resp.sendRedirect(req.getContextPath());
 							
 						}
 						
@@ -119,6 +119,8 @@ public class PostController extends HttpServlet{
 							
 							// pno, cp
 							int postNo = Integer.parseInt(req.getParameter("pno"));
+							
+							String memberName = URLDecoder.decode(arr[0],"UTF-8");
 							
 							
 							// 조회수에 사용
@@ -148,7 +150,7 @@ public class PostController extends HttpServlet{
 								
 								req.getSession().setAttribute("message", "존재하지 않는 포스트입니다.");
 								
-								resp.sendRedirect( req.getContextPath() + "/blog/" + post.getMemberName() );
+								resp.sendRedirect( req.getContextPath() + "/blog/" + memberName );
 								
 							}
 							
@@ -197,14 +199,14 @@ public class PostController extends HttpServlet{
 								message = "포스트가 삭제되었습니다.";
 								
 								// 포스트 리스트 페이지로 돌아가기
-								path = req.getContextPath() + "/blog/" + memberName + "/?cp=" + req.getParameter("cp");
+								path = req.getContextPath() + "/blog/" + memberName;
 								
 							}else {
 								
 								message = "포스트 삭제 중 문제가 발생했습니다.";
 								
 								// 포스트 리스트 페이지로 돌아가기
-								path = req.getContextPath() + "/blog/" + memberName + "/?cp=" + req.getParameter("cp");
+								path = req.getContextPath() + "/blog/" + memberName;
 								
 							}
 							
@@ -245,14 +247,10 @@ public class PostController extends HttpServlet{
 			                     int memberNo = 0;
 			                     
 			                     if(loginMember != null) memberNo = loginMember.getMemberNo();
-								//int memberNo = Integer.parseInt(req.getParameter("memberNo"));
-								//int memberNo = 1;	// 테스트용
 								
 								int postNo = Integer.parseInt(req.getParameter("postNo"));
 								String replyContent = req.getParameter("replyContent");
 								String secretReply = req.getParameter("secretReply");	// 비밀글 여부
-								
-								System.out.println(secretReply);
 								
 								PostReply reply = new PostReply();
 								
@@ -296,10 +294,16 @@ public class PostController extends HttpServlet{
 						// 좋아요 입력/삭제
 						else if(arr[1].equals("like")) {
 							
-							int memberNo = loginMember.getMemberNo();
-							int postNo = Integer.parseInt(req.getParameter("pno"));
+							int memberNo = 0;
+							if(loginMember != null) memberNo = loginMember.getMemberNo();
+							int postNo = Integer.parseInt(req.getParameter("postNo"));
+							
+							
+							System.out.println(postNo);
 							
 							int favoriteCount = service.likePost(memberNo, postNo);
+							
+							System.out.println(favoriteCount);
 							
 							resp.getWriter().print(favoriteCount);
 							
@@ -309,10 +313,13 @@ public class PostController extends HttpServlet{
 						// 좋아요 수 조회하기
 						else if(arr[1].equals("selectPostLike")) {
 							
-							int memberNo = loginMember.getMemberNo();
-							int postNo = Integer.parseInt(req.getParameter("pno"));
+							int memberNo = 0;
+							if(loginMember != null) memberNo = loginMember.getMemberNo();
+							int postNo = Integer.parseInt(req.getParameter("postNo"));
 							
 							int postLikeCount = service.selectPostLikeCount(memberNo, postNo);
+							
+							int likeCount = service.setLikeCount(postNo, postLikeCount);
 							
 							resp.getWriter().print(postLikeCount);
 							

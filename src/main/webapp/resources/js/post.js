@@ -401,5 +401,54 @@ function reportReply(replyNo){
 // --------------------------- 좋아요 -----------------------------
 
 
+// 좋아요 버튼
+$("#like-btn").on("click", function() {
+
+  if (loginMemberNo != "") {
+    
+    $.ajax({
+      url : contextPath + "/blog/" + memberName + "/like",
+      type : "GET",
+      data : {"postNo" : postNo},
+      success : function(favoriteCount) {
+      
+        if (favoriteCount > 0) {
+          
+          
+          if ($("#like-btn").hasClass("liked")) {
+            $("#like-btn").removeClass("liked");
+            $("#like-btn > img").attr("src", contextPath + "/resources/images/KYJ/emptyHeart.svg");
+            
+          } else { 
+            $("#like-btn").addClass("liked");
+            $("#like-btn > img").attr("src", contextPath+ "/resources/images/KYJ/filledHeart.svg");
+          }
+
+        }
+
+        selectPostLike();
+
+      }
+
+    }); 
+    
+  } else  // 로그인 하지 않은 경우 로그인창으로 이동
+    alert("로그인 후 이용 가능한 서비스입니다.");
+    $(".login-btn").click();
+});
 
 
+// 포스트 좋아요 수 조회
+function selectPostLike(){
+
+  $.ajax({
+    url : contextPath + "/blog/" + memberName + "/selectPostLike",
+    data : {"postNo" : postNo},
+    success : function(postLikeCount) {
+      
+      $(".favorite-count").text(postLikeCount);
+
+    }
+  }); 
+
+}

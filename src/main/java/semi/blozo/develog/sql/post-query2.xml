@@ -160,22 +160,28 @@
 	
 	<!-- 좋아요 추가 -->
 	<entry key="likePost">
-		INSERT INTO LIKE 
+		INSERT INTO "LIKE"
 		VALUES( ?, ? )
 	</entry>
 	
 	<!-- 좋아요 취소 -->
 	<entry key="likeCancel">
-		DELETE FROM LIKE 
-		WHERE MEMBER_NO = ?
-		AND POST_NO = ?
+		DELETE FROM "LIKE" 
+		WHERE POST_NO = ?
+		AND MEMBER_NO = ?
 	</entry>
 	
 	<!-- 좋아요 수 조회 -->
 	<entry key="selectPostLikeCount">
-		SELECT COUNT(*) FROM LIKE
-		WHERE MEMBER_NO = ?
-		AND POST_NO = ?
+		SELECT COUNT(*) FROM "LIKE"
+		WHERE POST_NO = ?
+	</entry>
+	
+	<!-- 좋아요 후 포스트에 반영 -->
+	<entry key="setLikeCount">
+		UPDATE POST SET
+		LIKE_COUNT = ?
+		WHERE POST_NO = ?
 	</entry>
 	
 	

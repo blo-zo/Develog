@@ -16,6 +16,7 @@ import semi.blozo.develog.admin.model.vo.Member;
 import semi.blozo.develog.admin.model.vo.Pagination;
 import semi.blozo.develog.admin.model.vo.Post;
 import semi.blozo.develog.admin.model.vo.Report;
+import semi.blozo.develog.common.XSS;
 
 public class AdminDAO {
 	
@@ -105,7 +106,7 @@ public class AdminDAO {
 			case "no" : where = "WHERE POST_NO LIKE '%"+searchWord +"%'"; break;
 			case "title" : where = "WHERE POST_TITLE LIKE '%"+searchWord +"%'"; break;
 			case "content" : where = "WHERE POST_CONTENT LIKE '%"+searchWord +"%'"; break;
-			case "memberNo" : where = "WHERE MEMBER_NO LIKE '%"+searchWord +"%'"; break;
+			case "memberNo" : where = "WHERE C.MEMBER_NO LIKE '%"+searchWord +"%'"; break;
 			case "createDate" : if(searchWord.length() == 15) {
 											String str1 = searchWord.substring(0,6);
 											String str2 = searchWord.substring(9,15);
@@ -149,8 +150,8 @@ public class AdminDAO {
 					+ where + "\r\n"
 					+ order + ")\r\n"
 					+ "					 A)\r\n"
-					+ "		WHERE RNUM BETWEEN ? AND ?"
-					+ "ORDER BY RNUM DESC";
+					+ "		WHERE RNUM BETWEEN ? AND ?";
+
 					
 			
 			int startRow = (pagination.getCurrentPage() -1) * pagination.getLimit() + 1;
@@ -164,10 +165,13 @@ public class AdminDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
+//				String content = rs.getString("POST_CONTENT").substring(0, 12);
+				// 15 글자 넘어가면 안되는 이유가 0~12글자를 자를수 없을 정도로 작은 게 있기 때문이다
+				String postContent = XSS.replaceParameter(rs.getString("POST_CONTENT"));
 				Post post = new Post();
 				post.setPostNo(rs.getInt("POST_NO"));
 				post.setPostTitle(rs.getString("POST_TITLE"));
-				post.setPostContent(rs.getString("POST_CONTENT"));
+				post.setPostContent(postContent);
 				post.setCreateDate(rs.getString("ENROLL_DT"));
 				post.setReadCount(rs.getInt("READ_COUNT"));
 				post.setViolationCount(rs.getInt("VIOLATION_COUNT"));
@@ -202,7 +206,7 @@ public class AdminDAO {
 			case "no" : where = "WHERE POST_NO LIKE '%"+searchWord +"%'"; break;
 			case "title" : where = "WHERE POST_TITLE LIKE '%"+searchWord +"%'"; break;
 			case "content" : where = "WHERE POST_CONTENT LIKE '%"+searchWord +"%'"; break;
-			case "memberNo" : where = "WHERE MEMBER_NO LIKE '%"+searchWord +"%'"; break;
+			case "memberNo" : where = "WHERE C.MEMBER_NO LIKE '%"+searchWord +"%'"; break;
 			case "createDate" : if(searchWord.length() == 15) {
 								String str1 = searchWord.substring(0,6);
 								String str2 = searchWord.substring(9,15);
@@ -323,9 +327,8 @@ public class AdminDAO {
 				enq.setEnquiryTitle(rs.getString(3));
 				enq.setEnquiryContent(rs.getString(4));
 				enq.setCreateDate(rs.getString(5));
-				enq.setModifyDate(rs.getString(6));
-				enq.setMemberNo(rs.getInt(7));
-				enq.setParentEnquiry(rs.getInt(8));
+				enq.setMemberNo(rs.getInt(6));
+				enq.setParentEnquiry(rs.getInt(7));
 				
 				enquiryList.add(enq);
 			}
@@ -479,9 +482,8 @@ public class AdminDAO {
 				enquiry.setEnquiryTitle(rs.getString(2));
 				enquiry.setEnquiryContent(rs.getString(3));
 				enquiry.setCreateDate(rs.getString(4));
-				enquiry.setModifyDate(rs.getString(5));
-				enquiry.setMemberNo(rs.getInt(6));
-				enquiry.setParentEnquiry(rs.getInt(7));
+				enquiry.setMemberNo(rs.getInt(5));
+				enquiry.setParentEnquiry(rs.getInt(6));
 			}
 		}finally {
 			close(rs);
@@ -857,6 +859,23 @@ public class AdminDAO {
 		
 		return result;
 	
+	}
+
+	public int insertEnquiry(Enquiry enquiry, String content, Connection conn) throws Exception {
+		int result = 0;
+		try {
+			String sql = prop.getProperty("insertEnquiry");
+			pstmt = conn.prepareStatement(sql);
+			String title = "Develog : " + enquiry.getEnquiryTitle();
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, enquiry.getEnquiryNo());
+			pstmt.setInt(4, enquiry.getMemberNo());
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+		return result;
 	}
 
 

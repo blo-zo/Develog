@@ -25,6 +25,17 @@
 	.removeViolation:hover{
 			cursor: pointer;
 	}
+
+	.postContent{
+		text-decoration: none !important;
+		color: black;
+	}
+
+	.postContent:hover{
+		cursor : pointer;
+		color: #3278FE;
+	}
+
 </style>
 </head>
 <body>
@@ -58,7 +69,6 @@
 	</header>
 	<main id="main">
 		<section id="section-table">
-
 			<table id="admin-table">
 				<thead>
 					<tr>
@@ -86,7 +96,12 @@
 									<td><input class="check" name="check" type="checkbox" ></td>
 									<td>${post.postNo}</td>
 									<td>${post.postTitle}</td>
-									<td>${post.postContent}</td>
+									<td>
+										<a  class="postContent" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 200px; display: inline-block; text-align: center;"
+											href="${pageContext.servletContext.contextPath}/blog/${post.memberName}/view?pno=${post.postNo}">
+											${post.postContent}
+										</a>
+									</td>
 									<td>${post.memberNo}</td>
 									<td>${post.readCount}</td>
 									<td>${post.likeCount}</td>
