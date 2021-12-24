@@ -193,9 +193,11 @@ public class PostService {
 			
 			// 좋아요 증가(삽입)
 			likePost = dao.likePost(postNo, memberNo, conn);
+			// 포스트 테이블에 좋아요 결과 반영하기
+			//int postLike = dao.setLikeCount(postNo, conn);
 			
 		}catch(SQLException e) {
-			
+			e.printStackTrace();
 			// 좋아요 취소(삭제)
 			likePost = dao.likeCancel(postNo, memberNo, conn);
 			

@@ -199,20 +199,19 @@ public class PostController extends HttpServlet{
 								message = "포스트가 삭제되었습니다.";
 								
 								// 포스트 리스트 페이지로 돌아가기
-								path = req.getContextPath() + "/blog/" + memberName + "/?cp=" + req.getParameter("cp");
+								path = req.getContextPath() + "/blog/" + memberName;
 								
 							}else {
 								
 								message = "포스트 삭제 중 문제가 발생했습니다.";
 								
 								// 포스트 리스트 페이지로 돌아가기
-								path = req.getContextPath() + "/blog/" + memberName + "/?cp=" + req.getParameter("cp");
+								path = req.getContextPath() + "/blog/" + memberName;
 								
 							}
 							
 							session.setAttribute("message", message);
-							req.getRequestDispatcher(path);
-							dispatcher.forward(req, resp);
+							resp.sendRedirect(path);
 							
 							
 						}
@@ -248,8 +247,6 @@ public class PostController extends HttpServlet{
 			                     int memberNo = 0;
 			                     
 			                     if(loginMember != null) memberNo = loginMember.getMemberNo();
-								//int memberNo = Integer.parseInt(req.getParameter("memberNo"));
-								//int memberNo = 1;	// 테스트용
 								
 								int postNo = Integer.parseInt(req.getParameter("postNo"));
 								String replyContent = req.getParameter("replyContent");
@@ -299,9 +296,14 @@ public class PostController extends HttpServlet{
 							
 							int memberNo = 0;
 							if(loginMember != null) memberNo = loginMember.getMemberNo();
-							int postNo = Integer.parseInt(req.getParameter("pno"));
+							int postNo = Integer.parseInt(req.getParameter("postNo"));
+							
+							
+							System.out.println(postNo);
 							
 							int favoriteCount = service.likePost(memberNo, postNo);
+							
+							System.out.println(favoriteCount);
 							
 							resp.getWriter().print(favoriteCount);
 							
@@ -313,9 +315,11 @@ public class PostController extends HttpServlet{
 							
 							int memberNo = 0;
 							if(loginMember != null) memberNo = loginMember.getMemberNo();
-							int postNo = Integer.parseInt(req.getParameter("pno"));
+							int postNo = Integer.parseInt(req.getParameter("postNo"));
 							
 							int postLikeCount = service.selectPostLikeCount(memberNo, postNo);
+							
+							System.out.println(postLikeCount);
 							
 							resp.getWriter().print(postLikeCount);
 							

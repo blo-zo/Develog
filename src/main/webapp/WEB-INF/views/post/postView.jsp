@@ -176,7 +176,7 @@
 	            
 	            <!-- 좋아요 아이콘 -->
 	            <div class="favorite-share-area">
-	              <div class="favorite-share-icon fill-heart" id="like-btn">
+	              <div class="favorite-share-icon" id="like-btn">
 					<img src="${contextPath}/resources/images/KYJ/emptyHeart.svg">
 	              </div>
 	              
@@ -184,7 +184,7 @@
 	
 	            <!-- 좋아요 수 -->
 	            <div class="favorite-share-area">
-	              <span class="favorite-count">0</span>
+	              <span class="favorite-count">${post.favoriteCount}</span>
 	            </div>
 	
 	            <!-- 공유하기 아이콘 -->

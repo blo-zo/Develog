@@ -408,19 +408,20 @@ $("#like-btn").on("click", function() {
     
     $.ajax({
       url : contextPath + "/blog/" + memberName + "/like",
+      type : "GET",
       data : {"postNo" : postNo},
       success : function(favoriteCount) {
       
         if (favoriteCount > 0) {
           
-          // 좋아요 취소
-          if ($("#like-btn").hasClass("fill-heart")) {
-            $("#like-btn").removeClass("fill-heart");
-            $("#like-btn").attr("src", "${contextPath}/resources/images/KYJ/emptyHeart.svg");
+          
+          if ($("#like-btn").hasClass("liked")) {
+            $("#like-btn").removeClass("liked");
+            $("#like-btn > img").attr("src", contextPath+ "/resources/images/KYJ/filledHeart.svg");
             
-          } else { // 좋아요 반영
-            $("#like-btn").addClass("fill-heart");
-            $("#like-btn").attr("src", "${contextPath}/resources/images/KYJ/filledHeart.svg");
+          } else { 
+            $("#like-btn").addClass("liked");
+            $("#like-btn > img").attr("src", contextPath + "/resources/images/KYJ/emptyHeart.svg");
           }
 
         }
@@ -432,7 +433,8 @@ $("#like-btn").on("click", function() {
     }); 
     
   } else  // 로그인 하지 않은 경우 로그인창으로 이동
-    location.href =  contextPath + "/member/login";
+    alert("로그인 후 이용 가능한 서비스입니다.");
+    $(".login-btn").click();
 });
 
 
