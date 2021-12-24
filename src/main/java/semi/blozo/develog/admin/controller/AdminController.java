@@ -248,6 +248,8 @@ public class AdminController extends HttpServlet {
 				
 				List<Enquiry> enquiryList = service.selectEnquiry(pagination);
 				
+
+				
 				req.setAttribute("pagination", pagination);
 				req.setAttribute("enquiryList", enquiryList);
 				 path = "/WEB-INF/views/admin/enquiry.jsp";
@@ -259,7 +261,21 @@ public class AdminController extends HttpServlet {
 				Enquiry enquiry = service.selectDetailEnquiry(enquiryNo);
 				
 				new Gson().toJson(enquiry, resp.getWriter());
-			}else if(command.equals("violation")) {
+			}else if(command.equals("enquiry/send")) {
+				int enquiryNo = Integer.parseInt(req.getParameter("enquiryNo"));
+				String content = req.getParameter("content");
+				Enquiry enquiry = service.selectDetailEnquiry(enquiryNo);
+				
+				int result = service.insertEnquiry(enquiry, content);
+				if(result > 0) {
+					message = "답장이 보내졌습니다.";
+				}else {
+					message = "답장을 보내는데 실패했습니다.";
+				}
+				resp.getWriter().print(message);
+					
+			}
+			else if(command.equals("violation")) {
 				
 				int memberNo = Integer.parseInt(req.getParameter("memberNo"));
 				
