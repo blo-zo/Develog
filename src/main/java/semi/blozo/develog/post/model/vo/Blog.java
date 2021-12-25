@@ -22,11 +22,104 @@ public class Blog {
 	private String tagName;
 	
 	// sns
+	private int memberSnsNo; // 회원 소셜번호
+	private String snsEmail;
+	private String snsGit;
+	private String snsTwitt;
+	private String snsFbook;
+	private String snsHome;
 	
 	
 //	private List<SNS> memberSns; // SNS VO 만들고 리스트로 얻어오기?
 	
 	public Blog() {	}
+
+	
+	
+	
+	public int getMemberSnsNo() {
+		return memberSnsNo;
+	}
+
+
+
+
+	public void setMemberSnsNo(int memberSnsNo) {
+		this.memberSnsNo = memberSnsNo;
+	}
+
+
+
+
+	public String getSnsEmail() {
+		return snsEmail;
+	}
+
+
+
+
+	public void setSnsEmail(String snsEmail) {
+		this.snsEmail = snsEmail;
+	}
+
+
+
+
+	public String getSnsGit() {
+		return snsGit;
+	}
+
+
+
+
+	public void setSnsGit(String snsGit) {
+		this.snsGit = snsGit;
+	}
+
+
+
+
+	public String getSnsTwitt() {
+		return snsTwitt;
+	}
+
+
+
+
+	public void setSnsTwitt(String snsTwitt) {
+		this.snsTwitt = snsTwitt;
+	}
+
+
+
+
+	public String getSnsFbook() {
+		return snsFbook;
+	}
+
+
+
+
+	public void setSnsFbook(String snsFbook) {
+		this.snsFbook = snsFbook;
+	}
+
+
+
+
+	public String getSnsHome() {
+		return snsHome;
+	}
+
+
+
+
+	public void setSnsHome(String snsHome) {
+		this.snsHome = snsHome;
+	}
+
+
+
 
 	public int getBlogNo() {
 		return blogNo;
@@ -100,13 +193,18 @@ public class Blog {
 		this.tagName = tagName;
 	}
 
+
+
+
 	@Override
 	public String toString() {
 		return "Blog [blogNo=" + blogNo + ", blogName=" + blogName + ", memberNo=" + memberNo + ", memberName="
 				+ memberName + ", intro=" + intro + ", categoryCode=" + categoryCode + ", categoryName=" + categoryName
-				+ ", tagCode=" + tagCode + ", tagName=" + tagName + "]";
+				+ ", tagCode=" + tagCode + ", tagName=" + tagName + ", memberSnsNo=" + memberSnsNo + ", snsEmail="
+				+ snsEmail + ", snsGit=" + snsGit + ", snsTwitt=" + snsTwitt + ", snsFbook=" + snsFbook + ", snsHome="
+				+ snsHome + "]";
 	}
-	
+
 	
 	
 }

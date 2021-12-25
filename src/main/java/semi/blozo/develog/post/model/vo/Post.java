@@ -2,6 +2,8 @@ package semi.blozo.develog.post.model.vo;
 
 import java.util.List;
 
+import semi.blozo.develog.board.model.vo.TagVO;
+
 public class Post {
 	
 	private int postNo;
@@ -26,8 +28,26 @@ public class Post {
 	private String postStatusName;
 	
 	private PostImage postImg;
+	private List<TagVO> tagList;
 	
 	public Post() { 	}
+
+	
+	
+	
+	public List<TagVO> getTagList() {
+		return tagList;
+	}
+
+
+
+
+	public void setTagList(List<TagVO> tagList) {
+		this.tagList = tagList;
+	}
+
+
+
 
 	public int getPostNo() {
 		return postNo;
@@ -166,6 +186,9 @@ public class Post {
 		this.postImg = postImg;
 	}
 
+
+
+
 	@Override
 	public String toString() {
 		return "Post [postNo=" + postNo + ", postTitle=" + postTitle + ", postContent=" + postContent + ", createDate="
@@ -173,9 +196,10 @@ public class Post {
 				+ favoriteCount + ", blogNo=" + blogNo + ", categoryCode=" + categoryCode + ", postStatusCode="
 				+ postStatusCode + ", memberNo=" + memberNo + ", memberName=" + memberName + ", blogTitle=" + blogTitle
 				+ ", intro=" + intro + ", categoryName=" + categoryName + ", postStatusName=" + postStatusName
-				+ ", postImg=" + postImg + "]";
+				+ ", postImg=" + postImg + ", tagList=" + tagList + "]";
 	}
 
+	
 
 	
 	

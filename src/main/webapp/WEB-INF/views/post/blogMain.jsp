@@ -38,6 +38,7 @@
       <!-- 소셜 계정 정보 영역 -->
       <div class="social-account-area">
 	  <%-- 소셜 정보 링크 삽입 c:when 사용해서 값이 있으면 보여주기 --%>
+	  
           <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/hompage.png"></a>
           <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/facebook.png"></a>
           <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/twitter.png"></a>
@@ -106,6 +107,7 @@
   						<c:choose>
   							
   							<%-- 로그인 회원과 포스트 작성자가 같고, 상태가 비공개인 경우 --%>
+  							
   							<c:when test="${(post.postStatusCode == 503) && (loginMember.memberNo == post.memberNo)}">
   							
 		  						<!-- 블로그 본문 내용 -->
@@ -123,7 +125,9 @@
 					                  <h2 class="cart-title">${post.postTitle}</h2>
 					                  
 					                  <!-- 내용 4~5줄 영역 -->
+					                  <%--
 					                  <p class="card-text blog-main-text">${post.postContent}</p>
+					                  --%>
 					                </div>
 					    
 					                <div class="card-footer blog-post-footer border">
@@ -166,7 +170,9 @@
 					                  <h2 class="cart-title" style="text-align:center;">비공개 포스트입니다.</h2>
 					                  
 					                  <!-- 내용 4~5줄 영역 -->
-					                  <p class="card-text" style="text-align:center;">비공개 포스트입니다.</p>
+					                  <%--
+					                  <p class="card-text blog-main-text">${post.postContent}</p>
+					                  --%>
 					                </div>
 					    
 					                <div class="card-footer blog-post-footer border">
@@ -189,6 +195,51 @@
 					              </a>
 					            </div>
   								
+  							</c:when>
+  							
+  							<%-- 관리자 블라인드 + 본인 게시글인 경우 --%>
+  							<c:when test="${post.postStatusCode == 502 && post.memberNo == loginMember.memberNo}">
+  								
+  								<!-- 블로그 본문 내용 -->
+					            <div class="card blog-post-card">
+					              <a href="${contextPath}/blog/${post.memberName}/view?pno=${post.postNo}&cp=${blogPostPagination.currentPage}" class="card-link">
+					  
+					                <div class="card-img-top blog-post-img">
+					                  <!-- 이미지 영역 -->
+					                  <img src="${contextPath}${post.postImg.postImgPath}${post.postImg.postImgName}" alt="">
+					                </div>
+					    
+					                <div class="card-body blog-post-body border">
+					                
+					                  <!-- 제목 -->
+					                  <h2 class="cart-title">${post.postTitle}</h2>
+					                  
+					                  <!-- 내용 4~5줄 영역 -->
+					                 <%--
+					                  <p class="card-text blog-main-text">${post.postContent}</p>
+					                  --%>
+					                </div>
+					    
+					                <div class="card-footer blog-post-footer border">
+					                  
+					                  <!-- 작성자, 좋아요, 날짜 영역 -->
+					                  <div class="blog-post-like">
+					                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"><path d="M12 9.229c.234-1.12 1.547-6.229 5.382-6.229 2.22 0 4.618 1.551 4.618 5.003 0 3.907-3.627 8.47-10 12.629-6.373-4.159-10-8.722-10-12.629 0-3.484 2.369-5.005 4.577-5.005 3.923 0 5.145 5.126 5.423 6.231zm-12-1.226c0 4.068 3.06 9.481 12 14.997 8.94-5.516 12-10.929 12-14.997 0-7.962-9.648-9.028-12-3.737-2.338-5.262-12-4.27-12 3.737z"/></svg>
+					                    <span>${post.favoriteCount}</span>
+					                  </div>
+					                  
+					                  <div class="blog-post-author">
+					                    by. <span>${post.memberName} </span>
+					                  </div>
+					                  <div class="blog-post-date">
+					                    <span>${post.createDate}</span>
+					                  </div>
+					  
+					                </div>
+					  
+					              </a>
+					            </div>
+					            
   							</c:when>
   							
   							
@@ -216,6 +267,7 @@
   								
   							</c:when>
   							
+  							
   							<c:otherwise>
   							
   								<%-- 일반 포스트 --%>
@@ -234,7 +286,9 @@
 					                  <h2 class="cart-title">${post.postTitle}</h2>
 					                  
 					                  <!-- 내용 4~5줄 영역 -->
-					                  <p class="card-text">${post.postContent}</p>
+					                 <%--
+					                  <p class="card-text blog-main-text">${post.postContent}</p>
+					                  --%>
 					                </div>
 					    
 					                <div class="card-footer blog-post-footer border">
@@ -321,11 +375,12 @@
           <hr class="hr-small">
 
           <div class="blog-tag-list-box">
-
-            <a href="#"><span>#농구</span></a>
-            <a href="#"><span>#숙제</span></a>
-            <a href="#"><span>#종각</span></a>
-            <a href="#"><span>#개발 공부</span></a>
+			
+			<c:forEach items="${tagListAll}" var="tag">
+				
+				<a href="#"><span>${tag.tagName}</span></a>
+				
+			</c:forEach>
 
           </div>
 

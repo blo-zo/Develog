@@ -236,5 +236,13 @@
 		VALUES(SEQ_STATIC_READ_COUNT.NEXTVAL, DEFAULT, ?)
 	</entry>
 	
+	
+	<!-- 블로그에 있는 모든 태그 조회 -->
+	<entry key="selectBlogTagList">
+		SELECT TAG_NM FROM TAG
+		WHERE POST_NO IN 
+    	( SELECT POST_NO FROM POST WHERE BLOG_NO = ?)
+	</entry>
+	
 
 </properties>

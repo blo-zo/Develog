@@ -102,12 +102,19 @@ public class PostController extends HttpServlet{
 							
 							List<Post> postList = service.selectBlogPostList(blogPostPagination, memberName);
 							
-							// list에서 post 하나씩 꺼내와 post.getPostContent().substring(0,50);
+							// list에서 post 하나씩 꺼내와 post.getPostContent().substring(0,50)
+							
+							
+							// 블로그 태그 조회
+							List<TagVO> tagListAll = service.selectBlogTagList(postList.get(1).getBlogNo());
+							
+							
 							
 							// 화면 출력하기
 							req.setAttribute("blog", blog);
 							req.setAttribute("blogPostPagination", blogPostPagination);
 							req.setAttribute("postList", postList);
+							req.setAttribute("tagListAll", tagListAll);
 							
 							
 							path = "/WEB-INF/views/post/blogMain.jsp";
@@ -140,11 +147,20 @@ public class PostController extends HttpServlet{
 							
 							if(loginMember != null) memberNo = loginMember.getMemberNo();
 							
-							
+							// 포스트 조회
 							Post post = service.selectPost(postNo, memberNo);
 							
-							
 							if(post != null) {
+								
+								// 태그 조회
+								List<TagVO> tagList = service.selectTagList(postNo);
+								
+								// 블로그 태그 조회
+								List<TagVO> tagListAll = service.selectBlogTagList(post.getBlogNo());
+								
+								if(!tagList.isEmpty()) {
+									post.setTagList(tagList);
+								}
 								
 								// + 댓글 조회
 								List<PostReply> prList = new ReplyService().selectPostReplyList(postNo);
@@ -159,6 +175,8 @@ public class PostController extends HttpServlet{
 								req.setAttribute("prList", prList);
 								req.setAttribute("replyCount", prList.size());
 								req.setAttribute("post", post);
+								req.setAttribute("tagList", tagList);
+								req.setAttribute("tagListAll", tagListAll);
 								
 								path = "/WEB-INF/views/post/postView.jsp";
 								dispatcher = req.getRequestDispatcher(path);
@@ -182,6 +200,8 @@ public class PostController extends HttpServlet{
 						else if(arr[1].equals("updateForm")) {
 							
 							int postNo = Integer.parseInt(req.getParameter("pno"));
+							
+							System.out.println(postNo);
 							
 							// 1. 수정할 게시글 조회하기
 							Post post = service.updateView(postNo);
