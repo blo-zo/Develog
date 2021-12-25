@@ -8,7 +8,7 @@
 
 
 
-	<form action="profile" enctype="multipart/form-data"  method="POST" name="profileForm" role="form" onsubmit="return validate();">
+	<form action="update" enctype="multipart/form-data"  method="POST" name="updateForm" role="form" onsubmit="return false">
 		<div class="category">PROFILE</div>
 	    
 	    <main class="main"> 
@@ -27,13 +27,16 @@
 	            <div class="profile">
 	                <div class="p-img">
 		                <div class="profileImg">
-	                    	<img src="../resources/images/common/user.png">
+	                    	<img name="memberImg" src="../resources/images/common/user.png">
 	                  </div>
 	                </div>
 	                <div class="p-btn">
 	                    <button type="button" class="p-choose" id="p-choose" >이미지 업로드</button>
 	                    <button type="button" class="p-delete" id="p-delete" >이미지 제거</button>
 	                </div>
+	                <div id="fileArea">
+						<input type="file" name="img" onchange="loadImg(this)" id="memberImg"> 
+					</div>
 	            </div>
 	
 	            <div class="intro" style="position: relative;">
