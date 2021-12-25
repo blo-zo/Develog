@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Post Page</title>
+<title>Admin Reply Page</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -97,14 +97,14 @@
 									<td><input class="check" name="check" type="checkbox" ></td>
 									<td>${reply.replyNo}</td>
 									<td>${reply.memberNo}</td>
+									<td>${reply.memberName}</td>
 									<td>
 										<a  class="postContent" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 200px; display: inline-block; text-align: center;"
 											href="${pageContext.servletContext.contextPath}/blog/${post.memberName}/view?pno=${post.postNo}">
 											${reply.replyContent}
 										</a>
 									</td>
-									<td>${post.readCount}</td>
-									<td>${post.likeCount}</td>
+									<td>${reply.replyCreateDate}</td>
 									<td>${post.createDate}</td>
 									<td>${post.reportCount}</td>
 									<td>${post.violationCount}</td>
