@@ -89,21 +89,13 @@
 	          
 	          <div class="post-tags">
 	            
-	            <div class="post-tag" onclick="location.href='#'">
-	              <span>샘플 태그 1</span>
-	            </div>
-	
-	            <div class="post-tag" onclick="location.href='#'">
-	              <span>샘플 태그 2</span>
-	            </div>
-	
-	            <div class="post-tag" onclick="location.href='#'">
-	              <span>샘플 태그 3</span>
-	            </div>
-	
-	            <div class="post-tag" onclick="location.href='#'">
-	              <span>샘플 태그 4</span>
-	            </div>
+	            <c:forEach items="${tagList}" var="tag">
+	            
+		            <div class="post-tag" onclick="location.href='#'">
+		              <span>${tag.tagName}</span>
+		            </div>
+	            
+	            </c:forEach>
 	
 	          </div>
 	
@@ -164,10 +156,11 @@
 	    
 	          <div class="blog-tag-list-box">
 	    
-	            <a href="#"><span>#농구</span></a>
-	            <a href="#"><span>#숙제</span></a>
-	            <a href="#"><span>#종각</span></a>
-	            <a href="#"><span>#개발 공부</span></a>
+	            <c:forEach items="${tagListAll}" var="tag">
+				
+					<a href="#"><span>${tag.tagName}</span></a>
+				
+				</c:forEach>
 	    
 	          </div>
 	        </div>

@@ -245,47 +245,6 @@ public class PostDAO {
 	}
 
 
-	/** 포스트 이미지 조회 DAO
-	 * @param postNo
-	 * @param conn
-	 * @return postImgList
-	 * @throws Exception
-	 */
-	public List<PostImage> selectPostImageList(int postNo, Connection conn) throws Exception{
-		
-		List<PostImage> postImgList = new ArrayList<PostImage>();
-		
-		try {
-			
-			String sql = prop.getProperty("selectPostImageList");
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, postNo);
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				
-				PostImage img = new PostImage();
-				
-				img.setPostImgNo(rs.getInt(1));
-				img.setPostImgPath(rs.getString(2));
-				img.setPostImgName(rs.getString(3));
-				img.setPostImgDate(rs.getString(4));
-				img.setPostImgOriginal(rs.getString(5));
-				img.setPostImgLevel(rs.getInt(6));
-				img.setPostNo(postNo);
-				
-				postImgList.add(img);
-				
-			}
-			
-		}finally {
-			close(rs);
-			close(pstmt);
-		}
-		
-		return postImgList;
-	}
-
 
 	/** 블로그 조회 dao
 	 * @param memberName
@@ -720,6 +679,41 @@ public class PostDAO {
 		}
 		
 		return result;
+	}
+
+	/** 블로그 태그 조회
+	 * @param blogNo
+	 * @param conn
+	 * @return tagList
+	 * @throws Exception
+	 */
+	public List<TagVO> selectBlogTagList(int blogNo, Connection conn) throws Exception{
+
+		List<TagVO> tagList = new ArrayList<TagVO>();
+		
+		try {
+			
+			String sql = prop.getProperty("selectBlogTagList");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, blogNo);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				TagVO tag = new TagVO();
+				tag.setTagName(rs.getString(1));
+				
+				tagList.add(tag);
+				
+			}
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return tagList;
 	}
 
 	

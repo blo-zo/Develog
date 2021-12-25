@@ -5,6 +5,8 @@ import static semi.blozo.develog.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import semi.blozo.develog.board.model.vo.PostVO;
 import semi.blozo.develog.board.model.vo.TagVO;
@@ -82,7 +84,7 @@ public class PostService {
 		close(conn);
 		return postList;
 	}
-
+	
 
 	/** 포스트 상세 조회
 	 * @param postNo
@@ -96,12 +98,8 @@ public class PostService {
 		
 		// 포스트 조회하기
 		Post post = dao.selectPost(postNo, conn);
-		// 프로필 이미지도 얻어오기
 		
-		// 포스트 이미지 조회
-//		List<PostImage> postImgList = dao.selectPostImageList(postNo, conn);
-//		
-//		post.setPostImgList(postImgList);
+		// 프로필 이미지도 얻어오기
 		
 		// 조회수
 		if(post != null && post.getMemberNo() != memberNo ) {
@@ -112,7 +110,7 @@ public class PostService {
 				
 				// 조회수 증가 시간 기록
 				int result2 = dao.insertStaticReadCount(postNo, conn);
-				
+					
 				if(result2 > 0) {
 					
 					commit(conn);
@@ -346,17 +344,17 @@ public class PostService {
 			// 2번 방법) 한 번 싹 지웠다가 다시 삽입하기 =>  채택
 			
 			
-			int result2 = dao.deleteTag(postNo, conn); // 포스트에 있는 태그 모두 삭제
+			result = dao.deleteTag(postNo, conn); // 포스트에 있는 태그 모두 삭제
 			
-			if(result2 > 0) {
+			if(result > 0) {
 				
 				for(TagVO tagVO : tagVOList) {
 					tagVO.setTagName(XSS.replaceParameter( tagVO.getTagName()) );  
 					tagVO.setPostNo(postVO.getPostNo());
 					
-					int result3 = dao.updateTag(tagVO, conn);
+					result = dao.updateTag(tagVO, conn);
 					
-					if( result3 != 1) { // 태그 삽입(수정) 실패 시
+					if( result != 1) { // 태그 삽입(수정) 실패 시
 						rollback(conn);
 						
 						flag = false;
@@ -370,7 +368,7 @@ public class PostService {
 					finalResult = dao.updatePostThumb(thumbImg, conn);
 					// finalResult => 최종 수정 결과
 					
-					if(finalResult > 0)	{
+					if(result > 0)	{
 						commit(conn);
 					}
 					else rollback(conn);
@@ -390,7 +388,7 @@ public class PostService {
 		
 		close(conn);
 		
-		return finalResult;
+		return result;
 	}
 
 
@@ -407,6 +405,32 @@ public class PostService {
 		PostImage thumbImg = dao.selectThumbImg(postNo, conn);
 		
 		return thumbImg;
+	}
+
+
+
+	/** 블로그 태그 조회
+	 * @param blogNo
+	 * @return tagList
+	 * @throws Exception
+	 */
+	public List<TagVO> selectBlogTagList(int blogNo) throws Exception{
+
+		Connection conn = getConnection();
+		
+		List<TagVO> tagList = dao.selectBlogTagList(blogNo, conn);
+		
+		for(int i = 0; i < tagList.size(); i++) {
+			
+			String tagName = tagList.get(i).getTagName();
+			tagName = tagName.substring(0, tagName.length()-1);
+			tagList.get(i).setTagName(tagName);
+			
+		}
+		
+		close(conn);
+		
+		return tagList;
 	}
 	
 	
