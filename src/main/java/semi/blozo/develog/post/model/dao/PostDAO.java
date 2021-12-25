@@ -272,6 +272,11 @@ public class PostDAO {
 				blog.setMemberNo(rs.getInt("MEMBER_NO"));
 				blog.setMemberName(rs.getString("MEMBER_NM"));
 				blog.setIntro(rs.getString("INTRO"));
+				blog.setSnsEmail(rs.getString("SNS_EMAIL"));
+				blog.setSnsGit(rs.getString("SNS_GIT"));
+				blog.setSnsTwitt(rs.getString("SNS_TWITT"));
+				blog.setSnsFbook(rs.getString("SNS_FBOOK"));
+				blog.setSnsHome(rs.getString("SNS_HOME"));
 				
 			}
 			

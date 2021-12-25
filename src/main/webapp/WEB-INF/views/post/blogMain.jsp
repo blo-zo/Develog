@@ -38,6 +38,7 @@
       <!-- 소셜 계정 정보 영역 -->
       <div class="social-account-area">
 	  <%-- 소셜 정보 링크 삽입 c:when 사용해서 값이 있으면 보여주기 --%>
+	  
           <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/hompage.png"></a>
           <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/facebook.png"></a>
           <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/twitter.png"></a>
