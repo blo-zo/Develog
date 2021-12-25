@@ -6,7 +6,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import semi.blozo.develog.board.model.vo.PostVO;
 import semi.blozo.develog.board.model.vo.TagVO;
+import semi.blozo.develog.board.model.vo.ThumbImgVO;
+import semi.blozo.develog.common.XSS;
 import semi.blozo.develog.post.model.dao.PostDAO;
 import semi.blozo.develog.post.model.vo.Blog;
 import semi.blozo.develog.post.model.vo.Post;
@@ -308,6 +311,102 @@ public class PostService {
 		close(conn);
 		
 		return tagList;
+	}
+
+
+
+	/** 포스트 수정 Service
+	 * @param postVO
+	 * @param tagVOList
+	 * @param thumbImg2
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updatePost(PostVO postVO, List<TagVO> tagVOList, PostImage thumbImg) throws Exception{
+
+		Connection conn = getConnection();
+		
+		// 포스트 제목 XSS 방지 (글 내용은 SummerNote 사용으로 XSS 처리 안함)
+		postVO.setPostTitle(XSS.replaceParameter( postVO.getPostTitle()) );
+		
+		// 글 부분 수정하기
+		int result = dao.updatePost(postVO, conn);
+		
+		int postNo = postVO.getPostNo();
+		
+		int finalResult = 0;
+		
+		if(result > 0) {	// 글 부분 수정 성공한 경우
+			
+			Boolean flag = true;
+		   
+			// 태그 수정하기
+			// 너무 어렵다.. 
+			// 1번 방법) 수정태그가 더 적으면? -> 삭제, 더 많으면 -> 삽입
+			// 2번 방법) 한 번 싹 지웠다가 다시 삽입하기 =>  채택
+			
+			
+			int result2 = dao.deleteTag(postNo, conn); // 포스트에 있는 태그 모두 삭제
+			
+			if(result2 > 0) {
+				
+				for(TagVO tagVO : tagVOList) {
+					tagVO.setTagName(XSS.replaceParameter( tagVO.getTagName()) );  
+					tagVO.setPostNo(postVO.getPostNo());
+					
+					int result3 = dao.updateTag(tagVO, conn);
+					
+					if( result3 != 1) { // 태그 삽입(수정) 실패 시
+						rollback(conn);
+						
+						flag = false;
+						break;
+					} 
+				}
+				
+				if(flag) {
+					
+					// 썸네일 수정
+					finalResult = dao.updatePostThumb(thumbImg, conn);
+					// finalResult => 최종 수정 결과
+					
+					if(finalResult > 0)	{
+						commit(conn);
+					}
+					else rollback(conn);
+					
+				}else { // 썸네일 수정 실패 시
+					rollback(conn);
+				}	
+				
+				
+			}else { // 태그 삭제 실패 시
+				rollback(conn);
+			}
+			
+		}else {	// 글 부분 수정 실패
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return finalResult;
+	}
+
+
+
+	/** 수정폼 전환 시 썸네일 이미지 조회
+	 * @param postNo
+	 * @return thumbImg
+	 * @throws Exception
+	 */
+	public PostImage selectThumbImg(int postNo) throws Exception{
+
+		Connection conn = getConnection();
+		
+		PostImage thumbImg = dao.selectThumbImg(postNo, conn);
+		
+		return thumbImg;
 	}
 	
 	

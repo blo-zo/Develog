@@ -123,7 +123,7 @@
 					                  <h2 class="cart-title">${post.postTitle}</h2>
 					                  
 					                  <!-- 내용 4~5줄 영역 -->
-					                  <p class="card-text">${post.postContent}</p>
+					                  <p class="card-text blog-main-text">${post.postContent}</p>
 					                </div>
 					    
 					                <div class="card-footer blog-post-footer border">

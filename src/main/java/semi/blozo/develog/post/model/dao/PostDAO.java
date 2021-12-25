@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import semi.blozo.develog.board.model.vo.PostVO;
 import semi.blozo.develog.board.model.vo.TagVO;
 import semi.blozo.develog.post.model.vo.Blog;
 import semi.blozo.develog.post.model.vo.Post;
@@ -610,6 +611,115 @@ public class PostDAO {
 		}
 		
 		return thumbImg;
+	}
+	
+	
+	/** 포스트 글부분 수정 DAO
+	 * @param postVO
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updatePost(PostVO postVO, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("updatePost");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, postVO.getPostTitle());		// 제목
+			pstmt.setString(2, postVO.getPostContent());	// 내용
+			pstmt.setInt(3, postVO.getCategoryCode());		// 카테고리 코드
+			pstmt.setInt(4, postVO.getPostStatusCode());	// 게시글 상태 코드
+			pstmt.setInt(5, postVO.getPostNo());			// 게시글 번호
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	
+	/** 태그 수정(새로 삽입하기) DAO
+	 * @param tagVO
+	 * @param conn
+	 * @return 
+	 * @throws Exception
+	 */
+	public int updateTag(TagVO tagVO, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("updateTag");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, tagVO.getTagName());
+			pstmt.setInt(2, tagVO.getPostNo());
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	/** 기존 태그 삭제하기
+	 * @param postNo
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int deleteTag(int postNo, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("deleteTag");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	/** 썸네일 이미지 수정
+	 * @param thumbImg
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updatePostThumb(PostImage thumbImg, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("updatePostThumb");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, thumbImg.getPostImgName());
+			pstmt.setString(2, thumbImg.getPostImgOriginal());
+			pstmt.setInt(3, thumbImg.getPostNo());
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	

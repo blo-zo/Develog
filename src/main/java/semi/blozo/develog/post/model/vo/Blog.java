@@ -21,6 +21,9 @@ public class Blog {
 	private int tagCode;
 	private String tagName;
 	
+	// sns
+	
+	
 //	private List<SNS> memberSns; // SNS VO 만들고 리스트로 얻어오기?
 	
 	public Blog() {	}

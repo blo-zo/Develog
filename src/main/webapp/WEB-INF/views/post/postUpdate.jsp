@@ -19,11 +19,19 @@
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet"> 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
   <%--  <link rel="stylesheet" href="${contextPath}/css/summernote/summernote-lite.css">  --%>
+<style>
+	.thumb-img-area > img{
+	  opacity:0.7;
+	  max-width: 350px;
+	  max-height: 200px;
+	  object-fit: cover;
+	}
+</style>
 </head>
 
 <body>
 
-	<form action="insert" enctype="multipart/form-data" name="insertForm" method="post"  role="form" onsubmit="return false">
+	<form action="update" enctype="multipart/form-data" name="insertForm" method="post"  role="form" onsubmit="return false">
 	<div class="wrapper">
 		<div class="write-area" style="max-width: 80%;">
 			<div class="head-title">
@@ -81,7 +89,17 @@
 					<h4>썸네일 설정</h4>
 				</div>
 				<div class="thumb-img-area">
-					<img name="thumbimg" src="https://via.placeholder.com/350x200" alt="샘플이미지">
+					
+					<c:choose>
+						<c:when test="${empty thumbImg}">
+							<%-- 디폴트 이미지 --%>
+							<img name="thumbimg" src="${contextPath}/resources/images/KYJ/emptyImage.png" style="opacity:0.7;">
+						</c:when>
+						<c:otherwise>
+							<img name="thumbimg" src="${contextPath}${thumbImg.postImgPath}${thumbImg.postImgName}" alt="썸네일" style="">
+						</c:otherwise>
+					</c:choose>
+					
 				</div>
 				<!--썸네일 값 -->
 				<div id="fileArea">
@@ -139,6 +157,11 @@
 
 		</div>
 	</div>
+	
+	<%-- 업데이트 진행 시 사용할 글번호 --%>
+	<input type="hidden" name="pno" value="${post.postNo}">
+	
+	
 </form>
 	
 	

@@ -3,7 +3,9 @@ package semi.blozo.develog.post.controller;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -15,14 +17,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
+import com.oreilly.servlet.MultipartRequest;
 
+import semi.blozo.develog.board.model.service.PostingService;
+import semi.blozo.develog.board.model.vo.Category;
+import semi.blozo.develog.board.model.vo.PostVO;
 import semi.blozo.develog.board.model.vo.TagVO;
+import semi.blozo.develog.board.model.vo.ThumbImgVO;
+import semi.blozo.develog.common.MyRenamePolicy;
 import semi.blozo.develog.member.model.vo.Member;
 import semi.blozo.develog.post.model.service.PostService;
 import semi.blozo.develog.post.model.service.ReplyService;
 import semi.blozo.develog.post.model.vo.Blog;
 import semi.blozo.develog.post.model.vo.Post;
 import semi.blozo.develog.post.model.vo.PostCategory;
+import semi.blozo.develog.post.model.vo.PostImage;
 import semi.blozo.develog.post.model.vo.PostPagination;
 import semi.blozo.develog.post.model.vo.PostReply;
 
@@ -51,8 +60,6 @@ public class PostController extends HttpServlet{
 				
 				String[] arr = uri.substring( (contextPath + "/blog/" ).length()).split("/");	
 				// 주소의 뒷부분을 '/'로 나누어서 저장하는 배열
-				System.out.println("uri : " + uri);
-				System.out.println("arr : " + Arrays.toString(arr));
 				
 				
 				String path = null;
@@ -80,9 +87,6 @@ public class PostController extends HttpServlet{
 						
 						// memberName을 통해 블로그 객체 생성 (해당 이름의 블로그가 있는지 찾음) 
 						Blog blog = service.selectBlog(memberName);
-						
-						System.out.println(memberName);
-						System.out.println(blog);
 						
 						if(blog != null) {	// 해당 블로그가 있는 경우
 							
@@ -183,16 +187,20 @@ public class PostController extends HttpServlet{
 							Post post = service.updateView(postNo);
 							
 							// 2. 카테고리 목록 조회
-							// List<Category> category = service.selectCategory();
+//							List<Category> category = new PostingService().selectCategory(loginMember.getBlogNo());
+							List<Category> category = new PostingService().selectCategory(21);
 							
 							// 3. 태그 목록 조회하기
 							List<TagVO> tagList = service.selectTagList(postNo);
 							
 							// 4. 썸네일 이미지 조회하기
+							PostImage thumbImg = service.selectThumbImg(postNo);
 							
 							req.setAttribute("post", post);
-							// req.setAttribute("category", category);
+							req.setAttribute("category", category);
 							req.setAttribute("tagList", tagList);
+							req.setAttribute("thumbImg", thumbImg);
+							
 							
 							path = "/WEB-INF/views/post/postUpdate.jsp";
 							dispatcher = req.getRequestDispatcher(path);
@@ -203,6 +211,99 @@ public class PostController extends HttpServlet{
 						
 						// 포스트 수정하기
 						else if(arr[1].equals("update")) {
+							
+							 int maxSize = 1024 * 1024 * 100;// 100MB
+							 String root = session.getServletContext().getRealPath("/");
+							 String filePath = "/resources/images/board/";
+							 String realPath = root + filePath;
+							
+							 MultipartRequest mReq
+							 	= new MultipartRequest(req, realPath , maxSize ,"UTF-8" ,new MyRenamePolicy());
+							 
+							// 1) 텍스트 형식의 파라미터
+							String postTitle = mReq.getParameter("postTitle");
+							String postContent =  mReq.getParameter("postContent");
+							int categoryCode = Integer.parseInt(mReq.getParameter("categoryCode"));
+							int postStatusCode = Integer.parseInt(mReq.getParameter("postStatusCode"));
+							
+							// 로그인멤버에 블로그번호 세팅되어있나 확인해보기
+							int blogNo = ((Member)req.getSession().getAttribute("loginMember")).getBlogNo();
+							
+							// ****************** 테스트용 임의로 지정 ***************************
+							blogNo = 21;
+							
+							// 수정할 게시글 번호 얻어오기 (insert와의 차이점)
+							int postNo = Integer.parseInt(mReq.getParameter("pno"));
+							
+							PostVO postVO = new PostVO();
+							
+							postVO.setPostTitle(postTitle);
+							postVO.setPostContent(postContent);
+							postVO.setCategoryCode(categoryCode);
+							postVO.setPostStatusCode(postStatusCode);
+							postVO.setBlogNo(blogNo);
+							postVO.setPostNo(postNo);
+								
+							// 태그
+							String[] tags = mReq.getParameterValues("tags");
+							
+							List<TagVO> tagVOList = new ArrayList<TagVO>();
+							
+							if(tags != null) {
+								for(String vo : tags) {
+									TagVO tagvo = new TagVO();
+									tagvo.setTagName(vo);
+									tagVOList.add(tagvo);
+									
+								}
+							}
+							
+							System.out.println(tagVOList);
+							
+							// 썸네일 이미지 처리 
+							// 2) 파일 형식의 파라미터
+							Enumeration<String> files = mReq.getFileNames();
+							
+							// 업로드 된 이미지 정보를 담을 객체 생성
+							PostImage thumbImg = new PostImage();
+							
+							// hasMoreElements() : 다음 요소가 있으면 true 
+							if( files.hasMoreElements() ) {
+								// 썸네일 추가
+								// 썸네일vo가 잘 담겨왔는지 확인 후 result postVO 방식처럼 진행되고
+								
+								String name = files.nextElement(); // 다음 요소값(name) 얻어오기
+								
+								if( mReq.getFilesystemName(name) != null) { 
+									
+									//변경된 값들을 담을 객체
+									thumbImg.setPostImgName(mReq.getFilesystemName(name));
+									thumbImg.setPostImgOriginal(mReq.getOriginalFileName(name));
+									thumbImg.setPostImgPath(filePath); // 파일이 있는 주소 경로
+									
+								}
+														
+							}
+							
+							// service로 넘기기
+							int result = service.updatePost(postVO, tagVOList, thumbImg);
+							
+							if(result > 0) {
+								
+								message = "포스트가 수정되었습니다.";
+								byte[] ptext = loginMember.getMemberNm().getBytes("UTF-8");
+								String value = new String(ptext, "ISO-8859-1"); 
+								path = "../" + value + "/?pno=" + postVO.getPostNo();
+									
+							}else {
+								
+								message = "포스트 수정 중 문제가 발생하였습니다.";
+								path = "updateForm";
+								
+							}
+							
+							session.setAttribute("message", message);
+							resp.sendRedirect(path);
 							
 							
 						}

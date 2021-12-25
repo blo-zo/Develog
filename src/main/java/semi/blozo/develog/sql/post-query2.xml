@@ -103,9 +103,35 @@
 	</entry>
 
 	<!-- 포스트 수정 -->
+	<!-- 글 부분 -->
+	<entry key="updatePost">
+		UPDATE POST SET
+		POST_TITLE = ?,
+		POST_CONTENT = ?,
+		MODIFY_DT = DEFAULT,
+		CATEGORY_CD = ?,
+		POST_STATUS_CD = ?
+		WHERE POST_NO = ?
+	</entry>
 	
+	<!-- 태그 부분 싹 지웠다가 다시 삽입 -->
+	<entry key="deleteTag">
+		DELETE FROM TAG WHERE POST_NO = ? 
+	</entry>
 	
+	<!-- 태그 새로 삽입하기(태그수정) -->
+	<entry key="updateTag">
+		INSERT INTO TAG 
+		VALUES(SEQ_TAG.NEXTVAL, ? , ?)
+	</entry>
 	
+	<!-- 썸네일 수정 -->
+	<entry key="updatePostThumb">
+		UPDATE THUMB_IMG SET
+		THUMB_IMG_NM = ?,
+		THUMB_IMG_ORIGINAL = ?
+		WHERE POST_NO = ?
+	</entry>
 	
 	<!-- 포스트 삭제 -->
 	<entry key="deletePost">

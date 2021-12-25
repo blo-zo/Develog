@@ -391,6 +391,7 @@ function reportReply(replyNo){
   if(loginMemberNo != ""){  // 회원이 신고를 누르면
 
     $("#reportModal").modal('show');
+    
 
   }else{
 
