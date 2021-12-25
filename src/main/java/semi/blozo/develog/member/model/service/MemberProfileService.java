@@ -80,7 +80,9 @@ public class MemberProfileService {
 				
 				if(result > 0) {
 					// 3) 프로필 이미지 
-					result= dao.updateMemberImg(memberImg, conn);
+					
+					
+						result= dao.updateMemberImg(memberImg, conn);						
 					
 					System.out.println("프로필이미지 " + result);
 					commit(conn);
