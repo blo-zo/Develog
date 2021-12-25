@@ -28,24 +28,8 @@ function loginValidate(){
 
 
 	function trend(){
-
-				const trend =  $("#trend").text();
-
-				$.ajax({
-
-
-					url:"/main/trend",
-
-					data:{"trend":trend}, 
-					type : "POST",
+		
 				
-
-					success: function(data){						
-
-					}
-
-				}); 
+				}; 
 
 			 	
-
-			}; 

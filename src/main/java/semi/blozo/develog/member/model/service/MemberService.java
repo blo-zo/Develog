@@ -36,21 +36,16 @@ public class MemberService {
 		int result = dao.signUp(member,conn);
 		
 		if(result>0) { 
-			result = dao.insertSNS(member, conn);
+			int result1 = dao.insertSns(conn);
+			if(result1 > 0 ) {
+			int result2 = dao.insertBlog(conn);
 			
-			if(result >0) {
-				
-				result = dao.insertBlog(member, conn);
-				
-				if(result>0) {
-					commit(conn);}
-				}
 			}
-			
-			
-			
-		else		 rollback(conn);
-		close(conn);		
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
 		return result;
 	}
 
