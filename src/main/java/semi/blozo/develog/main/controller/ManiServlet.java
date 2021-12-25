@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import semi.blozo.develog.main.service.MainService;
 import semi.blozo.develog.post.model.service.PostService;
 import semi.blozo.develog.post.model.vo.Blog;
 import semi.blozo.develog.post.model.vo.Post;
@@ -26,8 +27,8 @@ public class ManiServlet extends HttpServlet{
 			String message = null;
 			
 			try {
+				MainService service = new MainService();
 				
-				PostService service = new PostService();
 				
 			//	int type = Integer.parseInt(req.getParameter("type"));
 				String trend = req.getParameter("trend");

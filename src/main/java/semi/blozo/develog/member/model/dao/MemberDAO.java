@@ -63,6 +63,7 @@ public class MemberDAO {
 				loginMember.setModifyDt(rs.getDate("MODIFY_DT"));
 				loginMember.setStatusCd(rs.getInt("STATUS_CD"));
 				loginMember.setGradeCd(rs.getInt("GRADE_CD"));
+				loginMember.setBlogNo(rs.getInt("BLOG_NO"));
 			}
 			
 		}finally {
@@ -138,15 +139,28 @@ public class MemberDAO {
 	}
 
 
-	public int insertSNS(Member member, Connection conn) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
 	
-	}
-
-	public int insertBlog(Member member, Connection conn) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	/** 카테고리 삽입
+	 * @param conn
+	 * @return result3
+	 * @throws Exception
+	 */
+	public int insertCategory(Connection conn)throws Exception{
+		int result3 = 0;
+		try {
+			String sql =prop.getProperty("insertCategory");
+			pstmt = conn.prepareStatement(sql);
+			
+			result3 = pstmt.executeUpdate();
+			
+			
+		}finally {
+			close(pstmt);
+			
+		}
+		
+		
+		return result3;
 	}
 
 	
@@ -265,6 +279,7 @@ public class MemberDAO {
 		
 		return result;
 	}
+
 
 	
 

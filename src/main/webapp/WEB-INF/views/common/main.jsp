@@ -14,8 +14,8 @@
           
          <c:forEach items="${postListAll}" var="postList" begin="1" end="6">
           <div class="swiper-slide wrapper">
-          <a href="">
-              <img src="https://via.placeholder.com/420x250" alt="" class="carousel-imgbox">
+          <a href="${contextPath}/blog/${postList.memberName}/view?pno=${postList.postNo}">
+              <img src="${contextPath}${postList.postImg.postImgPath}${postList.postImg.postImgName}" alt="" class="carousel-imgbox">
                <div class="bg">
                <div style="margin: auto;  width: 250px; height: 50px; margin-top: 120px; ">
                  ${postList.postTitle}
@@ -92,12 +92,12 @@
             
    
    
-                 <a href="${contextPath}/blog/view?blog=${postList.blogTitle}&pno=${postList.postNo}" class="wrapper-a">
+                 <a href="${contextPath}/blog/${postList.memberName}/view?pno=${postList.postNo}" class="wrapper-a">
    
                      
                      <div class="card">
                          
-                         <div class="image"><img src="https://via.placeholder.com/280x150"  id="img-size"></div>  
+                         <div class="image"><img src="${contextPath}${postList.postImg.postImgPath}${postList.postImg.postImgName}"  id="img-size"></div>  
                          
                          <div class="title-box">
                              ${postList.postTitle}
