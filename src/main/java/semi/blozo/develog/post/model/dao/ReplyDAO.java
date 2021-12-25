@@ -194,6 +194,28 @@ public class ReplyDAO {
 		return result;
 	}
 
+	/** 댓글 신고 DAO
+	 * @param replyNo
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int reportReply(int replyNo, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("reportReply");
+			
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 	
 	
 	

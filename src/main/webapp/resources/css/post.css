@@ -277,6 +277,8 @@ html, body{
 .category{
   /* 선택사항 테두리 있게? 없게? */
   border: none;
+  cursor: pointer;
+  color: #323232;
 }
 
 .category:hover{
