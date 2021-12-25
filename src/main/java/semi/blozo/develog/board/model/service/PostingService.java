@@ -90,7 +90,7 @@ public class PostingService {
 		} else {
 			rollback(conn);
 		}
-		
+		close(conn);
 		return result;
 	}
 

@@ -56,6 +56,7 @@ public class MemberProfileService {
 		// xss 처리
 		profileVO.setMemberNm(XSS.replaceParameter(profileVO.getMemberNm()));
 		profileVO.setIntro(XSS.replaceParameter(profileVO.getIntro()));
+		
 		profileVO.setBlogTitle(XSS.replaceParameter(profileVO.getBlogTitle()));
 		
 		profileVO.setSnsEmail(XSS.replaceParameter(profileVO.getSnsEmail()));
@@ -64,34 +65,39 @@ public class MemberProfileService {
 		profileVO.setSnsFbook(XSS.replaceParameter(profileVO.getSnsFbook()));
 		profileVO.setSnsHome(XSS.replaceParameter(profileVO.getSnsHome()));
 		
+		// 1) 닉네임, 한 줄 소개
 		int result= dao.updateProfileMember(profileVO,  conn);
-		
-//		result = dao.updateProfileBlog(profileVO,  conn);
-		
-		
 		
 		
 		
 		if(result > 0) {
+			// 2) 디벨로그 제목
+			result = dao.updateProfileBlog(profileVO,  conn);
 			
-			result= dao.updateMemberImg(memberImg, conn);
-			// 둘 다 성공했을떄 
-			if(result == 0) { // 실패하면 false, for문 멈춘다
-				rollback(conn);
-				   
-			}  
-		}
-		
+			if(result > 0) {
+				// 3) 디벨로그 제목
+				result = dao.updateProfileTitle(profileVO,  conn);
+				
+				if(result > 0) {
+					// 3) 프로필 이미지 
+					result= dao.updateMemberImg(memberImg, conn);
+					commit(conn);
+				} else { rollback(conn); }
+				
+			} else { rollback(conn); }
+			
+		}  else { rollback(conn);}
+//		
 		
 		
 		
 		close(conn);
 		
 		return result;
+		
+
+
 	}
-
-
-	
 
 
 
