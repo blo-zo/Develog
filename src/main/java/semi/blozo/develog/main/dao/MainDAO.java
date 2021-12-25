@@ -42,12 +42,12 @@ public class MainDAO {
 	
 	/** 게시글 전체 조회 DAO
 	 * @param conn
-	 * @return
+	 * @return List
 	 * @throws Exception
 	 */
-	public List<Post> selectPostListAll(Connection conn) throws Exception{
+	public List<Post> allList(Connection conn) throws Exception{
 		
-		List<Post> allPostList = new ArrayList<Post>();
+		List<Post> allList = new ArrayList<Post>();
 		
 		try {
 			
@@ -71,7 +71,7 @@ public class MainDAO {
 				post.setBlogTitle(rs.getString("BLOG_TITLE"));
 				post.setMemberNo(rs.getInt("MEMBER_NO"));
 				post.setMemberName(rs.getString("MEMBER_NM"));
-				allPostList.add(post);
+				allList.add(post);
 			}
 			
 		}finally {
@@ -81,10 +81,98 @@ public class MainDAO {
 			
 		}
 		
-		return allPostList;
+		return allList;
+	}
+	
+	/** 캐러셀 조회수 부분
+	 * @param conn
+	 * @return readList
+	 * @throws Exception
+	 */
+	public List<Post> readList(Connection conn)throws Exception {
+		List<Post> readList = new ArrayList<Post>();
+		
+		try {
+			
+			String sql = prop.getProperty("selectReadCount");
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				// 값 세팅하기
+				Post post = new Post();
+				post.setPostNo(rs.getInt("POST_NO"));
+				post.setPostTitle(rs.getString("POST_TITLE"));
+				post.setPostContent(rs.getString("POST_CONTENT"));
+				post.setPostTitle(rs.getString("POST_TITLE"));
+				post.setCreateDate(rs.getString("CREATE_DT"));
+				post.setModifyDate(rs.getString("MODIFY_DT"));
+				post.setReadCount(rs.getInt("READ_COUNT"));
+				post.setFavoriteCount(rs.getInt("LIKE_COUNT"));
+				post.setBlogNo(rs.getInt("BLOG_NO"));
+				post.setBlogTitle(rs.getString("BLOG_TITLE"));
+				post.setMemberNo(rs.getInt("MEMBER_NO"));
+				post.setMemberName(rs.getString("MEMBER_NM"));
+				readList.add(post);
+			}
+			
+		}finally {
+			
+			close(rs);
+			close(stmt);
+			
+		}
+		
+		return readList;
 	}
 
 	
+	/** 좋아요순
+	 * @param conn
+	 * @return allPostList
+	 * @throws Exception
+	 */
+	public List<Post> trendList(Connection conn)throws Exception {
+	List<Post> trendList = new ArrayList<Post>();
+		
+		try {
+			
+			String sql = prop.getProperty("selectTrendList");
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				
+				// 값 세팅하기
+				Post post = new Post();
+				post.setPostNo(rs.getInt("POST_NO"));
+				post.setPostTitle(rs.getString("POST_TITLE"));
+				post.setPostContent(rs.getString("POST_CONTENT"));
+				post.setPostTitle(rs.getString("POST_TITLE"));
+				post.setCreateDate(rs.getString("CREATE_DT"));
+				post.setModifyDate(rs.getString("MODIFY_DT"));
+				post.setReadCount(rs.getInt("READ_COUNT"));
+				post.setFavoriteCount(rs.getInt("LIKE_COUNT"));
+				post.setBlogNo(rs.getInt("BLOG_NO"));
+				post.setBlogTitle(rs.getString("BLOG_TITLE"));
+				post.setMemberNo(rs.getInt("MEMBER_NO"));
+				post.setMemberName(rs.getString("MEMBER_NM"));
+				trendList.add(post);
+			}
+			
+		}finally {
+			
+			close(rs);
+			close(stmt);
+			
+		}
+		
+		return trendList;
+	}
+	
+	
+
 	
 	/** 썸네일 이미지 가져오기
 	 * @param postNo
@@ -125,7 +213,10 @@ public class MainDAO {
 		
 		return searchImg;
 	}
+
 	
+
+
 	
 	
 	

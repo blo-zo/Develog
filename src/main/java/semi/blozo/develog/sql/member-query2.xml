@@ -10,7 +10,6 @@
     
     FROM MEMBER
     JOIN BLOG USING(MEMBER_NO)
-    JOIN MEMBER_IMG USING(MEMBER_NO)
     JOIN MEMBER_SNS USING(MEMBER_NO)
     WHERE MEMBER_NO = ?
 	AND STATUS_CD = 200
@@ -29,13 +28,42 @@
 	</entry>
 	
 	
-	<!-- 회원정보조회 -->
-	<entry key = "updateProfile">
-	SELECT MEMBER_IMG_PATH, MEMBER_IMG_NM, MEMBER_IMG_ORIGINAL
-    FROM MEMBER
-    JOIN MEMBER_IMG USING(MEMBER_NO)
-    WHERE MEMBER_NO = ?
-	AND STATUS_CD = 200
+	<!-- 회원정보 수정 , 닉네임, 한 주 ㄹ소개 -->
+	<entry key = "updateProfileMember">
+		
+		UPDATE MEMBER SET MEMBER_NM = ? , INTRO = ?
+		WHERE MEMBER_NO = ?
+	
+	</entry>
+	
+	<!-- 회원정보 수정 , 블로그 타이틀 -->
+	<entry key = "updateProfileTitle">
+		UPDATE BLOG SET BLOG_TITLE = ?
+		WHERE MEMBER_NO = ?
+	
+	</entry>
+	
+	<!-- 회원정보 수정 , 소셜정보 -->
+	<entry key = "updateProfileSns">
+		UPDATE MEMBER_SNS 
+		SET SNS_EMAIL = ?,
+		    SNS_GIT = ?,
+		    SNS_TWITT = ?,
+		    SNS_FBOOK = ?,
+		    SNS_HOME = ?
+		
+		WHERE MEMBER_NO = ?
+	
+	</entry>
+	
+	
+	<!-- 회원정보 수정 , 이미지 -->
+	<entry key = "updateMemberImg">
+		UPDATE MEMBER_IMG SET
+		MEMBER_IMG_NM =?,
+		MEMBER_IMG_ORIGINAL = ?,
+		MEMBER_IMG_PATH = ?
+		AND MEMBER_NO = ?
 	
 	</entry>
 	

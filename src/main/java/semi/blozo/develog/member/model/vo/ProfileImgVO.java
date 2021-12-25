@@ -8,7 +8,7 @@ public class ProfileImgVO {
 	private String memberImgName;
 	private Date memberImgDt;
 	private String memberImgOriginal;
-	
+	private int BlogNo;
 	
 	public ProfileImgVO() {}
 
@@ -62,12 +62,27 @@ public class ProfileImgVO {
 		this.memberImgOriginal = memberImgOriginal;
 	}
 
+	
+	
+
+	public int getBlogNo() {
+		return BlogNo;
+	}
+
+
+	public void setBlogNo(int blogNo) {
+		BlogNo = blogNo;
+	}
+
 
 	@Override
 	public String toString() {
 		return "ProfileImgVO [memberImgNo=" + memberImgNo + ", memberImgPath=" + memberImgPath + ", memberImgName="
-				+ memberImgName + ", memberImgDt=" + memberImgDt + ", memberImgOriginal=" + memberImgOriginal + "]";
+				+ memberImgName + ", memberImgDt=" + memberImgDt + ", memberImgOriginal=" + memberImgOriginal
+				+ ", BlogNo=" + BlogNo + "]";
 	}
+
+
 	
 	
 	

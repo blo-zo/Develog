@@ -110,9 +110,6 @@ public class MemberProfileDAO {
 	}
 
 	
-
-	
-	
 	/** 회원정보 수정  1)닉네임, 한 줄 소개
 	 * @param profileVO
 	 * @param conn
@@ -127,8 +124,10 @@ public class MemberProfileDAO {
 			pstmt = conn.prepareStatement(prop.getProperty("updateProfileMember"));
 			
 			pstmt.setString(1, profileVO.getMemberNm());
+			pstmt.setString(2, profileVO.getIntro());
+			pstmt.setInt(3, profileVO.getMemberNo());
 			
-			
+			result = pstmt.executeUpdate();
 		}  finally { close(pstmt); }
 		
 		return result;
@@ -149,9 +148,10 @@ public class MemberProfileDAO {
 			
 			pstmt = conn.prepareStatement(prop.getProperty("updateProfileBlog"));
 			
+			pstmt.setString(1, profileVO.getBlogTitle());
+			pstmt.setInt(2, profileVO.getMemberNo());
 			
-			
-			
+			result = pstmt.executeUpdate();
 		}  finally { close(pstmt); }
 		
 		return result;
@@ -159,21 +159,27 @@ public class MemberProfileDAO {
 
 	
 	
-	/** 회원정보 수정 3) 벨로그 제목 
+	/** 회원정보 수정 3)소셜정보
 	 * @param profileVO
 	 * @param conn
 	 * @return
 	 * @throws Exception
 	 */
-	public int updateProfileTitle(ProfileVO profileVO, Connection conn) throws Exception{
+	public int updateProfileSns(ProfileVO profileVO, Connection conn) throws Exception{
 		int result = 0;
 		
 		try {
 			
-			pstmt = conn.prepareStatement(prop.getProperty("updateMemberImg"));
+			pstmt = conn.prepareStatement(prop.getProperty("updateProfileSns"));
 			
+			pstmt.setString(1, profileVO.getSnsEmail());
+			pstmt.setString(2, profileVO.getSnsGit());
+			pstmt.setString(3, profileVO.getSnsTwitt());
+			pstmt.setString(4, profileVO.getSnsFbook());
+			pstmt.setString(5, profileVO.getSnsHome());
+			pstmt.setInt(6, profileVO.getMemberNo());
 			
-			
+			result = pstmt.executeUpdate();
 			
 		}  finally { close(pstmt); }
 		
@@ -195,8 +201,12 @@ public class MemberProfileDAO {
 			
 			pstmt = conn.prepareStatement(prop.getProperty("updateMemberImg"));
 			
+			pstmt.setString(1, memberImg.getMemberImgName());
+			pstmt.setString(2, memberImg.getMemberImgOriginal());
+			pstmt.setString(3, memberImg.getMemberImgPath());
+			pstmt.setInt(4, memberImg.getBlogNo());
 			
-			
+			result = pstmt.executeUpdate();
 			
 		}  finally { close(pstmt); }
 		
@@ -205,6 +215,7 @@ public class MemberProfileDAO {
 
 	
 
+	// 회원 탈퇴
 	
 
 	
