@@ -1,4 +1,5 @@
 package semi.blozo.develog.member.model.dao;
+
 import static semi.blozo.develog.common.JDBCTemplate.*;
 
 import java.io.FileInputStream;
@@ -43,10 +44,8 @@ public class MemberProfileDAO {
 		ProfileVO profileVO = null;
 		
 		try {
+			pstmt = conn.prepareStatement(prop.getProperty("selectProfile"));
 			
-			String sql = prop.getProperty("selectProfile");
-			
-			pstmt = conn.prepareStatement(sql);		
 			pstmt.setInt(1, memberNo);
 					
 			rs = pstmt.executeQuery();
@@ -87,10 +86,8 @@ public class MemberProfileDAO {
 		ProfileImgVO profileImg = null;
 		
 		try {
-			
-			String sql = prop.getProperty("selectProfileImg");
-			
-			pstmt = conn.prepareStatement(sql);		
+			pstmt = conn.prepareStatement(prop.getProperty("selectProfileImg"));
+				
 			pstmt.setInt(1, memberNo);
 			
 			rs = pstmt.executeQuery();
@@ -113,10 +110,10 @@ public class MemberProfileDAO {
 	}
 
 	
+
 	
 	
-	
-	/** 회원정보(글 내용) 수정(닉네임, 한줄소개)
+	/** 회원정보 수정  1)닉네임, 한 줄 소개
 	 * @param profileVO
 	 * @param conn
 	 * @return result
@@ -127,37 +124,85 @@ public class MemberProfileDAO {
 		
 		try {
 			
-			String sql = prop.getProperty("updateProfileMember");
+			pstmt = conn.prepareStatement(prop.getProperty("updateProfileMember"));
+			
+			pstmt.setString(1, profileVO.getMemberNm());
 			
 			
-			
-			
-		}  finally {
-			
-			
-		}
+		}  finally { close(pstmt); }
 		
-		
-		return 0;
+		return result;
 	}
 
 	
 	
+	/** 회원정보 수정  2) 디벨로그 제목
+	 * @param profileVO
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
+	public int updateProfileBlog(ProfileVO profileVO, Connection conn) throws Exception{
+		int result = 0;
+			
+		try {
+			
+			pstmt = conn.prepareStatement(prop.getProperty("updateProfileBlog"));
+			
+			
+			
+			
+		}  finally { close(pstmt); }
+		
+		return result;
+	}
+
 	
 	
-	/**
+	/** 회원정보 수정 3) 벨로그 제목 
+	 * @param profileVO
+	 * @param conn
+	 * @return
+	 * @throws Exception
+	 */
+	public int updateProfileTitle(ProfileVO profileVO, Connection conn) throws Exception{
+		int result = 0;
+		
+		try {
+			
+			pstmt = conn.prepareStatement(prop.getProperty("updateMemberImg"));
+			
+			
+			
+			
+		}  finally { close(pstmt); }
+		
+		return result;
+	}
+
+	
+	
+	/** 회원정보 수정  4) 프로필 이미지 
 	 * @param memberImg
 	 * @param conn
 	 * @return
 	 * @throws Exception
 	 */
 	public int updateMemberImg(ProfileImgVO memberImg, Connection conn)  throws Exception{
+		int result = 0;
 		
-		return 0;
+		try {
+			
+			pstmt = conn.prepareStatement(prop.getProperty("updateMemberImg"));
+			
+			
+			
+			
+		}  finally { close(pstmt); }
+		
+		return result;
 	}
 
-	
-	
 	
 
 	

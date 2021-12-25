@@ -1,9 +1,9 @@
 // 섬머노트 기본
 $('#summernote').summernote({
-	height: 800,                     // 에디터 높이
-	minHeight: 800,             // set minimum height of editor
-	maxHeight: 800,             // set maximum height of editor
-	focus: true,                      // 에디터 로딩후 포커스를 맞출지 여부
+	height: 700,                     // 에디터 높이
+	minHeight: 700,             // set minimum height of editor
+	maxHeight: 700,             // set maximum height of editor
+	// focus: true,                      // 에디터 로딩후 포커스를 맞출지 여부
 	lang: "ko-KR",					// 한글 설정   
 
 	// 이미지 업로드 이벤트가 발생했을 때 

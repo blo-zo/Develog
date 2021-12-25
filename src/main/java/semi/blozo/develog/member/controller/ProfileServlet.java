@@ -29,18 +29,16 @@ public class ProfileServlet extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/WEB-INF/views/member/profile.jsp").forward(req, resp);
-	}
 	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		
+		
+		
 		// doPost 안에서 진행 되어야함
 		String method = req.getMethod();
 		
 		String uri =req.getRequestURI();
 		String contextPath = req.getContextPath();
-		String command = uri.substring(  (contextPath + "/board/").length() );
+		String command = uri.substring(  (contextPath + "/member/").length() );
 		
 		String path = null;
 		RequestDispatcher dispatcher = null;
@@ -67,68 +65,76 @@ public class ProfileServlet extends HttpServlet{
 			
 			ProfileImgVO memberImg = service.selectProfileImg(memberNo);
 			
+			req.setAttribute("profileVO", profileVO);
 			
-			
-			System.out.println(profileVO);
-			// Member 객체를 생성하여 파라미터를 하나의 객체에 저장			
-//			String memberNm = profileVO.getMemberNm();
-//			String intro = profileVO.getIntro();
-//			String blogTitle = profileVO.getBlogTitle();
-//			
-//			
-//			// 소셜 정보 담기
-//			String snsEmail = profileVO.getSnsEmail();
-//			String snsGit = profileVO.getSnsGit();
-//			String snsTwitt =  profileVO.getSnsTwitt();
-//			String snsFbook =  profileVO.getSnsFbook();
-//			String snsHome = profileVO.getSnsHome();
-			
-			
-			// 개인 프로필  이미지
-			int maxSize = 1024 * 1024 * 100;
-			String root =  session.getServletContext().getRealPath("/");
-			String filePath = "/resources/images/profile/";
-			String realPath = root + filePath;
-			
-			MultipartRequest mReq 
-			= new MultipartRequest( req, realPath, maxSize, "UTF-8", new MyRenamePolicy() );
-			
-			
-			// 2) 파일 형식의 파라미터
-			Enumeration<String> files = mReq.getFileNames();
-			
-			memberImg = new ProfileImgVO();
-			
-			if( files.hasMoreElements() ) {
-				// 썸네일 추가
-				// 썸네일vo가 잘 담겨왔는지 확인 후 result postVO 방식처럼 진행되고
-				
-				String name = files.nextElement(); // 다음 요소값(name) 얻어오기
-				
-				if( mReq.getFilesystemName(name) != null) { 
-					
-					memberImg.setMemberImgName(mReq.getFilesystemName(name));
-					memberImg.setMemberImgOriginal(mReq.getOriginalFileName(name));
-					memberImg.setMemberImgPath(filePath); // 파일이 있는 주소 경로
-					
-				}
-			}
-			
-			
-			//조회 후 살리기
-			int result = service.updateProfile(profileVO, memberImg);
-			
-			if(result > 0) {
-				session.setAttribute("message", "회원 정보가 수정 되었습니다.");
+			req.getRequestDispatcher("/WEB-INF/views/member/profile.jsp").forward(req, resp);
 
-				// 수정된 값이 화면에서도 보이게 세팅
+			
+			System.out.println("profileVO" + profileVO);
+			
+			if(command.equals("update")) {
+				// Member 객체를 생성하여 파라미터를 하나의 객체에 저장			
+//				String memberNm = profileVO.getMemberNm();
+//				String intro = profileVO.getIntro();
+//				String blogTitle = profileVO.getBlogTitle();
+//				
+//				
+//				// 소셜 정보 담기
+//				String snsEmail = profileVO.getSnsEmail();
+//				String snsGit = profileVO.getSnsGit();
+//				String snsTwitt =  profileVO.getSnsTwitt();
+//				String snsFbook =  profileVO.getSnsFbook();
+//				String snsHome = profileVO.getSnsHome();
 				
-			} else {
-				session.setAttribute("message", "회원 정보 수정 실패. return값 확인하세요.");
+				
+				// 개인 프로필  이미지
+				int maxSize = 1024 * 1024 * 100;
+				String root =  session.getServletContext().getRealPath("/");
+				String filePath = "/resources/images/profile/";
+				String realPath = root + filePath;
+				
+				MultipartRequest mReq 
+				= new MultipartRequest( req, realPath, maxSize, "UTF-8", new MyRenamePolicy() );
+				
+				
+				// 2) 파일 형식의 파라미터
+				Enumeration<String> files = mReq.getFileNames();
+				
+				memberImg = new ProfileImgVO();
+				
+				if( files.hasMoreElements() ) {
+					// 썸네일 추가
+					// 썸네일vo가 잘 담겨왔는지 확인 후 result postVO 방식처럼 진행되고
+					
+					String name = files.nextElement(); // 다음 요소값(name) 얻어오기
+					
+					if( mReq.getFilesystemName(name) != null) { 
+						
+						memberImg.setMemberImgName(mReq.getFilesystemName(name));
+						memberImg.setMemberImgOriginal(mReq.getOriginalFileName(name));
+						memberImg.setMemberImgPath(filePath); // 파일이 있는 주소 경로
+						
+					}
+				}
+				
+				
+				//조회 후 살리기
+				int result = service.updateProfile(profileVO, memberImg);
+				
+				if(result > 0) {
+					session.setAttribute("message", "회원 정보가 수정 되었습니다.");
+					
+					// 수정된 값이 화면에서도 보이게 세팅
+					
+				} else {
+					session.setAttribute("message", "회원 정보 수정 실패. return값 확인하세요.");
+				}
+				
+				resp.sendRedirect("profile");
+			
+				
 			}
-			
-			resp.sendRedirect("profile");
-			
+				
 		} catch (Exception e) {
 			e.printStackTrace();
 			
@@ -138,9 +144,14 @@ public class ProfileServlet extends HttpServlet{
 			req.getRequestDispatcher("/WEB-INF/views/common/error.jsp").forward(req, resp);
 		}
 		
-	
-	}
 		
-
+	}
 	
+	
+	
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
 }
