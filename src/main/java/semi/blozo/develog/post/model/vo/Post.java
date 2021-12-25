@@ -25,7 +25,7 @@ public class Post {
 	private String categoryName;
 	private String postStatusName;
 	
-	private List<PostImage> postImgList;
+	private PostImage postImg;
 	
 	public Post() { 	}
 
@@ -156,24 +156,26 @@ public class Post {
 	public void setPostStatusName(String postStatusName) {
 		this.postStatusName = postStatusName;
 	}
+	
 
-	public List<PostImage> getPostImgList() {
-		return postImgList;
+	public PostImage getPostImg() {
+		return postImg;
 	}
 
-	public void setPostImgList(List<PostImage> postImgList) {
-		this.postImgList = postImgList;
+	public void setPostImg(PostImage postImg) {
+		this.postImg = postImg;
 	}
 
 	@Override
 	public String toString() {
 		return "Post [postNo=" + postNo + ", postTitle=" + postTitle + ", postContent=" + postContent + ", createDate="
-				+ createDate + ", modifyDate=" + modifyDate + ", readCount=" + readCount + ", reportCount="
-				+ favoriteCount + ", blogNo=" + blogNo + ", categoryCode="
-				+ categoryCode + ", postStatusCode=" + postStatusCode + ", memberNo=" + memberNo + ", memberName="
-				+ memberName + ", blogTitle=" + blogTitle + ", intro=" + intro + ", categoryName=" + categoryName
-				+ ", postStatusName=" + postStatusName + ", postImgList=" + postImgList + "]";
+				+ createDate + ", modifyDate=" + modifyDate + ", readCount=" + readCount + ", favoriteCount="
+				+ favoriteCount + ", blogNo=" + blogNo + ", categoryCode=" + categoryCode + ", postStatusCode="
+				+ postStatusCode + ", memberNo=" + memberNo + ", memberName=" + memberName + ", blogTitle=" + blogTitle
+				+ ", intro=" + intro + ", categoryName=" + categoryName + ", postStatusName=" + postStatusName
+				+ ", postImg=" + postImg + "]";
 	}
+
 
 	
 	

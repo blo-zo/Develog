@@ -188,11 +188,11 @@ public class PostController extends HttpServlet{
 							// 3. 태그 목록 조회하기
 							List<TagVO> tagList = service.selectTagList(postNo);
 							
-							System.out.println(tagList);
+							// 4. 썸네일 이미지 조회하기
 							
 							req.setAttribute("post", post);
-							req.setAttribute("tagList", tagList);
 							// req.setAttribute("category", category);
+							req.setAttribute("tagList", tagList);
 							
 							path = "/WEB-INF/views/post/postUpdate.jsp";
 							dispatcher = req.getRequestDispatcher(path);
@@ -224,16 +224,14 @@ public class PostController extends HttpServlet{
 								byte[] ptext = memberName.getBytes("UTF-8");
 								String value = new String(ptext, "ISO-8859-1"); 
 								path = "../" + value;
-								System.out.println(memberName);
-								System.out.println(path);
-								System.out.println(value);
 								
 							}else {
 								
 								message = "포스트 삭제 중 문제가 발생했습니다.";
 								
-								// 포스트 리스트 페이지로 돌아가기
-								path = req.getContextPath() + "/blog/" + memberName;
+								byte[] ptext = memberName.getBytes("UTF-8");
+								String value = new String(ptext, "ISO-8859-1"); 
+								path = "../" + value;
 								
 							}
 							

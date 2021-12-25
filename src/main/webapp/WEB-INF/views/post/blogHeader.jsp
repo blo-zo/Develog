@@ -138,6 +138,31 @@
           <a href="#"><li class="list-group-item category">카테고리 3</li></a>
           <a href="#"><li class="list-group-item category">카테고리 4</li></a>
         </ul>
+        
+        
+        <div id="controller-menu" style="text-align: right; margin: 20px; margin-top: 50px;">
+
+          <div class="category-control">
+
+            <button class="category-control-btn" id="add-category-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-5v5h-2v-5h-5v-2h5v-5h2v5h5v2z"/></svg>
+            </button>
+            <label for="add-category-btn" style="cursor: pointer;">카테고리 추가</label>
+
+          </div>
+
+          <div class="category-control">
+          
+            <button class="category-control-btn" id="remove-category-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-12v-2h12v2z"/></svg>
+            </button>
+            <label for="remove-category-btn" style="cursor: pointer;">카테고리 삭제</label>
+          
+          </div>
+
+        </div>
+        
+        
     </div>  
   </div>
   

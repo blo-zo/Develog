@@ -68,12 +68,13 @@ public class PostService {
 		Connection conn = getConnection();
 		List<Post> postList = dao.selectBlogPostList(blogPostPagination, memberName, conn);
 		
-//		for(Post temp : postList) {
-//			
-//			List<PostImage> imgList = dao.selectBlogPostImageList(temp.getPostNo(), conn);
-//			temp.setPostImgList(imgList);
-//			
-//		}
+		for(Post temp : postList) {
+			
+			// 썸네일 이미지 조회
+			PostImage thumbImg = dao.selectThumbImg(temp.getPostNo(), conn);
+			temp.setPostImg(thumbImg);
+			
+		}
 		
 		close(conn);
 		return postList;
