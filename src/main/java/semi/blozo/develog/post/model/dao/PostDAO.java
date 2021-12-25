@@ -660,7 +660,6 @@ public class PostDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, tagVO.getTagName());
 			pstmt.setInt(2, tagVO.getPostNo());
-			pstmt.setInt(3, tagVO.getTagCode());
 			
 			result = pstmt.executeUpdate();
 			
@@ -683,10 +682,41 @@ public class PostDAO {
 		
 		try {
 			
-			
+			String sql = prop.getProperty("deleteTag");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			result = pstmt.executeUpdate();
 			
 		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	/** 썸네일 이미지 수정
+	 * @param thumbImg
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updatePostThumb(PostImage thumbImg, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
 			
+			String sql = prop.getProperty("updatePostThumb");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, thumbImg.getPostImgName());
+			pstmt.setString(2, thumbImg.getPostImgOriginal());
+			pstmt.setInt(3, thumbImg.getPostNo());
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
 		}
 		
 		return result;

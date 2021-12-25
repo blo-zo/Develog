@@ -318,11 +318,11 @@ public class PostService {
 	/** 포스트 수정 Service
 	 * @param postVO
 	 * @param tagVOList
-	 * @param imgList
+	 * @param thumbImg2
 	 * @return result
 	 * @throws Exception
 	 */
-	public int updatePost(PostVO postVO, List<TagVO> tagVOList, List<ThumbImgVO> imgList) throws Exception{
+	public int updatePost(PostVO postVO, List<TagVO> tagVOList, PostImage thumbImg) throws Exception{
 
 		Connection conn = getConnection();
 		
@@ -334,9 +334,10 @@ public class PostService {
 		
 		int postNo = postVO.getPostNo();
 		
+		int finalResult = 0;
+		
 		if(result > 0) {	// 글 부분 수정 성공한 경우
 			
-			// 플래그 사용이유 혹시 모를 상황방지, 태그 입력중 하나가 잘못되면 못하게
 			Boolean flag = true;
 		   
 			// 태그 수정하기
@@ -345,54 +346,67 @@ public class PostService {
 			// 2번 방법) 한 번 싹 지웠다가 다시 삽입하기 =>  채택
 			
 			
-			int result1 = dao.deleteTag(postNo, conn);//결과가 true면 태그가 잘들어갔다
+			int result2 = dao.deleteTag(postNo, conn); // 포스트에 있는 태그 모두 삭제
 			
-			for(TagVO tagVO : tagVOList) {
-				tagVO.setTagName(XSS.replaceParameter( tagVO.getTagName()) );  
-				tagVO.setPostNo(postVO.getPostNo());
+			if(result2 > 0) {
 				
-	        	int result2 = dao.updateTag(tagVO, conn);
-	        	
-				if(result1 == 0 || result2 == 0) { // 실패하면 false, for문 멈춘다
-				   rollback(conn);
-				   
-				   flag = false;
-	               break;
-				}  
-			
-				// 썸네일 수정하기
-				
-				// 썸네일 이미지  for문
-				if(flag) {
-					for(ThumbImgVO thumbVO : imgList) {
-						thumbVO.setPostNo(postNo);
+				for(TagVO tagVO : tagVOList) {
+					tagVO.setTagName(XSS.replaceParameter( tagVO.getTagName()) );  
+					tagVO.setPostNo(postVO.getPostNo());
+					
+					int result3 = dao.updateTag(tagVO, conn);
+					
+					if( result3 != 1) { // 태그 삽입(수정) 실패 시
+						rollback(conn);
 						
-//						result = dao.insertThumb(thumbVO, conn);
-						
-						if(result == 0) { 
-							rollback(conn);
-							
-							flag = false;
-							break;
-						} else {
-							result = postNo; //썸네일 이미지 IF문 안에서 처리하기 
-						}
-					}
+						flag = false;
+						break;
+					} 
 				}
 				
-				if(result > 0) commit(conn);
+				if(flag) {
+					
+					// 썸네일 수정
+					finalResult = dao.updatePostThumb(thumbImg, conn);
+					// finalResult => 최종 수정 결과
+					
+					if(finalResult > 0)	{
+						commit(conn);
+					}
+					else rollback(conn);
+					
+				}else { // 썸네일 수정 실패 시
+					rollback(conn);
+				}	
 				
-//			} else {
+				
+			}else { // 태그 삭제 실패 시
 				rollback(conn);
 			}
-			
 			
 		}else {	// 글 부분 수정 실패
 			rollback(conn);
 		}
 		
 		close(conn);
-		return result;
+		
+		return finalResult;
+	}
+
+
+
+	/** 수정폼 전환 시 썸네일 이미지 조회
+	 * @param postNo
+	 * @return thumbImg
+	 * @throws Exception
+	 */
+	public PostImage selectThumbImg(int postNo) throws Exception{
+
+		Connection conn = getConnection();
+		
+		PostImage thumbImg = dao.selectThumbImg(postNo, conn);
+		
+		return thumbImg;
 	}
 	
 	

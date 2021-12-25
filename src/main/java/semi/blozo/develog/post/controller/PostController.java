@@ -19,6 +19,8 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 import com.oreilly.servlet.MultipartRequest;
 
+import semi.blozo.develog.board.model.service.PostingService;
+import semi.blozo.develog.board.model.vo.Category;
 import semi.blozo.develog.board.model.vo.PostVO;
 import semi.blozo.develog.board.model.vo.TagVO;
 import semi.blozo.develog.board.model.vo.ThumbImgVO;
@@ -29,6 +31,7 @@ import semi.blozo.develog.post.model.service.ReplyService;
 import semi.blozo.develog.post.model.vo.Blog;
 import semi.blozo.develog.post.model.vo.Post;
 import semi.blozo.develog.post.model.vo.PostCategory;
+import semi.blozo.develog.post.model.vo.PostImage;
 import semi.blozo.develog.post.model.vo.PostPagination;
 import semi.blozo.develog.post.model.vo.PostReply;
 
@@ -57,8 +60,6 @@ public class PostController extends HttpServlet{
 				
 				String[] arr = uri.substring( (contextPath + "/blog/" ).length()).split("/");	
 				// 주소의 뒷부분을 '/'로 나누어서 저장하는 배열
-				System.out.println("uri : " + uri);
-				System.out.println("arr : " + Arrays.toString(arr));
 				
 				
 				String path = null;
@@ -86,9 +87,6 @@ public class PostController extends HttpServlet{
 						
 						// memberName을 통해 블로그 객체 생성 (해당 이름의 블로그가 있는지 찾음) 
 						Blog blog = service.selectBlog(memberName);
-						
-						System.out.println(memberName);
-						System.out.println(blog);
 						
 						if(blog != null) {	// 해당 블로그가 있는 경우
 							
@@ -189,16 +187,20 @@ public class PostController extends HttpServlet{
 							Post post = service.updateView(postNo);
 							
 							// 2. 카테고리 목록 조회
-							// List<Category> category = service.selectCategory();
+//							List<Category> category = new PostingService().selectCategory(loginMember.getBlogNo());
+							List<Category> category = new PostingService().selectCategory(21);
 							
 							// 3. 태그 목록 조회하기
 							List<TagVO> tagList = service.selectTagList(postNo);
 							
 							// 4. 썸네일 이미지 조회하기
+							PostImage thumbImg = service.selectThumbImg(postNo);
 							
 							req.setAttribute("post", post);
-							// req.setAttribute("category", category);
+							req.setAttribute("category", category);
 							req.setAttribute("tagList", tagList);
+							req.setAttribute("thumbImg", thumbImg);
+							
 							
 							path = "/WEB-INF/views/post/postUpdate.jsp";
 							dispatcher = req.getRequestDispatcher(path);
@@ -227,11 +229,11 @@ public class PostController extends HttpServlet{
 							// 로그인멤버에 블로그번호 세팅되어있나 확인해보기
 							int blogNo = ((Member)req.getSession().getAttribute("loginMember")).getBlogNo();
 							
+							// ****************** 테스트용 임의로 지정 ***************************
+							blogNo = 21;
+							
 							// 수정할 게시글 번호 얻어오기 (insert와의 차이점)
 							int postNo = Integer.parseInt(mReq.getParameter("pno"));
-								
-							System.out.println(blogNo);
-							System.out.println(postNo);
 							
 							PostVO postVO = new PostVO();
 							
@@ -256,16 +258,17 @@ public class PostController extends HttpServlet{
 								}
 							}
 							
+							System.out.println(tagVOList);
+							
 							// 썸네일 이미지 처리 
 							// 2) 파일 형식의 파라미터
 							Enumeration<String> files = mReq.getFileNames();
 							
-							// 업로드 된 이미지 정보를 담을 List 생성
-							List<ThumbImgVO> imgList = new ArrayList<ThumbImgVO>();
-							
+							// 업로드 된 이미지 정보를 담을 객체 생성
+							PostImage thumbImg = new PostImage();
 							
 							// hasMoreElements() : 다음 요소가 있으면 true 
-							while( files.hasMoreElements() ) {
+							if( files.hasMoreElements() ) {
 								// 썸네일 추가
 								// 썸네일vo가 잘 담겨왔는지 확인 후 result postVO 방식처럼 진행되고
 								
@@ -274,23 +277,16 @@ public class PostController extends HttpServlet{
 								if( mReq.getFilesystemName(name) != null) { 
 									
 									//변경된 값들을 담을 객체
-									ThumbImgVO temp = new ThumbImgVO();
+									thumbImg.setPostImgName(mReq.getFilesystemName(name));
+									thumbImg.setPostImgOriginal(mReq.getOriginalFileName(name));
+									thumbImg.setPostImgPath(filePath); // 파일이 있는 주소 경로
 									
-									temp.setThumbImgName(mReq.getFilesystemName(name));
-									temp.setThumbImgOriginal(mReq.getOriginalFileName(name));
-									temp.setThumbImgPath(filePath); // 파일이 있는 주소 경로
-									
-									
-									
-									// imgList에 추가 
-									imgList.add(temp);
-								
 								}
 														
 							}
 							
 							// service로 넘기기
-							int result = service.updatePost(postVO, tagVOList, imgList);
+							int result = service.updatePost(postVO, tagVOList, thumbImg);
 							
 							if(result > 0) {
 								
