@@ -88,6 +88,10 @@
 	</entry>
 	
 	<!-- 썸네일 이미지 조회 -->
+	<entry key="selectThumbImg">
+		SELECT * FROM THUMB_IMG
+		WHERE POST_NO = ?
+	</entry>
 	
 	
 	<!-- 태그 조회 (수정폼) -->
@@ -119,7 +123,7 @@
 	<entry key="selectPostReplyList">
 		SELECT  REPLY_NO, REPLY_CONTENT,
 		        TO_CHAR(REPLY_CREATE_DT, 'YYYY"년" MM"월" DD"일" HH24":"MI":"SS') REPLY_CREATE_DT,
-		        PARENT_REPLY, POST_NO, MEMBER_NO, MEMBER_NM,
+		        POST_NO, MEMBER_NO, MEMBER_NM,
 		        REPLY_STATUS_CD, REPLY_STATUS_NM
 		FROM REPLY
 		JOIN MEMBER USING(MEMBER_NO)
@@ -134,13 +138,14 @@
 	<entry key="insertPostReply">
 		INSERT INTO REPLY 
 		VALUES( SEQ_REPLY.NEXTVAL, ?, DEFAULT, 
-	    DEFAULT, ?, ?, 600) 
+	    ?, ?, 600) 
 	</entry>
 	
+	<!-- 포스트 비밀 댓글 삽입 -->
 	<entry key="insertSecretReply">
 		INSERT INTO REPLY
 		VALUES( SEQ_REPLY.NEXTVAL, ?, DEFAULT,
-		DEFAULT, ?, ?, 602)
+		?, ?, 602)
 	</entry>
 	
 	

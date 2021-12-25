@@ -10,6 +10,7 @@ import semi.blozo.develog.admin.model.vo.Enquiry;
 import semi.blozo.develog.admin.model.vo.Member;
 import semi.blozo.develog.admin.model.vo.Pagination;
 import semi.blozo.develog.admin.model.vo.Post;
+import semi.blozo.develog.admin.model.vo.Reply;
 import semi.blozo.develog.admin.model.vo.Report;
 
 public class AdminService {
@@ -348,6 +349,17 @@ public class AdminService {
 		conn.close();
 		
 		return new Pagination(listCount, cp);
+	}
+
+	public List<Reply> selectReply(Pagination pagination) throws Exception {
+		Connection conn = getConnection();
+		
+		List<Reply> listReply = dao.selectReply(pagination, conn);
+		
+		conn.close();
+		
+		return listReply;
+	
 	}
 
 

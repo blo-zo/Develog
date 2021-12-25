@@ -68,7 +68,7 @@
 	            	
 	            	<c:otherwise>
 			            <div class="post-menu2">
-			            	<span onclick="">신고하기</span>
+			            	<span onclick="reportPost(${post.postNo})">신고하기</span>
 		            	</div>
 	            	</c:otherwise>
 	            </c:choose>
@@ -363,6 +363,56 @@
 	
 	
 	  </main>
+	  
+	  
+	  <!-- ********************* 신고하기 모달 ***************************** -->
+	  
+	  <div class="modal" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      	<div class="modal-dialog modal-lg">
+       	  <div class="modal-content">
+            <div class="modal-header">
+               <span style="font-size: 50px; font-weight: bold;"><img style="width:50px; height:50px; margin-right:5px;" src="${contextPath}/resources/images/KYJ/reportIcon.png"> 신고하기</span>
+               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+	            
+            <div class="modal-body">
+               <section id="modal-section">
+                  <div>
+                     <div class="info input-modal">
+                        <!-- nn번 게시글 <br> 유형 : <span>홍보</span> -->
+                     </div>
+                     
+                     <div class="info input-modal">
+                        <!-- userid@email.com <br> 2021-11-10 <br> 미해결 -->
+                     </div>
+                     
+                  </div>
+	                  <div>
+	                     <div class="content" input-modal>&nbsp;신고내용</div>
+	                     <div class="content">
+	                        <div class="input-modal">
+                                <textarea name="" id="" cols="30" rows="10">무야호!</textarea>
+                            </div>
+	                     </div>
+	                  </div>
+               </section>
+             </div>
+           </div>
+         </div>
+   	   </div>
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 
 		<%-- 수정, 삭제에 사용할 pno , cp 파라미터 --%>
 		<form action="#" method="post" name="requestForm" >
@@ -395,9 +445,6 @@ const memberName = "${post.memberName}";
 let beforeReplyRow;
 
 </script>
-		
-		
-
 
 
 

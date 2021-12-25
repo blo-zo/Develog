@@ -132,6 +132,7 @@ section>div:nth-child(4) {
       </div>
       <%-- 절대 경로 에서는 맨 앞에 '/'가 없어야 한다. --%>
       <div><a href="${pageContext.servletContext.contextPath}/admin/post" class="category" >Post</a></div>
+	  <div><a href="${pageContext.servletContext.contextPath}/admin/post" class="category" >Reply</a></div>
       <div><a href="${pageContext.servletContext.contextPath}/admin/statistics" class="category">Statistics</a></div>
       <div><a href="${pageContext.servletContext.contextPath}/admin/report" class="category" >Report</a></div>
       <div><a href="${pageContext.servletContext.contextPath}/admin/enquiry" class="category" style="color: #3278FE;" >1:1 Enquiry</a></div>

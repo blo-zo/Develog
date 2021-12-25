@@ -116,6 +116,7 @@ section>div:nth-child(4) {
 				<a href="${pageContext.servletContext.contextPath}/admin/post"
 					class="category">Post</a>
 			</div>
+			<div><a href="${pageContext.servletContext.contextPath}/admin/post" class="category" >Reply</a></div>
 			<div>
 				<a href="${pageContext.servletContext.contextPath}/admin/statistics"
 					class="category">Statistics</a>

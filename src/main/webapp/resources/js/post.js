@@ -18,8 +18,6 @@ $("#search-delete-all").on("click",function(){
 
 });
 
-
-// 정렬 방식 선택하기
 // 클릭한것만 커지게
 $(".blog-menu > div").on("click",function(){
 
@@ -31,20 +29,19 @@ $(".blog-menu > div").on("click",function(){
   
 });
 
-//  블로그 포스트 클릭 시 동작(파라미터 넘기기)
-function sendBlog(e, pno, blogMemberName, blogIntro, blogTitle){
+// //  블로그 포스트 클릭 시 동작(파라미터 넘기기)
+// function sendBlog(e, pno, blogMemberName, blogIntro, blogTitle){
   
-  e.preventDefault(); // a태그 기본이벤트 제거
+//   e.preventDefault(); // a태그 기본이벤트 제거
 
-  $("input[name=pno]").val(pno);
-  $("input[name=blogMemberName]").val(blogMemberName);
-  $("input[name=blogIntro]").val(blogIntro);
-  $("input[name=blogTitle]").val(blogTitle);
+//   $("input[name=pno]").val(pno);
+//   $("input[name=blogMemberName]").val(blogMemberName);
+//   $("input[name=blogIntro]").val(blogIntro);
+//   $("input[name=blogTitle]").val(blogTitle);
   
-  document.sendBlogInfo.action = contextPath + "/blog/" + postMemberName + "/view";
-	document.sendBlogInfo.submit();
-}
-
+//   document.sendBlogInfo.action = contextPath + "/blog/" + postMemberName + "/view";
+// 	document.sendBlogInfo.submit();
+// }
 
 // ************* 포스트 *************
 
@@ -64,10 +61,24 @@ function deletePost(){
     document.requestForm.method = "POST";
     document.requestForm.submit();
     
-    // location.href = "delete";
-
   }
 };
+
+// 포스트 신고하기
+function reportPost(postNumber){
+
+  if(loginMemberNo != ""){  // 회원이 신고를 누르면
+
+    $("#reportModal").modal('show');
+
+  }else{
+
+    alert("로그인 후 이용 가능한 서비스입니다.");
+    $("#exampleModal").modal('show');
+
+  }
+
+}
 
 
 
@@ -374,12 +385,19 @@ function deleteReply(replyNo){
 };
 
 
-
-
 // 댓글 신고
 function reportReply(replyNo){
 
-  console.log("hi");
+  if(loginMemberNo != ""){  // 회원이 신고를 누르면
+
+    $("#reportModal").modal('show');
+
+  }else{
+
+    alert("로그인 후 이용 가능한 서비스입니다.");
+    $("#exampleModal").modal('show');
+
+  }
 
 };
 

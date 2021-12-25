@@ -572,6 +572,46 @@ public class PostDAO {
 		return result;
 	}
 
+	/** 썸네일 이미지 조회하기
+	 * @param postNo
+	 * @param conn
+	 * @return thumbImg
+	 * @throws Exception
+	 */
+	public PostImage selectThumbImg(int postNo, Connection conn) throws Exception{
+
+		PostImage thumbImg = null;
+		
+		try {
+			
+			String sql = prop.getProperty("selectThumbImg");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, postNo);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				
+				thumbImg = new PostImage();
+				
+				thumbImg.setPostImgNo(rs.getInt("THUMB_IMG_NO"));
+				thumbImg.setPostImgPath(rs.getString("THUMB_IMG_PATH"));
+				thumbImg.setPostImgName(rs.getString("THUMB_IMG_NM"));
+				thumbImg.setPostImgOriginal(rs.getString("THUMB_IMG_ORIGINAL"));
+				thumbImg.setPostNo(postNo);
+				
+			}
+			
+		}finally {
+			
+			close(rs);
+			close(pstmt);
+			
+		}
+		
+		return thumbImg;
+	}
+
 	
 
 	

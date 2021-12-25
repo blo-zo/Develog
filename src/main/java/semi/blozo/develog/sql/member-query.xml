@@ -16,7 +16,10 @@
 	<entry key="signUp">
 	INSERT INTO MEMBER VALUES(SEQ_MEMBER_NO.NEXTVAL,?,?,
 	?,DEFAULT,NULL,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+
 	<!-- SEQ_MEMBER_NO.CURRVAL -->
+
+
 	</entry>
 	<!-- 소셜 데이터 삽입 -->
 	<entry key="insertSns">
