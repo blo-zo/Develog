@@ -23,8 +23,7 @@
 	<entry key="selectEnquiry">
 	
  	 SELECT ENQUIRY_NO ,ENQUIRY_TITLE , ENQUIRY_CONTENT , PARENT_ENQUIRY,
- 	 TO_CHAR(CREATE_DT , 'YYYY"년" MM"월" DD"일" HH24"시" MI"분" ' ) CREATE_DT,
- 	 TO_CHAR(MODIFY_DT , 'YYYY"년" MM"월" DD"일" HH24"시" MI"분" ' ) MODIFY_DT
+ 	 TO_CHAR(CREATE_DT , 'YYYY"년" MM"월" DD"일" HH24"시" MI"분" ' ) CREATE_DT
    	 FROM
  	 ENQUIRY
  	 WHERE ENQUIRY_NO = ?
