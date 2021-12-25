@@ -76,9 +76,9 @@
 					<tr>
 						<td>&nbsp;&nbsp;</td>
 						<th>No</th>
-						<th>회원번호</th>
 						<th>닉네임</th>
 						<th>내용</th>
+						<th>회원번호</th>
 						<th>작성일</th>
 						<th>신고수</th>
 						<th>글 번호</th>
@@ -92,30 +92,29 @@
 						</c:when>
 						<c:otherwise>
 							<c:forEach items="${listReply}" var="reply">
-								${reply}	
 							<tr>
 									<td><input class="check" name="check" type="checkbox" ></td>
 									<td>${reply.replyNo}</td>
-									<td>${reply.memberNo}</td>
 									<td>${reply.memberName}</td>
 									<td>
 										<a  class="postContent" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 200px; display: inline-block; text-align: center;"
-											href="${pageContext.servletContext.contextPath}/blog/${post.memberName}/view?pno=${post.postNo}">
-											${reply.replyContent}
-										</a>
+										href="${pageContext.servletContext.contextPath}/blog/${reply.memberName}/view?pno=${reply.postNo}">
+										${reply.replyContent}
+									</a>
 									</td>
+									<td>${reply.memberNo}</td>
 									<td>${reply.replyCreateDate}</td>
-									<td>${post.createDate}</td>
-									<td>${post.reportCount}</td>
-									<td>${post.violationCount}</td>
+									<td>${reply.reportCount}</td>
+									<td>${reply.postNo}</td>
 									<c:choose>
-										<c:when test="${post.postStatusName eq '관리자 삭제'}">
-											<td class="remove-status" onclick="removeContent(${post.postNo})"
-											data-bs-toggle="modal"	data-bs-target="#postModal3"
-											>${post.postStatusName}</td>
+										<c:when test="${reply.replyStatusName eq '블라인드'}">
+											<td class="remove-status" onclick="blindContent(${reply.replyNo})"
+												data-bs-toggle="modal"	data-bs-target="#postModal3">
+												${reply.replyStatusName}
+											</td>
 										</c:when>
 										<c:otherwise>
-											<td>${post.postStatusName}</td>
+											<td>${reply.replyStatusName}</td>
 										</c:otherwise>
 									</c:choose>
 								</tr>
@@ -135,25 +134,21 @@
 					상태변경
 				</div>
 			</div>
-			<form action="post?cp=1" method="GET" onsubmit="return refresh()">
+			<form action="reply?cp=1" method="GET" onsubmit="return refresh()">
 				<div id="search-area">
 					<input type="text" name="searchWord" placeholder="검색어를 입력해주세요">
 					<img id="search" src="image/search-solid.svg" style="width: 20px; height: 20px;">
 					<select name="searchTag" onchange="changeSelect()">
-						<option value="no">게시글 번호</option>
-						<option value="title">제목</option>
-						<option value="content">내용</option>
+						<option value="no">댓글 번호</option>
 						<option value="memberNo">회원번호</option>
+						<option value="memberName">닉네임</option>
+						<option value="content">내용</option>
 						<option value="createDate">작성일</option>
-						<option value="status">글 상태</option>
+						<option value="postNo">글번호</option>
+						<option value="status">댓글상태</option>
 					</select>
 					<select  name="orderTag" onchange="changeSelect()">
-						<option value="ascNo">글번호 오름</option>
-						<option value="descNo" selected>글번호 내림</option>
-						<option value="ascViews">조회수 오름</option>
-						<option value="descViews">조회수 내림</option>
-						<option value="ascLikes">좋아요 오름</option>
-						<option value="descLikes">좋아요 내림</option>
+						<option value="">신고수 정렬</option>
 						<option value="ascReports">신고수 오름</option>
 						<option value="descReports">신고수 내림</option>
 					</select>
@@ -163,10 +158,10 @@
 		<ul class="pagination" style="justify-content: center;">
 			<c:if test="${pagination.startPage != 1}">
 			<li>
-				<a class="page-link" href="post?cp=1&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">&lt;&lt;</a>
+				<a class="page-link" href="reply?cp=1&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">&lt;&lt;</a>
 			</li>
 			<li>
-				<a class="page-link" href="post?cp=${pagination.prevPage}&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">&lt;</a>
+				<a class="page-link" href="reply?cp=${pagination.prevPage}&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">&lt;</a>
 			</li>
 			
 			</c:if>
@@ -180,14 +175,14 @@
 					</c:when>
 					<c:otherwise>
 						<li>
-							<a class="page-link" href="post?cp=${i}&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">${i}</a>
+							<a class="page-link" href="reply?cp=${i}&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">${i}</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
 			<c:if test="${pagination.endPage != pagination.maxPage}">
 			<li>
-				<a class="page-link" href="post?cp=${pagination.nextPage}&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">&gt;</a>
+				<a class="page-link" href="reply?cp=${pagination.nextPage}&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">&gt;</a>
 			</li>
 			<li>
 				<a class="page-link" href="post?cp=${pagination.maxPage}&searchWord=${searchWord}&searchTag=${searchTag}&orderTag=${orderTag}">&gt;&gt;</a>
@@ -198,7 +193,7 @@
 	</div>
 		</section>
 	</main>
-	<!-- violation modal -->
+	<!-- blind modal -->
 	<div class="modal" id="postModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -235,7 +230,7 @@
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<span style="font-size: 30px; font-weight: bold;">삭제 내용</span>
+					<span style="font-size: 30px; font-weight: bold;">블라인드 내용</span>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	
 				</div>
@@ -253,9 +248,9 @@
 							<div class="content" input-modal style="float: right;">
 								<textarea name="" id="" cols="90" rows="7"
 									style="border: none; margin-left: 1%; outline: none; resize: none;"></textarea>
-								<div class="button" onclick="postStatusChange()"
+								<div class="button" onclick="replyStatusChange()"
 									style="background-color: #3278FE; color: white; width: 60px; height: 37px; border-radius: 5px; text-align: center; line-height: 35px; float: right; margin-right: 10px; ">
-									삭제</div>
+									블라인드</div>
 						</div>
 					</section>
 				</div>
@@ -267,7 +262,7 @@
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<span style="font-size: 30px; font-weight: bold;">삭제 내용</span>
+					<span style="font-size: 30px; font-weight: bold;">블라인드 내용</span>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
@@ -309,6 +304,6 @@
 	  }
 
 	</script>
-	<script src="${pageContext.servletContext.contextPath}/resources/js/adminPost.js"></script>
+	<script src="${pageContext.servletContext.contextPath}/resources/js/adminReply.js"></script>
 </body>
 </html>

@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.tomcat.dbcp.dbcp2.cpdsadapter.PStmtKeyCPDS;
+
 import semi.blozo.develog.admin.model.vo.Enquiry;
 import semi.blozo.develog.admin.model.vo.Member;
 import semi.blozo.develog.admin.model.vo.Pagination;
@@ -1102,10 +1104,51 @@ public class AdminDAO {
 		return result;
 	}
 
-	public List<Reply> selectReply(Pagination pagination, Connection conn) throws Exception {
+	public List<Reply> selectReply(String searchWord, String searchTag, String orderTag, Pagination pagination, Connection conn) throws Exception {
 		List<Reply> listReply = new ArrayList<Reply>();
 		try {
-			String sql = prop.getProperty("selectReply");
+			String where = "";
+			String order = "ORDER BY REPLY_NO DESC";
+			
+			switch(searchTag) {
+			case "no" : where = "WHERE REPLY_NO LIKE '%"+searchWord +"%'"; break;
+			case "memberNo" : where = "WHERE MEMBER_NO LIKE '%"+searchWord +"%'"; break;
+			case "memberName" : where = "WHERE MEMBER_NM LIKE '%"+searchWord +"%'"; break;
+			case "content" : where = "WHERE REPLY_CONTENT LIKE '%"+searchWord +"%'"; break;
+			case "createDate" : if(searchWord.length() == 15) {
+											String str1 = searchWord.substring(0,6);
+											String str2 = searchWord.substring(9,15);
+											str1 = stringToDate(str1);
+											str2 = stringToDate(str2);
+											
+											where = "WHERE TO_DATE(REPLY_CREATE_DT) BETWEEN '"+ str1 +"' AND '"+str2+"'"; break;
+							
+										}else if(searchWord.length() == 6) {
+											String str = searchWord.substring(0, 6);
+											where = "WHERE TO_DATE(REPLY_CREATE_DT) = '"+ str +"'"; break;
+											
+										}
+			case "postNo" : where = "WHERE POST_NO LIKE '%"+searchWord +"%'"; break;
+			case "status" : where = "WHERE REPLY_STATUS_NM LIKE '%"+searchWord +"%'"; break;
+			default : where = "";
+			}
+			
+			switch(orderTag) {
+			case "ascReports" : order ="ORDER BY REPORT_COUNT"; break;
+			case "descReports" : order ="ORDER BY REPORT_COUNT DESC"; break;
+			default : order ="ORDER BY REPLY_NO DESC";
+			}
+			
+			String sql = "SELECT * FROM(\r\n"
+					+ "		SELECT ROWNUM RNUM, A.* FROM (     \r\n"
+					+ "		SELECT REPLY_NO, REPLY_CONTENT, TO_CHAR(REPLY_CREATE_DT, 'YYYY-MM-DD') REPLY_CREATE_DT, POST_NO, MEMBER_NO, MEMBER_NM, REPLY_STATUS_NM,\r\n"
+					+ "                (SELECT COUNT(*) FROM REPLY_REPORT B WHERE B.REPLY_NO = A.REPLY_NO) REPORT_COUNT \r\n"
+					+ "		FROM REPLY A\r\n"
+					+ "		JOIN MEMBER USING(MEMBER_NO)\r\n"
+					+ "		JOIN REPLY_STATUS USING(REPLY_STATUS_CD)\r\n"
+					+ where +"\r\n"
+					+ order + ") A)\r\n"
+					+ "		WHERE RNUM BETWEEN ? AND ?";
 			pstmt = conn.prepareStatement(sql);
 			int startRow = (pagination.getCurrentPage() -1) * pagination.getLimit() + 1;
 			
@@ -1122,6 +1165,7 @@ public class AdminDAO {
 				reply.setMemberNo(rs.getInt("MEMBER_NO"));
 				reply.setMemberName(rs.getString("MEMBER_NM"));
 				reply.setReplyStatusName(rs.getString("REPLY_STATUS_NM"));
+				reply.setReportCount(rs.getInt("REPORT_COUNT"));
 				listReply.add(reply);
 			}
 		}finally {
@@ -1129,6 +1173,151 @@ public class AdminDAO {
 			pstmt.close();
 		}
 		return listReply;
+	
+	}
+
+	public int replytListCount(String searchWord, String searchTag, String orderTag, Connection conn) throws Exception {
+		int replySearchListCount = 0;
+		try {
+			String where = "";
+			String order = "ORDER BY REPLY_NO DESC";
+			
+			switch(searchTag) {
+			case "no" : where = "WHERE REPLY_NO LIKE '%"+searchWord +"%'"; break;
+			case "memberNo" : where = "WHERE MEMBER_NO LIKE '%"+searchWord +"%'"; break;
+			case "memberName" : where = "WHERE MEMBER_NM LIKE '%"+searchWord +"%'"; break;
+			case "content" : where = "WHERE REPLY_CONTENT LIKE '%"+searchWord +"%'"; break;
+			case "createDate" : if(searchWord.length() == 15) {
+											String str1 = searchWord.substring(0,6);
+											String str2 = searchWord.substring(9,15);
+											str1 = stringToDate(str1);
+											str2 = stringToDate(str2);
+											
+											where = "WHERE TO_DATE(REPLY_CREATE_DT) BETWEEN '"+ str1 +"' AND '"+str2+"'"; break;
+							
+										}else if(searchWord.length() == 6) {
+											String str = searchWord.substring(0, 6);
+											where = "WHERE TO_DATE(REPLY_CREATE_DT) = '"+ str +"'"; break;
+											
+										}
+			case "postNo" : where = "WHERE POST_NO LIKE '%"+searchWord +"%'"; break;
+			case "status" : where = "WHERE REPLY_STATUS_NM LIKE '%"+searchWord +"%'"; break;
+			default : where = "";
+			}
+			
+			switch(orderTag) {
+			case "ascReports" : order ="ORDER BY REPORT_COUNT"; break;
+			case "descReports" : order ="ORDER BY REPORT_COUNT DESC"; break;
+			default : order ="ORDER BY REPLY_NO DESC";
+			}
+			
+			String sql = "SELECT COUNT(*) FROM(\r\n"
+					+ "		SELECT ROWNUM RNUM, A.* FROM (     \r\n"
+					+ "		SELECT REPLY_NO, REPLY_CONTENT, TO_CHAR(REPLY_CREATE_DT, 'YYYY-MM-DD') REPLY_CREATE_DT, POST_NO, MEMBER_NO, MEMBER_NM, REPLY_STATUS_NM,\r\n"
+					+ "                (SELECT COUNT(*) FROM REPLY_REPORT B WHERE B.REPLY_NO = A.REPLY_NO) REPORT_COUNT \r\n"
+					+ "		FROM REPLY A\r\n"
+					+ "		JOIN MEMBER USING(MEMBER_NO)\r\n"
+					+ "		JOIN REPLY_STATUS USING(REPLY_STATUS_CD)\r\n"
+					+ where +"\r\n"
+					+ order + ") A)";
+			
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				replySearchListCount = rs.getInt(1);
+			}
+		}finally {
+			pstmt.close();
+			rs.close();
+		}
+		return replySearchListCount;
+	
+	}
+
+	public int updateReplyStatus(int replyNo, Connection conn) throws Exception {
+		int result = 0;
+		try {
+			String sql = prop.getProperty("updateReplyStatus");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, replyNo);
+			
+			result = pstmt.executeUpdate();
+		
+		}finally {
+			pstmt.close();
+		}
+		return result;
+	}
+
+	public Reply selectBlindReply(int replyNo, Connection conn) throws Exception{
+		Reply reply = new Reply();
+		
+		try {
+			String sql = prop.getProperty("selectBlindReply");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, replyNo);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				reply.setReplyNo(rs.getInt("BLIND_REPLY_NO"));
+				reply.setReplyContent(rs.getString("BLIND_REPLY_CONTENT"));
+				reply.setReplyCreateDate(rs.getString("BLIND_REPLY_DT"));
+				reply.setPostNo(rs.getInt("REPLY_NO"));
+			}
+		}finally {
+			rs.close();
+			pstmt.close();
+		}
+		return reply;
+	}
+
+	public int insertBlindReply(int replyNo, String content, Connection conn) throws Exception {
+		int result = 0;
+		try {
+			String sql = prop.getProperty("insertBlindReply");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, content);
+			pstmt.setInt(2, replyNo);
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+				
+		return result;
+	}
+
+	public int deleteBlindReply(int replyNo, Connection conn) throws Exception {
+		int result = 0;
+		try {
+			String sql = prop.getProperty("deleteBlindReply");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, replyNo);
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+		
+	}
+
+	public int restoreReply(int replyNo, Connection conn) throws Exception {
+		int result = 0;
+		try {
+			String sql = prop.getProperty("restoreReply");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, replyNo);
+			
+			result = pstmt.executeUpdate();
+		
+		}finally {
+			pstmt.close();
+		}
+		return result;
 	
 	}
 
