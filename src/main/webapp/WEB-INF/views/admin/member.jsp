@@ -99,7 +99,7 @@
 	<form action="member?cp=1" method="GET" > <!-- onsubmit="return refresh()" --> <!--  true  -->
 		<div id="search-area">
 			<input type="text" name="searchWord" placeholder="검색어를 입력해주세요"> <!-- true를 적용하니까 form태그가 입력된다. -->
-			<img id="search" src="image/search-solid.svg" style="width: 20px; height: 20px;">
+			<img id="search" onclick="submit()" src="${pageContext.servletContext.contextPath}/resources/images/admin/search-solid.svg" style="width: 20px; height: 20px;">
 			<select name="searchTag" onchange="changeSelect()">
 				<option value="no">회원 번호</option>
 				<option value="email">이메일</option>

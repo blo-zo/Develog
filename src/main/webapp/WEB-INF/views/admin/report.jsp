@@ -174,7 +174,7 @@ section>div:nth-child(4) {
 			<form action="report?cp=1" method="GET" onsubmit="return refresh()">
 				<div id="search-area">
 					<input type="text" name="searchWord" placeholder="검색어를 입력해주세요">
-					<img id="search" src="image/search-solid.svg" style="width: 20px; height: 20px;">
+					<img id="search" onclick="submit()" src="${pageContext.servletContext.contextPath}/resources/images/admin/search-solid.svg" style="width: 20px; height: 20px;">
 					<select name="searchTag" onchange="changeSelect()">
 						<option value="no">신고 번호</option>
 						<option value="memberNo">회원 번호</option>
