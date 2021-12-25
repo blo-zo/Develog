@@ -484,3 +484,16 @@ margin: 5px;
 }
 
 
+
+
+
+.member-img-size{
+	max-width: 350px;
+	max-height : 200px;
+}
+
+
+
+#fileArea{
+	display: none; 
+}

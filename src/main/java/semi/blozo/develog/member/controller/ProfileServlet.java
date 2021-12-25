@@ -69,8 +69,7 @@ public class ProfileServlet extends HttpServlet{
 			
 			req.getRequestDispatcher("/WEB-INF/views/member/profile.jsp").forward(req, resp);
 
-			
-			System.out.println("profileVO" + profileVO);
+			System.out.println("여기지나가니?");
 			
 			if(command.equals("update")) {
 				// Member 객체를 생성하여 파라미터를 하나의 객체에 저장			

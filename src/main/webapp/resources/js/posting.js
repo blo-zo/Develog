@@ -197,10 +197,7 @@ $(".modal-content-area .btn-cancel").on("click", function() {
 $(function() {
 	$(".thumb-img-area").on("click", function() {
 		$("#thumbImg").click();
-
 	});
-	
-	
 });
 
 // 각각의 영역에 파일을 첨부 했을 경우 미리 보기가 가능하도록 하는 함수
