@@ -161,7 +161,17 @@ margin: 5px;
     justify-content: center;
     object-fit: cover;
 }
+.profileImg{
+    width: 80px;
+    height: 80px;
 
+}
+
+
+.profileImg > img {
+    width: 80px;
+    border-radius: 70%;
+}
 .thumb-img{
 	cursor: pointer;
 	display: none;
