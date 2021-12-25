@@ -6,7 +6,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import semi.blozo.develog.board.model.vo.PostVO;
 import semi.blozo.develog.board.model.vo.TagVO;
+import semi.blozo.develog.board.model.vo.ThumbImgVO;
+import semi.blozo.develog.common.XSS;
 import semi.blozo.develog.post.model.dao.PostDAO;
 import semi.blozo.develog.post.model.vo.Blog;
 import semi.blozo.develog.post.model.vo.Post;
@@ -308,6 +311,88 @@ public class PostService {
 		close(conn);
 		
 		return tagList;
+	}
+
+
+
+	/** 포스트 수정 Service
+	 * @param postVO
+	 * @param tagVOList
+	 * @param imgList
+	 * @return result
+	 * @throws Exception
+	 */
+	public int updatePost(PostVO postVO, List<TagVO> tagVOList, List<ThumbImgVO> imgList) throws Exception{
+
+		Connection conn = getConnection();
+		
+		// 포스트 제목 XSS 방지 (글 내용은 SummerNote 사용으로 XSS 처리 안함)
+		postVO.setPostTitle(XSS.replaceParameter( postVO.getPostTitle()) );
+		
+		// 글 부분 수정하기
+		int result = dao.updatePost(postVO, conn);
+		
+		int postNo = postVO.getPostNo();
+		
+		if(result > 0) {	// 글 부분 수정 성공한 경우
+			
+			// 플래그 사용이유 혹시 모를 상황방지, 태그 입력중 하나가 잘못되면 못하게
+			Boolean flag = true;
+		   
+			// 태그 수정하기
+			// 너무 어렵다.. 
+			// 1번 방법) 수정태그가 더 적으면? -> 삭제, 더 많으면 -> 삽입
+			// 2번 방법) 한 번 싹 지웠다가 다시 삽입하기 =>  채택
+			
+			
+			int result1 = dao.deleteTag(postNo, conn);//결과가 true면 태그가 잘들어갔다
+			
+			for(TagVO tagVO : tagVOList) {
+				tagVO.setTagName(XSS.replaceParameter( tagVO.getTagName()) );  
+				tagVO.setPostNo(postVO.getPostNo());
+				
+	        	int result2 = dao.updateTag(tagVO, conn);
+	        	
+				if(result1 == 0 || result2 == 0) { // 실패하면 false, for문 멈춘다
+				   rollback(conn);
+				   
+				   flag = false;
+	               break;
+				}  
+			
+				// 썸네일 수정하기
+				
+				// 썸네일 이미지  for문
+				if(flag) {
+					for(ThumbImgVO thumbVO : imgList) {
+						thumbVO.setPostNo(postNo);
+						
+//						result = dao.insertThumb(thumbVO, conn);
+						
+						if(result == 0) { 
+							rollback(conn);
+							
+							flag = false;
+							break;
+						} else {
+							result = postNo; //썸네일 이미지 IF문 안에서 처리하기 
+						}
+					}
+				}
+				
+				if(result > 0) commit(conn);
+				
+//			} else {
+				rollback(conn);
+			}
+			
+			
+		}else {	// 글 부분 수정 실패
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
 	}
 	
 	

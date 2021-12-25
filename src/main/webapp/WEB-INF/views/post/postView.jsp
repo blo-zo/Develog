@@ -110,7 +110,7 @@
 	          <div class="post-prev-next-btn">
 	            <div class="post-prev-btn">이전 글</div>
                 <div class="goList">
-	              <a href="${contextPath}/blog/${post.memberName}?cp=${param.cp}">목록으로</a>
+	              <a href="${contextPath}/blog/${post.memberName}">목록으로</a>
                 </div>
 	            <div class="post-next-btn">다음 글</div>
 	          </div>

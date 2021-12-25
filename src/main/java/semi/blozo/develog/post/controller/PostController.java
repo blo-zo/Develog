@@ -3,7 +3,9 @@ package semi.blozo.develog.post.controller;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -15,8 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
+import com.oreilly.servlet.MultipartRequest;
 
+import semi.blozo.develog.board.model.vo.PostVO;
 import semi.blozo.develog.board.model.vo.TagVO;
+import semi.blozo.develog.board.model.vo.ThumbImgVO;
+import semi.blozo.develog.common.MyRenamePolicy;
 import semi.blozo.develog.member.model.vo.Member;
 import semi.blozo.develog.post.model.service.PostService;
 import semi.blozo.develog.post.model.service.ReplyService;
@@ -203,6 +209,105 @@ public class PostController extends HttpServlet{
 						
 						// 포스트 수정하기
 						else if(arr[1].equals("update")) {
+							
+							 int maxSize = 1024 * 1024 * 100;// 100MB
+							 String root = session.getServletContext().getRealPath("/");
+							 String filePath = "/resources/images/board/";
+							 String realPath = root + filePath;
+							
+							 MultipartRequest mReq
+							 	= new MultipartRequest(req, realPath , maxSize ,"UTF-8" ,new MyRenamePolicy());
+							 
+							// 1) 텍스트 형식의 파라미터
+							String postTitle = mReq.getParameter("postTitle");
+							String postContent =  mReq.getParameter("postContent");
+							int categoryCode = Integer.parseInt(mReq.getParameter("categoryCode"));
+							int postStatusCode = Integer.parseInt(mReq.getParameter("postStatusCode"));
+							
+							// 로그인멤버에 블로그번호 세팅되어있나 확인해보기
+							int blogNo = ((Member)req.getSession().getAttribute("loginMember")).getBlogNo();
+							
+							// 수정할 게시글 번호 얻어오기 (insert와의 차이점)
+							int postNo = Integer.parseInt(mReq.getParameter("pno"));
+								
+							System.out.println(blogNo);
+							System.out.println(postNo);
+							
+							PostVO postVO = new PostVO();
+							
+							postVO.setPostTitle(postTitle);
+							postVO.setPostContent(postContent);
+							postVO.setCategoryCode(categoryCode);
+							postVO.setPostStatusCode(postStatusCode);
+							postVO.setBlogNo(blogNo);
+							postVO.setPostNo(postNo);
+								
+							// 태그
+							String[] tags = mReq.getParameterValues("tags");
+							
+							List<TagVO> tagVOList = new ArrayList<TagVO>();
+							
+							if(tags != null) {
+								for(String vo : tags) {
+									TagVO tagvo = new TagVO();
+									tagvo.setTagName(vo);
+									tagVOList.add(tagvo);
+									
+								}
+							}
+							
+							// 썸네일 이미지 처리 
+							// 2) 파일 형식의 파라미터
+							Enumeration<String> files = mReq.getFileNames();
+							
+							// 업로드 된 이미지 정보를 담을 List 생성
+							List<ThumbImgVO> imgList = new ArrayList<ThumbImgVO>();
+							
+							
+							// hasMoreElements() : 다음 요소가 있으면 true 
+							while( files.hasMoreElements() ) {
+								// 썸네일 추가
+								// 썸네일vo가 잘 담겨왔는지 확인 후 result postVO 방식처럼 진행되고
+								
+								String name = files.nextElement(); // 다음 요소값(name) 얻어오기
+								
+								if( mReq.getFilesystemName(name) != null) { 
+									
+									//변경된 값들을 담을 객체
+									ThumbImgVO temp = new ThumbImgVO();
+									
+									temp.setThumbImgName(mReq.getFilesystemName(name));
+									temp.setThumbImgOriginal(mReq.getOriginalFileName(name));
+									temp.setThumbImgPath(filePath); // 파일이 있는 주소 경로
+									
+									
+									
+									// imgList에 추가 
+									imgList.add(temp);
+								
+								}
+														
+							}
+							
+							// service로 넘기기
+							int result = service.updatePost(postVO, tagVOList, imgList);
+							
+							if(result > 0) {
+								
+								message = "포스트가 수정되었습니다.";
+								byte[] ptext = loginMember.getMemberNm().getBytes("UTF-8");
+								String value = new String(ptext, "ISO-8859-1"); 
+								path = "../" + value + "/?pno=" + postVO.getPostNo();
+									
+							}else {
+								
+								message = "포스트 수정 중 문제가 발생하였습니다.";
+								path = "updateForm";
+								
+							}
+							
+							session.setAttribute("message", message);
+							resp.sendRedirect(path);
 							
 							
 						}
