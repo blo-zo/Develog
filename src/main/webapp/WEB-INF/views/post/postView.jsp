@@ -456,7 +456,7 @@
                      	<div class="input-modal">
                             <textarea name="reportReplyContent" class="reportReplyContent" cols="30" rows="10">무야호!</textarea>
                      	</div>
-						<button class="btn btn-primary">제출</button>
+						<button class="btn btn-primary" onclick="reportReply2();">제출</button>
                     </div>
                  </div>
                </section>

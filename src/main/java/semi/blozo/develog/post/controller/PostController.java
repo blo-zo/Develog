@@ -437,6 +437,13 @@ public class PostController extends HttpServlet{
 							else if(arr[2].equals("report")) {
 								
 								int replyNo = Integer.parseInt(req.getParameter("replyNo"));
+								int memberNo = Integer.parseInt(req.getParameter("memberNo"));
+								String reportContent = req.getParameter("reportContent");
+								
+								System.out.println(replyNo);
+								System.out.println(memberNo);
+								System.out.println(reportContent);
+								
 								
 								resp.getWriter().print(new ReplyService().reportReply(replyNo));
 								
