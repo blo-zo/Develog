@@ -16,7 +16,18 @@
 	<entry key="signUp">
 	INSERT INTO MEMBER VALUES(SEQ_MEMBER_NO.NEXTVAL,?,?,
 	?,DEFAULT,NULL,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+	<!-- SEQ_MEMBER_NO.CURRVAL -->
 	</entry>
+	<!-- 소셜 데이터 삽입 -->
+	<entry key="insertSns">
+	INSERT INTO MEMBER_SNS VALUES(SEQ_MEMBER_SNS.NEXTVAL , SEQ_MEMBER_NO.CURRVAL , DEFAULT , DEFAULT , DEFAULT , DEFAULT , DEFAULT)
+	</entry>
+	<!-- 블로그 데이터 삽입 -->
+	<entry key="insertBlog">
+	INSERT INTO BLOG VALUES(SEQ_BLOG.NEXTVAL , DEFAULT , SEQ_MEMBER_NO.CURRVAL)
+	
+	</entry>
+	
 	<!--닉네임 중복검사  -->
 	<entry key="nameDupCheck">
 		SELECT COUNT(*) FROM MEMBER

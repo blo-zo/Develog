@@ -30,17 +30,15 @@ public class ManiServlet extends HttpServlet{
 				PostService service = new PostService();
 				
 			//	int type = Integer.parseInt(req.getParameter("type"));
+				String trend = req.getParameter("trend");
 				
-				
-				
-					
-
+				System.out.print("값을 넣어야된다" +trend);
 				List<Post> postListAll = service.selectPostListAll();
-				
-				
+
 				//화면출력
 				System.out.println(postListAll);
 				req.setAttribute("postListAll", postListAll);
+				
 				path = "/WEB-INF/views/common/main.jsp";
 				req.getRequestDispatcher(path).forward(req, resp);
 				
