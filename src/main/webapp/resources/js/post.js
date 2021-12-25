@@ -386,7 +386,7 @@ function deleteReply(replyNo){
 
 
 // 댓글 신고창 띄우기
-function reportReply(replyNo){
+function reportReply(){
 
   if(loginMemberNo != ""){  // 회원이 신고를 누르면
 
@@ -398,34 +398,6 @@ function reportReply(replyNo){
     $("#exampleModal").modal('show');
 
   }
-
-};
-
-// 댓글 신고 기능
-function reportReply2(){
-
-  $.ajax({
-
-    url : contextPath + "/blog/" + memberName + "/reply/report",
-    data : { "replyNo" : replyNo,
-              "memberNo" : loginMemberNo ,
-              "reportContent" : $(".reportReplyContent").val() },
-    type : "POST",
-
-    success : function(result){
-
-      
-
-
-    },
-
-    error : function(req, status, error){
-      console.log("댓글 신고 실패")
-      console.log(req.responseText)
-    }
-
-  });
-
 
 };
 

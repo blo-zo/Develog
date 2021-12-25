@@ -293,123 +293,6 @@
 	    </div>
 	
 	
-	    <!-- 추천 게시글 -->
-	
-	    <!-- 높이 문제 해결해야함 -->
-	    <div class="relative-post-box" style="width: 1200px; height: 600px; margin: auto; margin-top: 50px;">
-	
-	      <div style="font-size: 50px; font-weight: bold; text-align: center; margin-bottom: 50px;">추천 게시글</div>
-	
-	      <!-- 추천 게시글 카드 -->
-	      <div class="" style="width: 100%; min-height: 400px;">
-	      
-	        <section class="card-bord">
-	          <div class="wrapper-card">
-	            <a href="" class="wrapper-a">
-	              <div class="card-small">
-	
-	                <div class="image"><img src="https://via.placeholder.com/280x150" id="img-size"></div>  
-	                    
-	                <div class="title-box">
-	                  <p  class="title">제목입니다</p>
-	                </div>  
-	
-	                <div class="user-div sub-div">
-	                  <span class="by_name">by <b>Author</b></span>
-	                  <div class="likes">
-	                    <svg id="ht"viewBox="0 0 24 24"><path fill="currentColor" d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path></svg>
-	                    n
-	                  </div>
-	                </div>
-	                          
-	              </div>
-	            </a>
-	          </div>
-	        </section>
-	
-	
-	        <section class="card-bord">
-	          <div class="wrapper-card">
-	            <a href="" class="wrapper-a">
-	              <div class="card-small">
-	
-	                <div class="image"><img src="https://via.placeholder.com/280x150" id="img-size"></div>  
-	                    
-	                <div class="title-box">
-	                  <p  class="title">제목입니다</p>
-	                </div>  
-	
-	                <div class="user-div sub-div">
-	                  <span class="by_name">by <b>Author</b></span>
-	                  <div class="likes">
-	                    <svg id="ht"viewBox="0 0 24 24"><path fill="currentColor" d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path></svg>
-	                    n
-	                  </div>
-	                </div>
-	                          
-	              </div>
-	            </a>
-	          </div>
-	        </section>
-	
-	
-	        <section class="card-bord">
-	          <div class="wrapper-card">
-	            <a href="" class="wrapper-a">
-	              <div class="card-small">
-	
-	                <div class="image"><img src="https://via.placeholder.com/280x150" id="img-size"></div>  
-	                    
-	                <div class="title-box">
-	                  <p  class="title">제목입니다</p>
-	                </div>  
-	
-	                <div class="user-div sub-div">
-	                  <span class="by_name">by <b>Author</b></span>
-	                  <div class="likes">
-	                    <svg id="ht"viewBox="0 0 24 24"><path fill="currentColor" d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path></svg>
-	                    n
-	                  </div>
-	                </div>
-	                          
-	              </div>
-	            </a>
-	          </div>
-	        </section>
-	
-	        <section class="card-bord">
-	          <div class="wrapper-card">
-	            <a href="" class="wrapper-a">
-	              <div class="card-small">
-	
-	                <div class="image"><img src="https://via.placeholder.com/280x150" id="img-size"></div>  
-	                    
-	                <div class="title-box">
-	                  <p  class="title">제목입니다</p>
-	                </div>  
-	
-	                <div class="user-div sub-div">
-	                  <span class="by_name">by <b>Author</b></span>
-	                  <div class="likes">
-	                    <svg id="ht"viewBox="0 0 24 24"><path fill="currentColor" d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path></svg>
-	                    
-	                  </div>
-	                </div>
-	                          
-	              </div>
-	            </a>
-	          </div>
-	        </section>
-	
-	      
-	      </div>
-	
-	      <button class="" id="more-post-btn" style="border: none; border-radius: 4px; background-color: #EEEEEE; width: 100px; height: 40px; display: block; margin: auto; margin-top: 50px;">더 보기 + </button>
-	
-	    </div>
-	
-	
-	
 	  </main>
 	  
 	  
@@ -429,7 +312,12 @@
                     <div class="content" input-modal>&nbsp;신고내용</div>
                     <div class="content">
                        <div class="input-modal">
-                              <textarea name="" id="" cols="30" rows="10">무야호!</textarea>
+                       		<form action="reportPost" method="POST">
+                       		  <input type="hidden" name="memberName" value="${post.memberName}">	
+                       		  <input type="hidden" name="reportPostNo" value="${post.postNo}">	
+                              <textarea name="reportPostContent" cols="30" rows="10" placeholder="신고내용 입력" style="resize:none;"></textarea>
+							  <button class="btn btn-primary">제출</button>                       		
+                       		</form>
                           </div>
                     </div>
                  </div>
@@ -454,9 +342,13 @@
                     <div class="content" input-modal>&nbsp;신고내용</div>
                     <div class="content">
                      	<div class="input-modal">
-                            <textarea name="reportReplyContent" class="reportReplyContent" cols="30" rows="10">무야호!</textarea>
+                            <form action="reply/report" method="POST">
+                       		  <input type="hidden" name="memberName" value="${post.memberName}">	
+                       		  <input type="hidden" name="reportReplyNo" value="${reply.replyNo}">	
+                              <textarea name="reportReplyContent" cols="30" rows="10" placeholder="신고내용 입력" style="resize:none;"></textarea>
+							  <button class="btn btn-primary report-btn">제출</button>                       		
+                       		</form>
                      	</div>
-						<button class="btn btn-primary" onclick="reportReply2();">제출</button>
                     </div>
                  </div>
                </section>
@@ -464,18 +356,6 @@
           </div>
         </div>
  	  </div>
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
 	  
 
 		<%-- 수정, 삭제에 사용할 pno , cp 파라미터 --%>
