@@ -8,7 +8,7 @@
 
 
 
-	<form action="profile" method="POST" name="profileForm" onsubmit="return validate();">
+	<form action="profile" method="POST" name="profileForm" role="form" onsubmit="return validate();">
 		<div class="category">PROFILE</div>
 	    
 	    <main class="main"> 
@@ -16,7 +16,7 @@
 	        <div class="tab-area">
 	            <div class="tab">프로필</div>  
 	            <div class="tab">소셜 정보</div>  
-	            <div class="tab">이메일</div>  
+	            <div class="tab">비밀번호 변경</div>  
 	            <div class="tab" style="color: darkgray;">회원탈퇴</div>  
 	        </div>
 	
@@ -25,7 +25,11 @@
 	         <!-- 프로필 -->
 	        <div class="content" style=" display: block;" >
 	            <div class="profile">
-	                <div class="p-img"><img src="https://via.placeholder.com/50x50"></div>
+	                <div class="p-img">
+		                <div class="profileImg">
+	                    	<img src="../resources/images/common/user.png">
+	                  </div>
+	                </div>
 	                <div class="p-btn">
 	                    <button type="button" class="p-choose" id="p-choose" >이미지 업로드</button>
 	                    <button type="button" class="p-delete" id="p-delete" >이미지 제거</button>
@@ -35,7 +39,7 @@
 	            <div class="intro" style="position: relative;">
 	                <div class="int-title" style="height: 100; line-height: 88px;">자기소개</div>
 	                <div class="int-input">
-	                    <input type="text" id="nickname" name="nickname" placeholder="${sessionScope.loginMember.memberNm}" > 
+	                    <input type="text" id="nickname" name="nickname" value="${loginMember.memberNm}" placeholder="닉네임" > 
 	                    <input type="text"  class="line-intro " id="line-intro" name="line-intro" placeholder="한 줄 소개" style="margin: 5px 0px 5px 9px;" >
 	                </div>
 	            </div>
@@ -43,7 +47,7 @@
 	            <div class="devel-intro">
 	                <div class="d-title">디벨로그 제목</div>
 	                <div class="d-input">
-	                    <input type="text" id="devel-input" name="devel-input" placeholder="한 줄 소개" >
+	                    <input type="text" id="devel-input" name="devel-input" placeholder="디벨로그 제목" >
 	                </div>
 	            </div>
 	
@@ -133,7 +137,7 @@
 	            <div class="pw-title d-title " >비밀번호 변경</div>
 	            <div class="pw-input d-input ">
 	              <div class="pw-btn-area ">
-	                <button class="pw-btn " id="pw-btn" onclick="location.href='${contextPath}/Develog/member/updatepw'">변경</button>
+	                <button class="pw-btn"  type="button" id="pw-btn" onclick="location.href='${contextPath}/member/updatepw'">변경</button> <!-- get 방식 -->
 	              </div>
 	            </div>
 	          </div>

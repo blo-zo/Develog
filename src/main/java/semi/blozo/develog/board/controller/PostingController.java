@@ -43,7 +43,7 @@ public class PostingController extends HttpServlet {
 		String message = null;
 		
 		try {
-
+			// 파일 들어오면 담을 객체 선언
 			PostingService service = new PostingService();
 			
 			// 게시글 삽입

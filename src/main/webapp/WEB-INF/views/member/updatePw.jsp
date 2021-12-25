@@ -83,7 +83,7 @@
                             
                             <section class="btin-wrap">
                                 <button type="submit" id="suc">확인</button>
-                                <button type="reset" id="eix" onclick= "location.href = '${contextPath}';">취소</button>
+                                <button type="reset" id="eix" onclick= "location.href = '${contextPath}/member/profile'">취소</button>
                             </section>
                         </td>
                     </tr>
