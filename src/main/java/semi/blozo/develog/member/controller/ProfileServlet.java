@@ -17,9 +17,8 @@ import com.oreilly.servlet.MultipartRequest;
 
 import semi.blozo.develog.board.model.vo.ThumbImgVO;
 import semi.blozo.develog.member.model.vo.Member;
-import semi.blozo.develog.member.model.vo.MemberImg;
-import semi.blozo.develog.member.model.vo.MemberSNS;
-import semi.blozo.develog.member.model.vo.MemberVO;
+import semi.blozo.develog.member.model.vo.ProfileImgVO;
+import semi.blozo.develog.member.model.vo.ProfileVO;
 import semi.blozo.develog.post.model.vo.Blog;
 import semi.blozo.develog.common.MyRenamePolicy;
 import semi.blozo.develog.member.model.service.MemberProfileService;
@@ -47,50 +46,44 @@ public class ProfileServlet extends HttpServlet{
 		RequestDispatcher dispatcher = null;
 		String message = null;
 		
+		
+		HttpSession session = req.getSession();
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		
 		try {
 			// 파일 들어오면 담을 객체 선언
 			// 서비스 객체 선언
 			MemberProfileService service = new MemberProfileService();
 			
-			HttpSession session = req.getSession();
 			
 			// 텍스트 타입의 형태들 넣기 
 			// 로그인 멤버로 부터 받기
 			// member 닉네임, 한줄소개, blog 블로그(디벨로그 제목) ,member_sns 소셜정보 // member-img 프로필 이미지 
 			// session에서 loginMember얻어오기
-			Member loginMember = (Member)session.getAttribute("loginMember");
-			
-			// Member 객체를 생성하여 파라미터를 하나의 객체에 저장
 			int memberNo = loginMember.getMemberNo();
-			String memberNm = loginMember.getMemberNm();
-			String intro = loginMember.getIntro();
-			String blogTitle = loginMember.getBlogTitle();
-			int blogNo = ((Member)req.getSession().getAttribute("loginMember")).getMemberNo();
 			
-			Member member = new Member();
-			member.setMemberNo(memberNo);
-			member.setMemberNm(memberNm);
-			member.setIntro(intro);
-			member.setBlogNo(blogNo);
-			member.setBlogTitle(blogTitle);
+			// memberNo을 통해 해당 회원의 정보조회 있는지 찾음) 
+			ProfileVO profileVO = service.selectProfile(memberNo);
 			
-			// 소셜 정보 담기
-			String snsEmail = ((MemberSNS)req.getSession().getAttribute("loginMember")).getSnsEmail();
-			String snsGit = ((MemberSNS)req.getSession().getAttribute("loginMember")).getSnsGit();
-			String snsTwitt = ((MemberSNS)req.getSession().getAttribute("loginMember")).getSnsTwitt();
-			String snsFbook = ((MemberSNS)req.getSession().getAttribute("loginMember")).getSnsFbook();
-			String snsHome = ((MemberSNS)req.getSession().getAttribute("loginMember")).getSnsHome();
+			ProfileImgVO memberImg = service.selectProfileImg(memberNo);
 			
 			
-			MemberSNS memberSNS = new MemberSNS();
-			memberSNS.setMemberNo(memberNo);
-			memberSNS.setSnsEmail(snsEmail);
-			memberSNS.setSnsGit(snsGit);
-			memberSNS.setSnsTwitt(snsTwitt);
-			memberSNS.setSnsFbook(snsFbook);
-			memberSNS.setSnsHome(snsHome);
 			
-	
+			System.out.println(profileVO);
+			// Member 객체를 생성하여 파라미터를 하나의 객체에 저장			
+//			String memberNm = profileVO.getMemberNm();
+//			String intro = profileVO.getIntro();
+//			String blogTitle = profileVO.getBlogTitle();
+//			
+//			
+//			// 소셜 정보 담기
+//			String snsEmail = profileVO.getSnsEmail();
+//			String snsGit = profileVO.getSnsGit();
+//			String snsTwitt =  profileVO.getSnsTwitt();
+//			String snsFbook =  profileVO.getSnsFbook();
+//			String snsHome = profileVO.getSnsHome();
+			
+			
 			// 개인 프로필  이미지
 			int maxSize = 1024 * 1024 * 100;
 			String root =  session.getServletContext().getRealPath("/");
@@ -104,7 +97,7 @@ public class ProfileServlet extends HttpServlet{
 			// 2) 파일 형식의 파라미터
 			Enumeration<String> files = mReq.getFileNames();
 			
-			MemberImg memberImg = new MemberImg();
+			memberImg = new ProfileImgVO();
 			
 			if( files.hasMoreElements() ) {
 				// 썸네일 추가
@@ -122,12 +115,8 @@ public class ProfileServlet extends HttpServlet{
 			}
 			
 			
-			
-			System.out.println(member);
-			System.out.println( memberSNS);
-			System.out.println(memberImg);
-		
-			int result = service.updateProfile(member, memberSNS, memberImg);
+			//조회 후 살리기
+			int result = service.updateProfile(profileVO, memberImg);
 			
 			if(result > 0) {
 				session.setAttribute("message", "회원 정보가 수정 되었습니다.");

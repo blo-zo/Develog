@@ -129,7 +129,6 @@ public class PostingController extends HttpServlet {
 							temp.setThumbImgPath(filePath); // 파일이 있는 주소 경로
 							
 							
-							
 							// imgList에 추가 
 							imgList.add(temp);
 						

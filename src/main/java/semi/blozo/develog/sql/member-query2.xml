@@ -2,6 +2,46 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 	
+	<!-- 회원정보조회- 글내용 -->
+	<entry key = "selectProfile">
+	SELECT MEMBER_NO ,  MEMBER_NM , MEMBER_EMAIL , INTRO, 
+    BLOG_NO, BLOG_TITLE,
+    SNS_EMAIL, SNS_GIT, SNS_TWITT, SNS_FBOOK, SNS_HOME
+    
+    FROM MEMBER
+    JOIN BLOG USING(MEMBER_NO)
+    JOIN MEMBER_IMG USING(MEMBER_NO)
+    JOIN MEMBER_SNS USING(MEMBER_NO)
+    WHERE MEMBER_NO = ?
+	AND STATUS_CD = 200
+	
+	</entry>
+	
+	
+	<!-- 회원정보조회- 프로필 이미지 -->
+	<entry key = "selectProfileImg">
+	SELECT MEMBER_IMG_PATH, MEMBER_IMG_NM, MEMBER_IMG_ORIGINAL
+    FROM MEMBER
+    JOIN MEMBER_IMG USING(MEMBER_NO)
+    WHERE MEMBER_NO = ?
+	AND STATUS_CD = 200
+	
+	</entry>
+	
+	
+	<!-- 회원정보조회 -->
+	<entry key = "updateProfile">
+	SELECT MEMBER_IMG_PATH, MEMBER_IMG_NM, MEMBER_IMG_ORIGINAL
+    FROM MEMBER
+    JOIN MEMBER_IMG USING(MEMBER_NO)
+    WHERE MEMBER_NO = ?
+	AND STATUS_CD = 200
+	
+	</entry>
+	
+	
+	
+	
 	
 	
 	

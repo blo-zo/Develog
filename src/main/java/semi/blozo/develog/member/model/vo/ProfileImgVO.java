@@ -1,17 +1,16 @@
 package semi.blozo.develog.member.model.vo;
 
-import java.util.Date;
+import java.sql.Date;
 
-public class MemberImg {
-	
-	private int memberImgNo;
+public class ProfileImgVO {
+	private int memberImgNo; // 회원 이미지
 	private String memberImgPath;
 	private String memberImgName;
 	private Date memberImgDt;
 	private String memberImgOriginal;
 	
 	
-	private int memberNo;
+	public ProfileImgVO() {}
 
 
 	public int getMemberImgNo() {
@@ -64,22 +63,11 @@ public class MemberImg {
 	}
 
 
-	public int getMemberNo() {
-		return memberNo;
-	}
-
-
-	public void setMemberNo(int memberNo) {
-		this.memberNo = memberNo;
-	}
-
-
 	@Override
 	public String toString() {
-		return "MemberImg [memberImgNo=" + memberImgNo + ", memberImgPath=" + memberImgPath + ", memberImgName="
-				+ memberImgName + ", memberImgDt=" + memberImgDt + ", memberImgOriginal=" + memberImgOriginal
-				+ ", memberNo=" + memberNo + "]";
-	}		
+		return "ProfileImgVO [memberImgNo=" + memberImgNo + ", memberImgPath=" + memberImgPath + ", memberImgName="
+				+ memberImgName + ", memberImgDt=" + memberImgDt + ", memberImgOriginal=" + memberImgOriginal + "]";
+	}
 	
 	
 	
