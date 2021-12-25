@@ -8,7 +8,7 @@
 
 
 
-	<form action="update" enctype="multipart/form-data"  method="POST" name="updateForm" role="form" onsubmit="return false">
+	<form action="profile/update" enctype="multipart/form-data"  method="POST" name="updateForm" role="form" onsubmit="return false">
 		<div class="category">PROFILE</div>
 	    
 	    <main class="main"> 

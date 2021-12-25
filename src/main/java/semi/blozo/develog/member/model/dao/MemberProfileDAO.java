@@ -198,8 +198,8 @@ public class MemberProfileDAO {
 		int result = 0;
 		
 		try {
-			
-			pstmt = conn.prepareStatement(prop.getProperty("updateMemberImg"));
+			String sql = prop.getProperty("updateMemberImg");
+			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, memberImg.getMemberImgName());
 			pstmt.setString(2, memberImg.getMemberImgOriginal());
