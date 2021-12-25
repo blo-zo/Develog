@@ -40,7 +40,7 @@
       </div>
       <%-- 절대 경로 에서는 맨 앞에 '/'가 없어야 한다. --%>
       <div><a href="${pageContext.servletContext.contextPath}/admin/post" class="category" >Post</a></div>
-      <div><a href="${pageContext.servletContext.contextPath}/admin/post" class="category" >Reply</a></div>
+      <div><a href="${pageContext.servletContext.contextPath}/admin/reply" class="category" >Reply</a></div>
       <div><a href="${pageContext.servletContext.contextPath}/admin/statistics" class="category">Statistics</a></div>
       <div><a href="${pageContext.servletContext.contextPath}/admin/report" class="category" >Report</a></div>
       <div><a href="${pageContext.servletContext.contextPath}/admin/enquiry" class="category">1:1 Enquiry</a></div>
@@ -98,9 +98,9 @@
           경고</div>
 		</form>
 	</div>
-	<form action="member?cp=1" method="GET" onsubmit="return refresh()">
+	<form action="member?cp=1" method="GET" > <!-- onsubmit="return refresh()" --> <!--  true  -->
 		<div id="search-area">
-			<input type="text" name="searchWord" placeholder="검색어를 입력해주세요">
+			<input type="text" name="searchWord" placeholder="검색어를 입력해주세요"> <!-- true를 적용하니까 form태그가 입력된다. -->
 			<img id="search" src="image/search-solid.svg" style="width: 20px; height: 20px;">
 			<select name="searchTag" onchange="changeSelect()">
 				<option value="no">회원 번호</option>
@@ -112,7 +112,7 @@
 				<option value="status">회원 상태</option>
 			</select>
 		</div>
-	</form> (${pagination.currentPage}-1) x ${pagination.limit} + 1
+	</form>
 	<div class="my-5">
 		<ul class="pagination" style="justify-content: center;">
 			<c:if test="${pagination.startPage != 1}">

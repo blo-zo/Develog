@@ -22,6 +22,7 @@ import semi.blozo.develog.admin.model.vo.Enquiry;
 import semi.blozo.develog.admin.model.vo.Member;
 import semi.blozo.develog.admin.model.vo.Pagination;
 import semi.blozo.develog.admin.model.vo.Post;
+import semi.blozo.develog.admin.model.vo.Reply;
 import semi.blozo.develog.admin.model.vo.Report;
 
 @WebServlet("/admin/*")
@@ -316,6 +317,13 @@ public class AdminController extends HttpServlet {
 				
 				int result = service.deletePostContent(postNo);
 				
+			}else if(command.equals("reply")){
+				Pagination pagination = service.getPagination(cp);
+				List<Reply> listReply = service.selectReply(pagination);
+				req.setAttribute("                          ", listReply);
+				path = "/WEB-INF/views/admin/reply.jsp";
+			 	req.getRequestDispatcher(path).forward(req, resp);
+					
 			}
 			
 			
