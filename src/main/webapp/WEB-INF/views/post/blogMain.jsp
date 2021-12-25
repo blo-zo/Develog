@@ -38,12 +38,34 @@
       <!-- 소셜 계정 정보 영역 -->
       <div class="social-account-area">
 	  <%-- 소셜 정보 링크 삽입 c:when 사용해서 값이 있으면 보여주기 --%>
-	  
-          <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/hompage.png"></a>
-          <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/facebook.png"></a>
-          <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/twitter.png"></a>
-          <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/github.png"></a>
-          <a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/mail.png"></a>
+	  	
+	  	<c:choose>
+	  		<c:when test="${blog.snsEmail != '이메일을 입력해주세요.'}">
+	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/hompage.png"></a>
+	  		</c:when>
+	  		
+	  		<c:when test="${blog.snsGit}">
+	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/facebook.png"></a>
+	  		</c:when>
+	  		
+	  		<c:when test="${blog.snsTwitt}">
+	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/twitter.png"></a>
+	  		</c:when>
+	  		
+	  		<c:when test="${blog.snsFbook}">
+	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/github.png"></a>
+	  		</c:when>
+	  		
+	  		<c:when test="${blog.snsHome}">
+	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/mail.png"></a>
+	  		</c:when>
+	  		
+	  	</c:choose>
+          
+          
+          
+          
+          
 
       </div>
 
