@@ -23,7 +23,7 @@ import semi.blozo.develog.post.model.vo.Blog;
 import semi.blozo.develog.common.MyRenamePolicy;
 import semi.blozo.develog.member.model.service.MemberProfileService;
 
-@WebServlet("/member/profile")
+@WebServlet("/member/profile/*")
 public class ProfileServlet extends HttpServlet{
 	
 	
@@ -49,6 +49,7 @@ public class ProfileServlet extends HttpServlet{
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		
 		try {
+
 			// 파일 들어오면 담을 객체 선언
 			// 서비스 객체 선언
 			MemberProfileService service = new MemberProfileService();
@@ -71,7 +72,8 @@ public class ProfileServlet extends HttpServlet{
 
 			System.out.println("여기지나가니?");
 			
-			if(command.equals("update")) {
+			if(command.equals("profile/update")) {
+				System.out.println("profile");
 				// Member 객체를 생성하여 파라미터를 하나의 객체에 저장			
 //				String memberNm = profileVO.getMemberNm();
 //				String intro = profileVO.getIntro();
@@ -112,6 +114,7 @@ public class ProfileServlet extends HttpServlet{
 						memberImg.setMemberImgName(mReq.getFilesystemName(name));
 						memberImg.setMemberImgOriginal(mReq.getOriginalFileName(name));
 						memberImg.setMemberImgPath(filePath); // 파일이 있는 주소 경로
+						memberImg.setBlogNo(memberNo);
 						
 					}
 				}
@@ -119,7 +122,14 @@ public class ProfileServlet extends HttpServlet{
 				
 				//조회 후 살리기
 				int result = service.updateProfile(profileVO, memberImg);
-				
+//				if( result>0) {
+//					if(memberImg == null) {
+//						result = service.insertMemberImg();
+//					}else {
+//						result = service.updateMemberImg();
+//					}
+//						
+//				}
 				if(result > 0) {
 					session.setAttribute("message", "회원 정보가 수정 되었습니다.");
 					
@@ -129,7 +139,7 @@ public class ProfileServlet extends HttpServlet{
 					session.setAttribute("message", "회원 정보 수정 실패. return값 확인하세요.");
 				}
 				
-				resp.sendRedirect("profile");
+				resp.sendRedirect(req.getContextPath() +"/member/profile");
 			
 				
 			}
