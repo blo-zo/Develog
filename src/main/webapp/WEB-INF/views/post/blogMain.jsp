@@ -19,6 +19,53 @@
 	<jsp:include page="blogHeader.jsp"/>
 	<%-- include할 jsp 파일 경로 작성 --%>
 	
+	<!-- 카테고리 오프캔버스 -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbar">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="category-menu-title" style="font-weight: bold; font-size: 30px; cursor:pointer;" onclick="location.href='${contextPath}/main'">
+        Develog
+      </h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="list-group category-list">
+          <li class="list-group-item category">전체 포스트</li>
+          <li class="list-group-item category">카테고리 1</li>
+          <li class="list-group-item category">카테고리 2</li>
+          <li class="list-group-item category">카테고리 3</li>
+          <li class="list-group-item category">카테고리 4</li>
+        </ul>
+        
+        <c:if test="${blog.memberNo == loginMember.memberNo}">
+        
+	        <div id="controller-menu" style="text-align: right; margin: 20px; margin-top: 50px;">
+	
+	          <div class="category-control">
+	
+	            <button class="category-control-btn" id="add-category-btn">
+	              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-5v5h-2v-5h-5v-2h5v-5h2v5h5v2z"/></svg>
+	            </button>
+	            <label for="add-category-btn" style="cursor: pointer;">카테고리 추가</label>
+	
+	          </div>
+	
+	          <div class="category-control">
+	          
+	            <button class="category-control-btn" id="remove-category-btn">
+	              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-12v-2h12v2z"/></svg>
+	            </button>
+	            <label for="remove-category-btn" style="cursor: pointer;">카테고리 삭제</label>
+	          
+	          </div>
+	
+	        </div>
+        
+        </c:if>
+        
+        
+    </div>  
+  </div>
+	
   <!-- 본문 -->
   <main style="width: 100%;">
     <!-- 프로필 영역 -->
@@ -37,30 +84,47 @@
 
       <!-- 소셜 계정 정보 영역 -->
       <div class="social-account-area">
-	  <%-- 소셜 정보 링크 삽입 c:when 사용해서 값이 있으면 보여주기 --%>
+      	
+      	<c:choose>
+	  		<c:when test="${(blog.snsHome =='홈페이지 주소를 입력하세요.') || (empty blog.snsHome)}">
+	  		</c:when>
+      		<c:otherwise>
+	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/hompage.png"></a>
+      		</c:otherwise>
+      	</c:choose>
 	  	
 	  	<c:choose>
-	  		<c:when test="${blog.snsEmail != '이메일을 입력해주세요.'}">
-	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/hompage.png"></a>
+	  		<c:when test="${(blog.snsFbook =='http://www.facebook.com/') || (empty blog.snsFbook)}">
 	  		</c:when>
-	  		
-	  		<c:when test="${blog.snsGit}">
+      		<c:otherwise>
 	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/facebook.png"></a>
+      		</c:otherwise>
+      	</c:choose>
+	  	
+	  	<c:choose>
+	  		<c:when test="${(blog.snsTwitt =='Twitter 계정을 입력하세요.') || (empty blog.snsTwitt)}">
 	  		</c:when>
-	  		
-	  		<c:when test="${blog.snsTwitt}">
+      		<c:otherwise>
 	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/twitter.png"></a>
-	  		</c:when>
+      		</c:otherwise>
+      	</c:choose>
 	  		
-	  		<c:when test="${blog.snsFbook}">
+	  	<c:choose>
+	  		<c:when test="${(blog.snsGit =='Github 계정을 입력하세요.') || (empty blog.snsGit)}">
+	  		</c:when>
+      		<c:otherwise>
 	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/github.png"></a>
+      		</c:otherwise>
+      	</c:choose>
+	  	
+	  	<c:choose>
+	  		<c:when test="${(blog.snsEmail =='이메일을 입력해주세요.') || (empty blog.snsEmail)}">
 	  		</c:when>
-	  		
-	  		<c:when test="${blog.snsHome}">
+      		<c:otherwise>
 	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/mail.png"></a>
-	  		</c:when>
+      		</c:otherwise>
+      	</c:choose>
 	  		
-	  	</c:choose>
           
           
           
@@ -397,12 +461,24 @@
           <hr class="hr-small">
 
           <div class="blog-tag-list-box">
+          	
+          	<c:choose>
+          		
+          		<c:when test="${!empty tagListAll}">
+          			<c:forEach items="${tagListAll}" var="tag">
+						<c:if test="${tag.postStatusCode eq 500 }">
+							<a href="#"><span>${tag.tagName}</span></a>
+          				</c:if>
+					</c:forEach>
+          		</c:when>
+          		
+          		<c:otherwise>
+          			<p style="color:#323232; opacity:0.8; font-size:15px;"> 태그가 없습니다. </p>
+          		</c:otherwise>
+          		
+          	</c:choose>
 			
-			<c:forEach items="${tagListAll}" var="tag">
-				
-				<a href="#"><span>${tag.tagName}</span></a>
-				
-			</c:forEach>
+			
 
           </div>
 
@@ -418,6 +494,34 @@
 
 
   </main>
+  
+  <script>
+
+// 전역 변수로 댓글 관련 기능에 사용될 변수를 미리 선언
+// -> 이 때 JSP에서만 사용 가능한 EL 값을 전역 변수로 선언하면
+//    아래 쪽에 추가된 js파일에서 사용 가능
+
+const contextPath = "${contextPath}";
+
+// 로그인한 회원의 회원 번호, 비로그인 시 "" (빈문자열) (따옴표 안붙이면 아예 빈 공간이라 오류 발생)
+const loginMemberNo = "${loginMember.memberNo}";
+
+// 포스트 작성자의 회원번호
+const postMemberNo = "${post.memberNo}";
+
+// 현재 게시글 번호
+const postNo = "${post.postNo}";
+
+// 현재 게시글 작성자명
+const memberName = "${post.memberName}";
+
+// 현재 블로그 번호
+const blogNo = "${loginMember.blogNo}"
+
+// 수정 전 댓글 요소를 저장할 변수 (댓글 수정 시 사용)
+let beforeReplyRow;
+
+</script>
 
   
 

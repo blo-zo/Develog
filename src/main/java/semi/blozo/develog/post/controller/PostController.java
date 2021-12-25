@@ -102,11 +102,17 @@ public class PostController extends HttpServlet{
 							
 							List<Post> postList = service.selectBlogPostList(blogPostPagination, memberName);
 							
-							// list에서 post 하나씩 꺼내와 post.getPostContent().substring(0,50)
-							
 							
 							// 블로그 태그 조회
-//							List<TagVO> tagListAll = service.selectBlogTagList(postList.get(1).getBlogNo());
+
+
+
+							List<TagVO> tagListAll = service.selectBlogTagList(blog.getBlogNo());
+							
+							System.out.println(blog.getBlogNo());
+							System.out.println(tagListAll);
+							
+
 							
 							
 							
@@ -431,6 +437,16 @@ public class PostController extends HttpServlet{
 							}
 							
 							
+							// 댓글 신고
+							else if(arr[2].equals("report")) {
+								
+								int replyNo = Integer.parseInt(req.getParameter("replyNo"));
+								
+								resp.getWriter().print(new ReplyService().reportReply(replyNo));
+								
+							}
+							
+							
 						}	// 댓글 부분 END
 						
 						
@@ -465,6 +481,14 @@ public class PostController extends HttpServlet{
 							resp.getWriter().print(postLikeCount);
 							
 						}
+						
+						else if(arr[1].equals("reportPost")) {
+							
+							
+							
+							
+						}
+						
 						
 						
 						

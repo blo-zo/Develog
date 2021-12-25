@@ -241,9 +241,11 @@
 	
 	<!-- 블로그에 있는 모든 태그 조회 -->
 	<entry key="selectBlogTagList">
-		SELECT TAG_NM FROM TAG
+		SELECT TAG_NM, POST_NO , POST_STATUS_CD
+	    FROM TAG
+	    JOIN POST USING(POST_NO)
 		WHERE POST_NO IN 
-    	( SELECT POST_NO FROM POST WHERE BLOG_NO = ?)
+    	(SELECT POST_NO FROM POST WHERE BLOG_NO = ?)
 	</entry>
 	
 

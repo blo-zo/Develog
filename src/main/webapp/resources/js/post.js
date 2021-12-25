@@ -69,7 +69,7 @@ function reportPost(postNumber){
 
   if(loginMemberNo != ""){  // 회원이 신고를 누르면
 
-    $("#reportModal").modal('show');
+    $("#reportPostModal").modal('show');
 
   }else{
 
@@ -197,6 +197,7 @@ function addReply(){
   if(loginMemberNo == ""){  // 로그인이 되어있지 않은 경우
     
     alert("로그인 후 댓글 작성이 가능합니다.");
+    $("#exampleModal").modal('show');
 
   }else{
 
@@ -224,7 +225,6 @@ function addReply(){
 
           if(result > 0){
 
-            alert("댓글 작성 성공");
             $("#post-reply").val(""); // 작성한 댓글 내용 비우기
             selectReplyList(); // 댓글 조회 함수를 호출하여 댓글 화면 다시 만들기
 
@@ -385,13 +385,12 @@ function deleteReply(replyNo){
 };
 
 
-// 댓글 신고
+// 댓글 신고창 띄우기
 function reportReply(replyNo){
 
   if(loginMemberNo != ""){  // 회원이 신고를 누르면
 
-    $("#reportModal").modal('show');
-    
+    $("#reportReplyModal").modal('show');
 
   }else{
 
@@ -402,6 +401,34 @@ function reportReply(replyNo){
 
 };
 
+// 댓글 신고 기능
+function reportReply2(){
+
+  $.ajax({
+
+    url : contextPath + "/blog/" + memberName + "/reply/report",
+    data : { "replyNo" : replyNo,
+              "memberNo" : loginMemberNo ,
+              "reportContent" : $(".reportReplyContent").val() },
+    type : "POST",
+
+    success : function(result){
+
+      
+
+
+    },
+
+    error : function(req, status, error){
+      console.log("댓글 신고 실패")
+      console.log(req.responseText)
+    }
+
+  });
+
+
+};
+
 
 
 /* ------------ 블로그 ---------------- */
@@ -409,6 +436,24 @@ function reportReply(replyNo){
 
 /* 카테고리 메뉴 삽입, 수정, 삭제 */
 
+function selectCategoryList(){
+
+  $.ajax({
+
+    url : contextPath + "/blog/" + membername + "/category/select",
+    data : {"blogNo" : blogNo},
+    type : "GET",
+    dataType : "JSON",
+
+    success
+
+
+
+
+  });
+
+
+}
 
 
 
@@ -471,3 +516,21 @@ function selectPostLike(){
   }); 
 
 }
+
+
+// 공유하기 버튼 누르면 url 복사되도록
+$("#share-btn").on("click",function(){
+
+  var url = '';
+	var textarea = document.createElement("textarea");
+	document.body.appendChild(textarea);
+	url = window.document.location.href;
+	textarea.value = url;
+	textarea.select();
+	document.execCommand("copy");
+	document.body.removeChild(textarea);
+	alert("URL이 복사되었습니다.")
+
+});
+
+

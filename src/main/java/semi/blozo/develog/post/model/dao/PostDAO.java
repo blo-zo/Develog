@@ -708,6 +708,9 @@ public class PostDAO {
 				
 				TagVO tag = new TagVO();
 				tag.setTagName(rs.getString(1));
+				tag.setPostNo(rs.getInt(2));
+				// 태그가 달린 포스트의 상태(정상,삭제,블라인드)
+				tag.setPostStatusCode(rs.getInt(3));
 				
 				tagList.add(tag);
 				
