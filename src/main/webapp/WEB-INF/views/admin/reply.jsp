@@ -51,8 +51,9 @@
 			<%-- 절대 경로 에서는 맨 앞에 '/'가 없어야 한다. --%>
 			<div>
 				<a href="${pageContext.servletContext.contextPath}/admin/post"
-					class="category" style="color: #3278FE;">Post</a>
+					class="category" >Post</a>
 			</div>
+			<div><a href="${pageContext.servletContext.contextPath}/admin/reply" class="category" style="color: #3278FE;" >Reply</a></div>
 			<div>
 				<a href="${pageContext.servletContext.contextPath}/admin/statistics"
 					class="category">Statistics</a>
@@ -67,6 +68,7 @@
 			</div>
 		</nav>
 	</header>
+	${listReply[0]}
 	<main id="main">
 		<section id="section-table">
 			<table id="admin-table">
@@ -74,35 +76,33 @@
 					<tr>
 						<td>&nbsp;&nbsp;</td>
 						<th>No</th>
-						<th>글제목</th>
-						<th>글 내용</th>
 						<th>회원번호</th>
-						<th>조회수</th>
-						<th>좋아요</th>
+						<th>닉네임</th>
+						<th>내용</th>
 						<th>작성일</th>
 						<th>신고수</th>
-						<th>경고수</th>
-						<th>글 상태</th>
+						<th>글 번호</th>
+						<th>댓글 상태</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:choose>
-						<c:when test="${empty postList }">
+						<c:when test="${empty listReply }">
 							<td colspan="11">게시글이 존재하지 않습니다.</td>
 						</c:when>
 						<c:otherwise>
-							<c:forEach items="${postList}" var="post">
-								<tr>
+							<c:forEach items="${listReply}" var="reply">
+								${reply}	
+							<tr>
 									<td><input class="check" name="check" type="checkbox" ></td>
-									<td>${post.postNo}</td>
-									<td>${post.postTitle}</td>
+									<td>${reply.replyNo}</td>
+									<td>${reply.memberNo}</td>
 									<td>
 										<a  class="postContent" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 200px; display: inline-block; text-align: center;"
 											href="${pageContext.servletContext.contextPath}/blog/${post.memberName}/view?pno=${post.postNo}">
-											${post.postContent}
+											${reply.replyContent}
 										</a>
 									</td>
-									<td>${post.memberNo}</td>
 									<td>${post.readCount}</td>
 									<td>${post.likeCount}</td>
 									<td>${post.createDate}</td>

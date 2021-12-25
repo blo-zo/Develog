@@ -87,6 +87,7 @@
                 <div>
                     <a href="${pageContext.servletContext.contextPath}/admin/post" class="category">Post</a>
                 </div>
+                <div><a href="${pageContext.servletContext.contextPath}/admin/reply" class="category" >Reply</a></div>
                 <div>
                     <a href="${pageContext.servletContext.contextPath}/admin/statistics" class="category"
                     style="color: #3278FE;">Statistics</a>

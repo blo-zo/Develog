@@ -101,6 +101,7 @@ public class MemberDAO {
 	public int insertSNS(Member member, Connection conn) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
+	
 	}
 
 	public int insertBlog(Member member, Connection conn) throws Exception {
