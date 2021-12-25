@@ -51,7 +51,7 @@ public class PostingController extends HttpServlet {
 				//GET 방식 요청 -> 게시글 등록 화면 전환
 				if(method.equals("GET")) {
 					
-					int blogNo = ((Member)req.getSession().getAttribute("loginMember")).getMemberNo();
+					int blogNo = ((Member)req.getSession().getAttribute("loginMember")).getBlogNo();
 					// 카테고리 테이블 내용 조회하기 // VO에 카테고리 
 					List<Category> category = service.selectCategory(blogNo);
 					
