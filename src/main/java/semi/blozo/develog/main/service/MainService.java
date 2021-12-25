@@ -34,7 +34,7 @@ public class MainService {
 					
 					PostImage searchImg = dao.searchImg(post.getPostNo(), conn);
 					post.setPostImg(searchImg);
-					System.out.println("이미지 나와라"+searchImg);
+					
 				}
 			}
 		close(conn);
