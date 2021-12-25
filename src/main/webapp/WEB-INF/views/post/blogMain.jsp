@@ -114,7 +114,7 @@
 					  
 					                <div class="card-img-top blog-post-img">
 					                  <!-- 썸네일 이미지 영역 -->
-					                  <img src="https://via.placeholder.com/800x350" alt="">
+					                  <img src="${contextPath}${post.postImg.postImgPath}${post.postImg.postImgName}" alt="">
 					                </div>
 					    
 					                <div class="card-body blog-post-body border">
@@ -225,7 +225,7 @@
 					  
 					                <div class="card-img-top blog-post-img">
 					                  <!-- 이미지 영역 -->
-					                  <img src="https://via.placeholder.com/800x350" alt="">
+					                  <img src="${contextPath}${post.postImg.postImgPath}${post.postImg.postImgName}" alt="">
 					                </div>
 					    
 					                <div class="card-body blog-post-body border">

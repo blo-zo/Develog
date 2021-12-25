@@ -3,6 +3,7 @@ package semi.blozo.develog.post.controller;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -50,6 +51,8 @@ public class PostController extends HttpServlet{
 				
 				String[] arr = uri.substring( (contextPath + "/blog/" ).length()).split("/");	
 				// 주소의 뒷부분을 '/'로 나누어서 저장하는 배열
+				System.out.println("uri : " + uri);
+				System.out.println("arr : " + Arrays.toString(arr));
 				
 				
 				String path = null;
@@ -77,6 +80,9 @@ public class PostController extends HttpServlet{
 						
 						// memberName을 통해 블로그 객체 생성 (해당 이름의 블로그가 있는지 찾음) 
 						Blog blog = service.selectBlog(memberName);
+						
+						System.out.println(memberName);
+						System.out.println(blog);
 						
 						if(blog != null) {	// 해당 블로그가 있는 경우
 							
@@ -182,11 +188,11 @@ public class PostController extends HttpServlet{
 							// 3. 태그 목록 조회하기
 							List<TagVO> tagList = service.selectTagList(postNo);
 							
-							System.out.println(tagList);
+							// 4. 썸네일 이미지 조회하기
 							
 							req.setAttribute("post", post);
-							req.setAttribute("tagList", tagList);
 							// req.setAttribute("category", category);
+							req.setAttribute("tagList", tagList);
 							
 							path = "/WEB-INF/views/post/postUpdate.jsp";
 							dispatcher = req.getRequestDispatcher(path);
@@ -214,14 +220,18 @@ public class PostController extends HttpServlet{
 								message = "포스트가 삭제되었습니다.";
 								
 								// 포스트 리스트 페이지로 돌아가기
-								path = req.getContextPath() + "/blog/" + memberName;
+								// 브라우저 인코딩...
+								byte[] ptext = memberName.getBytes("UTF-8");
+								String value = new String(ptext, "ISO-8859-1"); 
+								path = "../" + value;
 								
 							}else {
 								
 								message = "포스트 삭제 중 문제가 발생했습니다.";
 								
-								// 포스트 리스트 페이지로 돌아가기
-								path = req.getContextPath() + "/blog/" + memberName;
+								byte[] ptext = memberName.getBytes("UTF-8");
+								String value = new String(ptext, "ISO-8859-1"); 
+								path = "../" + value;
 								
 							}
 							
