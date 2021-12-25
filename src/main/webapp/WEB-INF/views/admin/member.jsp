@@ -59,7 +59,6 @@
 						<th>이메일</th>
 						<th>닉네임</th>
 						<th>가입일</th>
-						<th>신고횟수</th>
 						<th>경고횟수</th>
 						<th>회원상태</th>
 					</tr>
@@ -77,7 +76,6 @@
 									<td>${member.memberEmail }</td>
 									<td>${member.memberName }</td>
 									<td>${member.enrollDate }</td>
-									<td>2</td>
 									<td class="violationTd"
 										onclick="warningContent(${member.memberNo})"
 										data-bs-toggle="modal" data-bs-target="#violationModal">

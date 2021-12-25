@@ -15,9 +15,21 @@ public class Reply {
 	private int memberNo;  
 	private String memberName;
 	
-	
+	// report count
+	private int reportCount;
+
+
 	public Reply() {	}
 	
+	
+	public int getReportCount() {
+		return reportCount;
+	}
+	
+	
+	public void setReportCount(int reportCount) {
+		this.reportCount = reportCount;
+	}
 	
 	public int getReplyNo() {
 		return replyNo;

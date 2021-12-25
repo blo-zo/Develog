@@ -141,7 +141,7 @@
 					<input type="text" name="searchWord" placeholder="검색어를 입력해주세요">
 					<img id="search" src="image/search-solid.svg" style="width: 20px; height: 20px;">
 					<select name="searchTag" onchange="changeSelect()">
-						<option value="no">게시글 번호</option>
+						<option value="no">글 번호</option>
 						<option value="title">제목</option>
 						<option value="content">내용</option>
 						<option value="memberNo">회원번호</option>

@@ -351,15 +351,77 @@ public class AdminService {
 		return new Pagination(listCount, cp);
 	}
 
-	public List<Reply> selectReply(Pagination pagination) throws Exception {
+	public List<Reply> selectReply(String searchWord, String searchTag, String orderTag, Pagination pagination) throws Exception {
 		Connection conn = getConnection();
 		
-		List<Reply> listReply = dao.selectReply(pagination, conn);
+		List<Reply> listReply = dao.selectReply(searchWord, searchTag, orderTag, pagination, conn);
 		
 		conn.close();
 		
 		return listReply;
 	
+	}
+
+	public Pagination getPaginationReply(String searchWord, String searchTag, String orderTag, int cp) throws Exception {
+		Connection conn = getConnection();
+		
+		int listCount = dao.replytListCount(searchWord, searchTag, orderTag, conn);
+		
+		conn.close();
+		
+		return new Pagination(listCount, cp);
+		
+	
+	}
+
+	public Reply selectBlindReply(int replyNo) throws Exception {
+		Connection conn = getConnection();
+		
+		Reply reply = dao.selectBlindReply(replyNo,conn);
+		
+		conn.close();
+		
+		return reply;
+	
+	}
+
+	public int insertBlindReply(int replyNo, String content) throws Exception {
+		Connection conn = getConnection();
+		
+		int result = dao.updateReplyStatus(replyNo, conn);
+		
+		if(result > 0) {
+				result = dao.insertBlindReply(replyNo, content, conn);
+				if(result >0) {
+					conn.commit();					
+				}else {
+					conn.rollback();
+				}
+		}
+		
+		conn.close();
+		
+		return result;
+	
+	}
+
+	public int deleteBlindReply(int replyNo) throws Exception {
+		Connection conn = getConnection();
+		
+		int result = dao.deleteBlindReply(replyNo,conn);
+		
+		if(result >0 ) {
+				result = dao.restoreReply(replyNo, conn);
+				if(result >0) {
+					conn.commit();
+					
+				}else {
+					conn.rollback();
+				}
+		}
+		
+		return result;
+		
 	}
 
 

@@ -317,13 +317,83 @@ public class AdminController extends HttpServlet {
 				
 				int result = service.deletePostContent(postNo);
 				
+				if(result >0) {
+					message = "게시글이 복구되었습니다.";
+				}else {
+					message = "복구 중 문제가 발생했습니다.";					
+				}
+				resp.getWriter().print(message);
+				
 			}else if(command.equals("reply")){
-				Pagination pagination = service.getPagination(cp);
-				List<Reply> listReply = service.selectReply(pagination);
-				req.setAttribute("                          ", listReply);
+				String searchWord ="";
+				String searchTag = "";
+				String orderTag = "";
+				if(req.getParameter("searchWord") != null && !req.getParameter("searchWord").equals("")) {
+					searchWord = req.getParameter("searchWord");
+					searchTag = req.getParameterValues("searchTag")[0];
+				}
+				if(req.getParameter("orderTag") != null) {
+					orderTag = req.getParameterValues("orderTag")[0];					
+				}
+				Pagination pagination = service.getPaginationReply(searchWord, searchTag, orderTag, cp);
+				List<Reply> listReply = service.selectReply(searchWord, searchTag, orderTag, pagination);
+				
+				req.setAttribute("searchWord", searchWord);
+				req.setAttribute("searchTag", searchTag);
+				req.setAttribute("orderTag", orderTag);
+				req.setAttribute("pagination", pagination);
+				req.setAttribute("listReply", listReply);
 				path = "/WEB-INF/views/admin/reply.jsp";
 			 	req.getRequestDispatcher(path).forward(req, resp);
 					
+			}else if(command.equals("reply/blind")) {
+				String[] arr = req.getParameterValues("replyNo"); 
+				int[] replyNo = new int[arr.length-1];
+				for(int i=0; i<arr.length-1; i++) {
+						replyNo[i] = Integer.parseInt(arr[i]);
+				}
+				String content = arr[arr.length-1];
+				int result = 0;
+				String str ="";
+				for(int i=0; i < replyNo.length; i++) {
+					if(!content.equals("")) {
+							result = service.insertBlindReply(replyNo[i], content);													
+					}
+						if(result != 1) {
+							str += replyNo[i]+" ";
+						}else {
+						}
+				}
+				
+				if(result >0) {
+					message = "댓글이 블라인드 되었습니다.";					
+				}else {
+					message = "블라인드 기능 수행 중 문제가 발생했습니다.\r\n"
+							+ "문제 댓글 번호"+ str;
+				}
+				resp.getWriter().print(message);
+				
+			}else if(command.equals("reply/blindContent")) {
+				int replyNo = Integer.parseInt(req.getParameter("replyNo"));
+				
+				Reply reply = service.selectBlindReply(replyNo);
+				
+				new Gson().toJson(reply, resp.getWriter());
+			}else if(command.equals("reply/restoreReply")) {
+				int replyNo = Integer.parseInt(req.getParameter("replyNo"));
+				
+				
+				int result = service.deleteBlindReply(replyNo);
+				
+				if(result >0) {
+					message = "블라인드 댓글 복구되었습니다.";
+				}else {
+					message = "복구 중 문제가 발생했습니다.";					
+				}
+				
+				resp.getWriter().print(message);
+				
+				
 			}
 			
 			
