@@ -59,7 +59,6 @@ public class ReplyDAO {
 				
 				PostReply reply = new PostReply();
 				
-				// 댓글 경고수로 조건문 만들기
 				reply.setReplyNo(rs.getInt("REPLY_NO"));
 				reply.setReplyContent(rs.getString("REPLY_CONTENT"));
 	            reply.setReplyCreateDate(rs.getString("REPLY_CREATE_DT"));

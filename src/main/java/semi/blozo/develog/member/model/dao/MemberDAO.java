@@ -98,9 +98,50 @@ public class MemberDAO {
 	}
 	
 
+	
+	/** 회원 소셜  DEFAULT 값삽입
+	 * @return result1 성공 1 실패 0 
+	 * @throws Exception
+	 */
+	public int insertSns(Connection conn) throws Exception{
+		int result1 = 0;
+		try {
+			String sql = prop.getProperty("insertSns");
+			pstmt = conn.prepareStatement(sql);
+			
+			
+			result1 = pstmt.executeUpdate();
+		}finally {
+			close(pstmt);
+		}
+		
+		
+		return result1;
+	}
+	/** 블로그 제목 삽입
+	 * @param conn
+	 * @return result2 성공 1 실패 2
+	 * @throws Exception
+	 */
+	public int insertBlog(Connection conn)throws Exception {
+					int result2 = 0;
+				try {
+					String sql = prop.getProperty("insertBlog");
+					pstmt = conn.prepareStatement(sql);
+					
+					result2 = pstmt.executeUpdate();
+				}finally {
+					close(pstmt);
+				}
+		
+		return result2;
+	}
+
+
 	public int insertSNS(Member member, Connection conn) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
+	
 	}
 
 	public int insertBlog(Member member, Connection conn) throws Exception {
@@ -110,6 +151,7 @@ public class MemberDAO {
 
 	
 	
+
 
 	/** 닉네임 중복검사
 	 * @param inputName
@@ -225,6 +267,9 @@ public class MemberDAO {
 	}
 
 	
+
+	
+
 
 	
 	

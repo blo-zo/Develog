@@ -15,6 +15,7 @@ import semi.blozo.develog.admin.model.vo.Enquiry;
 import semi.blozo.develog.admin.model.vo.Member;
 import semi.blozo.develog.admin.model.vo.Pagination;
 import semi.blozo.develog.admin.model.vo.Post;
+import semi.blozo.develog.admin.model.vo.Reply;
 import semi.blozo.develog.admin.model.vo.Report;
 import semi.blozo.develog.common.XSS;
 
@@ -1099,6 +1100,36 @@ public class AdminDAO {
 			pstmt.close();
 		}
 		return result;
+	}
+
+	public List<Reply> selectReply(Pagination pagination, Connection conn) throws Exception {
+		List<Reply> listReply = new ArrayList<Reply>();
+		try {
+			String sql = prop.getProperty("selectReply");
+			pstmt = conn.prepareStatement(sql);
+			int startRow = (pagination.getCurrentPage() -1) * pagination.getLimit() + 1;
+			
+			int endRow = startRow + pagination.getLimit() -1;
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Reply reply = new Reply();
+				reply.setReplyNo(rs.getInt("REPLY_NO"));
+				reply.setReplyContent(rs.getString("REPLY_CONTENT"));
+				reply.setReplyCreateDate(rs.getString("REPLY_CREATE_DT"));
+				reply.setPostNo(rs.getInt("POST_NO"));
+				reply.setMemberNo(rs.getInt("MEMBER_NO"));
+				reply.setMemberName(rs.getString("MEMBER_NM"));
+				reply.setReplyStatusName(rs.getString("REPLY_STATUS_NM"));
+				listReply.add(reply);
+			}
+		}finally {
+			rs.close();
+			pstmt.close();
+		}
+		return listReply;
+	
 	}
 
 	

@@ -9,7 +9,6 @@ public class PostImage {
 	private String postImgOriginal;
 	private int postImgLevel;
 	private int postNo;
-	// postThumbImg
 	
 	
 	public PostImage() {	}

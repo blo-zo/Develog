@@ -50,7 +50,7 @@
 		<!-- write area -->
 
 		<footer>
-            <button class="out-area" onclick="location.href='${contextPath}/blog/${loginMember.memberNm}/view/?pno=${post.postNo}&cp=${param.cp}'">
+            <button type="button" class="out-area" onclick="location.href='${contextPath}/blog/${loginMember.memberNm}/view/?pno=${post.postNo}&cp=${param.cp}'">
                 <div id="out-image">
                     <img src="${contextPath}/resources/images/boardIcon/arrow.png" id="img-arrow" >
                 </div>
