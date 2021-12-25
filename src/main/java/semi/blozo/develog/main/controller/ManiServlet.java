@@ -16,7 +16,7 @@ import semi.blozo.develog.post.model.service.PostService;
 import semi.blozo.develog.post.model.vo.Blog;
 import semi.blozo.develog.post.model.vo.Post;
 import semi.blozo.develog.post.model.vo.PostPagination;
-@WebServlet("/main/*")
+@WebServlet("/main")
 public class ManiServlet extends HttpServlet{
 		@Override
 		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,23 +25,38 @@ public class ManiServlet extends HttpServlet{
 			String path = null;
 			RequestDispatcher dispatcher = null;
 			String message = null;
+			path = "/WEB-INF/views/common/main.jsp";
+			
+			
 			
 			try {
 				MainService service = new MainService();
+		
+				if(req.getParameter("type") == null || Integer.parseInt(req.getParameter("type")) == 1) {
+					
+					List<Post> allList = service.allList();
+					List<Post> readList = service.readList();
+					
+					req.setAttribute("readList", readList);
+					req.setAttribute("allList", allList);
+					req.getRequestDispatcher(path).forward(req, resp);
 				
 				
-			//	int type = Integer.parseInt(req.getParameter("type"));
-				String trend = req.getParameter("trend");
-				
-				System.out.print("값을 넣어야된다" +trend);
-				List<Post> postListAll = service.selectPostListAll();
+				}else {
+					int type = Integer.parseInt(req.getParameter("type"));
+					List<Post> allList = service.trendList();
+					List<Post> readList = service.readList();
+					req.setAttribute("readList", readList);
+					req.setAttribute("allList", allList);
+				System.out.print("값을 넣어야된다" +type);
 
 				//화면출력
-				System.out.println(postListAll);
-				req.setAttribute("postListAll", postListAll);
+				path = "/WEB-INF/views/common/maintrend.jsp";
 				
-				path = "/WEB-INF/views/common/main.jsp";
+				
+				
 				req.getRequestDispatcher(path).forward(req, resp);
+				}
 				
 						
 					
