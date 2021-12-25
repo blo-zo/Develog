@@ -27,15 +27,15 @@
 	            <div class="profile">
 	                <div class="p-img"><img src="https://via.placeholder.com/50x50"></div>
 	                <div class="p-btn">
-	                    <button class="p-choose" id="p-choose" >이미지 업로드</button>
-	                    <button class="p-delete" id="p-delete" >이미지 제거</button>
+	                    <button type="button" class="p-choose" id="p-choose" >이미지 업로드</button>
+	                    <button type="button" class="p-delete" id="p-delete" >이미지 제거</button>
 	                </div>
 	            </div>
 	
 	            <div class="intro" style="position: relative;">
 	                <div class="int-title" style="height: 100; line-height: 88px;">자기소개</div>
 	                <div class="int-input">
-	                    <input type="text" id="nickname" name="nickname" placeholder="닉네임" >
+	                    <input type="text" id="nickname" name="nickname" placeholder="${sessionScope.loginMember.memberNm}" > 
 	                    <input type="text"  class="line-intro " id="line-intro" name="line-intro" placeholder="한 줄 소개" style="margin: 5px 0px 5px 9px;" >
 	                </div>
 	            </div>
@@ -124,7 +124,7 @@
 	          <div class="email-area">
 	              <div class="email-addr-title">이메일 주소</div>
 	              <div class="email-addr">
-	                  <span class="email-span" id="email-span">sample1234@gmail.com</span>
+	                  <span class="email-span" id="email-span">${sessionScope.loginMember.memberEmail}</span>
 	                </div>
 	          </div>
 	
@@ -133,7 +133,7 @@
 	            <div class="pw-title d-title " >비밀번호 변경</div>
 	            <div class="pw-input d-input ">
 	              <div class="pw-btn-area ">
-	                <button class="pw-btn " id="pw-btn" onclick= "location.href ">변경</butt>
+	                <button class="pw-btn " id="pw-btn" onclick="location.href='${contextPath}/Develog/member/updatepw'">변경</button>
 	              </div>
 	            </div>
 	          </div>
@@ -146,7 +146,7 @@
 	        <!-- 회원탈퇴 -->
 	        <div class="content" >
 	          <div class="secession">
-	            <textarea class="secessionForm" id="" cols="55" rows="6.5">
+	            <textarea class="secessionForm" id="" cols="65" rows="6.5">
 	[회원탈퇴 약관]
 	
 	회원탈퇴 신청 전 안내 사항을 확인 해 주세요.
@@ -174,7 +174,7 @@
 	    
 	    <div class="footer">
 	        <div class="btn-area">
-	            <button class="btn-submit">저장</button>
+	            <button class="btn-submit" onclick="return pofileValidate();">저장</button>
 	        </div>
 	    </div>
 	</form>

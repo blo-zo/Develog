@@ -49,6 +49,11 @@
 	
 	
 	
+	
+	
+	
+	
+	
 	<!-- 비밀번호 변경 -->
 	<entry key="updatePw">
 		UPDATE MEMBER SET
@@ -56,4 +61,10 @@
 		WHERE MEMBER_PW = ?
 		AND MEMBER_NO = ?
 	</entry>
+	
+	
+	
+	
+	
+	
 </properties>

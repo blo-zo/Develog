@@ -63,12 +63,6 @@
           
           <div class="blog-search-statistic-box">
   
-            <!-- 블로그 전체 통계 -->
-            <div>
-              <a href="#"><span>전체 통계 조회</span></a>
-            </div>
-  
-  
             <!-- 블로그 검색창(ajax) -->
             
             <form action="#">
@@ -119,7 +113,7 @@
 					              <a href="${contextPath}/blog/${post.memberName}/view?pno=${post.postNo}&cp=${blogPostPagination.currentPage}" class="card-link">
 					  
 					                <div class="card-img-top blog-post-img">
-					                  <!-- 이미지 영역 -->
+					                  <!-- 썸네일 이미지 영역 -->
 					                  <img src="https://via.placeholder.com/800x350" alt="">
 					                </div>
 					    

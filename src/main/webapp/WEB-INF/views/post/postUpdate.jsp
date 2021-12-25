@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="contextPath" value="${pageContext.servletContext.contextPath}" scope="application" />
 
-<title>posting</title>
-<link rel="stylesheet" href="../resources/css/posting.css">
+
+<title>포스트 수정하기</title>
+
+
+<link rel="stylesheet" href="${contextPath}/resources/css/posting.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
    
     <!-- include libraries(jQuery, bootstrap) --> 
@@ -23,16 +27,22 @@
 	<div class="wrapper">
 		<div class="write-area" style="max-width: 80%;">
 			<div class="head-title">
-				<textarea id="head-textarea" class="head-textarea" name="postTitle" placeholder="제목을 입력하세요" maxlength="200" ></textarea>
+				<textarea id="head-textarea" class="head-textarea" name="postTitle" placeholder="제목을 입력하세요" maxlength="200" >${post.postTitle}</textarea>
 			</div><!-- head title -->
 
 			<div class="line"></div>
 
-			<textarea class="summernote" id="summernote" name="postContent" style=" height: fit-content;"></textarea>
+			<textarea class="summernote" id="summernote" name="postContent" style=" height: fit-content;">${post.postContent}</textarea>
 			<!-- content end -->
 
 			<div class="tag-area">
-                <div class="postTags" id="postTags"></div>  <!-- 태그 생성될 영역 -->
+                <div class="postTags" id="postTags">
+                	
+                	<c:forEach items="${tagList}" var="tag">
+                		<span class="tags post-tag">${tag.tagName}<b class="del" onclick="deleteTag(this)">X</b></span>
+                	</c:forEach>
+                
+                </div>  <!-- 태그 생성될 영역 -->
                 <input type="text" class="inputTag" id="inputTag" placeholder="태그를 입력하세요" maxlength="15" >
             </div> <!-- tag-area -->
             
@@ -40,18 +50,19 @@
 		<!-- write area -->
 
 		<footer>
-            <button class="out-area" type="button" onclick="location.href='${contextPath}/main'">
+            <button class="out-area" onclick="location.href='${contextPath}/blog/${loginMember.memberNm}/view/?pno=${post.postNo}&cp=${param.cp}'">
                 <div id="out-image">
                     <img src="${contextPath}/resources/images/boardIcon/arrow.png" id="img-arrow" >
                 </div>
                  <span id="out-span" >나가기</span>
             </button> <!-- /out-area -->
             
-            <div class="btn-area" >
+            <div class="btn-area">
                 <button class="btn-pre-submit" id="btn-pre-submit" type="button"> 
-                    <a style=" color: white; text-decoration : none;">출간하기</a>
+                    <a style=" color: white; text-decoration : none;">수정하기</a>
                 </button>
             </div>    
+    
         </footer>
 	</div><!-- wrapper -->
 
@@ -92,7 +103,7 @@
 							<img src="${contextPath}/resources/images/boardIcon/earth.png" class="img-earth" alt="">
 							<p>전체 공개</p>
 						</button>
-						<button class="lock-btn postStatusBtn openBtn" name="openBtn"  value="503" type="button">
+						<button class="lock-btn postStatusBtn openBtn" name="openBtn"  value="502" type="button">
 							<img src="${contextPath}/resources/images/boardIcon/padlock.png" class="img-lock" alt="">
 							<p>비공개</p>
 						</button>
@@ -107,11 +118,13 @@
 					<div class="category-input">
 						<div class="sort-post dropstart border" data-bs-toggle="dropdown" aria-expanded="false">
 							<select name="categoryCode" id="categoryCode">
+								
 								<c:forEach items = "${category}" var="c">
 								
 									<option value="${c.categoryCode}">${c.categoryName}</option>
 								
 								</c:forEach> 
+							
 							</select>
 						</div>
 					</div>
@@ -119,7 +132,7 @@
 				</div>
 				<div class="set-btns">
 					<button class="btn-cancel" >취소</button>
-					<button class="btn-submit" onclick="return postValidate();">출간하기</button>
+					<button class="btn-submit" onclick="return postValidate();">수정하기</button>
 				</div>
 
 			</div>

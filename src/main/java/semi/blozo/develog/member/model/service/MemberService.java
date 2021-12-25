@@ -35,27 +35,17 @@ public class MemberService {
 		Connection conn = getConnection();
 		int result = dao.signUp(member,conn);
 		
-		
-		
 		if(result>0) { 
-			System.out.println("result" + result);
-			// 회원 소셜 dao 호출
-			
 			int result1 = dao.insertSns(conn);
-				System.out.print("들어가라 소셜"+ result1);
-				
-				
-				if(result1>0) {
-			// 블로그 dao 호출
-				int result2 = dao.insertBlog(conn);	
-				System.out.println("들어가라 블로그" + result2);
-				}
+			if(result1 > 0 ) {
+			int result2 = dao.insertBlog(conn);
 			
-			
-			commit(conn);
 			}
-		else		 rollback(conn);
-		close(conn);		
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
 		return result;
 	}
 

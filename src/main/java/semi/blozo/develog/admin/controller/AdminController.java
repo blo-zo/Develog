@@ -110,7 +110,6 @@ public class AdminController extends HttpServlet {
 			}else if(command.equals("member/warningPlus")) {
 				String[] arr = req.getParameterValues("memberNo"); // 언제 부터 values였지? 자동으로 되어있내
 				int[] memberNo = new int[arr.length-1];
-				System.out.println(arr);
 				for(int i=0; i<arr.length-1; i++) {
 						memberNo[i] = Integer.parseInt(arr[i]);
 				}
@@ -215,9 +214,9 @@ public class AdminController extends HttpServlet {
 				 req.setAttribute("dailyMembers", dailyMembers);
 				 req.setAttribute("dailyPosts", dailyPosts);
 				 
-				 List<Post> listCounts = service.selectListCounts();
-
-				 req.setAttribute("listCounts", listCounts);
+//				 List<Post> listCounts = service.selectListCounts();
+//
+//				 req.setAttribute("listCounts", listCounts);
 				 
 				 path = "/WEB-INF/views/admin/statistics.jsp";
 				 req.getRequestDispatcher(path).forward(req, resp);
@@ -225,11 +224,22 @@ public class AdminController extends HttpServlet {
 			}
 			
 			else if(command.equals("report")) {
+				String searchWord ="";
+				String searchTag = "";
+//				String orderTag = "";
+				if(req.getParameter("searchWord") != null && !req.getParameter("searchWord").equals("")) {
+					searchWord = req.getParameter("searchWord");
+					searchTag = req.getParameterValues("searchTag")[0];
+				}
+//				if(req.getParameter("orderTag") != null) {
+//					orderTag = req.getParameterValues("orderTag")[0];					
+//				}
+				Pagination pagination = service.getPaginationReport(searchWord, searchTag, cp);
+				List<Report> reportList = service.selectReport(searchWord, searchTag, pagination);
 				
-				Pagination pagination = service.getPagination(cp);
-				
-				List<Report> reportList = service.selectReport(pagination);
-				
+				req.setAttribute("searchWord", searchWord);
+				req.setAttribute("searchTag", searchTag);
+//				req.setAttribute("orderTag", orderTag);
 				req.setAttribute("pagination", pagination);
 				req.setAttribute("reportList", reportList);
 				 path = "/WEB-INF/views/admin/report.jsp";
@@ -244,12 +254,22 @@ public class AdminController extends HttpServlet {
 			}
 			
 			else if(command.equals("enquiry")) {
-				Pagination pagination = service.getPagination(cp);
-				
-				List<Enquiry> enquiryList = service.selectEnquiry(pagination);
-				
+				String searchWord ="";
+				String searchTag = "";
+				String orderTag = "";
+				if(req.getParameter("searchWord") != null && !req.getParameter("searchWord").equals("")) {
+					searchWord = req.getParameter("searchWord");
+					searchTag = req.getParameterValues("searchTag")[0];
+				}
+				if(req.getParameter("orderTag") != null) {
+					orderTag = req.getParameterValues("orderTag")[0];					
+				}
+				Pagination pagination = service.getPaginationEnquiry(searchWord, searchTag, orderTag, cp);
 
-				
+				List<Enquiry> enquiryList = service.selectEnquiry(searchWord, searchTag, orderTag, pagination);
+				req.setAttribute("searchWord", searchWord);
+				req.setAttribute("searchTag", searchTag);
+				req.setAttribute("orderTag", orderTag);
 				req.setAttribute("pagination", pagination);
 				req.setAttribute("enquiryList", enquiryList);
 				 path = "/WEB-INF/views/admin/enquiry.jsp";

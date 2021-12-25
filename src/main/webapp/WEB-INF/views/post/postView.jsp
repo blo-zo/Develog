@@ -61,15 +61,14 @@
 	            <c:choose>
 	            	<c:when test="${loginMember.memberNo == post.memberNo}">
 			            <div class="post-menu2">
-			              	<span onclick="showStatistic();">통계</span> /
 			              	<span onclick="updateForm();">수정</span> /
 		              		<span onclick="deletePost();">삭제</span>
 			            </div>
 	            	</c:when>
 	            	
 	            	<c:otherwise>
-			            <div class="post-menu2" style="display: none;">
-			            	<a href="#">신고하기</a>
+			            <div class="post-menu2">
+			            	<span onclick="">신고하기</span>
 		            	</div>
 	            	</c:otherwise>
 	            </c:choose>
@@ -129,7 +128,16 @@
 	            </div>
 	            <div class="post-profile-text">
 	              <h1>${post.memberName}</h1>
-	              <p>${post.intro}</p>
+	              <p>
+	              	<c:choose>
+	              		<c:when test="${post.intro == '한 줄 소개'}">
+	              		</c:when>
+	              		
+	              		<c:otherwise>
+			             	 ${post.intro}
+	              		</c:otherwise>
+	              	</c:choose>
+             	 </p>
 	            </div>
 	          </div>
 	
@@ -177,7 +185,17 @@
 	            <!-- 좋아요 아이콘 -->
 	            <div class="favorite-share-area">
 	              <div class="favorite-share-icon" id="like-btn">
-					<img src="${contextPath}/resources/images/KYJ/emptyHeart.svg">
+					<c:choose>
+						
+						<c:when test="${!empty likeYN}">
+							<img class="liked" src="${contextPath}/resources/images/KYJ/filledHeart.svg">
+						</c:when>
+						
+						<c:otherwise>
+							<img src="${contextPath}/resources/images/KYJ/emptyHeart.svg">
+						</c:otherwise>
+							              
+					</c:choose>
 	              </div>
 	              
 	            </div>
@@ -326,7 +344,7 @@
 	                  <span class="by_name">by <b>Author</b></span>
 	                  <div class="likes">
 	                    <svg id="ht"viewBox="0 0 24 24"><path fill="currentColor" d="M18 1l-6 4-6-4-6 5v7l12 10 12-10v-7z"></path></svg>
-	                    n
+	                    
 	                  </div>
 	                </div>
 	                          

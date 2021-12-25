@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import semi.blozo.develog.board.model.vo.TagVO;
 import semi.blozo.develog.member.model.vo.Member;
 import semi.blozo.develog.post.model.service.PostService;
 import semi.blozo.develog.post.model.service.ReplyService;
@@ -91,6 +92,7 @@ public class PostController extends HttpServlet{
 							
 							List<Post> postList = service.selectBlogPostList(blogPostPagination, memberName);
 							
+							// list에서 post 하나씩 꺼내와 post.getPostContent().substring(0,50);
 							
 							// 화면 출력하기
 							req.setAttribute("blog", blog);
@@ -137,6 +139,13 @@ public class PostController extends HttpServlet{
 								// + 댓글 조회
 								List<PostReply> prList = new ReplyService().selectPostReplyList(postNo);
 								
+								// 좋아요 여부 저장용
+								int likeYN = service.likedPost(postNo, memberNo);
+								
+								if(likeYN == 1) {	// 좋아요한 게시글일 경우
+									req.setAttribute("likeYN", likeYN);
+								}
+								
 								req.setAttribute("prList", prList);
 								req.setAttribute("replyCount", prList.size());
 								req.setAttribute("post", post);
@@ -170,7 +179,13 @@ public class PostController extends HttpServlet{
 							// 2. 카테고리 목록 조회
 							// List<Category> category = service.selectCategory();
 							
+							// 3. 태그 목록 조회하기
+							List<TagVO> tagList = service.selectTagList(postNo);
+							
+							System.out.println(tagList);
+							
 							req.setAttribute("post", post);
+							req.setAttribute("tagList", tagList);
 							// req.setAttribute("category", category);
 							
 							path = "/WEB-INF/views/post/postUpdate.jsp";
@@ -298,12 +313,7 @@ public class PostController extends HttpServlet{
 							if(loginMember != null) memberNo = loginMember.getMemberNo();
 							int postNo = Integer.parseInt(req.getParameter("postNo"));
 							
-							
-							System.out.println(postNo);
-							
 							int favoriteCount = service.likePost(memberNo, postNo);
-							
-							System.out.println(favoriteCount);
 							
 							resp.getWriter().print(favoriteCount);
 							

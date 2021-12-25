@@ -7,14 +7,17 @@ public class Member {
 	private String memberPw; // 회원 비밀번호
 	private String memberNm; // 회원 이름
 	private String memberEmail; // 회원 이메일
+	
 	private Date enrollDt; // 회원 가입일
 	private String intro;  	 // 한줄 소개
 	private int vlolationCount; // 경고수
 	private Date modifyDt; // 수정일
+	
 	private int statusCd;// 회원상태코드
 	private int gradeCd; // 회원 등급 코드
 	private int blogNo; //블로그넘버
 	private String blogTitle; // 블로그제목
+	
 	public Member() {
 		// TODO Auto-generated constructor stub
 	}
