@@ -8,7 +8,7 @@
 
 
 
-	<form action="profile" method="POST" name="profileForm" role="form" onsubmit="return validate();">
+	<form action="profile" enctype="multipart/form-data"  method="POST" name="profileForm" role="form" onsubmit="return validate();">
 		<div class="category">PROFILE</div>
 	    
 	    <main class="main"> 
@@ -39,15 +39,15 @@
 	            <div class="intro" style="position: relative;">
 	                <div class="int-title" style="height: 100; line-height: 88px;">자기소개</div>
 	                <div class="int-input">
-	                    <input type="text" id="nickname" name="nickname" value="${loginMember.memberNm}" placeholder="닉네임" > 
-	                    <input type="text"  class="line-intro " id="line-intro" name="line-intro" placeholder="한 줄 소개" style="margin: 5px 0px 5px 9px;" >
+	                    <input type="text" id="nickname" name="nickname" value="${profileVO.memberNm}" placeholder="닉네임" > 
+	                    <input type="text" class="line-intro" id="line-intro" name="line-intro" value="${loginMember.memberNm}"  placeholder="한 줄 소개" style="margin: 5px 0px 5px 9px;" >
 	                </div>
 	            </div>
 	
 	            <div class="devel-intro">
 	                <div class="d-title">디벨로그 제목</div>
 	                <div class="d-input">
-	                    <input type="text" id="devel-input" name="devel-input" placeholder="디벨로그 제목" >
+	                    <input type="text" id="devel-input" name="devel-input" value="" placeholder="디벨로그 제목" >
 	                </div>
 	            </div>
 	
@@ -66,7 +66,7 @@
 	              <img class="email-img" id="email-img" src="${contextPath}/resources/images/boardIcon/email.png">
 	            </div>
 	            <div class="email-input">
-	                <input type="text"  class="line-intro" id="emailContent" name="" placeholder="이메일을 입력해주세요." size=35 >
+	                <input type="text"  class="line-intro" id="emailContent" name="" value="" placeholder="이메일을 입력해주세요." size=35 >
 	            </div>
 	          </div>
 	
