@@ -104,11 +104,15 @@ public class PostController extends HttpServlet{
 							
 							
 							// 블로그 태그 조회
+
+
+
 							List<TagVO> tagListAll = service.selectBlogTagList(blog.getBlogNo());
 							
 							System.out.println(blog.getBlogNo());
 							System.out.println(tagListAll);
 							
+
 							
 							
 							
@@ -116,7 +120,7 @@ public class PostController extends HttpServlet{
 							req.setAttribute("blog", blog);
 							req.setAttribute("blogPostPagination", blogPostPagination);
 							req.setAttribute("postList", postList);
-							req.setAttribute("tagListAll", tagListAll);
+//							req.setAttribute("tagListAll", tagListAll);
 							
 							
 							path = "/WEB-INF/views/post/blogMain.jsp";
