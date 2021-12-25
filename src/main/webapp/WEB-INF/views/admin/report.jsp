@@ -273,7 +273,18 @@ section>div:nth-child(4) {
 
 	  		function refresh1(){
 			  return true
-	  }
+			  }
+
+			  function changeSelect(){
+				const select = document.getElementsByTagName("select")[0]
+				const placeholder = document.getElementById("search-area").firstElementChild
+				const val = select.options[select.selectedIndex].value
+				if(val == 'createDate'){
+					placeholder.setAttribute("placeholder", 'YYMMDD - YYMMDD OR YYMMDD')
+				}else{
+					placeholder.setAttribute("placeholder", '검색어를 입력해주세요')
+				}
+				}
 	</script>
 </body>
 </body>

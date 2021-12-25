@@ -169,8 +169,9 @@ public class AdminDAO {
 			
 			while(rs.next()) {
 //				String content = rs.getString("POST_CONTENT").substring(0, 12);
-				// 15 글자 넘어가면 안되는 이유가 0~12글자를 자를수 없을 정도로 작은 게 있기 때문이다
-				String postContent = XSS.replaceParameter(rs.getString("POST_CONTENT"));
+//				 15 글자 넘어가면 안되는 이유가 0~12글자를 자를수 없을 정도로 작은 게 있기 때문이다
+				String postContent = rs.getString("POST_CONTENT");
+				postContent = postContent.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>","");
 				Post post = new Post();
 				post.setPostNo(rs.getInt("POST_NO"));
 				post.setPostTitle(rs.getString("POST_TITLE"));
