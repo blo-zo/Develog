@@ -111,6 +111,24 @@ public class ReplyService {
 		
 		return result;
 	}
+
+
+	/** 댓글 신고하기
+	 * @param replyNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int reportReply(int replyNo) throws Exception{
+
+		Connection conn = getConnection();
+		
+		int result = dao.reportReply(replyNo, conn);
+		
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		return result;
+	}
 	
 	
 	

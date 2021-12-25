@@ -4,9 +4,23 @@ public class TagVO {
 	private int tagCode;
 	private String tagName;
 	private int postNo;
+	private int postStatusCode;	// 태그가 작성된 포스트의 상태 번호
 	
 	
 	public TagVO() {}
+	
+	
+
+	public int getPostStatusCode() {
+		return postStatusCode;
+	}
+
+
+
+	public void setPostStatusCode(int postStatusCode) {
+		this.postStatusCode = postStatusCode;
+	}
+
 
 
 	public int getTagCode() {
@@ -39,10 +53,14 @@ public class TagVO {
 	}
 
 
+
 	@Override
 	public String toString() {
-		return "TagVO [tagCode=" + tagCode + ", tagName=" + tagName + ", postNo=" + postNo + "]";
+		return "TagVO [tagCode=" + tagCode + ", tagName=" + tagName + ", postNo=" + postNo + ", postStatusCode="
+				+ postStatusCode + "]";
 	}
+
+
 
 	
 	

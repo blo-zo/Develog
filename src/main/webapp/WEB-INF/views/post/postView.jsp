@@ -19,6 +19,53 @@
 	<jsp:include page="blogHeader.jsp"/>
 	<%-- include할 jsp 파일 경로 작성 --%>
 	
+<!-- 카테고리 오프캔버스 -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbar">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="category-menu-title" style="font-weight: bold; font-size: 30px; cursor:pointer;" onclick="location.href='${contextPath}/main'">
+        Develog
+      </h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <ul class="list-group category-list">
+          <li class="list-group-item category">전체 포스트</li>
+          <li class="list-group-item category">카테고리 1</li>
+          <li class="list-group-item category">카테고리 2</li>
+          <li class="list-group-item category">카테고리 3</li>
+          <li class="list-group-item category">카테고리 4</li>
+        </ul>
+        
+        <c:if test="${post.memberNo == loginMember.memberNo}">
+        
+	        <div id="controller-menu" style="text-align: right; margin: 20px; margin-top: 50px;">
+	
+	          <div class="category-control">
+	
+	            <button class="category-control-btn" id="add-category-btn">
+	              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-5v5h-2v-5h-5v-2h5v-5h2v5h5v2z"/></svg>
+	            </button>
+	            <label for="add-category-btn" style="cursor: pointer;">카테고리 추가</label>
+	
+	          </div>
+	
+	          <div class="category-control">
+	          
+	            <button class="category-control-btn" id="remove-category-btn">
+	              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-12v-2h12v2z"/></svg>
+	            </button>
+	            <label for="remove-category-btn" style="cursor: pointer;">카테고리 삭제</label>
+	          
+	          </div>
+	
+	        </div>
+        
+        </c:if>
+        
+        
+    </div>  
+  </div>
+	
 	
 	  <!-- 본문 -->
 	  <main style="width: 100%;">
@@ -152,16 +199,24 @@
 	        
 	        <div id="blog-tag-list">
 	          <span>태그목록</span>
-	          <hr class="">
-	    
+	          <hr class="hr-small">
 	          <div class="blog-tag-list-box">
 	    
-	            <c:forEach items="${tagListAll}" var="tag">
-				
-					<a href="#"><span>${tag.tagName}</span></a>
-				
-				</c:forEach>
-	    
+	          	<c:choose>
+          		
+	          		<c:when test="${!empty tagListAll}">
+	          			<c:forEach items="${tagListAll}" var="tag">
+	          				<c:if test="${tag.postStatusCode eq 500 }">
+								<a href="#"><span>${tag.tagName}</span></a>
+	          				</c:if>
+						</c:forEach>
+	          		</c:when>
+	          		
+	          		<c:otherwise>
+	          			<p style="color:#323232; opacity:0.8; font-size:15px;"> 태그가 없습니다. </p>
+	          		</c:otherwise>
+          		
+          		</c:choose>
 	          </div>
 	        </div>
 	
@@ -200,7 +255,7 @@
 	
 	            <!-- 공유하기 아이콘 -->
 	            <div class="favorite-share-area">
-	              <div class="favorite-share-icon">
+	              <div class="favorite-share-icon" id="share-btn">
 	                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 7c2.761 0 5 2.239 5 5s-2.239 5-5 5-5-2.239-5-5 2.239-5 5-5zm11.122 12.065c-.073.301-.122.611-.122.935 0 2.209 1.791 4 4 4s4-1.791 4-4-1.791-4-4-4c-1.165 0-2.204.506-2.935 1.301l-5.488-2.927c-.23.636-.549 1.229-.943 1.764l5.488 2.927zm7.878-15.065c0-2.209-1.791-4-4-4s-4 1.791-4 4c0 .324.049.634.122.935l-5.488 2.927c.395.535.713 1.127.943 1.764l5.488-2.927c.731.795 1.77 1.301 2.935 1.301 2.209 0 4-1.791 4-4z"/></svg>
 	              </div>
 	            </div>
@@ -360,7 +415,7 @@
 	  
 	  <!-- ********************* 신고하기 모달 ***************************** -->
 	  
-	  <div class="modal" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal" id="reportPostModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       	<div class="modal-dialog modal-lg">
        	  <div class="modal-content">
             <div class="modal-header">
@@ -370,29 +425,45 @@
 	            
             <div class="modal-body">
                <section id="modal-section">
-                  <div>
-                     <div class="info input-modal">
-                        <!-- nn번 게시글 <br> 유형 : <span>홍보</span> -->
-                     </div>
-                     
-                     <div class="info input-modal">
-                        <!-- userid@email.com <br> 2021-11-10 <br> 미해결 -->
-                     </div>
-                     
-                  </div>
-	                  <div>
-	                     <div class="content" input-modal>&nbsp;신고내용</div>
-	                     <div class="content">
-	                        <div class="input-modal">
-                                <textarea name="" id="" cols="30" rows="10">무야호!</textarea>
-                            </div>
-	                     </div>
-	                  </div>
+                 <div>
+                    <div class="content" input-modal>&nbsp;신고내용</div>
+                    <div class="content">
+                       <div class="input-modal">
+                              <textarea name="" id="" cols="30" rows="10">무야호!</textarea>
+                          </div>
+                    </div>
+                 </div>
                </section>
-             </div>
-           </div>
-         </div>
-   	   </div>
+            </div>
+          </div>
+        </div>
+ 	  </div>
+ 	  
+ 	  
+	  <div class="modal" id="reportReplyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      	<div class="modal-dialog modal-lg">
+       	  <div class="modal-content">
+            <div class="modal-header">
+               <span style="font-size: 50px; font-weight: bold;"><img style="width:50px; height:50px; margin-right:5px;" src="${contextPath}/resources/images/KYJ/reportIcon.png"> 신고하기</span>
+               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+	            
+            <div class="modal-body">
+               <section id="modal-section">
+                 <div>
+                    <div class="content" input-modal>&nbsp;신고내용</div>
+                    <div class="content">
+                     	<div class="input-modal">
+                            <textarea name="reportReplyContent" class="reportReplyContent" cols="30" rows="10">무야호!</textarea>
+                     	</div>
+						<button class="btn btn-primary">제출</button>
+                    </div>
+                 </div>
+               </section>
+            </div>
+          </div>
+        </div>
+ 	  </div>
 	  
 	  
 	  
@@ -433,6 +504,10 @@ const postNo = "${post.postNo}";
 
 // 현재 게시글 작성자명
 const memberName = "${post.memberName}";
+
+// 현재 블로그 번호
+const blogNo = "${loginMember.blogNo}";
+
 
 // 수정 전 댓글 요소를 저장할 변수 (댓글 수정 시 사용)
 let beforeReplyRow;
