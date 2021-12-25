@@ -104,15 +104,20 @@ public class PostController extends HttpServlet{
 							
 							
 							// 블로그 태그 조회
-<<<<<<< HEAD
+
 //							List<TagVO> tagListAll = service.selectBlogTagList(postList.get(1).getBlogNo());
-=======
+
+
+
+
+
 							List<TagVO> tagListAll = service.selectBlogTagList(blog.getBlogNo());
 							
 							System.out.println(blog.getBlogNo());
 							System.out.println(tagListAll);
 							
->>>>>>> 2a2820e (공유벝튼 누르면 url 복사되게 함)
+
+
 							
 							
 							

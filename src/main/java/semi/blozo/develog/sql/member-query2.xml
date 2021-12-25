@@ -37,7 +37,7 @@
 	</entry>
 	
 	<!-- 회원정보 수정 , 블로그 타이틀 -->
-	<entry key = "updateProfileTitle">
+	<entry key = "updateProfileBlog">
 		UPDATE BLOG SET BLOG_TITLE = ?
 		WHERE MEMBER_NO = ?
 	
