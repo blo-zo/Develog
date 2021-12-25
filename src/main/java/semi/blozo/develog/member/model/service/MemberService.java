@@ -36,11 +36,20 @@ public class MemberService {
 		int result = dao.signUp(member,conn);
 		
 		if(result>0) { 
+			// sns
 			int result1 = dao.insertSns(conn);
-			if(result1 > 0 ) {
-			int result2 = dao.insertBlog(conn);
-			
-			}
+			System.out.println("sns 들어가면 1임! :"+ result1);
+				if(result1 > 0 ) {
+					// 블로그
+					int result2 = dao.insertBlog(conn);
+					System.out.println("블로그 들어가면 1임 :"+ result2);
+				
+					if(result2 >0) {
+						// 카테고리
+						int result3 = dao.insertCategory(conn);
+						System.out.println("카테고리 들어가면 1임 :"+ result3);
+					};
+				}
 			commit(conn);
 		}else {
 			rollback(conn);

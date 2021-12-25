@@ -3,13 +3,14 @@
 <properties>
 	<!--로그인 -->
 	<entry key = "login">
-	SELECT MEMBER_NO , MEMBER_PW , MEMBER_NM , MEMBER_EMAIL , ENROLL_DT,
-		  	INTRO , VIOLATION_COUNT , MODIFY_DT , STATUS_CD ,GRADE_CD
-		  	FROM MEMBER
-		  	WHERE MEMBER_EMAIL = ?
-		  	AND MEMBER_PW = ?
-		  	AND STATUS_CD != 201
-		  	AND GRADE_CD != 101
+		SELECT MEMBER_NO , MEMBER_PW , MEMBER_NM , MEMBER_EMAIL , ENROLL_DT,
+           INTRO , VIOLATION_COUNT , MODIFY_DT , STATUS_CD ,GRADE_CD, BLOG_NO
+           FROM MEMBER
+            JOIN BLOG USING(MEMBER_NO)
+           WHERE MEMBER_EMAIL = ?
+           AND MEMBER_PW = ?
+           AND STATUS_CD != 201
+           AND GRADE_CD != 101  
 	
 	</entry>
 	<!-- 회원가입  -->
@@ -28,6 +29,12 @@
 	<!-- 블로그 데이터 삽입 -->
 	<entry key="insertBlog">
 	INSERT INTO BLOG VALUES(SEQ_BLOG.NEXTVAL , DEFAULT , SEQ_MEMBER_NO.CURRVAL)
+	
+	</entry>
+	<!-- 카테고리 데이터 삽입  -->
+	<entry key="insertCategory">
+	
+	INSERT INTO CATEGORY VALUES( SEQ_CATEGORY.NEXTVAL, DEFAULT, SEQ_BLOG.CURRVAL)
 	
 	</entry>
 	
