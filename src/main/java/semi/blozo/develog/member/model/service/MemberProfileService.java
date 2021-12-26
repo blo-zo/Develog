@@ -77,16 +77,28 @@ public class MemberProfileService {
 			if(result > 0) {
 				// 3) 소셜정보
 				result = dao.updateProfileSns(profileVO,  conn);
-				
-				if(result > 0) {
-					// 3) 프로필 이미지 
-					
-					
-						result= dao.updateMemberImg(memberImg, conn);						
-					
-					System.out.println("프로필이미지 " + result);
-					commit(conn);
-				} else { rollback(conn); }
+				System.out.println("SNS 업데이트 " + result);
+				if(result >0) {
+					// 4) 회원 이미지 유무 조회
+					result = dao.selectMemberImg(profileVO,  conn);
+					System.out.println("이미지 유무 조회 " + result);
+					if(result >0) {
+						// 4-1) 회원 이미지 있을 시 수정
+						result = dao.updateMemberImg(memberImg, conn);	
+						System.out.println("이미지 있을 때 " + result);
+					}else {
+						// 4-2) 회원 이미지 없을 시 삽입
+						result = dao.insertMemberImg(memberImg, conn);
+						System.out.println("이미지 없을 때 " + result);
+					}
+					if(result >0) {
+						conn.commit();						
+					}else {
+						conn.rollback();
+					}
+				}else {
+					conn.rollback();
+				}
 				
 			} else { rollback(conn); }
 			
@@ -100,6 +112,31 @@ public class MemberProfileService {
 
 
 	}
+
+
+//	public int updateMemberImg(ProfileImgVO memberImg) throws Exception{
+//		Connection conn = getConnection();
+//		
+//		int result = dao.updateMemberImg(memberImg, conn);	
+//		
+//		if(result > 0) conn.commit();
+//		else		   conn.rollback();
+//		
+//		return result;
+//	
+//	}
+//
+//
+//	public int insertMemberImg(ProfileImgVO memberImg) throws Exception {
+//		Connection conn = getConnection();
+//		
+//		int result = dao.insertMemberImg(memberImg, conn);
+//		
+//		if(result > 0) conn.commit();
+//		else		   conn.rollback();
+//	
+//		return result;
+//	}
 
 
 

@@ -63,8 +63,18 @@
 		MEMBER_IMG_NM =?,
 		MEMBER_IMG_ORIGINAL = ?,
 		MEMBER_IMG_PATH = ?
-		AND MEMBER_NO = ?
+		WHERE MEMBER_NO = ?
 	
+	</entry>
+
+	<!-- 회원 정보 이미지 삽입 -->
+	<entry key = "insertMemberImg">
+		INSERT INTO MEMBER_IMG VALUES(SEQ_MEMBER_IMG.NEXTVAL, ?, ?, DEFAULT, ?, ?)
+	</entry>
+
+	<!-- 회원정보 이미지 유무 조회 -->
+	<entry key = "selectMemberImg">
+		SELECT * FROM MEMBER_IMG WHERE MEMBER_NO = ?
 	</entry>
 	
 	
