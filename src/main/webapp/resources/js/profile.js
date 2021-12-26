@@ -80,4 +80,35 @@ function pofileValidate() {
 	document.updateForm.submit();
 }
 
+function secession(){
+	const secessionCheck = document.getElementById("agree")
+	if(secessionCheck.checked){
+		if(confirm("정말로 탈퇴하시겠습니까?")){
 
+			$.ajax({
+				
+					url : contextPath + "/member/secession",
+					data : {"memberNo" : memberNo},
+					type : "GET",
+					success : function(message){
+								alert(message)
+								if(message == "회원탈퇴를 성공했습니다."){
+									location.replace(contextPath)
+									
+								}else{
+
+								}
+							  },
+								
+					error : function(req, status, error){
+								console.log("ajax 실패");
+								console.log(req.responseText);
+								console.log(status);
+								console.log(error);
+							}
+								
+				
+			})
+		}
+	}
+}

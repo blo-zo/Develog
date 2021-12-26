@@ -246,6 +246,22 @@ public class MemberProfileDAO {
 		return result;
 	}
 
+	public int updateSecession(int memberNo, Connection conn) throws Exception {
+		int result = 0;
+		try {
+			String sql = prop.getProperty("updateSecession");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+		
+		return result;
+		
+	}
+
 	
 
 	// 회원 탈퇴
