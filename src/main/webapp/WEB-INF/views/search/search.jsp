@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/search.css">
 </head>
 <body>
-
+  ${searchPost}
 	<!-- 헤더 -->
   <header class="jun-header">
 
