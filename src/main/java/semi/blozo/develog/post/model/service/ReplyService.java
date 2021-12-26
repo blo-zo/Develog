@@ -115,21 +115,22 @@ public class ReplyService {
 
 	/** 댓글 신고하기
 	 * @param replyNo
+	 * @param memberNo
+	 * @param reportReplyContent
 	 * @return result
 	 * @throws Exception
 	 */
-	public int reportReply(int replyNo) throws Exception{
-
+	public int reportReply(int replyNo, int memberNo, String reportReplyContent) throws Exception{
+		
 		Connection conn = getConnection();
-		
-		int result = dao.reportReply(replyNo, conn);
-		
+		int result = dao.reportReply(replyNo, memberNo, reportReplyContent, conn);
 		if(result>0) commit(conn);
 		else rollback(conn);
-		
 		close(conn);
 		return result;
 	}
+
+
 	
 	
 	

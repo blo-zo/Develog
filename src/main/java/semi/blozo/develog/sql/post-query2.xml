@@ -24,7 +24,6 @@
 	
 	
 	<!-- 블로그 조회 후 결과가 있으면 메인페이지 출력 -->
-	<!-- SNS 정보는 후순위로.. -->
 	<entry key="selectBlog">
 		SELECT BLOG_NO, BLOG_TITLE, BLOG.MEMBER_NO, MEMBER_NM, INTRO
         , SNS_EMAIL, SNS_GIT, SNS_TWITT, SNS_FBOOK, SNS_HOME
@@ -36,6 +35,12 @@
 	
 	
 	<!-- 블로그 태그 조회는 따로 빼야할듯 -->
+	
+	<!-- 프로필 이미지 조회 -->
+	<entry key="selectProfImg">
+		SELECT * FROM MEMBER_IMG
+		WHERE MEMBER_NO = (SELECT MEMBER_NO FROM BLOG WHERE BLOG_NO = ?)
+	</entry>
 	
 	
 	
@@ -196,6 +201,13 @@
 		UPDATE REPLY SET
 		REPLY_STATUS_CD = 603
 		WHERE REPLY_NO = ?
+	</entry>
+	
+	
+	<!-- 댓글 신고하기 -->
+	<entry key="reportReply">
+		INSERT INTO REPLY_REPORT
+		VALUES(SEQ_REPLY_REPORT.NEXTVAL, ?, DEFAULT, DEFAULT, ?, ? )
 	</entry>
 	
 	

@@ -55,10 +55,10 @@
 						<c:otherwise>
 						  
 						  <c:if test="${loginMember.memberNo == post.memberNo}">
-						  	<span onclick="">삭제하기</span>
+						  	<span onclick="deleteReply(${reply.replyNo})">삭제하기</span>
 						  </c:if>
 
-		                  <span onclick="reportReply(${reply.replyNo})">신고하기</span>
+		                  <span onclick="reportReply(${reply.replyNo}, this)">신고하기</span>
 
 						</c:otherwise>
 

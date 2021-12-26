@@ -27,14 +27,31 @@ public class Post {
 	private String categoryName;
 	private String postStatusName;
 	
-	private PostImage postImg;
+	private PostImage postImg;		// 썸네일 이미지
+	private MemberImage profileImg;	// 프로필 이미지
 	private List<TagVO> tagList;
+	
 	
 	public Post() { 	}
 
 	
 	
 	
+	public MemberImage getProfileImg() {
+		return profileImg;
+	}
+
+
+
+
+	public void setProfileImg(MemberImage profileImg) {
+		this.profileImg = profileImg;
+	}
+
+
+
+
+
 	public List<TagVO> getTagList() {
 		return tagList;
 	}
@@ -196,8 +213,12 @@ public class Post {
 				+ favoriteCount + ", blogNo=" + blogNo + ", categoryCode=" + categoryCode + ", postStatusCode="
 				+ postStatusCode + ", memberNo=" + memberNo + ", memberName=" + memberName + ", blogTitle=" + blogTitle
 				+ ", intro=" + intro + ", categoryName=" + categoryName + ", postStatusName=" + postStatusName
-				+ ", postImg=" + postImg + ", tagList=" + tagList + "]";
+				+ ", postImg=" + postImg + ", profileImg=" + profileImg + ", tagList=" + tagList + "]";
 	}
+
+
+
+
 
 	
 

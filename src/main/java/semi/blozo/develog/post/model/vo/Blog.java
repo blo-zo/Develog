@@ -29,6 +29,10 @@ public class Blog {
 	private String snsFbook;
 	private String snsHome;
 	
+	// 프로필 이미지
+	private MemberImage profileImg;	// 프로필 이미지
+	private List<PostCategory> categoryList;
+	
 	
 //	private List<SNS> memberSns; // SNS VO 만들고 리스트로 얻어오기?
 	
@@ -37,6 +41,39 @@ public class Blog {
 	
 	
 	
+	
+	public MemberImage getProfileImg() {
+		return profileImg;
+	}
+
+
+
+
+
+	public void setProfileImg(MemberImage profileImg) {
+		this.profileImg = profileImg;
+	}
+
+
+
+
+
+	public List<PostCategory> getCategoryList() {
+		return categoryList;
+	}
+
+
+
+
+
+	public void setCategoryList(List<PostCategory> categoryList) {
+		this.categoryList = categoryList;
+	}
+
+
+
+
+
 	public int getMemberSnsNo() {
 		return memberSnsNo;
 	}
@@ -196,14 +233,19 @@ public class Blog {
 
 
 
+
 	@Override
 	public String toString() {
 		return "Blog [blogNo=" + blogNo + ", blogName=" + blogName + ", memberNo=" + memberNo + ", memberName="
 				+ memberName + ", intro=" + intro + ", categoryCode=" + categoryCode + ", categoryName=" + categoryName
 				+ ", tagCode=" + tagCode + ", tagName=" + tagName + ", memberSnsNo=" + memberSnsNo + ", snsEmail="
 				+ snsEmail + ", snsGit=" + snsGit + ", snsTwitt=" + snsTwitt + ", snsFbook=" + snsFbook + ", snsHome="
-				+ snsHome + "]";
+				+ snsHome + ", profileImg=" + profileImg + ", categoryList=" + categoryList + "]";
 	}
+
+
+
+
 
 	
 	
