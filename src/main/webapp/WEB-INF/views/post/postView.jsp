@@ -262,6 +262,7 @@
 	          
 	          </div>
 	
+	          <%-- 
 	          
 	          <div class="post-index">
 	  
@@ -284,6 +285,8 @@
 	            </a>
 	  
 	          </div>
+	          
+	          --%>
 	
 	        </div>
 	
@@ -328,6 +331,7 @@
  	  </div>
  	  
  	  
+ 	  <%-- 댓글 신고하기.. 댓글 번호 얻어오는 방법? --%>
 	  <div class="modal" id="reportReplyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       	<div class="modal-dialog modal-lg">
        	  <div class="modal-content">
@@ -340,12 +344,11 @@
                <section id="modal-section">
                  <div>
                     <div class="content" input-modal>&nbsp;신고내용</div>
+                    신고할 댓글 ${reply.replyNo}
                     <div class="content">
                      	<div class="input-modal">
                             <form action="reply/report" method="POST">
-                       		  <input type="hidden" name="memberName" value="${post.memberName}">	
-                       		  <input type="hidden" name="reportReplyNo" value="${reply.replyNo}">	
-                              <textarea name="reportReplyContent" cols="30" rows="10" placeholder="신고내용 입력" style="resize:none;"></textarea>
+                              <textarea name="reportReplyContent" class="reportReplyContent" cols="30" rows="10" placeholder="신고내용 입력" style="resize:none;"></textarea>
 							  <button class="btn btn-primary report-btn">제출</button>                       		
                        		</form>
                      	</div>
@@ -364,6 +367,8 @@
 		<input type="hidden" name = "pno" value="${param.pno}">
 		<input type="hidden" name = "memberName" value="${post.memberName}">
 		</form>
+		
+		<%-- 댓글 신고에 사용할 replyNo, content --%>
 		
 <script>
 

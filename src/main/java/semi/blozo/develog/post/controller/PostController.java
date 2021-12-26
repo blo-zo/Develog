@@ -29,6 +29,7 @@ import semi.blozo.develog.member.model.vo.Member;
 import semi.blozo.develog.post.model.service.PostService;
 import semi.blozo.develog.post.model.service.ReplyService;
 import semi.blozo.develog.post.model.vo.Blog;
+import semi.blozo.develog.post.model.vo.MemberImage;
 import semi.blozo.develog.post.model.vo.Post;
 import semi.blozo.develog.post.model.vo.PostCategory;
 import semi.blozo.develog.post.model.vo.PostImage;
@@ -109,6 +110,11 @@ public class PostController extends HttpServlet{
 
 							List<TagVO> tagListAll = service.selectBlogTagList(blog.getBlogNo());
 							
+							// 블로그 프로필 이미지 조회
+							MemberImage profileImg = service.selectProfImg(blog.getBlogNo());
+							blog.setProfileImg(profileImg);
+							
+							
 							
 							// 화면 출력하기
 							req.setAttribute("blog", blog);
@@ -116,6 +122,7 @@ public class PostController extends HttpServlet{
 							req.setAttribute("postList", postList);
 							req.setAttribute("tagListAll", tagListAll);
 							req.setAttribute("categoryList", categoryList);
+							req.setAttribute("profileImg", profileImg);
 							
 							
 							path = "/WEB-INF/views/post/blogMain.jsp";
@@ -249,11 +256,15 @@ public class PostController extends HttpServlet{
 							// 로그인멤버에 블로그번호 세팅되어있나 확인해보기
 							int blogNo = ((Member)req.getSession().getAttribute("loginMember")).getBlogNo();
 							
-							// ****************** 테스트용 임의로 지정 ***************************
-							blogNo = 21;
 							
 							// 수정할 게시글 번호 얻어오기 (insert와의 차이점)
 							int postNo = Integer.parseInt(mReq.getParameter("pno"));
+							
+							
+							System.out.println("포스트 수정 테스트 ==============================");
+							System.out.println("블로그 번호 " + blogNo);
+							System.out.println("포스트 번호 " + postNo);
+							
 							
 							PostVO postVO = new PostVO();
 							
@@ -263,6 +274,8 @@ public class PostController extends HttpServlet{
 							postVO.setPostStatusCode(postStatusCode);
 							postVO.setBlogNo(blogNo);
 							postVO.setPostNo(postNo);
+							
+							System.out.println("수정 내용을 담은 정보 " + postVO);
 								
 							// 태그
 							String[] tags = mReq.getParameterValues("tags");
@@ -278,7 +291,8 @@ public class PostController extends HttpServlet{
 								}
 							}
 							
-							System.out.println(tagVOList);
+							System.out.println("수정하거나 추가한 태그 : " + tagVOList);
+							
 							
 							// 썸네일 이미지 처리 
 							// 2) 파일 형식의 파라미터
@@ -302,6 +316,8 @@ public class PostController extends HttpServlet{
 									thumbImg.setPostImgPath(filePath); // 파일이 있는 주소 경로
 									
 								}
+								
+								System.out.println("썸네일 이미지 정보" + thumbImg);
 														
 							}
 							
@@ -465,18 +481,25 @@ public class PostController extends HttpServlet{
 							
 							
 							// 댓글 신고
-//							else if(arr[2].equals("report")) {
-//								
-//								String memberName = req.getParameter("memberName");
-//								String reportReplyContent = req.getParameter("reportReplyContent");
-//								int replyNo = Integer.parseInt(req.getParameter("replyNo"));
-//								int memberNo = loginMember.getMemberNo();
-//								
-//								System.out.println(memberName);
-//								System.out.println(memberNo);
-//								
-//								
-//							}
+							else if(arr[2].equals("report")) {
+								
+								String memberName = req.getParameter("memberName");
+								int memberNo = loginMember.getMemberNo();
+								String reportReplyContent = req.getParameter("reportReplyContent");
+								int replyNo = Integer.parseInt(req.getParameter("replyNo"));
+								
+								System.out.println(memberName);
+								System.out.println(memberNo);
+								System.out.println(replyNo);
+								System.out.println(reportReplyContent);
+								
+								int result = new ReplyService().reportReply(replyNo, memberNo, reportReplyContent);
+								
+								resp.getWriter().print(result);
+								
+								
+								
+							}
 							
 							
 						}	// 댓글 부분 END

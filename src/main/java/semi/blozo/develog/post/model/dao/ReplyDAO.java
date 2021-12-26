@@ -196,18 +196,25 @@ public class ReplyDAO {
 
 	/** 댓글 신고 DAO
 	 * @param replyNo
+	 * @param reportReplyContent 
+	 * @param memberNo 
 	 * @param conn
 	 * @return result
 	 * @throws Exception
 	 */
-	public int reportReply(int replyNo, Connection conn) throws Exception{
+	public int reportReply(int replyNo, int memberNo, String reportReplyContent, Connection conn) throws Exception{
 
 		int result = 0;
 		
 		try {
 			
 			String sql = prop.getProperty("reportReply");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, reportReplyContent);
+			pstmt.setInt(2, replyNo);
+			pstmt.setInt(3, memberNo);
 			
+			result = pstmt.executeUpdate();
 			
 		}finally {
 			close(pstmt);

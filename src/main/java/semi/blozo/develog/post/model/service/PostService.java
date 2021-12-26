@@ -14,6 +14,7 @@ import semi.blozo.develog.board.model.vo.ThumbImgVO;
 import semi.blozo.develog.common.XSS;
 import semi.blozo.develog.post.model.dao.PostDAO;
 import semi.blozo.develog.post.model.vo.Blog;
+import semi.blozo.develog.post.model.vo.MemberImage;
 import semi.blozo.develog.post.model.vo.Post;
 import semi.blozo.develog.post.model.vo.PostImage;
 import semi.blozo.develog.post.model.vo.PostPagination;
@@ -141,11 +142,6 @@ public class PostService {
 		Connection conn = getConnection();
 		
 		Post post = dao.selectPost(postNo, conn);
-		
-		// 썸네일 이미지 정보 조회
-//		List<PostImage> postImgList = dao.selectPostImageList(postNo, conn);
-		// 이미지를 post에 추가
-//		post.setPostImgList(postImgList);
 		
 		// 줄바꿈 다시 원래대로 돌리기
 		post.setPostContent(post.getPostContent().replaceAll("<br>", "\r\n"));
@@ -452,6 +448,21 @@ public class PostService {
 		else rollback(conn);
 		close(conn);
 		return result;
+	}
+
+
+
+	/** 프로필 이미지 조회
+	 * @param blogNo
+	 * @return profileImg
+	 * @throws Exception
+	 */
+	public MemberImage selectProfImg(int blogNo) throws Exception{
+
+		Connection conn = getConnection();
+		MemberImage profileImg = dao.selectProfImg(blogNo, conn);
+		close(conn);
+		return profileImg;
 	}
 	
 	

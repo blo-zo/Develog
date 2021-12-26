@@ -384,22 +384,90 @@ function deleteReply(replyNo){
 
 };
 
+function insertEnquiry(){
+	const title =$("#enquiryTitle").val()
+	const content = $("#enquiryContent").val()	
+	console.log(title);
+	if(title.trim().length == 0){
+		alert("문의 제목을 입력하세요");
+		$("#enquiryTitle").focus();
+		return false;
+	}
+	if(content.trim().length == 0 ){
+		alert("문의사항을 등록해주세요");
+		$("#enquiryContent").focus();
+		return false;
+	}
+	if(confirm("문의사항을 등록하시겠습니까?")){
+		return;
+	}else{
+		return false;
+	}
+}
 
 // 댓글 신고창 띄우기
-function reportReply(){
+function reportReply(replyNo){
 
-  if(loginMemberNo != ""){  // 회원이 신고를 누르면
-
-    $("#reportReplyModal").modal('show');
-
-  }else{
+  if(loginMemberNo == ""){  // 비회원이 신고를 누르면
 
     alert("로그인 후 이용 가능한 서비스입니다.");
     $("#exampleModal").modal('show');
+    
+  }else{
+    
+    $("#reportReplyModal").modal('show');
+
+    $(".report-btn").on("click", function(){
+
+      if($(".reportReplyContent").val().trim().length == 0 ){
+  
+        alert("신고 내용을 입력해주세요");
+        $(".reportReplyContent").focus();
+  
+      }else{
+  
+        $.ajax({
+  
+          url : contextPath + "/blog/" + memberName + "/reply/report",
+          data : {  "memberNo" : loginMemberNo , 
+                    "postNo" : postNo , 
+                    "reportReplyContent" : $(".reportReplyContent").val(),
+                    "replyNo" : replyNo,
+                    "memberName" : memberName
+                },
+          type : "POST",
+          
+          success : function(result){
+  
+            if(result > 0){
+  
+              $("#reportReplyModal").modal('hide');
+              location.href= contextPath + "/blog/" + memberName + "/view/?pno=" + postNo;
+              alert("신고가 정상 접수되었습니다.");
+  
+            }else{
+              alert("신고 처리과정 중 문제 발생");
+            }
+  
+          },
+  
+          error : function(req, status, error){
+            console.log("신고 과정 중 문제 발생")
+            console.log(req.responseText)
+          }
+  
+        });
+  
+      }
+  
+    });
 
   }
 
+
+
 };
+
 
 
 
