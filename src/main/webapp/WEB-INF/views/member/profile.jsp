@@ -30,6 +30,25 @@
 	                    	<img name="memberImg" src="../resources/images/common/user.png">
 	                  </div>
 	                </div>
+	                
+	                
+	                
+	                
+	               <!-- <div class="p-img">
+	                	
+		                <div class="profileImg">
+	                		<c:if test ="${hasClass eq  member-img-size}">
+	              				<img src="${contextPath}${profileImg.memberImgPath}${profileImg.memberImgName}">
+	              			</c:if>
+	              			<c:if test ="${!hasClass eq  member-img-size}">
+	              			
+	                    	<img name="memberImg" src="../resources/images/common/user.png">
+	              			</c:if>
+	                  </div>
+	                  
+	                </div> -->
+	                
+	                
 	                <div class="p-btn">
 	                    <button type="button" class="p-choose" id="p-choose" >이미지 업로드</button>
 	                    <button type="button" class="p-delete" id="p-delete" >이미지 제거</button>

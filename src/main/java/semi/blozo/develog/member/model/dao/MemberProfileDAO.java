@@ -209,7 +209,7 @@ public class MemberProfileDAO {
 			result = pstmt.executeUpdate();
 			
 		}  finally { close(pstmt); }
-		
+		System.out.println("img :" +result );
 		return result;
 	}
 

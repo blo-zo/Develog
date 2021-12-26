@@ -18,6 +18,8 @@ public class SecessionServlet extends HttpServlet{
 		
 		MemberProfileService service = new MemberProfileService();
 		HttpSession session = req.getSession();
+		String path= null;
+		
 		try {
 			
 			int memberNo = Integer.parseInt(req.getParameter("memberNo"));
@@ -27,6 +29,7 @@ public class SecessionServlet extends HttpServlet{
 			String message = null;
 			if(result > 0) {
 				message = "회원탈퇴를 성공했습니다.";
+				path = req.getContextPath(); // 메인페이지 
 				session.removeAttribute("loginMember");
 				
 			}else {
