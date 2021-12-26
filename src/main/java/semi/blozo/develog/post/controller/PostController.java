@@ -105,6 +105,10 @@ public class PostController extends HttpServlet{
 							
 							// 블로그 태그 조회
 
+//							List<TagVO> tagListAll = service.selectBlogTagList(postList.get(1).getBlogNo());
+
+
+
 
 
 							List<TagVO> tagListAll = service.selectBlogTagList(blog.getBlogNo());
@@ -112,6 +116,7 @@ public class PostController extends HttpServlet{
 							System.out.println(blog.getBlogNo());
 							System.out.println(tagListAll);
 							
+
 
 							
 							

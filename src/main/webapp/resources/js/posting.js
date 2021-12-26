@@ -70,8 +70,11 @@ function postValidate() {
 		return false;
 	}
 	
-	if($(".thumb-img-area > img").attr("src", "../resources/images/common/thumbnail.jpg")){
+	if($(".thumb-img-area > img").attr("src", result) == "../resources/images/common/thumbnail.jpg"){
 		alert("썸네일을 선택해주세요.");
+		
+		console.log("e.target.result" + e.target.result);
+		console.log("value" + value);
 		return false;
 	}
 
