@@ -97,7 +97,7 @@
 	  		<c:when test="${(blog.snsHome =='홈페이지 주소를 입력하세요.') || (empty blog.snsHome)}">
 	  		</c:when>
       		<c:otherwise>
-	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/hompage.png"></a>
+	  			<a href="${blog.snsHome}"><img class="social-icon" src="${contextPath}/resources/images/common/hompage.png"></a>
       		</c:otherwise>
       	</c:choose>
 	  	
@@ -105,7 +105,7 @@
 	  		<c:when test="${(blog.snsFbook =='http://www.facebook.com/') || (empty blog.snsFbook)}">
 	  		</c:when>
       		<c:otherwise>
-	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/facebook.png"></a>
+	  			<a href="${blog.snsFbook}"><img class="social-icon" src="${contextPath}/resources/images/common/facebook.png"></a>
       		</c:otherwise>
       	</c:choose>
 	  	
@@ -113,7 +113,7 @@
 	  		<c:when test="${(blog.snsTwitt =='Twitter 계정을 입력하세요.') || (empty blog.snsTwitt)}">
 	  		</c:when>
       		<c:otherwise>
-	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/twitter.png"></a>
+	  			<a href="${blog.snsTwitt}"><img class="social-icon" src="${contextPath}/resources/images/common/twitter.png"></a>
       		</c:otherwise>
       	</c:choose>
 	  		
@@ -121,7 +121,7 @@
 	  		<c:when test="${(blog.snsGit =='Github 계정을 입력하세요.') || (empty blog.snsGit)}">
 	  		</c:when>
       		<c:otherwise>
-	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/github.png"></a>
+	  			<a href="${blog.snsGit}"><img class="social-icon" src="${contextPath}/resources/images/common/github.png"></a>
       		</c:otherwise>
       	</c:choose>
 	  	
@@ -129,7 +129,7 @@
 	  		<c:when test="${(blog.snsEmail =='이메일을 입력해주세요.') || (empty blog.snsEmail)}">
 	  		</c:when>
       		<c:otherwise>
-	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/mail.png"></a>
+	  			<a href="${blog.snsEmail}"><img class="social-icon" src="${contextPath}/resources/images/common/mail.png"></a>
       		</c:otherwise>
       	</c:choose>
 	  		
@@ -160,14 +160,22 @@
   
             <!-- 블로그 검색창(ajax) -->
             
+            <%-- 
+            
             <form action="#">
               <input type="text" id="search-blog-post" name="search-blog-post" size="15" placeholder="블로그 게시글 검색하기" autocomplete="off">
               <button style="background-color: #fdfdfd;" id="post-search-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M23.809 21.646l-6.205-6.205c1.167-1.605 1.857-3.579 1.857-5.711 0-5.365-4.365-9.73-9.731-9.73-5.365 0-9.73 4.365-9.73 9.73 0 5.366 4.365 9.73 9.73 9.73 2.034 0 3.923-.627 5.487-1.698l6.238 6.238 2.354-2.354zm-20.955-11.916c0-3.792 3.085-6.877 6.877-6.877s6.877 3.085 6.877 6.877-3.085 6.877-6.877 6.877c-3.793 0-6.877-3.085-6.877-6.877z"/></svg>
               </button>
             </form>
+            
+            --%>
+            
           </div>
-  
+  		  
+  		  
+  		  <%-- 
+  		  
           <div class="sort-post dropstart border" data-bs-toggle="dropdown" aria-expanded="false">
             <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               정렬 방식
@@ -178,6 +186,8 @@
             </ul>
           
           </div>
+          
+          --%>
   
           <div class="blog-post-label">
             <div class="blog-post-board">

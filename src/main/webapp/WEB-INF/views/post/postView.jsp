@@ -163,7 +163,7 @@
 	          <!-- 게시글 프로필 영역 -->
 	          <div class="post-profile-area">
 	            <div class="post-profile-photo">
-	              <img id="post-profile-img" src="https://via.placeholder.com/200x200" alt="">
+	              <img id="post-profile-img" src="${contextPath}${profileImg.memberImgPath}${profileImg.memberImgName}" alt="">
 	            </div>
 	            <div class="post-profile-text">
 	              <h1>${post.memberName}</h1>

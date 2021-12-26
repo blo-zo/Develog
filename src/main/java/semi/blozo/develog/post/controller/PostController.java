@@ -173,6 +173,10 @@ public class PostController extends HttpServlet{
 								// + 댓글 조회
 								List<PostReply> prList = new ReplyService().selectPostReplyList(postNo);
 								
+								// 프로필 이미지 조회
+								MemberImage profileImg = service.selectProfImg(post.getBlogNo());
+								post.setProfileImg(profileImg);
+								
 								// 좋아요 여부 저장용
 								int likeYN = service.likedPost(postNo, memberNo);
 								
@@ -185,6 +189,7 @@ public class PostController extends HttpServlet{
 								req.setAttribute("post", post);
 								req.setAttribute("tagList", tagList);
 								req.setAttribute("tagListAll", tagListAll);
+								req.setAttribute("profileImg", profileImg);
 								
 								path = "/WEB-INF/views/post/postView.jsp";
 								dispatcher = req.getRequestDispatcher(path);
@@ -244,14 +249,17 @@ public class PostController extends HttpServlet{
 							 String filePath = "/resources/images/board/";
 							 String realPath = root + filePath;
 							
+							 
 							 MultipartRequest mReq
 							 	= new MultipartRequest(req, realPath , maxSize ,"UTF-8" ,new MyRenamePolicy());
+							 
 							 
 							// 1) 텍스트 형식의 파라미터
 							String postTitle = mReq.getParameter("postTitle");
 							String postContent =  mReq.getParameter("postContent");
 							int categoryCode = Integer.parseInt(mReq.getParameter("categoryCode"));
 							int postStatusCode = Integer.parseInt(mReq.getParameter("postStatusCode"));
+							
 							
 							// 로그인멤버에 블로그번호 세팅되어있나 확인해보기
 							int blogNo = ((Member)req.getSession().getAttribute("loginMember")).getBlogNo();
@@ -274,6 +282,15 @@ public class PostController extends HttpServlet{
 							postVO.setPostStatusCode(postStatusCode);
 							postVO.setBlogNo(blogNo);
 							postVO.setPostNo(postNo);
+							
+							Post post = new Post();
+							post.setPostTitle(postTitle);
+							post.setPostContent(postContent);
+							post.setCategoryCode(categoryCode);
+							post.setPostStatusCode(postStatusCode);
+							post.setBlogNo(blogNo);
+							post.setPostNo(postNo);
+							
 							
 							System.out.println("수정 내용을 담은 정보 " + postVO);
 								
@@ -302,7 +319,7 @@ public class PostController extends HttpServlet{
 							PostImage thumbImg = new PostImage();
 							
 							// hasMoreElements() : 다음 요소가 있으면 true 
-							if( files.hasMoreElements() ) {
+							while( files.hasMoreElements() ) {
 								// 썸네일 추가
 								// 썸네일vo가 잘 담겨왔는지 확인 후 result postVO 방식처럼 진행되고
 								
@@ -311,15 +328,17 @@ public class PostController extends HttpServlet{
 								if( mReq.getFilesystemName(name) != null) { 
 									
 									//변경된 값들을 담을 객체
+									thumbImg.setPostImgPath(filePath); // 파일이 있는 주소 경로
 									thumbImg.setPostImgName(mReq.getFilesystemName(name));
 									thumbImg.setPostImgOriginal(mReq.getOriginalFileName(name));
-									thumbImg.setPostImgPath(filePath); // 파일이 있는 주소 경로
 									
-								}
+									thumbImg.setPostNo(postNo);
+									
+								}	// end if
 								
 								System.out.println("썸네일 이미지 정보" + thumbImg);
 														
-							}
+							} // end while
 							
 							// service로 넘기기
 							int result = service.updatePost(postVO, tagVOList, thumbImg);

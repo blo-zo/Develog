@@ -615,7 +615,7 @@ public class PostDAO {
 	 * @return 
 	 * @throws Exception
 	 */
-	public int updateTag(TagVO tagVO, Connection conn) throws Exception{
+	public int insertTag(TagVO tagVO, Connection conn) throws Exception{
 
 		int result = 0;
 		
