@@ -22,10 +22,13 @@
     <link rel = "stylesheet" href = "${updatePw}">
     <style>
        
+    <script src="${contextPath}/resources/js/search.js"></script>
     </style>
 </head>
 <body>
     <!-- 검색창 오프캔버스 -->
+    
+    
   <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
    
     <div class="offcanvas-header">
@@ -36,8 +39,8 @@
     <div class="offcanvas-body">
       <div id="search-area">
         <div>
-          <input type="search" id="search-input" name="search-input"  placeholder="검색어를 입력해주세요.">
-          <a href="#">
+          <input type="text" id="search-input" name="search-input"  placeholder="검색어를 입력해주세요." onkeyup="search()">
+          <a href="search">
             <svg id="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.809 21.646l-6.205-6.205c1.167-1.605 1.857-3.579 1.857-5.711 0-5.365-4.365-9.73-9.731-9.73-5.365 0-9.73 4.365-9.73 9.73 0 5.366 4.365 9.73 9.73 9.73 2.034 0 3.923-.627 5.487-1.698l6.238 6.238 2.354-2.354zm-20.955-11.916c0-3.792 3.085-6.877 6.877-6.877s6.877 3.085 6.877 6.877-3.085 6.877-6.877 6.877c-3.793 0-6.877-3.085-6.877-6.877z"/></svg>
           </a>
         </div>
@@ -46,21 +49,11 @@
         <!-- prepend 활용 -->
         <div class="recent-search">
           <p>
-            <span>최근 검색어 1</span> 
+            <span id="recent-search"></span> 
             <span class="search-delete">X</span>
           </p>
           
-          <p>
-            <span>최근 검색어 2</span> 
-            <span class="search-delete">X</span>
-          </p>
-          
-          <p>
-            <span>최근 검색어 3</span> 
-            <!-- <button type="button">X</button> -->
-            <span class="search-delete">X</span>
-          </p>
-
+  
           <p>
             <span id="search-delete-all">전체 삭제</span>
           </p>
@@ -80,11 +73,11 @@
                   <p>develog</p>
                 </a>
                 
-                <ul class="nav col-12 col-lg-auto my-2 justify-content-center align-items-center my-md-0 text-small">
+                <ul id = "searchList" class="nav col-12 col-lg-auto my-2 justify-content-center align-items-center my-md-0 text-small">
       
                   <!-- 검색 -->
-                  <li data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
-                    <a href="#" class="nav-link">
+                  <li data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop" id="searchList">
+                    <a href="#" class="nav-link" onclick="search();">
                       <svg class="bi d-block" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.809 21.646l-6.205-6.205c1.167-1.605 1.857-3.579 1.857-5.711 0-5.365-4.365-9.73-9.731-9.73-5.365 0-9.73 4.365-9.73 9.73 0 5.366 4.365 9.73 9.73 9.73 2.034 0 3.923-.627 5.487-1.698l6.238 6.238 2.354-2.354zm-20.955-11.916c0-3.792 3.085-6.877 6.877-6.877s6.877 3.085 6.877 6.877-3.085 6.877-6.877 6.877c-3.793 0-6.877-3.085-6.877-6.877z"/></svg>
                     </a>
                   </li>
@@ -202,5 +195,11 @@
       </div>
     </div>
   </div>
+  
+ 
+  
 </header>
   <!-- -----------------------------------------------------------모달 끝----------------------------------------- -->  
+
+
+   

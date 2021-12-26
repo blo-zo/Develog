@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import semi.blozo.develog.member.model.service.MemberService;
 
-@WebServlet("/member/*")
+@WebServlet("/member/emailDupCheck")
 public class EmailDupCheck extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

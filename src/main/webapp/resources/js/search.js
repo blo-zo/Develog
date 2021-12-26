@@ -1,6 +1,43 @@
 
 // ****** 공통 검색창 JS *******
 
+	function search(){
+  		const searchInput = document.getElementById("search-input").value
+  		
+  		if(searchInput.trim().length > 2){
+  		console.log(search);
+		$.ajax({
+  				
+				url : "../search/search",
+  				
+				type : "POST",
+  				
+				data : {"searchInput" : searchInput},
+  				
+				success : function(result){
+  					if(result != null){
+  						console.log(result);
+  						
+  			
+ 		 					}	
+  		
+
+  					}
+ 			 });
+
+		}	
+
+
+	}
+
+
+
+
+
+
+
+
+
 // ready 함수
 $(function(){
 
