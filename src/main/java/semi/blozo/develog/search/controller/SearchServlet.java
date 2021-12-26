@@ -24,7 +24,10 @@ public class SearchServlet extends HttpServlet{
 		String message = null;
 		String path = null;
 		RequestDispatcher dispatcher = null;
-		
+//		String uri =req.getRequestURI();
+//		String contextPath = req.getContextPath();
+//
+//		String command = uri.substring(  (contextPath + "/searcb/").length() );
 		
 		SearchService service = new SearchService();
 		
@@ -50,10 +53,12 @@ public class SearchServlet extends HttpServlet{
 					req.setAttribute("searchPost", searchPost);
 					System.out.println("검색 결과 전체 조회" + searchPost); // 글상태 일반일 경우만 조회
 					path = "/WEB-INF/views/search/search.jsp";
-				
+					
+					dispatcher = req.getRequestDispatcher(path);
+					dispatcher.forward(req, resp);
+
 				}else { //검색 결과 가 없을 시 다시 alert창 메세지
-					message = "검색결과 가 없습니다";
-					req.setAttribute("message", message);
+				
 					
 				}
 				
@@ -62,11 +67,11 @@ public class SearchServlet extends HttpServlet{
 				req.setAttribute("searchInput", "입력한 검색어가 없습니다.");
 				req.setAttribute("searchResultCount", "null");
 				path = "/WEB-INF/views/search/search.jsp";
+				
+				dispatcher = req.getRequestDispatcher(path);
+				dispatcher.forward(req, resp);
 			}
 			
-			
-			dispatcher = req.getRequestDispatcher(path);
-			dispatcher.forward(req, resp);
 
 			
 			
