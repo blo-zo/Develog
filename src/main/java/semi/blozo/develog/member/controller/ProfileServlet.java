@@ -23,7 +23,7 @@ import semi.blozo.develog.post.model.vo.Blog;
 import semi.blozo.develog.common.MyRenamePolicy;
 import semi.blozo.develog.member.model.service.MemberProfileService;
 
-@WebServlet("/member/profile")
+@WebServlet("/member/profile/*")
 public class ProfileServlet extends HttpServlet{
 	
 	
@@ -49,6 +49,7 @@ public class ProfileServlet extends HttpServlet{
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		
 		try {
+
 			// 파일 들어오면 담을 객체 선언
 			// 서비스 객체 선언
 			MemberProfileService service = new MemberProfileService();
@@ -67,11 +68,11 @@ public class ProfileServlet extends HttpServlet{
 			
 			req.setAttribute("profileVO", profileVO);
 			
-			req.getRequestDispatcher("/WEB-INF/views/member/profile.jsp").forward(req, resp);
 
 			System.out.println("여기지나가니?");
 			
-			if(command.equals("update")) {
+			if(command.equals("profile/update")) {
+				System.out.println("profile");
 				// Member 객체를 생성하여 파라미터를 하나의 객체에 저장			
 //				String memberNm = profileVO.getMemberNm();
 //				String intro = profileVO.getIntro();
@@ -84,8 +85,6 @@ public class ProfileServlet extends HttpServlet{
 //				String snsTwitt =  profileVO.getSnsTwitt();
 //				String snsFbook =  profileVO.getSnsFbook();
 //				String snsHome = profileVO.getSnsHome();
-				
-				
 				// 개인 프로필  이미지
 				int maxSize = 1024 * 1024 * 100;
 				String root =  session.getServletContext().getRealPath("/");
@@ -95,11 +94,18 @@ public class ProfileServlet extends HttpServlet{
 				MultipartRequest mReq 
 				= new MultipartRequest( req, realPath, maxSize, "UTF-8", new MyRenamePolicy() );
 				
+				profileVO.setMemberNm(mReq.getParameter("nickname"));
+				profileVO.setIntro(mReq.getParameter("line-intro"));
+				profileVO.setBlogTitle(mReq.getParameter("devel-input"));
 				
 				// 2) 파일 형식의 파라미터
 				Enumeration<String> files = mReq.getFileNames();
 				
 				memberImg = new ProfileImgVO();
+				memberImg.setBlogNo(memberNo);
+				memberImg.setMemberImgName("없음");
+				memberImg.setMemberImgOriginal("없음");
+				memberImg.setMemberImgPath("없음"); // 파일이 있는 주소 경로
 				
 				if( files.hasMoreElements() ) {
 					// 썸네일 추가
@@ -120,6 +126,8 @@ public class ProfileServlet extends HttpServlet{
 				//조회 후 살리기
 				int result = service.updateProfile(profileVO, memberImg);
 				
+					System.out.println(result);
+				
 				if(result > 0) {
 					session.setAttribute("message", "회원 정보가 수정 되었습니다.");
 					
@@ -129,9 +137,10 @@ public class ProfileServlet extends HttpServlet{
 					session.setAttribute("message", "회원 정보 수정 실패. return값 확인하세요.");
 				}
 				
-				resp.sendRedirect("profile");
-			
+				resp.sendRedirect(req.getContextPath() +"/member/profile");
 				
+			}else {
+				req.getRequestDispatcher("/WEB-INF/views/member/profile.jsp").forward(req, resp);				
 			}
 				
 		} catch (Exception e) {

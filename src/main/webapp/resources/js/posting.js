@@ -54,13 +54,13 @@ function sendFile(file, editor) {
 // 글 삽입 유효성 검사
 function postValidate() {
 	if ($("#head-textarea").val().trim().length == 0) {
-		alert("제목을 입력해 주세요.");
+		alert("제목을 입력해주세요.");
 		$("#head-textarea").focus();
 		return false;
 	}
 
 	if ($("#summernote").val().trim().length == 0) {
-		alert("내용을 입력해 주세요.");
+		alert("내용을 입력해주세요.");
 		$("#summernote").focus();
 		return false;
 	}
@@ -70,7 +70,13 @@ function postValidate() {
 		return false;
 	}
 	
-	
+	if($(".thumb-img-area > img").attr("src", result) == "../resources/images/common/thumbnail.jpg"){
+		alert("썸네일을 선택해주세요.");
+		
+		console.log("e.target.result" + e.target.result);
+		console.log("value" + value);
+		return false;
+	}
 
 	// 입력된 태그를 form 태그 마지막에 hidden 타입으로 추가
 	$(".tags").each(function(index, tag) {

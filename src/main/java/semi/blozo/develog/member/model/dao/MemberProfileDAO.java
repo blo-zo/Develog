@@ -198,8 +198,8 @@ public class MemberProfileDAO {
 		int result = 0;
 		
 		try {
-			
-			pstmt = conn.prepareStatement(prop.getProperty("updateMemberImg"));
+			String sql = prop.getProperty("updateMemberImg");
+			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, memberImg.getMemberImgName());
 			pstmt.setString(2, memberImg.getMemberImgOriginal());
@@ -210,6 +210,39 @@ public class MemberProfileDAO {
 			
 		}  finally { close(pstmt); }
 		
+		return result;
+	}
+
+	public int insertMemberImg(ProfileImgVO memberImg, Connection conn) throws Exception {
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("insertMemberImg");
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, memberImg.getMemberImgPath());
+			pstmt.setString(2, memberImg.getMemberImgName());
+			pstmt.setString(3, memberImg.getMemberImgOriginal());
+			pstmt.setInt(4, memberImg.getBlogNo()); //MEMBER_NO임
+			
+			result = pstmt.executeUpdate();
+			
+		}  finally { close(pstmt); }
+		
+		return result;
+	}
+
+	public int selectMemberImg(ProfileVO profileVO, Connection conn) throws Exception{
+		int result = 0;
+		try {
+			String sql = prop.getProperty("selectMemberImg");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, profileVO.getMemberNo());
+			
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
 		return result;
 	}
 

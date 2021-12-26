@@ -70,7 +70,7 @@
 					<h4>썸네일 설정</h4>
 				</div>
 				<div class="thumb-img-area">
-					<img name="thumbimg" src="https://via.placeholder.com/350x200" alt="샘플이미지">
+					<img name="thumbimg" src="${contextPath}/resources/images/common/thumbnail.jpg" alt="샘플이미지">
 				</div>
 				<!--썸네일 값 -->
 				<div id="fileArea">

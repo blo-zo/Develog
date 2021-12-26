@@ -76,6 +76,7 @@ function changeIMG(){
 
 // 저장
 function pofileValidate() {
+	console.log("submit");
 	document.updateForm.submit();
 }
 
