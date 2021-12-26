@@ -811,6 +811,59 @@ public class PostDAO {
 		return result;
 	}
 
+	/** 기존 포스트의 카테고리 변경하기
+	 * @param categoryCode 
+	 * @param conn 
+	 * @param blogNo 
+	 * @return result
+	 * @throws Exception
+	 */
+	public int switchCategory(int categoryCode, int blogNo, Connection conn) throws Exception{
+		
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("switchCategory");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, blogNo);
+			pstmt.setInt(2, blogNo);
+			pstmt.setInt(3, categoryCode);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	/** 카테고리 제거하기, 삭제
+	 * @param categoryCode
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int removeCategory(int categoryCode, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("removeCategory");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryCode);
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 	
 
 	

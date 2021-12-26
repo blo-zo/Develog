@@ -580,6 +580,7 @@ public class PostController extends HttpServlet{
 							}
 							
 							
+							// 카테고리 생성
 							else if(arr[2].equals("add")) {
 								
 								int blogNo = Integer.parseInt(req.getParameter("blogNo"));
@@ -588,6 +589,20 @@ public class PostController extends HttpServlet{
 								int result = service.addCategory(blogNo, categoryName);
 								
 								resp.getWriter().print(result);
+							}
+							
+							
+							// 카테고리 제거 (포스트의 카테고리번호를 기본값으로 바꾼 뒤 삭제)
+							else if(arr[2].equals("remove")) {
+								
+								int categoryCode = Integer.parseInt(req.getParameter("categoryCode"));
+								String categoryName = req.getParameter("categoryName");
+								int blogNo = Integer.parseInt(req.getParameter("blogNo"));
+								
+								int result = service.removeCategory(categoryCode, categoryName, blogNo);
+								
+								resp.getWriter().print(result);
+								
 							}
 							
 							

@@ -37,7 +37,7 @@
         	<c:forEach items="${categoryList}" var="category">
         		
         		<c:if test="${category.categoryName != '없음'}">
-		          <li class="list-group-item category" onclick="findPostByC();">${category.categoryName}</li>
+		          <li class="list-group-item category userCategory" onclick="findOrDelete();">${category.categoryName}</li>
         		</c:if>
         	
         	</c:forEach>

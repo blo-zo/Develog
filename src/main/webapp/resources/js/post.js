@@ -495,7 +495,7 @@ function selectCategoryList(){
 
         const listBox = $(".list-box");
 
-        const li = $('<li class="list-group-item category" onclick="findPostByC();">');
+        const li = $('<li class="list-group-item category userCategory" onclick="findPostByC();">');
 
         if(category.categoryName != "없음"){
 
@@ -565,7 +565,7 @@ function addCategory(){
   
             if(result > 0){ // 삽입 성공
   
-              const li = $('<li class="list-group-item category" onclick="findPostByC();">');
+              const li = $('<li class="list-group-item category userCategory" onclick="findPostByC();">');
         
               li.text(input.val());
               listBox.append(li);
@@ -601,14 +601,64 @@ function addCategory(){
 
 }
 
+
 // 카테고리 삭제하기
+// 기존 카테고리에 있는 글을 카테고리 '없음'으로 변경 
+// --> 카테고리 삭제
 
+// 삭제폼 전환시키기
+function deleteCategory(){
 
+  console.log($(".userCategory"));
 
+  const categories = $(".userCategory");
 
-function findPostByC(){
-  console.log("hi");
+  if(categories.hasClass("delete-form")){
+
+    categories.removeClass("delete-form");
+
+  }else{
+
+    categories.addClass("delete-form");
+
+  }
+
 }
+
+function findOrDelete(){
+
+  // 제출 주소 : category/remove
+  // result > 0 이면 삭제 성공
+
+  const categories = $(".userCategory");
+  
+  categories.on("click",function(){
+
+    console.log("새로 생긴것에도 적용이 되나?")
+
+  });
+
+
+
+
+  // delete-form을 가졌을 경우에는 삭제하기
+  // if($(this).hasClass("delete-form")){
+
+  //   console.log("삭제용");
+    
+  // }else{
+    
+  //   // delete-form이 없을 때는 해당 카테고리 게시글 조회하기
+    
+  //   console.log("검색용");
+  //   console.log(this);
+
+  // }
+
+}
+
+
+
 
 
 

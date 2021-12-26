@@ -269,14 +269,29 @@
 	
 	
 	<!-- ***************** 카테고리 ******************** -->
+	
+	<!-- 카테고리 추가 -->
 	<entry key="addCategory">
 		INSERT INTO CATEGORY 
 		VALUES(SEQ_CATEGORY.NEXTVAL, ? , ?)
 	</entry>
 	
 	
+	<!-- 카테고리 변경 -->
+	<entry key="switchCategory">
+		UPDATE POST SET
+		CATEGORY_CD = (SELECT CATEGORY_CD FROM CATEGORY
+		    		   WHERE BLOG_NO = ? AND CATEGORY_NM = '없음')
+		WHERE BLOG_NO = ?
+		AND CATEGORY_CD = ?
+	</entry>
 	
 	
+	<!-- 카테고리 제거, 삭제 -->
+	<entry key="removeCategory">
+		DELETE FROM CATEGORY
+		WHERE CATEGORY_CD = ?
+	</entry>
 	
 	
 	

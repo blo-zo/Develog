@@ -493,6 +493,39 @@ public class PostService {
 		close(conn);
 		return result;
 	}
+
+
+
+	/** 카테고리 제거
+	 * @param categoryCode
+	 * @param categoryName
+	 * @param blogNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int removeCategory(int categoryCode, String categoryName, int blogNo) throws Exception{
+
+		Connection conn = getConnection();
+		
+		int result = 0;
+		// 먼저 해당 카테고리 게시글을 기본카테고리("없음")로 변경시킨다.
+		try {
+			
+			result = dao.switchCategory(categoryCode, blogNo, conn);
+			
+			result = dao.removeCategory(categoryCode, conn); 
+			
+			if(result>0) commit(conn);
+			else rollback(conn);
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
 	
 	
 	
