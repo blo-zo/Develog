@@ -39,8 +39,7 @@ function sendFile(file, editor) {
 
 		success: function(result) {
 			var contextPath = location.pathname.substring(0, window.location.pathname.indexOf("/", 2));
-			console.log(result);
-
+			
 			// 저장된 이미지를 에디터에 삽입
 			$(editor).summernote('editor.insertImage', result);
 
@@ -70,13 +69,21 @@ function postValidate() {
 		return false;
 	}
 	
-	if($(".thumb-img-area > img").attr("src", result) == "../resources/images/common/thumbnail.jpg"){
+	
+/*	if($(".thumb-img-area").children("img").attr('src') == "Develog/src/main/webapp/resources/images/common/thumbnail.jpg"){
 		alert("썸네일을 선택해주세요.");
 		
-		console.log("e.target.result" + e.target.result);
-		console.log("value" + value);
 		return false;
 	}
+*/	
+
+	if(!$(".thumb-img-area").children("img").hasClass("thumb-img-size")){
+		alert("썸네일을 선택해주세요.");
+		
+		return false;
+	}
+
+
 
 	// 입력된 태그를 form 태그 마지막에 hidden 타입으로 추가
 	$(".tags").each(function(index, tag) {
@@ -216,16 +223,20 @@ function loadImg(value) {
 
 		// 선택된 파일 읽기 시작
 		reader.readAsDataURL(value.files[0]);
-
+	
+		
 		// 다 읽은 경우
 		reader.onload = function(e) {
 
 			// 사이즈 지정 필요  
-			$(".thumb-img-area > img").addClass('thumb-img-size');
+			$(".thumb-img-area > img").addClass("thumb-img-size");
 			$(".thumb-img-area").children("img").attr("src", e.target.result);
 
 			// div 박스.이벤트가 발생한 결과값 뱉어 내라 src="여기에 넣어라"
+			
 		}
+		
 
 	}
+	
 }

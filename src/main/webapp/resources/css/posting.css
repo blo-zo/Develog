@@ -172,8 +172,13 @@ footer{
     bottom: 0;
     z-index: 10;
     background: rgb(248, 249, 250);
+    height: -webkit-fill-available;
 }
-.modal-content-area.active{display:flex;}
+.modal-content-area.active{
+	display:flex;
+	z-index: 15;
+    height: -webkit-fill-available;
+}
 
 .modal-content-box{
     width: 770px;
@@ -304,6 +309,13 @@ footer{
 	justify-content : center;
 	align-items : center;
 }
+
+.thumbImgCss{
+ 	display: inline-block;
+    width: 100%;
+    object-fit: cover;
+}   
+    
 
 /* 들어가는 썸네일 이미지 사이즈 지정  */
 .thumb-img-size{ 

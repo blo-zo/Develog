@@ -143,6 +143,12 @@
 	</entry>
 
 
+	<!-- 포스트 신고 -->
+	<entry key="reportPost">
+		INSERT INTO POST_REPORT
+		VALUES(SEQ_POST_REPORT.NEXTVAL, ?, DEFAULT, DEFAULT, ?, ?)
+	</entry>
+
 
 <!-- ****************************** 댓글 영역 ******************************* -->
 	
@@ -191,6 +197,7 @@
 		REPLY_STATUS_CD = 603
 		WHERE REPLY_NO = ?
 	</entry>
+	
 	
 	
 	<!-- ************************ 좋아요 ******************************** -->
