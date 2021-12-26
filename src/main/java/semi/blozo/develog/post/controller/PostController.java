@@ -102,30 +102,20 @@ public class PostController extends HttpServlet{
 							
 							List<Post> postList = service.selectBlogPostList(blogPostPagination, memberName);
 							
+							// 카테고리 조회
+							List<Category> categoryList = new PostingService().selectCategory(blog.getBlogNo());
 							
 							// 블로그 태그 조회
 
-//							List<TagVO> tagListAll = service.selectBlogTagList(postList.get(1).getBlogNo());
-
-
-
-
-
 							List<TagVO> tagListAll = service.selectBlogTagList(blog.getBlogNo());
-							
-							System.out.println(blog.getBlogNo());
-							System.out.println(tagListAll);
-							
-
-
-							
 							
 							
 							// 화면 출력하기
 							req.setAttribute("blog", blog);
 							req.setAttribute("blogPostPagination", blogPostPagination);
 							req.setAttribute("postList", postList);
-//							req.setAttribute("tagListAll", tagListAll);
+							req.setAttribute("tagListAll", tagListAll);
+							req.setAttribute("categoryList", categoryList);
 							
 							
 							path = "/WEB-INF/views/post/blogMain.jsp";
@@ -218,8 +208,7 @@ public class PostController extends HttpServlet{
 							Post post = service.updateView(postNo);
 							
 							// 2. 카테고리 목록 조회
-//							List<Category> category = new PostingService().selectCategory(loginMember.getBlogNo());
-							List<Category> category = new PostingService().selectCategory(21);
+							List<Category> category = new PostingService().selectCategory(loginMember.getBlogNo());
 							
 							// 3. 태그 목록 조회하기
 							List<TagVO> tagList = service.selectTagList(postNo);
@@ -373,6 +362,39 @@ public class PostController extends HttpServlet{
 							
 						}
 						
+						// 포스트 신고하기
+						else if(arr[1].equals("reportPost")) {
+							
+							String memberName = req.getParameter("memberName");
+							String reportPostContent = req.getParameter("reportPostContent");
+							int postNo = Integer.parseInt(req.getParameter("reportPostNo"));
+							int memberNo = loginMember.getMemberNo();
+							
+							
+							int result = service.reportPost(postNo, memberNo, reportPostContent);
+							
+							if(result>0) {
+								message="신고가 정상적으로 접수되었습니다.";
+								// 포스트 리스트 페이지로 돌아가기
+								// 브라우저 인코딩...
+								byte[] ptext = memberName.getBytes("UTF-8");
+								String value = new String(ptext, "ISO-8859-1"); 
+								path = "../" + value;
+							}else {
+								message="신고 과정 중 문제가 발생했습니다.";
+								// 포스트 리스트 페이지로 돌아가기
+								// 브라우저 인코딩...
+								byte[] ptext = memberName.getBytes("UTF-8");
+								String value = new String(ptext, "ISO-8859-1"); 
+								path = "../" + value;
+							}
+							
+							session.setAttribute("message", message);
+							resp.sendRedirect(path);
+							
+							
+						}
+						
 						
 						
 						// ----------------------- 댓글 ------------------------
@@ -443,13 +465,18 @@ public class PostController extends HttpServlet{
 							
 							
 							// 댓글 신고
-							else if(arr[2].equals("report")) {
-								
-								int replyNo = Integer.parseInt(req.getParameter("replyNo"));
-								
-								resp.getWriter().print(new ReplyService().reportReply(replyNo));
-								
-							}
+//							else if(arr[2].equals("report")) {
+//								
+//								String memberName = req.getParameter("memberName");
+//								String reportReplyContent = req.getParameter("reportReplyContent");
+//								int replyNo = Integer.parseInt(req.getParameter("replyNo"));
+//								int memberNo = loginMember.getMemberNo();
+//								
+//								System.out.println(memberName);
+//								System.out.println(memberNo);
+//								
+//								
+//							}
 							
 							
 						}	// 댓글 부분 END
@@ -487,12 +514,24 @@ public class PostController extends HttpServlet{
 							
 						}
 						
-						else if(arr[1].equals("reportPost")) {
+						
+						
+						// 카테고리
+						else if(arr[1].equals("category")) {
+							
+							if(arr[2].equals("select")) {
+								
+								
+								
+							}
+							
 							
 							
 							
 							
 						}
+						
+						
 						
 						
 						
@@ -509,6 +548,7 @@ public class PostController extends HttpServlet{
 			
 			e.printStackTrace();
 			session.setAttribute("message", "오류가 발생했습니다. 메인페이지로 이동합니다.");
+			
 			resp.sendRedirect(req.getContextPath() + "/main");
 			
 		}

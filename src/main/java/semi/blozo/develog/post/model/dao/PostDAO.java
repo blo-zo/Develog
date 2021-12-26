@@ -724,6 +724,35 @@ public class PostDAO {
 		return tagList;
 	}
 
+	/** 포스트 신고하기
+	 * @param postNo
+	 * @param memberNo
+	 * @param reportPostContent
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int reportPost(int postNo, int memberNo, String reportPostContent, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("reportPost");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, reportPostContent);
+			pstmt.setInt(2, postNo);
+			pstmt.setInt(3, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 	
 
 	

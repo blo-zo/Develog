@@ -386,7 +386,7 @@ function deleteReply(replyNo){
 
 
 // 댓글 신고창 띄우기
-function reportReply(replyNo){
+function reportReply(){
 
   if(loginMemberNo != ""){  // 회원이 신고를 누르면
 
@@ -401,34 +401,6 @@ function reportReply(replyNo){
 
 };
 
-// 댓글 신고 기능
-function reportReply2(){
-
-  $.ajax({
-
-    url : contextPath + "/blog/" + memberName + "/reply/report",
-    data : { "replyNo" : replyNo,
-              "memberNo" : loginMemberNo ,
-              "reportContent" : $(".reportReplyContent").val() },
-    type : "POST",
-
-    success : function(result){
-
-      
-
-
-    },
-
-    error : function(req, status, error){
-      console.log("댓글 신고 실패")
-      console.log(req.responseText)
-    }
-
-  });
-
-
-};
-
 
 
 /* ------------ 블로그 ---------------- */
@@ -436,18 +408,32 @@ function reportReply2(){
 
 /* 카테고리 메뉴 삽입, 수정, 삭제 */
 
+// 카테고리 목록 조회
 function selectCategoryList(){
 
   $.ajax({
 
-    url : contextPath + "/blog/" + membername + "/category/select",
-    data : {"blogNo" : blogNo},
+    url : contextPath + "/blog/" + memberName2 + "/category/select",
+    data : {"blogNo" : blogNo, "memberName" : memberName2},
     type : "GET",
     dataType : "JSON",
 
-    success
+    success : function(categoryList){
+
+      console.log(categoryList);
+
+      $(".list-box").empty();
+
+      $.each( categoryList, function( index, category){
+
+        const li = $('<li class="list-group-item category"');
 
 
+
+      });
+
+
+    }
 
 
   });
@@ -455,6 +441,27 @@ function selectCategoryList(){
 
 }
 
+function addCategory(){
+
+  const input = $('<input type="text" name="categoryName"');
+  const li = $('<li class="list-group-item category">');
+
+
+
+  input.on("keyup", function(key){
+
+    if(keyCode == 13){
+
+      li.text() == input.val();
+
+    }
+
+  });
+
+  $(".list-box").append(li);
+
+
+}
 
 
 

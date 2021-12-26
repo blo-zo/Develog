@@ -76,6 +76,11 @@
 	<entry key = "selectMemberImg">
 		SELECT * FROM MEMBER_IMG WHERE MEMBER_NO = ?
 	</entry>
+
+	<!-- 회원탈퇴 -->
+	<entry key = "updateSecession">
+		UPDATE MEMBER SET STATUS_CD = 201 WHERE MEMBER_NO = ?
+	</entry>
 	
 	
 	

@@ -70,11 +70,11 @@
 					<h4>썸네일 설정</h4>
 				</div>
 				<div class="thumb-img-area">
-					<img name="thumbimg" src="${contextPath}/resources/images/common/thumbnail.jpg" alt="샘플이미지">
+					<img class="thumbImgCss" name="thumbimg" src="${contextPath}/resources/images/common/thumbnail.jpg" alt="샘플이미지">
 				</div>
 				<!--썸네일 값 -->
 				<div id="fileArea">
-					 <input type="file" name="img" onchange="loadImg(this)" id="thumbImg"> 
+					 <input type="file" name="img" onchange="loadImg(this)" id="thumbImg" accept="image/jpeg, image/png, image/jpg, image/gif"> 
 					
 				</div>
 			</div> <!-- /thumbnail-area -->
