@@ -81,7 +81,18 @@
 										data-bs-toggle="modal" data-bs-target="#violationModal">
 										${member.violationCount}
 									</td>
-									<td>${member.statusName}</td>
+									<c:choose>
+										<c:when test="${member.statusName eq '탈퇴'}">
+											<td class="violationTd" onclick="restore(${member.memberNo});">
+												${member.statusName}
+											</td>
+										</c:when>
+										<c:otherwise>
+											<td>
+												${member.statusName}
+											</td>
+										</c:otherwise>
+									</c:choose>
 								</tr>
 							</c:forEach>
 						</c:otherwise>
@@ -247,6 +258,6 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
 		}
 	  
   </script>
-  <script src="${pageContext.servletContext.contextPath}/resources/js/modal.js"></script>
+  <script src="${pageContext.servletContext.contextPath}/resources/js/adminMember.js"></script>
 </body>
 </html>

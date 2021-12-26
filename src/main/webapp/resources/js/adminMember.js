@@ -1,4 +1,28 @@
-console.log("js 연결 확인");
+console.log("modal.js");
+
+function restore(memberNo){
+    console.log(memberNo);
+    if(confirm("탈퇴한 회원을 정말로 복구 하시겠습니까?")){
+        $.ajax({
+            url : contextPath + "/admin/member/restore",
+            data : {"memberNo" : memberNo},
+            type : "GET",
+            async : false, // 비동기 방식을 동기 방식으로 변환 // 결과적으로 페이지를 새로고침하게 해준다.
+            success : function(message){
+              location.reload()
+              alert(message)
+              },
+                        
+            error : function(req, status, error){
+                        console.log("ajax 실패");
+                        console.log(req.responseText);
+                        console.log(status);
+                        console.log(error);
+                    }
+                        
+        })
+    }
+}
 
 function reportDetailContent(e){
     // console.log(e.previousElementSibling);
@@ -152,4 +176,5 @@ console.log(memberNo);
 
     })
 }
+
 
