@@ -146,7 +146,17 @@ public class AdminController extends HttpServlet {
 				
 				int result = service.deleteViolation(violationNo);
 				int updateStatus = service.updateViolationMinus();
-				System.out.println(updateStatus);
+			}else if(command.equals("member/restore")) {
+				int memberNo = Integer.parseInt(req.getParameter("memberNo"));
+				
+				int result = service.updateMemberRestore(memberNo);
+				
+				if(result >0) {
+					message = "회원 복구를 성공했습니다.";
+				}else {
+					message = "회원 복구 중 문제가 발생했습니다.";
+				}
+				resp.getWriter().print(message);
 			}
 			
 			else if(command.equals("post")) {

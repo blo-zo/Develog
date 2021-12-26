@@ -236,6 +236,11 @@
 	<entry key="restoreReply">
 		UPDATE REPLY SET REPLY_STATUS_CD = 600 WHERE REPLY_NO = ?
 	</entry>
+
+	<!-- 블라인드 댓글 복구 -->
+	<entry key="updateMemberRestore">
+		UPDATE MEMBER SET STATUS_CD = 200 WHERE MEMBER_NO = ?
+	</entry>
 	
 
 </properties>

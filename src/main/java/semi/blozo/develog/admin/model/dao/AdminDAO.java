@@ -1322,6 +1322,21 @@ public class AdminDAO {
 	
 	}
 
+	public int updateMemberRestore(int memberNo, Connection conn) throws Exception{
+		int result = 0;
+		try {
+			String sql = prop.getProperty("updateMemberRestore");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, memberNo);
+			
+			result = pstmt.executeUpdate();
+		}finally {
+			pstmt.close();
+		}
+		return result;
+	
+	}
+
 	
 
 
