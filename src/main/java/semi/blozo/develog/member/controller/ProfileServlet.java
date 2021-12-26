@@ -68,7 +68,6 @@ public class ProfileServlet extends HttpServlet{
 			
 			req.setAttribute("profileVO", profileVO);
 			
-			req.getRequestDispatcher("/WEB-INF/views/member/profile.jsp").forward(req, resp);
 
 			System.out.println("여기지나가니?");
 			
@@ -86,8 +85,6 @@ public class ProfileServlet extends HttpServlet{
 //				String snsTwitt =  profileVO.getSnsTwitt();
 //				String snsFbook =  profileVO.getSnsFbook();
 //				String snsHome = profileVO.getSnsHome();
-				
-				
 				// 개인 프로필  이미지
 				int maxSize = 1024 * 1024 * 100;
 				String root =  session.getServletContext().getRealPath("/");
@@ -97,11 +94,18 @@ public class ProfileServlet extends HttpServlet{
 				MultipartRequest mReq 
 				= new MultipartRequest( req, realPath, maxSize, "UTF-8", new MyRenamePolicy() );
 				
+				profileVO.setMemberNm(mReq.getParameter("nickname"));
+				profileVO.setIntro(mReq.getParameter("line-intro"));
+				profileVO.setBlogTitle(mReq.getParameter("devel-input"));
 				
 				// 2) 파일 형식의 파라미터
 				Enumeration<String> files = mReq.getFileNames();
 				
 				memberImg = new ProfileImgVO();
+				memberImg.setBlogNo(memberNo);
+				memberImg.setMemberImgName("없음");
+				memberImg.setMemberImgOriginal("없음");
+				memberImg.setMemberImgPath("없음"); // 파일이 있는 주소 경로
 				
 				if( files.hasMoreElements() ) {
 					// 썸네일 추가
@@ -114,7 +118,6 @@ public class ProfileServlet extends HttpServlet{
 						memberImg.setMemberImgName(mReq.getFilesystemName(name));
 						memberImg.setMemberImgOriginal(mReq.getOriginalFileName(name));
 						memberImg.setMemberImgPath(filePath); // 파일이 있는 주소 경로
-						memberImg.setBlogNo(memberNo);
 						
 					}
 				}
@@ -122,14 +125,9 @@ public class ProfileServlet extends HttpServlet{
 				
 				//조회 후 살리기
 				int result = service.updateProfile(profileVO, memberImg);
-//				if( result>0) {
-//					if(memberImg == null) {
-//						result = service.insertMemberImg();
-//					}else {
-//						result = service.updateMemberImg();
-//					}
-//						
-//				}
+				
+					System.out.println(result);
+				
 				if(result > 0) {
 					session.setAttribute("message", "회원 정보가 수정 되었습니다.");
 					
@@ -140,8 +138,9 @@ public class ProfileServlet extends HttpServlet{
 				}
 				
 				resp.sendRedirect(req.getContextPath() +"/member/profile");
-			
 				
+			}else {
+				req.getRequestDispatcher("/WEB-INF/views/member/profile.jsp").forward(req, resp);				
 			}
 				
 		} catch (Exception e) {

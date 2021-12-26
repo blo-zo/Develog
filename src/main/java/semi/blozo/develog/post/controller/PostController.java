@@ -110,7 +110,6 @@ public class PostController extends HttpServlet{
 							List<TagVO> tagListAll = service.selectBlogTagList(blog.getBlogNo());
 							
 							
-							
 							// 화면 출력하기
 							req.setAttribute("blog", blog);
 							req.setAttribute("blogPostPagination", blogPostPagination);
