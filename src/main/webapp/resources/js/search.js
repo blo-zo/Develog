@@ -3,20 +3,21 @@
 
 	function search(){
   		const searchInput = document.getElementById("search-input").value
-  		
-  		if(searchInput.trim().length > 2){
+  		console.log(searchInput);
+  		if(searchInput.trim().length != 0){
   		console.log(search);
 		$.ajax({
   				
-				url : "../search/search",
+				url : "search/search",
   				
-				type : "POST",
+				type : "GET",
   				
 				data : {"searchInput" : searchInput},
   				
 				success : function(result){
   					if(result != null){
-  						console.log(result);
+  				
+					console.log(result);
   						
   			
  		 					}	

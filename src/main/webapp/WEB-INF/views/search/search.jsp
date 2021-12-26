@@ -137,11 +137,11 @@
           <!-- 검색어 20글자 제한하기... -->
           <div id="search-result">
             <div class="search-result-large">
-              <span>${searchInput}</span>
+              <span>"${searchInput}"</span>
             </div>
         
             <div class="search-result-number">
-              총 <span>${searchResultCount}</span>개의 게시글을 찾았습니다.
+              총 <span>"${searchResultCount}"</span>개의 게시글을 찾았습니다.
             </div>
         
           </div>
