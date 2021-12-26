@@ -424,6 +424,16 @@ public class AdminService {
 		
 	}
 
+	public int updateMemberRestore(int memberNo) throws Exception {
+		Connection conn = getConnection();
+		
+		int result = dao.updateMemberRestore(memberNo, conn);
+		if(result >0) conn.commit();
+		else		  conn.rollback();
+		return result;
+	
+	}
+
 
 
 
