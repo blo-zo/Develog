@@ -408,18 +408,32 @@ function reportReply(){
 
 /* 카테고리 메뉴 삽입, 수정, 삭제 */
 
+// 카테고리 목록 조회
 function selectCategoryList(){
 
   $.ajax({
 
-    url : contextPath + "/blog/" + membername + "/category/select",
-    data : {"blogNo" : blogNo},
+    url : contextPath + "/blog/" + memberName2 + "/category/select",
+    data : {"blogNo" : blogNo, "memberName" : memberName2},
     type : "GET",
     dataType : "JSON",
 
-    success
+    success : function(categoryList){
+
+      console.log(categoryList);
+
+      $(".list-box").empty();
+
+      $.each( categoryList, function( index, category){
+
+        const li = $('<li class="list-group-item category"');
 
 
+
+      });
+
+
+    }
 
 
   });
@@ -427,6 +441,27 @@ function selectCategoryList(){
 
 }
 
+function addCategory(){
+
+  const input = $('<input type="text" name="categoryName"');
+  const li = $('<li class="list-group-item category">');
+
+
+
+  input.on("keyup", function(key){
+
+    if(keyCode == 13){
+
+      li.text() == input.val();
+
+    }
+
+  });
+
+  $(".list-box").append(li);
+
+
+}
 
 
 

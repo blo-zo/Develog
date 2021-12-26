@@ -102,10 +102,10 @@ public class PostController extends HttpServlet{
 							
 							List<Post> postList = service.selectBlogPostList(blogPostPagination, memberName);
 							
+							// 카테고리 조회
+							List<Category> categoryList = new PostingService().selectCategory(blog.getBlogNo());
 							
 							// 블로그 태그 조회
-
-
 
 							List<TagVO> tagListAll = service.selectBlogTagList(blog.getBlogNo());
 							
@@ -115,7 +115,8 @@ public class PostController extends HttpServlet{
 							req.setAttribute("blog", blog);
 							req.setAttribute("blogPostPagination", blogPostPagination);
 							req.setAttribute("postList", postList);
-//							req.setAttribute("tagListAll", tagListAll);
+							req.setAttribute("tagListAll", tagListAll);
+							req.setAttribute("categoryList", categoryList);
 							
 							
 							path = "/WEB-INF/views/post/blogMain.jsp";
@@ -208,8 +209,7 @@ public class PostController extends HttpServlet{
 							Post post = service.updateView(postNo);
 							
 							// 2. 카테고리 목록 조회
-//							List<Category> category = new PostingService().selectCategory(loginMember.getBlogNo());
-							List<Category> category = new PostingService().selectCategory(21);
+							List<Category> category = new PostingService().selectCategory(loginMember.getBlogNo());
 							
 							// 3. 태그 목록 조회하기
 							List<TagVO> tagList = service.selectTagList(postNo);
@@ -466,18 +466,18 @@ public class PostController extends HttpServlet{
 							
 							
 							// 댓글 신고
-							else if(arr[2].equals("report")) {
-								
-								String memberName = req.getParameter("memberName");
-								String reportReplyContent = req.getParameter("reportReplyContent");
-								int replyNo = Integer.parseInt(req.getParameter("replyNo"));
-								int memberNo = loginMember.getMemberNo();
-								
-								System.out.println(memberName);
-								System.out.println(memberNo);
-								
-								
-							}
+//							else if(arr[2].equals("report")) {
+//								
+//								String memberName = req.getParameter("memberName");
+//								String reportReplyContent = req.getParameter("reportReplyContent");
+//								int replyNo = Integer.parseInt(req.getParameter("replyNo"));
+//								int memberNo = loginMember.getMemberNo();
+//								
+//								System.out.println(memberName);
+//								System.out.println(memberNo);
+//								
+//								
+//							}
 							
 							
 						}	// 댓글 부분 END
@@ -514,6 +514,24 @@ public class PostController extends HttpServlet{
 							resp.getWriter().print(postLikeCount);
 							
 						}
+						
+						
+						
+						// 카테고리
+						else if(arr[1].equals("category")) {
+							
+							if(arr[2].equals("select")) {
+								
+								
+								
+							}
+							
+							
+							
+							
+							
+						}
+						
 						
 						
 						
