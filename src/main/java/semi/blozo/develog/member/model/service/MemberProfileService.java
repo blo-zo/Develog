@@ -114,6 +114,21 @@ public class MemberProfileService {
 	}
 
 
+	public int updateSecession(int memberNo) throws Exception {
+		Connection conn = getConnection();
+		
+		int result = dao.updateSecession(memberNo, conn);
+		
+		if(result >0) conn.commit();
+		else		  conn.rollback();
+		
+		conn.close();
+		
+		return result;
+	
+	}
+
+
 //	public int updateMemberImg(ProfileImgVO memberImg) throws Exception{
 //		Connection conn = getConnection();
 //		

@@ -103,9 +103,9 @@ public class ProfileServlet extends HttpServlet{
 				
 				memberImg = new ProfileImgVO();
 				memberImg.setBlogNo(memberNo);
-				memberImg.setMemberImgName("없음");
-				memberImg.setMemberImgOriginal("없음");
-				memberImg.setMemberImgPath("없음"); // 파일이 있는 주소 경로
+				memberImg.setMemberImgName("default");
+				memberImg.setMemberImgOriginal("user.png");
+				memberImg.setMemberImgPath("/resources/images/common/"); // 파일이 있는 주소 경로
 				
 				if( files.hasMoreElements() ) {
 					// 썸네일 추가
