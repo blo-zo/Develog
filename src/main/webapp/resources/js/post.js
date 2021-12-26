@@ -465,7 +465,6 @@ function reportReply(replyNo){
   }
 
 
-
 };
 
 
@@ -481,8 +480,8 @@ function selectCategoryList(){
 
   $.ajax({
 
-    url : contextPath + "/blog/" + memberName2 + "/category/select",
-    data : {"blogNo" : blogNo, "memberName" : memberName2},
+    url : contextPath + "/blog/" + memberName + "/category/select",
+    data : {"blogNo" : blogNo, "memberName" : memberName},
     type : "GET",
     dataType : "JSON",
 
@@ -494,45 +493,122 @@ function selectCategoryList(){
 
       $.each( categoryList, function( index, category){
 
-        const li = $('<li class="list-group-item category"');
+        const listBox = $(".list-box");
 
+        const li = $('<li class="list-group-item category" onclick="findPostByC();">');
 
+        if(category.categoryName != "없음"){
+
+          li.text(category.categoryName);
+  
+          listBox.append(li);
+
+        }
 
       });
 
+    },
 
+    error : function(req, status, error){
+      console.log("카테고리 목록 조회 실패")
+      console.log(req.responseText)
     }
-
 
   });
 
-
 }
 
+
+var flag = true;  // 중복 클릭 방지용
+
+
+// 카테고리 추가하기
 function addCategory(){
 
-  const input = $('<input type="text" name="categoryName"');
-  const li = $('<li class="list-group-item category">');
+  const input = $('<input size="15" type="text" name="categoryName" autocomplete="off" place placeholder="생성할 카테고리(15자 이내)" style="width:200px; height:30px; outline:none; margin-left:10px; margin-top:10px; border:0.5px solid lightgray;">');
+
+  const listBox = $(".list-box");
+  
+  if(flag){
+
+    flag = false;
+    
+    listBox.append(input);
 
 
+    input.on("blur",function(){
+      input.remove();
+      flag = true;
+    });
 
-  input.on("keyup", function(key){
 
-    if(keyCode == 13){
+    input.on("keyup", function(e){
+      
+      if(e.keyCode == 13){  // 엔터키 키업
 
-      li.text() == input.val();
+        if(input.val().trim().length== 0){
+          alert("카테고리명을 입력해주세요");
+          input.focus();
+        }else{
 
-    }
+        }
 
-  });
+        $.ajax({
 
-  $(".list-box").append(li);
+          url : contextPath + "/blog/" + memberName + "/category/add",
+          data : {  "categoryName" : input.val(), 
+                    "blogNo" : blogNo , 
+                 },
+          type : "POST",
+          
+          success : function(result){
+  
+            if(result > 0){ // 삽입 성공
+  
+              const li = $('<li class="list-group-item category" onclick="findPostByC();">');
+        
+              li.text(input.val());
+              listBox.append(li);
+              input.remove();
 
+              selectCategoryList();
+              flag = true;
+
+  
+            }else{
+
+              alert("카테고리 추가 중 문제 발생");
+              input.remove();
+              flag = true;
+
+            }
+  
+          },
+  
+          error : function(req, status, error){
+            console.log("카테고리 추가 실패")
+            console.log(req.responseText)
+            flag=true;
+          }
+  
+        });
+  
+      }
+  
+    });
+
+  }
 
 }
 
+// 카테고리 삭제하기
 
 
+
+
+function findPostByC(){
+  console.log("hi");
+}
 
 
 
@@ -607,5 +683,8 @@ $("#share-btn").on("click",function(){
 	alert("URL이 복사되었습니다.")
 
 });
+
+
+
 
 

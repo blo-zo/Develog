@@ -473,6 +473,26 @@ public class PostService {
 		close(conn);
 		return profileImg;
 	}
+
+
+
+	/** 카테고리 추가
+	 * @param blogNo
+	 * @param categoryName
+	 * @return result
+	 * @throws Exception
+	 */
+	public int addCategory(int blogNo, String categoryName) throws Exception{
+
+		Connection conn = getConnection();
+		int result = dao.addCategory(blogNo, categoryName, conn);
+		
+		if(result>0)commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		return result;
+	}
 	
 	
 	

@@ -786,6 +786,31 @@ public class PostDAO {
 		return profileImg;
 	}
 
+	/** 카테고리 추가
+	 * @param blogNo
+	 * @param categoryName
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int addCategory(int blogNo, String categoryName, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("addCategory");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, categoryName);
+			pstmt.setInt(2, blogNo);
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 	
 
 	

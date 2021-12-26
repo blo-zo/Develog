@@ -173,6 +173,9 @@ public class PostController extends HttpServlet{
 								// + 댓글 조회
 								List<PostReply> prList = new ReplyService().selectPostReplyList(postNo);
 								
+								// 카테고리 조회
+								List<Category> categoryList = new PostingService().selectCategory(post.getBlogNo());
+								
 								// 프로필 이미지 조회
 								MemberImage profileImg = service.selectProfImg(post.getBlogNo());
 								post.setProfileImg(profileImg);
@@ -185,6 +188,7 @@ public class PostController extends HttpServlet{
 								}
 								
 								req.setAttribute("prList", prList);
+								req.setAttribute("categoryList", categoryList);
 								req.setAttribute("replyCount", prList.size());
 								req.setAttribute("post", post);
 								req.setAttribute("tagList", tagList);
@@ -561,10 +565,29 @@ public class PostController extends HttpServlet{
 						// 카테고리
 						else if(arr[1].equals("category")) {
 							
+							
+							// 카테고리 목록 조회하기
 							if(arr[2].equals("select")) {
 								
+								int blogNo = Integer.parseInt(req.getParameter("blogNo"));
+								String memberName = req.getParameter("memberName");
 								
 								
+								List<Category> categoryList = new PostingService().selectCategory(blogNo);
+								
+								new Gson().toJson(categoryList, resp.getWriter());
+								
+							}
+							
+							
+							else if(arr[2].equals("add")) {
+								
+								int blogNo = Integer.parseInt(req.getParameter("blogNo"));
+								String categoryName = req.getParameter("categoryName");
+								
+								int result = service.addCategory(blogNo, categoryName);
+								
+								resp.getWriter().print(result);
 							}
 							
 							
@@ -572,15 +595,6 @@ public class PostController extends HttpServlet{
 							
 							
 						}
-						
-						
-						
-						
-						
-						
-						
-						
-						
 						
 						
 						

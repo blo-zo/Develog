@@ -267,5 +267,18 @@
     	(SELECT POST_NO FROM POST WHERE BLOG_NO = ?)
 	</entry>
 	
+	
+	<!-- ***************** 카테고리 ******************** -->
+	<entry key="addCategory">
+		INSERT INTO CATEGORY 
+		VALUES(SEQ_CATEGORY.NEXTVAL, ? , ?)
+	</entry>
+	
+	
+	
+	
+	
+	
+	
 
 </properties>
