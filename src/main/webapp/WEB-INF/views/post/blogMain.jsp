@@ -28,12 +28,20 @@
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <ul class="list-group category-list">
-          <li class="list-group-item category">전체 포스트</li>
-          <li class="list-group-item category">카테고리 1</li>
-          <li class="list-group-item category">카테고리 2</li>
-          <li class="list-group-item category">카테고리 3</li>
-          <li class="list-group-item category">카테고리 4</li>
+        <ul class="list-group" >
+          <li class="list-group-item category" onclick="location.href='${contextPath}/blog/${blog.memberName}'">전체 포스트</li>
+        </ul>
+        
+        <ul class="list-group category-list list-box">
+        
+        	<c:forEach items="${categoryList}" var="category">
+        		
+        		<c:if test="${category.categoryName != '없음'}">
+		          <li class="list-group-item category">${category.categoryName}</li>
+        		</c:if>
+        	
+        	</c:forEach>
+        
         </ul>
         
         <c:if test="${blog.memberNo == loginMember.memberNo}">
@@ -45,7 +53,7 @@
 	            <button class="category-control-btn" id="add-category-btn">
 	              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-5v5h-2v-5h-5v-2h5v-5h2v5h5v2z"/></svg>
 	            </button>
-	            <label for="add-category-btn" style="cursor: pointer;">카테고리 추가</label>
+	            <label for="add-category-btn" style="cursor: pointer;" onclick="addCategory()">카테고리 추가</label>
 	
 	          </div>
 	
@@ -54,7 +62,7 @@
 	            <button class="category-control-btn" id="remove-category-btn">
 	              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-12v-2h12v2z"/></svg>
 	            </button>
-	            <label for="remove-category-btn" style="cursor: pointer;">카테고리 삭제</label>
+	            <label for="remove-category-btn" style="cursor: pointer;" onclick="deleteCategory()">카테고리 삭제</label>
 	          
 	          </div>
 	
@@ -516,7 +524,9 @@ const postNo = "${post.postNo}";
 const memberName = "${post.memberName}";
 
 // 현재 블로그 번호
-const blogNo = "${loginMember.blogNo}"
+const blogNo = "${loginMember.blogNo}";
+
+const memberName2 = "${blog.memberName}";
 
 // 수정 전 댓글 요소를 저장할 변수 (댓글 수정 시 사용)
 let beforeReplyRow;

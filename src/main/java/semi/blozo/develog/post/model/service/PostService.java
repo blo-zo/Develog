@@ -432,6 +432,27 @@ public class PostService {
 		
 		return tagList;
 	}
+
+
+
+	/** 포스트 신고하기
+	 * @param postNo
+	 * @param memberNo
+	 * @param reportPostContent
+	 * @return result
+	 * @throws Exception
+	 */
+	public int reportPost(int postNo, int memberNo, String reportPostContent) throws Exception{
+
+		Connection conn = getConnection();
+		
+		int result = dao.reportPost(postNo, memberNo, reportPostContent, conn);
+		
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
 	
 	
 	
