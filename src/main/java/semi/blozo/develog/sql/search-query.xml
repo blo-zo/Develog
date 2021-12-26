@@ -12,5 +12,27 @@
 	<!-- OR 태그 = ?  -->
 	<!-- 게시글 상태 = 정상 -->
 	<!-- CLOB은 무슨 차이가 있는걸까 -->
+	
+	<!-- postTitle 로 검색  -->
+	<entry key = "searchPost">
+	  SELECT  POST_NO, POST_TITLE, 
+                POST_CONTENT,
+                TO_CHAR(CREATE_DT ,'YYYY"년" MM"월" DD"일" HH24":"MI":"SS') CREATE_DT,
+	        	TO_CHAR(POST.MODIFY_DT ,'YYYY"년" MM"월" DD"일" HH24":"MI":"SS') MODIFY_DT,
+	        	READ_COUNT, LIKE_COUNT, BLOG.BLOG_NO, 
+	        	BLOG_TITLE, MEMBER.MEMBER_NO, MEMBER_NM, 
+               
+                POST.POST_STATUS_CD, POST_STATUS_NM
+                FROM POST
+                JOIN BLOG ON(BLOG.BLOG_NO = POST.BLOG_NO)
+                JOIN MEMBER ON(BLOG.MEMBER_NO = MEMBER.MEMBER_NO)
+                JOIN POST_STATUS ON(POST.POST_STATUS_CD = POST_STATUS.POST_STATUS_CD)
+                WHERE POST.POST_TITLE LIKE '%' || ? || '%'
+                AND POST.POST_STATUS_CD = 500
+                ORDER BY CREATE_DT DESC
+                
+	
+	
+	</entry>
 
 </properties>

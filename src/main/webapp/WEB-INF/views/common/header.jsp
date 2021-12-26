@@ -40,7 +40,7 @@
       <div id="search-area">
         <div>
           <input type="text" id="search-input" name="search-input"  placeholder="검색어를 입력해주세요." onkeyup="search()">
-          <a href="search">
+          <a href="search" onclick="search()">
             <svg id="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.809 21.646l-6.205-6.205c1.167-1.605 1.857-3.579 1.857-5.711 0-5.365-4.365-9.73-9.731-9.73-5.365 0-9.73 4.365-9.73 9.73 0 5.366 4.365 9.73 9.73 9.73 2.034 0 3.923-.627 5.487-1.698l6.238 6.238 2.354-2.354zm-20.955-11.916c0-3.792 3.085-6.877 6.877-6.877s6.877 3.085 6.877 6.877-3.085 6.877-6.877 6.877c-3.793 0-6.877-3.085-6.877-6.877z"/></svg>
           </a>
         </div>
@@ -69,7 +69,7 @@
       
               <!-- 로고 -->
               <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="../main" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto">
+                <a href="main" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto">
                   <p>develog</p>
                 </a>
                 
@@ -77,7 +77,7 @@
       
                   <!-- 검색 -->
                   <li data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop" id="searchList">
-                    <a href="#" class="nav-link" onclick="search();">
+                    <a href="#" class="nav-link">
                       <svg class="bi d-block" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.809 21.646l-6.205-6.205c1.167-1.605 1.857-3.579 1.857-5.711 0-5.365-4.365-9.73-9.731-9.73-5.365 0-9.73 4.365-9.73 9.73 0 5.366 4.365 9.73 9.73 9.73 2.034 0 3.923-.627 5.487-1.698l6.238 6.238 2.354-2.354zm-20.955-11.916c0-3.792 3.085-6.877 6.877-6.877s6.877 3.085 6.877 6.877-3.085 6.877-6.877 6.877c-3.793 0-6.877-3.085-6.877-6.877z"/></svg>
                     </a>
                   </li>
@@ -196,7 +196,7 @@
     </div>
   </div>
   
- 
+   <script src="${contextPath}/resources/js/search.js"></script>
   
 </header>
   <!-- -----------------------------------------------------------모달 끝----------------------------------------- -->  
