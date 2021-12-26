@@ -73,15 +73,8 @@
                  
                </div>
                
-               <form action="" id="date-form" style="height: 30px;">
-                 <select name="" id="date">
-                   <option value="1">오늘</option>
-                   <option value="2">이번주</option>
-                   <option value="3">이번달</option>
-                   <option value="4">올해</option>
-                 </select>
-               </form>
-             </div>
+          
+             
              
    
           

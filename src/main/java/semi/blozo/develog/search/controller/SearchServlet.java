@@ -30,8 +30,8 @@ public class SearchServlet extends HttpServlet{
 		try {
 			
 			
-			String searchInput = req.getParameter("search-input");	// 검색어
-			
+			String searchInput = req.getParameter("searchInput");	// 검색어
+			System.out.println(searchInput);
 			if(searchInput != null) {	// 검색어를 입력한 경우
 				
 				int searchResultCount = service.searchResultCount(searchInput);	// 검색 결과 수
