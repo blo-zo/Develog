@@ -101,19 +101,14 @@ public class ProfileServlet extends HttpServlet{
 				// 2) 파일 형식의 파라미터
 				Enumeration<String> files = mReq.getFileNames();
 				
-				// 
-				memberImg = new ProfileImgVO();
-				memberImg.setBlogNo(memberNo);
-				memberImg.setMemberImgName("user.png");
-				memberImg.setMemberImgOriginal("user.png");
-				memberImg.setMemberImgPath("/resources/images/common/"); // 파일이 있는 주소 경로
+				// 회원가입한 회원은 기본 프로필 이미지가 없다
+				// 문제: 프로필 사진을 바꿔도 설정페이지로 가면 
+				
 				
 				
 				
 				
 				if( files.hasMoreElements() ) {
-					// 썸네일 추가
-					// 썸네일vo가 잘 담겨왔는지 확인 후 result postVO 방식처럼 진행되고
 					
 					String name = files.nextElement(); // 다음 요소값(name) 얻어오기
 					
@@ -130,7 +125,7 @@ public class ProfileServlet extends HttpServlet{
 				//조회 후 살리기
 				int result = service.updateProfile(profileVO, memberImg);
 				
-				resp.getWriter().print(result);
+				
 				
 				
 					System.out.println("thisisresult:"+result);
