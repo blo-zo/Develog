@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -180,7 +181,7 @@ section>div:nth-child(4) {
 									<c:choose>
 										<c:when test="${enquiry.parentEnquiry == 0}">
 											<c:choose>
-												<c:when test="${enquiry.memberNo == 0}">
+												<c:when test="${fn:contains(enquiry.enquiryTitle, 'Develog :')}">
 													<td>관리자 답장</td>
 												</c:when>
 												<c:otherwise>
