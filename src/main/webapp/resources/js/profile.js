@@ -29,7 +29,7 @@ for(let i=0; i < tabArr.length ; i++){
     });
 } 
 
-// 썸네일 영역파일이 클릭되었을때 
+// 프로필 영역파일이 클릭되었을때 
 $(function() {
 	$("#p-choose").on("click", function() {
 		$("#memberImg").click();

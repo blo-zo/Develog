@@ -101,11 +101,15 @@ public class ProfileServlet extends HttpServlet{
 				// 2) 파일 형식의 파라미터
 				Enumeration<String> files = mReq.getFileNames();
 				
+				// 
 				memberImg = new ProfileImgVO();
 				memberImg.setBlogNo(memberNo);
-				memberImg.setMemberImgName("default");
+				memberImg.setMemberImgName("user.png");
 				memberImg.setMemberImgOriginal("user.png");
 				memberImg.setMemberImgPath("/resources/images/common/"); // 파일이 있는 주소 경로
+				
+				
+				
 				
 				if( files.hasMoreElements() ) {
 					// 썸네일 추가
@@ -126,7 +130,10 @@ public class ProfileServlet extends HttpServlet{
 				//조회 후 살리기
 				int result = service.updateProfile(profileVO, memberImg);
 				
-					System.out.println(result);
+				resp.getWriter().print(result);
+				
+				
+					System.out.println("thisisresult:"+result);
 				
 				if(result > 0) {
 					session.setAttribute("message", "회원 정보가 수정 되었습니다.");
