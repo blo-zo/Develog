@@ -352,7 +352,7 @@ public class PostController extends HttpServlet{
 								message = "포스트가 수정되었습니다.";
 								byte[] ptext = loginMember.getMemberNm().getBytes("UTF-8");
 								String value = new String(ptext, "ISO-8859-1"); 
-								path = "../" + value + "/?pno=" + postVO.getPostNo();
+								path = "../" + value + "/view?pno=" + postVO.getPostNo();
 									
 							}else {
 								
