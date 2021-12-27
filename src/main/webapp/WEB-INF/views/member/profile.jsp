@@ -43,7 +43,7 @@
 	            <div class="intro" style="position: relative;">
 	                <div class="int-title" style="height: 100; line-height: 88px;">자기소개</div>
 	                <div class="int-input">
-	                    <input type="text" id="nickname" name="nickname" value="${profileVO.memberNm}" placeholder="닉네임" maxlength=5> 
+	                    <input type="text" id="nickname" name="nickname" value="${profileVO.memberNm}" placeholder="닉네임" maxlength=5 > 
 	                    <input type="text" class="line-intro" id="line-intro" name="line-intro" value="${profileVO.intro}"   placeholder="한 줄 소개" style="margin: 5px 0px 5px 9px;" >
 	                </div>
 	            </div>
