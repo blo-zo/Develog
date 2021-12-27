@@ -70,12 +70,6 @@ function postValidate() {
 	}
 	
 	
-/*	if($(".thumb-img-area").children("img").attr('src') == "Develog/src/main/webapp/resources/images/common/thumbnail.jpg"){
-		alert("썸네일을 선택해주세요.");
-		
-		return false;
-	}
-*/	
 
 	if(!$(".thumb-img-area").children("img").hasClass("thumb-img-size")){
 		alert("썸네일을 선택해주세요.");
