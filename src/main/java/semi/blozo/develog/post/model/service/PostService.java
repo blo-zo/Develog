@@ -485,6 +485,8 @@ public class PostService {
 	public int addCategory(int blogNo, String categoryName) throws Exception{
 
 		Connection conn = getConnection();
+		
+		// 다음 번호 얻어오기 후 번호 세팅해서 insert 하고 번호 반환받기
 		int result = dao.addCategory(blogNo, categoryName, conn);
 		
 		if(result>0)commit(conn);
