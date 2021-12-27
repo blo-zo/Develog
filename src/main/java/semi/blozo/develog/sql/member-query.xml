@@ -71,7 +71,11 @@
 		WHERE MEMBER_PW = ?
 		AND MEMBER_NO = ?
 	</entry>
+	<entry key="insertMemberImg">
 	
+	
+	INSERT INTO MEMBER_IMG VALUES(SEQ_MEMBER_IMG.NEXTVAL, '/resources/images/common/', 'user.png', DEFAULT, 'user.png', SEQ_MEMBER_NO.CURRVAL)
+	</entry>
 	
 	
 	
