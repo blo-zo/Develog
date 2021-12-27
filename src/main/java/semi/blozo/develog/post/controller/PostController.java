@@ -218,7 +218,6 @@ public class PostController extends HttpServlet{
 							
 							int postNo = Integer.parseInt(req.getParameter("pno"));
 							
-							System.out.println(postNo);
 							
 							// 1. 수정할 게시글 조회하기
 							Post post = service.updateView(postNo);
@@ -273,9 +272,6 @@ public class PostController extends HttpServlet{
 							int postNo = Integer.parseInt(mReq.getParameter("pno"));
 							
 							
-							System.out.println("포스트 수정 테스트 ==============================");
-							System.out.println("블로그 번호 " + blogNo);
-							System.out.println("포스트 번호 " + postNo);
 							
 							
 							PostVO postVO = new PostVO();
@@ -296,7 +292,6 @@ public class PostController extends HttpServlet{
 							post.setPostNo(postNo);
 							
 							
-							System.out.println("수정 내용을 담은 정보 " + postVO);
 								
 							// 태그
 							String[] tags = mReq.getParameterValues("tags");
@@ -312,7 +307,6 @@ public class PostController extends HttpServlet{
 								}
 							}
 							
-							System.out.println("수정하거나 추가한 태그 : " + tagVOList);
 							
 							
 							// 썸네일 이미지 처리 
@@ -340,7 +334,6 @@ public class PostController extends HttpServlet{
 									
 								}	// end if
 								
-								System.out.println("썸네일 이미지 정보" + thumbImg);
 														
 							} // end while
 							
@@ -513,10 +506,6 @@ public class PostController extends HttpServlet{
 								String reportReplyContent = req.getParameter("reportReplyContent");
 								int replyNo = Integer.parseInt(req.getParameter("replyNo"));
 								
-								System.out.println(memberName);
-								System.out.println(memberNo);
-								System.out.println(replyNo);
-								System.out.println(reportReplyContent);
 								
 								int result = new ReplyService().reportReply(replyNo, memberNo, reportReplyContent);
 								
@@ -598,14 +587,10 @@ public class PostController extends HttpServlet{
 							else if(arr[2].equals("remove")) {
 								
 								String categoryName = req.getParameter("categoryName");
-								System.out.println(categoryName);
 
 								int blogNo = Integer.parseInt(req.getParameter("blogNo"));
-								System.out.println(blogNo);
 								
 								int categoryCode = Integer.parseInt(req.getParameter("categoryCode"));
-								System.out.println(categoryCode);
-								
 								
 								int result = service.removeCategory(categoryCode, categoryName, blogNo);
 								

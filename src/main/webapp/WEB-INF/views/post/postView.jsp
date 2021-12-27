@@ -37,7 +37,7 @@
         	<c:forEach items="${categoryList}" var="category">
         		
         		<c:if test="${category.categoryName != '없음'}">
-		          <li class="list-group-item category userCategory" onclick="findOrDelete(this,${category.categoryCode},'${category.categoryName}');">${category.categoryName}</li>
+		          <li class="list-group-item category userCategory" onclick="findOrDelete(this,${category.categoryCode},'${category.categoryName}');">${category.categoryName}</li> 
         		</c:if>
         	
         	</c:forEach>
@@ -405,6 +405,9 @@ const memberName = "${post.memberName}";
 
 // 현재 블로그 번호
 const blogNo = "${post.blogNo}";
+
+const categoryName = "${category.categoryName}";
+const categoryCode = "${category.categoryCode}";
 
 
 
