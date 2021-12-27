@@ -22,7 +22,7 @@
 	<!-- 카테고리 오프캔버스 -->
   <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbar">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="category-menu-title" style="font-weight: bold; font-size: 30px; cursor:pointer;" onclick="location.href='${contextPath}/main'">
+      <h5 class="offcanvas-title" id="category-menu-title" style="color:#323232; font-weight: bold; font-size: 30px; cursor:pointer;" onclick="location.href='${contextPath}/main'">
         Develog
       </h5>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>

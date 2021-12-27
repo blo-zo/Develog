@@ -22,7 +22,7 @@
 <!-- 카테고리 오프캔버스 -->
   <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbar">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="category-menu-title" style="font-weight: bold; font-size: 30px; cursor:pointer;" onclick="location.href='${contextPath}/main'">
+      <h5 class="offcanvas-title" id="category-menu-title" style="color:#323232; font-weight: bold; font-size: 30px; cursor:pointer;" onclick="location.href='${contextPath}/main'">
         Develog
       </h5>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -159,11 +159,11 @@
 	          </div>
 	
 	          <div class="post-prev-next-btn">
-	            <div class="post-prev-btn">이전 글</div>
+	           <%--  <div class="post-prev-btn">이전 글</div> --%>
                 <div class="goList">
 	              <a href="${contextPath}/blog/${post.memberName}">목록으로</a>
                 </div>
-	            <div class="post-next-btn">다음 글</div>
+	           <%-- <div class="post-next-btn">다음 글</div> --%>
 	          </div>
 	
 	        </div>
@@ -191,6 +191,8 @@
              	 </p>
 	            </div>
 	          </div>
+	          
+	          <hr style="width:800px;">
 	
 	
 			  <!-- 댓글 영역 -->
@@ -324,14 +326,13 @@
             <div class="modal-body">
                <section id="modal-section">
                  <div>
-                    <div class="content" input-modal>&nbsp;신고내용</div>
                     <div class="content">
                        <div class="input-modal">
                        		<form action="reportPost" method="POST">
                        		  <input type="hidden" name="memberName" value="${post.memberName}">	
                        		  <input type="hidden" name="reportPostNo" value="${post.postNo}">	
-                              <textarea name="reportPostContent" cols="30" rows="10" placeholder="신고내용 입력" style="resize:none;"></textarea>
-							  <button class="btn btn-primary">제출</button>                       		
+                              <textarea name="reportPostContent" cols="30" rows="10" placeholder="신고내용 입력" style="resize:none; width:90%; margin-left:30px; padding:10px;"></textarea>
+							  <button class="btn btn-primary" style="float:right; margin-right:31px;">제출</button>                       		
                        		</form>
                           </div>
                     </div>
@@ -355,13 +356,11 @@
             <div class="modal-body">
                <section id="modal-section">
                  <div>
-                    <div class="content" input-modal>&nbsp;신고내용</div>
-                    신고할 댓글 ${reply.replyNo}
                     <div class="content">
                      	<div class="input-modal">
                             <form action="reply/report" method="POST">
-                              <textarea name="reportReplyContent" class="reportReplyContent" cols="30" rows="10" placeholder="신고내용 입력" style="resize:none;"></textarea>
-							  <button class="btn btn-primary report-btn">제출</button>                       		
+                              <textarea name="reportReplyContent" class="reportReplyContent" cols="30" rows="10" placeholder="신고내용 입력" style="resize:none; width:90%; margin-left:30px; padding:10px;"></textarea>
+							  <button class="btn btn-primary report-btn" style="float:right; margin-right:31px;">제출</button>                       		
                        		</form>
                      	</div>
                     </div>
