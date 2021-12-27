@@ -442,8 +442,8 @@ function reportReply(replyNo){
             if(result > 0){
   
               $("#reportReplyModal").modal('hide');
-              location.href= contextPath + "/blog/" + memberName + "/view/?pno=" + postNo;
               alert("신고가 정상 접수되었습니다.");
+              location.href= contextPath + "/blog/" + memberName + "/view/?pno=" + postNo;
   
             }else{
               alert("신고 처리과정 중 문제 발생");
@@ -465,7 +465,6 @@ function reportReply(replyNo){
   }
 
 
-
 };
 
 
@@ -481,8 +480,8 @@ function selectCategoryList(){
 
   $.ajax({
 
-    url : contextPath + "/blog/" + memberName2 + "/category/select",
-    data : {"blogNo" : blogNo, "memberName" : memberName2},
+    url : contextPath + "/blog/" + memberName + "/category/select",
+    data : {"blogNo" : blogNo, "memberName" : memberName},
     type : "GET",
     dataType : "JSON",
 
@@ -494,40 +493,167 @@ function selectCategoryList(){
 
       $.each( categoryList, function( index, category){
 
-        const li = $('<li class="list-group-item category"');
+        const listBox = $(".list-box");
 
+        const li = $('<li class="list-group-item category userCategory" onclick="findPostByC();">');
 
+        if(category.categoryName != "없음"){
+
+          li.text(category.categoryName);
+  
+          listBox.append(li);
+
+        }
 
       });
 
+    },
 
+    error : function(req, status, error){
+      console.log("카테고리 목록 조회 실패")
+      console.log(req.responseText)
     }
 
-
   });
-
 
 }
 
+
+var flag = true;  // 중복 클릭 방지용
+
+
+// 카테고리 추가하기
 function addCategory(){
 
-  const input = $('<input type="text" name="categoryName"');
-  const li = $('<li class="list-group-item category">');
+  const input = $('<input size="15" type="text" name="categoryName" autocomplete="off" place placeholder="생성할 카테고리(15자 이내)" style="width:200px; height:30px; outline:none; margin-left:10px; margin-top:10px; border:0.5px solid lightgray;">');
+
+  const listBox = $(".list-box");
+  
+  if(flag){
+
+    flag = false;
+    
+    listBox.append(input);
 
 
+    input.on("blur",function(){
+      input.remove();
+      flag = true;
+    });
 
-  input.on("keyup", function(key){
 
-    if(keyCode == 13){
+    input.on("keyup", function(e){
+      
+      if(e.keyCode == 13){  // 엔터키 키업
 
-      li.text() == input.val();
+        if(input.val().trim().length== 0){
+          alert("카테고리명을 입력해주세요");
+          input.focus();
+        }else{
 
-    }
+        }
+
+        $.ajax({
+
+          url : contextPath + "/blog/" + memberName + "/category/add",
+          data : {  "categoryName" : input.val(), 
+                    "blogNo" : blogNo , 
+                 },
+          type : "POST",
+          
+          success : function(result){
+  
+            if(result > 0){ // 삽입 성공
+  
+              const li = $('<li class="list-group-item category userCategory" onclick="findPostByC();">');
+        
+              li.text(input.val());
+              listBox.append(li);
+              input.remove();
+
+              selectCategoryList();
+              flag = true;
+
+  
+            }else{
+
+              alert("카테고리 추가 중 문제 발생");
+              input.remove();
+              flag = true;
+
+            }
+  
+          },
+  
+          error : function(req, status, error){
+            console.log("카테고리 추가 실패")
+            console.log(req.responseText)
+            flag=true;
+          }
+  
+        });
+  
+      }
+  
+    });
+
+  }
+
+}
+
+
+// 카테고리 삭제하기
+// 기존 카테고리에 있는 글을 카테고리 '없음'으로 변경 
+// --> 카테고리 삭제
+
+// 삭제폼 전환시키기
+function deleteCategory(){
+
+  console.log($(".userCategory"));
+
+  const categories = $(".userCategory");
+
+  if(categories.hasClass("delete-form")){
+
+    categories.removeClass("delete-form");
+
+  }else{
+
+    categories.addClass("delete-form");
+
+  }
+
+}
+
+function findOrDelete(){
+
+  // 제출 주소 : category/remove
+  // result > 0 이면 삭제 성공
+
+  const categories = $(".userCategory");
+  
+  categories.on("click",function(){
+
+    console.log("새로 생긴것에도 적용이 되나?")
 
   });
 
-  $(".list-box").append(li);
 
+
+
+  // delete-form을 가졌을 경우에는 삭제하기
+  // if($(this).hasClass("delete-form")){
+
+  //   console.log("삭제용");
+    
+  // }else{
+    
+  //   // delete-form이 없을 때는 해당 카테고리 게시글 조회하기
+    
+  //   console.log("검색용");
+  //   console.log(this);
+
+  // }
 
 }
 
@@ -607,5 +733,8 @@ $("#share-btn").on("click",function(){
 	alert("URL이 복사되었습니다.")
 
 });
+
+
+
 
 
