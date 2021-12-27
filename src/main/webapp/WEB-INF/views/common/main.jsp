@@ -32,7 +32,7 @@
         <div class="swiper-pagination"></div>
       </div>
         <!-- --------------------------------------------캐러셀 끝------------------------------------------------------- -->
-        <button onclick=" location.href='${contextPath}/member/updatepw'"  >비밀번호 변경</button>
+       
 		
      
         

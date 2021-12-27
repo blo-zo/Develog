@@ -84,7 +84,9 @@ a{
 .search-offcanvas-body{
   text-align: center;
 }
-
+#search-icon:hover{
+	cursor: pointer;
+}
 
 #search-input{
   border: none;
