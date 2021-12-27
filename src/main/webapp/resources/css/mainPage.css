@@ -13,13 +13,16 @@ body * {
 html, body{
   margin:0; 
   padding:0; 
- 
+ 	
   font-family: "Noto Sans KR" !important; 
   font-size:15px; 
   color:#323232;
-  background-color: #FDFDFD;
+ 
 
   margin-bottom: 50px;
+}
+.body{
+	background-color: #FDFDFD;
 }
 
 hr{
@@ -676,7 +679,7 @@ height: 3px;
   opacity: 0;
   transition-duration: 0.5s;
 }
-.bg > p {
+.bg > a {
   line-height: 230px;
   font-size: 30px;
   color: #323232;
@@ -684,5 +687,5 @@ height: 3px;
 }
 
 .bg:hover{
-  opacity: 0.9;
+  opacity: 1;
 }

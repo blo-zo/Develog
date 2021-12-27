@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" href="../resources/css/profile.css">
 
-
+<body class="body">
 
 	<form action="profile/update" enctype="multipart/form-data"  method="POST" name="updateForm" role="form" onsubmit="return false">
 		<div class="category">PROFILE</div>
@@ -25,11 +25,12 @@
 	         <!-- 프로필 -->
 	        <div class="content" style=" display: block;" >
 	            <div class="profile">
-	                <div class="p-img">
+	                <div class="p-img"> 
 		                <div class="profileImg">
-	                    	<img name="memberImg" src="../resources/images/common/user.png">
+	                    	<img class="profileImgCss" name="memberImg" src="${contextPath}${memberImg.memberImgPath}${memberImg.memberImgName}">
 	                  </div>
 	                </div>
+	                
 	                <div class="p-btn">
 	                    <button type="button" class="p-choose" id="p-choose" >이미지 업로드</button>
 	                    <button type="button" class="p-delete" id="p-delete" >이미지 제거</button>

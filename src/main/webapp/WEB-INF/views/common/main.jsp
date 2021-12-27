@@ -17,7 +17,7 @@
           <a href="${contextPath}/blog/${list.memberName}/view?pno=${list.postNo}">
               <img src="${contextPath}${list.postImg.postImgPath}${list.postImg.postImgName}" alt="" class="carousel-imgbox">
                <div class="bg">
-               <div style="margin: auto;  width: 250px; height: 50px; margin-top: 120px; ">
+               <div style="margin: auto;  width: 250px; height: 50px; margin-top: 120px; color: black">
                  ${list.postTitle}
                </div>
                 </div>

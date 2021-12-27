@@ -70,6 +70,8 @@ public class MemberProfileService {
 		
 		System.out.println("닉넴 result"+result);
 		
+		
+		
 		if(result > 0) {
 			// 2) 디벨로그 제목
 			result = dao.updateProfileBlog(profileVO,  conn);
