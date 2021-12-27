@@ -166,7 +166,7 @@
              </c:if>
              <input type="checkbox" name="idcheck" id="idcheck" ${chk}>
             </div>
-            <div style="widows: 500px;">
+            <div style="width: 500px;">
               <b id="qs">아직 회원가입 안하셨나요?</b>
               <span id="sign-span">            
                 <a href="${contextPath}/member/signup"><p>
