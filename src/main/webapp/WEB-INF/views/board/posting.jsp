@@ -17,7 +17,7 @@
   <%--  <link rel="stylesheet" href="${contextPath}/css/summernote/summernote-lite.css">  --%>
 </head>
 
-<body>
+<body class="body">
 
 	<form action="insert" enctype="multipart/form-data" name="insertForm" method="post"  role="form" onsubmit="return false">
 	<div class="wrapper">

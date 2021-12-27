@@ -8,6 +8,10 @@ body{
     padding-top: 30px;
 }
 
+.body{
+	background-color: #fdfdfd;
+}
+
 /* 글 작성 영역 */
 .wrapper{
     display: flex;

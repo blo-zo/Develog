@@ -112,3 +112,45 @@ function secession(){
 		}
 	}
 }
+
+
+
+
+/* 닉네임 유효성 중복 확인 */
+/*$("#nickname").on("blur", function () {
+
+    const inputName = $(this).val();  // 입력 받은 이름
+    const regExp = /^[가-힣]{2,10}$/;
+
+    if (inputName.length == 0) {
+        $("#checkName").text("");
+        signUpCheckObj.name = false;
+    } else if (regExp.test(inputName)) {
+
+        $.ajax({
+
+            url: "nameDupCheck",
+            type: "GET",
+            data: { "inputName": inputName },
+            success: function (result) {
+                if (result == 0) {
+					alert("사용가능");
+                    return true;
+                } else {
+					alert("사용 불가");
+                }
+            },
+            error: function (request, status, error) {
+
+            },
+            complite: function () {
+
+            }
+        });
+    } else {
+        $("#checkName").text("닉네임은 한글로 두글자이상 10글자이하로 작성해주세요.").css("color", "red");
+        signUpCheckObj.name = false;
+    }
+
+});*/
+

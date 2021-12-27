@@ -1,66 +1,14 @@
 /* Noto Sans KR font 적용 */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 .category, .main, .footer { font-family: 'Noto Sans KR', sans-serif; }
+.body{ background-color: #fdfdfd;}
+
 
 /* 헤더 */
 .jun-header{
 max-width: 1200px;
 margin: auto;
 }
-
-/* 검색창 오프캔버스 */
-.search-offcanvas{
-height: 40vh;
-}
-
-.search-offcanvas-body{
-text-align: center;
-}
-
-
-#search-input{
-border: none;
-border-bottom: #323232 solid 3px;
-outline: none;
-width: 375px;
-}
-
-#search-area{
-margin: auto;
-width: 400px;
-}
-
-#search-btn{
-width: 21px;
-height: 21px;
-border: none;
-}
-
-.recent-search{
-text-align: left;
-width: 380px;
-}
-.recent-search p > span:first-child:hover{
-color: #3278FE;
-}
-
-.recent-search p{
-margin: 5px;
-}
-
-/* 최근 검색어 전체 삭제 */
-#search-delete-all, .search-delete{
-    cursor: pointer;
-    color: #323232;
-}
-.search-delete{
-    margin-left: 20px;
-}
-#search-delete-all:hover, .search-delete:hover{
-    opacity: 70%;
-}
-
-/* ---- 헤더 공통 부분 끝 ---- */
 
 
 /* ----  카테고리 PROFILE ----  */
@@ -137,6 +85,9 @@ margin: 5px;
 }
 
 /* 1- 프로필 */
+
+
+
 .profile{
     height: 120px;
     display: flex;
@@ -161,17 +112,26 @@ margin: 5px;
     justify-content: center;
     object-fit: cover;
 }
+
+
+
+
+
 .profileImg{
-    width: 80px;
-    height: 80px;
-
+    width: 90px;
+    height: 90px;
+	border-radius: 70%;
+    overflow: hidden;
 }
-
 
 .profileImg > img {
-    width: 80px;
-    border-radius: 70%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+display: inline-block;
 }
+
+
 .thumb-img{
 	cursor: pointer;
 	display: none;
