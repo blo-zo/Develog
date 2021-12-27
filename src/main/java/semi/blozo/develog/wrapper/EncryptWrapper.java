@@ -66,8 +66,6 @@ public class EncryptWrapper extends HttpServletRequestWrapper {
 			encPwd = Base64.getEncoder().encodeToString(md.digest());
 			// md.digest() : 암호화된 코드를 꺼내옴
 			
-			System.out.println("암호화 전 : " + pwd);
-			System.out.println("암호화 후 : " + encPwd);
 			
 		}catch (NoSuchAlgorithmException e) {
 			// SHA-512 해쉬함수가 없는 경우 발생

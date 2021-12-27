@@ -171,7 +171,8 @@ public class AdminDAO {
 //				String content = rs.getString("POST_CONTENT").substring(0, 12);
 //				 15 글자 넘어가면 안되는 이유가 0~12글자를 자를수 없을 정도로 작은 게 있기 때문이다
 				String postContent = rs.getString("POST_CONTENT");
-				postContent = postContent.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>","");
+//				postContent = postContent.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>","");
+				postContent = postContent.replaceAll("<[^>]*>", "");
 				Post post = new Post();
 				post.setPostNo(rs.getInt("POST_NO"));
 				post.setPostTitle(rs.getString("POST_TITLE"));
@@ -469,14 +470,15 @@ public class AdminDAO {
 			}
 			
 			String sql = "SELECT * FROM(\r\n"
-					+ "		SELECT ROWNUM RNUM, A.* FROM\r\n"
-					+ "		(SELECT ENQUIRY_NO,ENQUIRY_TITLE,ENQUIRY_CONTENT,TO_CHAR(CREATE_DT, 'YYYY-MM-DD') CREATE_DT, MEMBER_NO, PARENT_ENQUIRY, MEMBER_NM\r\n"
-					+ "		FROM ENQUIRY\r\n"
+					+ "        SELECT ROWNUM RNUM, A.* FROM\r\n"
+					+ "        (SELECT ENQUIRY_NO, ENQUIRY_TITLE, ENQUIRY_CONTENT, TO_CHAR(CREATE_DT, 'YYYY-MM-DD'), MEMBER_NO, MEMBER_NM,\r\n"
+					+ "                (SELECT COUNT(*) FROM ENQUIRY B WHERE B.PARENT_ENQUIRY = C.ENQUIRY_NO)\r\n"
+					+ "        FROM ENQUIRY C\r\n"
 					+ "        JOIN MEMBER USING(MEMBER_NO)\r\n"
 					+ where
-					+ order
-					+ ") A)\r\n"
-					+ "		WHERE RNUM BETWEEN ? AND ?";
+					+ order 
+					+ "        ) A)\r\n"
+					+ "        WHERE RNUM BETWEEN ? AND ?";
 			
 			int startRow = (pagination.getCurrentPage() -1) * pagination.getLimit() + 1;
 			
@@ -497,8 +499,8 @@ public class AdminDAO {
 				enq.setEnquiryContent(enquiryContent);
 				enq.setCreateDate(rs.getString(5));
 				enq.setMemberNo(rs.getInt(6));
-				enq.setParentEnquiry(rs.getInt(7));
-				enq.setMemberName(rs.getString(8));
+				enq.setMemberName(rs.getString(7));
+				enq.setParentEnquiry(rs.getInt(8));
 				
 				enquiryList.add(enq);
 			}
@@ -901,7 +903,6 @@ public class AdminDAO {
 			String sql = prop.getProperty("updateViolationMinus");
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeUpdate();
-			System.out.println(sql);
 		}finally {
 			pstmt.close();
 		}
@@ -1098,7 +1099,7 @@ public class AdminDAO {
 			pstmt.setString(1, title);
 			pstmt.setString(2, content);
 			pstmt.setInt(3, enquiry.getEnquiryNo());
-			pstmt.setInt(4, enquiry.getMemberNo());
+			pstmt.setInt(4, 0);
 			result = pstmt.executeUpdate();
 		}finally {
 			pstmt.close();

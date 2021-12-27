@@ -146,8 +146,8 @@ section>div:nth-child(4) {
 					<tr>
 						<th>No</th>
 						<th>회원번호</th>
-						<th>닉네임</th>
 						<th>제목</th>
+						<th>닉네임</th>
 						<th>내용</th>
 						<th>작성일</th>
 						<th>답장여부</th>
@@ -163,20 +163,30 @@ section>div:nth-child(4) {
 								<tr>
 									<td>${enquiry.enquiryNo}</td>
 									<td>${enquiry.memberNo}</td>
-									<td>${enquiry.memberName}</td>
-									<td>${enquiry.enquiryTitle}</td>
 									<td>
+										<span style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 200px; height:30px; display: inline-block; text-align: center;" >${enquiry.enquiryTitle}</span>
+									</td>
+										<td>${enquiry.memberName}</td>
+									<td>
+									
 									<span class="report-content"
 									data-bs-toggle="modal"
 									data-bs-target="#exampleModal"
 									onclick="enquiryDetailContent(this)">
-										${enquiry.enquiryContent}
+										<span style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; width: 200px; height:30px; display: inline-block; text-align: center;" >${enquiry.enquiryContent}</span>
 									</span>
 									</td>
 									<td>${enquiry.createDate}</td>
 									<c:choose>
 										<c:when test="${enquiry.parentEnquiry == 0}">
-											<td>미답장</td>
+											<c:choose>
+												<c:when test="${enquiry.memberNo == 0}">
+													<td>관리자 답장</td>
+												</c:when>
+												<c:otherwise>
+													<td>미답장</td>
+												</c:otherwise>
+											</c:choose>
 										</c:when>
 										<c:otherwise>
 											<td>답장 완료</td>
