@@ -347,7 +347,7 @@ section>div:nth-child(4) {
 	<script>
 		const contextPath = "${pageContext.servletContext.contextPath}"
 	</script>
-	<script src="${pageContext.servletContext.contextPath}/resources/js/modal.js"></script>
+	<script src="${pageContext.servletContext.contextPath}/resources/js/adminMember.js"></script>
 	
 </body>
 </html>

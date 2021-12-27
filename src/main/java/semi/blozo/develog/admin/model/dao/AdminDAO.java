@@ -490,10 +490,11 @@ public class AdminDAO {
 			
 			while(rs.next()) {
 				Enquiry enq = new Enquiry();
-				
+				String enquiryContent = rs.getString(4); 
+				enquiryContent = enquiryContent.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>","");
 				enq.setEnquiryNo(rs.getInt(2));
 				enq.setEnquiryTitle(rs.getString(3));
-				enq.setEnquiryContent(rs.getString(4));
+				enq.setEnquiryContent(enquiryContent);
 				enq.setCreateDate(rs.getString(5));
 				enq.setMemberNo(rs.getInt(6));
 				enq.setParentEnquiry(rs.getInt(7));
