@@ -104,7 +104,7 @@ public class ProfileServlet extends HttpServlet{
 				// 회원가입한 회원은 기본 프로필 이미지가 없다
 				// 문제: 프로필 사진을 바꿔도 설정페이지로 가면 
 				
-				
+	
 				
 				
 				
