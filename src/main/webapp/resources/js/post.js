@@ -495,7 +495,7 @@ function selectCategoryList(){
 
         const listBox = $(".list-box");
 
-        const li = $('<li class="list-group-item category userCategory" onclick="findPostByC();">');
+        const li = $('<li class="list-group-item category userCategory" onclick="findOrDelete(this, ${category.categoryCode}, "${category.categoryName}");">');
 
         if(category.categoryName != "없음"){
 
@@ -504,7 +504,6 @@ function selectCategoryList(){
           listBox.append(li);
 
         }
-
       });
 
     },
@@ -565,7 +564,7 @@ function addCategory(){
   
             if(result > 0){ // 삽입 성공
   
-              const li = $('<li class="list-group-item category userCategory" onclick="findPostByC();">');
+              const li = $('<li class="list-group-item category userCategory" onclick="findOrDelete(this, ${category.categoryCode}, "${category.categoryName}");">');
         
               li.text(input.val());
               listBox.append(li);
@@ -625,28 +624,47 @@ function deleteCategory(){
 
 }
 
-function findOrDelete(){
+function findOrDelete(el, categoryCode, categoryName){
 
   // 제출 주소 : category/remove
   // result > 0 이면 삭제 성공
 
   const categories = $(".userCategory");
   
-  categories.on("click",function(){
+    if($(el).hasClass("delete-form")){
 
-    console.log("새로 생긴것에도 적용이 되나?")
+      $.ajax({
 
-  });
-
-
-
-
-  // delete-form을 가졌을 경우에는 삭제하기
-  // if($(this).hasClass("delete-form")){
-
-  //   console.log("삭제용");
+        url : contextPath + "/blog/" + memberName + "/category/remove",
+        data : {"blogNo" : blogNo, "categoryName" : categoryName,
+                 "categoryCode" : categoryCode },
+        type : "POST",
     
-  // }else{
+        success : function(result){
+          
+          if(result > 0){ 
+            alert("카테고리가 삭제되었습니다.");
+            $(el).remove();
+            selectCategoryList();
+          }else{
+            alert("카테고리 삭제 중 문제 발생");
+          }
+          
+    
+        },
+    
+        error : function(req, status, error){
+          console.log("카테고리 삭제 실패")
+          console.log(req.responseText);
+        }
+    
+      });
+
+    }else{
+
+      alert("준비중인 기능입니다.");
+    }
+
     
   //   // delete-form이 없을 때는 해당 카테고리 게시글 조회하기
     

@@ -37,7 +37,7 @@
         	<c:forEach items="${categoryList}" var="category">
         		
         		<c:if test="${category.categoryName != '없음'}">
-		          <li class="list-group-item category userCategory" onclick="findOrDelete();">${category.categoryName}</li>
+		          <li class="list-group-item category userCategory" onclick="findOrDelete(this,${category.categoryCode},'${category.categoryName}');">${category.categoryName}</li>
         		</c:if>
         	
         	</c:forEach>
@@ -99,6 +99,10 @@
 		                  <td colspan="2">
 		                    By.<a href="${contextPath}/blog/${post.memberName}"><span id="post-author">${post.memberName}</span></a> 
 		                  </td>
+		                </tr>
+		                <tr>
+		                  <td>조회수</td>
+		                  <td>${post.readCount}</td>
 		                </tr>
 		                <tr>
 		                  <td>작성일</td>
@@ -395,11 +399,13 @@ const postMemberNo = "${post.memberNo}";
 // 현재 게시글 번호
 const postNo = "${post.postNo}";
 
+
 // 현재 게시글 작성자명
 const memberName = "${post.memberName}";
 
 // 현재 블로그 번호
 const blogNo = "${post.blogNo}";
+
 
 
 // 수정 전 댓글 요소를 저장할 변수 (댓글 수정 시 사용)
