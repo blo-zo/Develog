@@ -64,16 +64,14 @@ function loadImg(value) {
 // 이미지 제거버튼 클릭시 디폴트 값으로 변경
 $(function() {
 	$("#p-delete").on("click", function() {
-		changeIMG();
+		$(".profileImg").children("img").attr("src", "../resources/images/common/user.png");
+		
+		const file = document.getElementById("file");
+         file.value = "";
+		
 	});
 });
 
-function changeIMG(){
-	//img 태그의 아이디로 변경 할 때
-	$(".profileImg > img").addClass('member-img-size');
-	$(".profileImg").children("img").attr("src", "../resources/images/common/user.png");
-    
-}
 
 // 저장
 function pofileValidate() {
