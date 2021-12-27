@@ -818,3 +818,7 @@ border-bottom-right-radius: 10px;}
 .delete-form:hover{
   background-color: rgb(255 0 0 / 56%);
 }
+
+#category-menu-title:hover{
+  opacity: 0.8;
+}
