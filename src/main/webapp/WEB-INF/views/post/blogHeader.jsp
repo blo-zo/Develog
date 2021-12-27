@@ -45,7 +45,7 @@
           <li>
             <div class="dropdown">
               <a href="#" class="nav-link d-block text-decoration-none " id="userID" data-bs-toggle="dropdown" aria-expanded="false">
-						<P style="margin:0px;">${sessionScope.loginMember.memberNm}</P>						
+						<P style="margin:0px; color:#323232;">${sessionScope.loginMember.memberNm}</P>						
               </a>
               
               <ul class="dropdown-menu text-small" aria-labelledby="userID">
