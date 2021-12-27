@@ -495,7 +495,7 @@ function selectCategoryList(){
 
         const listBox = $(".list-box");
 
-        const li = $('<li class="list-group-item category userCategory" onclick="findPostByC();">');
+        const li = $('<li class="list-group-item category userCategory" onclick="findOrDelete(this);">');
 
         if(category.categoryName != "없음"){
 
@@ -504,6 +504,8 @@ function selectCategoryList(){
           listBox.append(li);
 
         }
+
+        console.log("여기");
 
       });
 
@@ -565,7 +567,7 @@ function addCategory(){
   
             if(result > 0){ // 삽입 성공
   
-              const li = $('<li class="list-group-item category userCategory" onclick="findPostByC();">');
+              const li = $('<li class="list-group-item category userCategory" onclick="findOrDelete(this);">');
         
               li.text(input.val());
               listBox.append(li);
@@ -625,18 +627,42 @@ function deleteCategory(){
 
 }
 
-function findOrDelete(){
+function findOrDelete(el){
 
   // 제출 주소 : category/remove
   // result > 0 이면 삭제 성공
 
   const categories = $(".userCategory");
   
-  categories.on("click",function(){
+  //$(el).on("click",function(){
 
-    console.log("새로 생긴것에도 적용이 되나?")
+    if($(el).hasClass("delete-form")){
 
-  });
+      $.ajax({
+
+        url : contextPath + "/blog/" + memberName + "/category/delete",
+        data : {"blogNo" : blogNo, "categoryName" : el.text()},
+        type : "POST",
+    
+        success : function(result){
+    
+          
+    
+        },
+    
+        error : function(req, status, error){
+          console.log("카테고리 삭제 실패")
+          console.log(req.responseText);
+        }
+    
+      });
+
+
+
+    }
+
+
+  //});
 
 
 

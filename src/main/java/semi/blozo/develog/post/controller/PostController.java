@@ -362,6 +362,7 @@ public class PostController extends HttpServlet{
 							}
 							
 							session.setAttribute("message", message);
+							
 							resp.sendRedirect(path);
 							
 							
