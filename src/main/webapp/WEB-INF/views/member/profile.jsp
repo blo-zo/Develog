@@ -43,15 +43,15 @@
 	            <div class="intro" style="position: relative;">
 	                <div class="int-title" style="height: 100; line-height: 88px;">자기소개</div>
 	                <div class="int-input">
-	                    <input type="text" id="nickname" name="nickname" value="${profileVO.memberNm}" placeholder="닉네임" > 
-	                    <input type="text" class="line-intro" id="line-intro" name="line-intro" value="${profileVO.intro}"   placeholder="한 줄 소개" style="margin: 5px 0px 5px 9px;" >
+	                    <input type="text" id="nickname" name="nickname" value="${profileVO.memberNm}" placeholder="닉네임" maxlength=5 > 
+	                    <input type="text" class="line-intro" id="line-intro" name="line-intro" value="${profileVO.intro}"   placeholder="한 줄 소개" style="margin: 5px 0px 5px 9px;" maxlength = 100 >
 	                </div>
 	            </div>
 	
 	            <div class="devel-intro">
 	                <div class="d-title">디벨로그 제목</div>
 	                <div class="d-input">
-	                    <input type="text" id="devel-input" name="devel-input" value="${profileVO.blogTitle}"  placeholder="디벨로그 제목" >
+	                    <input type="text" id="devel-input" name="devel-input" value="${profileVO.blogTitle}"  placeholder="디벨로그 제목" maxlength = 6>
 	                </div>
 	            </div>
 	
@@ -70,7 +70,7 @@
 	              <img class="email-img" id="email-img" src="${contextPath}/resources/images/boardIcon/email.png">
 	            </div>
 	            <div class="email-input">
-	                <input type="text"  class="line-intro" id="emailContent" name="" value="${profileVO.snsEmail}"  placeholder="이메일을 입력해주세요." size=35 >
+	                <input type="text"  class="line-intro" id="emailContent" name="" value="${profileVO.snsEmail}"  placeholder="이메일을 입력해주세요." maxlength = 16 >
 	            </div>
 	          </div>
 	
@@ -80,7 +80,7 @@
 	              <img  class="github-img"  id="github-img" src="${contextPath}/resources/images/boardIcon/github.png">
 	            </div>
 	            <div class="github-input">
-	                <input type="text"  class="line-intro" id="gitContent" name="" value="${profileVO.snsGit}"  placeholder="Github 계정을 입력하세요." size=35 >
+	                <input type="text"  class="line-intro" id="gitContent" name="" value="${profileVO.snsGit}"  placeholder="Github 계정을 입력하세요." maxlength = 16 >
 	            </div>
 	          </div>
 	
@@ -91,8 +91,7 @@
 	            </div>
 	            <div class="twitter-input">
 	                <input type="text" class="line-intro"  id="twitterContent" name="" value="${profileVO.snsTwitt}"  placeholder="Twitter 계정을 입력하세요." 
-	                size=35
-	                >
+	                maxlength = 16 >
 	            </div>
 	          </div>
 	
@@ -103,7 +102,7 @@
 	              >
 	            </div>
 	            <div class="facebook-input">
-	                <input type="text"  class="line-intro" id="facebookContent" name="" value="${profileVO.snsFbook}" placeholder="http://www.facebook.com/" size=35 >
+	                <input type="text"  class="line-intro" id="facebookContent" name="" value="${profileVO.snsFbook}" placeholder="http://www.facebook.com/" maxlength = 16 >
 	            </div>
 	          </div>
 	
@@ -113,7 +112,7 @@
 	              <img  class="homepage-img" id="homepage-img" src="${contextPath}/resources/images/boardIcon/home.png" alt="" >
 	            </div>
 	            <div class="homepage-input">
-	                <input type="text" class="line-intro" id="homeContent" name="" value="${profileVO.snsHome}" placeholder="홈페이지 주소를 입력하세요."  size=35 >
+	                <input type="text" class="line-intro" id="homeContent" name="" value="${profileVO.snsHome}" placeholder="홈페이지 주소를 입력하세요." maxlength = 16 >
 	            </div>
 	          </div> <!-- homepage -->
 	
