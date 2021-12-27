@@ -23,7 +23,7 @@
 	<div class="wrapper">
 		<div class="write-area" style="max-width: 80%;">
 			<div class="head-title">
-				<textarea id="head-textarea" class="head-textarea" name="postTitle" placeholder="제목을 입력하세요" maxlength="200" ></textarea>
+				<textarea id="head-textarea" class="head-textarea" name="postTitle" placeholder="제목을 입력하세요" maxlength="60" ></textarea>
 			</div><!-- head title -->
 
 			<div class="line"></div>
@@ -55,10 +55,7 @@
         </footer>
 	</div><!-- wrapper -->
 
-	<!-- 
-        지금은 보이고 안보이고 정도만 작성
-        나중에 움직이는걸로 바꾸고 싶으면 transform 했던거 찾으면 된다 
-    -->
+
 
 
 	<!-- modal slide up -->
