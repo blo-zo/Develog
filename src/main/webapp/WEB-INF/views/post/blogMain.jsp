@@ -37,7 +37,7 @@
         	<c:forEach items="${categoryList}" var="category">
         		
         		<c:if test="${category.categoryName != '없음'}">
-		          <li class="list-group-item category">${category.categoryName}</li>
+		          <li class="list-group-item category userCategory" onclick="findOrDelete();">${category.categoryName}</li>
         		</c:if>
         	
         	</c:forEach>
@@ -50,19 +50,19 @@
 	
 	          <div class="category-control">
 	
-	            <button class="category-control-btn" id="add-category-btn">
+	            <button class="category-control-btn" id="add-category-btn" onclick="addCategory()">
 	              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-5v5h-2v-5h-5v-2h5v-5h2v5h5v2z"/></svg>
 	            </button>
-	            <label for="add-category-btn" style="cursor: pointer;" onclick="addCategory()">카테고리 추가</label>
+	            <label for="add-category-btn" style="cursor: pointer;">카테고리 추가</label>
 	
 	          </div>
 	
 	          <div class="category-control">
 	          
-	            <button class="category-control-btn" id="remove-category-btn">
+	            <button class="category-control-btn" id="remove-category-btn" onclick="deleteCategory()">
 	              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-12v-2h12v2z"/></svg>
 	            </button>
-	            <label for="remove-category-btn" style="cursor: pointer;" onclick="deleteCategory()">카테고리 삭제</label>
+	            <label for="remove-category-btn" style="cursor: pointer;">카테고리 삭제</label>
 	          
 	          </div>
 	
@@ -81,7 +81,7 @@
 
       <div class="blog-profile-area">
         <div class="blog-profile-photo">
-          <img id="blog-profile-img" src="${contextPath}/resources/images/KYJ/eyeOfPine-profile-image.jpg" alt="">
+          <img id="blog-profile-img" src="${contextPath}${profileImg.memberImgPath}${profileImg.memberImgName}" alt="">
         </div>
         <div class="blog-profile-text">
           <h1>${blog.memberName}</h1>
@@ -97,7 +97,7 @@
 	  		<c:when test="${(blog.snsHome =='홈페이지 주소를 입력하세요.') || (empty blog.snsHome)}">
 	  		</c:when>
       		<c:otherwise>
-	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/hompage.png"></a>
+	  			<a href="${blog.snsHome}"><img class="social-icon" src="${contextPath}/resources/images/common/hompage.png"></a>
       		</c:otherwise>
       	</c:choose>
 	  	
@@ -105,7 +105,7 @@
 	  		<c:when test="${(blog.snsFbook =='http://www.facebook.com/') || (empty blog.snsFbook)}">
 	  		</c:when>
       		<c:otherwise>
-	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/facebook.png"></a>
+	  			<a href="${blog.snsFbook}"><img class="social-icon" src="${contextPath}/resources/images/common/facebook.png"></a>
       		</c:otherwise>
       	</c:choose>
 	  	
@@ -113,7 +113,7 @@
 	  		<c:when test="${(blog.snsTwitt =='Twitter 계정을 입력하세요.') || (empty blog.snsTwitt)}">
 	  		</c:when>
       		<c:otherwise>
-	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/twitter.png"></a>
+	  			<a href="${blog.snsTwitt}"><img class="social-icon" src="${contextPath}/resources/images/common/twitter.png"></a>
       		</c:otherwise>
       	</c:choose>
 	  		
@@ -121,7 +121,7 @@
 	  		<c:when test="${(blog.snsGit =='Github 계정을 입력하세요.') || (empty blog.snsGit)}">
 	  		</c:when>
       		<c:otherwise>
-	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/github.png"></a>
+	  			<a href="${blog.snsGit}"><img class="social-icon" src="${contextPath}/resources/images/common/github.png"></a>
       		</c:otherwise>
       	</c:choose>
 	  	
@@ -129,7 +129,7 @@
 	  		<c:when test="${(blog.snsEmail =='이메일을 입력해주세요.') || (empty blog.snsEmail)}">
 	  		</c:when>
       		<c:otherwise>
-	  			<a href="#"><img class="social-icon" src="${contextPath}/resources/images/common/mail.png"></a>
+	  			<a href="${blog.snsEmail}"><img class="social-icon" src="${contextPath}/resources/images/common/mail.png"></a>
       		</c:otherwise>
       	</c:choose>
 	  		
@@ -160,14 +160,22 @@
   
             <!-- 블로그 검색창(ajax) -->
             
+            <%-- 
+            
             <form action="#">
               <input type="text" id="search-blog-post" name="search-blog-post" size="15" placeholder="블로그 게시글 검색하기" autocomplete="off">
               <button style="background-color: #fdfdfd;" id="post-search-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M23.809 21.646l-6.205-6.205c1.167-1.605 1.857-3.579 1.857-5.711 0-5.365-4.365-9.73-9.731-9.73-5.365 0-9.73 4.365-9.73 9.73 0 5.366 4.365 9.73 9.73 9.73 2.034 0 3.923-.627 5.487-1.698l6.238 6.238 2.354-2.354zm-20.955-11.916c0-3.792 3.085-6.877 6.877-6.877s6.877 3.085 6.877 6.877-3.085 6.877-6.877 6.877c-3.793 0-6.877-3.085-6.877-6.877z"/></svg>
               </button>
             </form>
+            
+            --%>
+            
           </div>
-  
+  		  
+  		  
+  		  <%-- 
+  		  
           <div class="sort-post dropstart border" data-bs-toggle="dropdown" aria-expanded="false">
             <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               정렬 방식
@@ -178,6 +186,8 @@
             </ul>
           
           </div>
+          
+          --%>
   
           <div class="blog-post-label">
             <div class="blog-post-board">
@@ -524,9 +534,9 @@ const postNo = "${post.postNo}";
 const memberName = "${post.memberName}";
 
 // 현재 블로그 번호
-const blogNo = "${loginMember.blogNo}";
+const blogNo = "${blog.blogNo}";
 
-const memberName2 = "${blog.memberName}";
+const blogMemberName = "${blog.memberName}";
 
 // 수정 전 댓글 요소를 저장할 변수 (댓글 수정 시 사용)
 let beforeReplyRow;

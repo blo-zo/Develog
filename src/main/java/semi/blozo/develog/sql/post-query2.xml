@@ -24,7 +24,6 @@
 	
 	
 	<!-- 블로그 조회 후 결과가 있으면 메인페이지 출력 -->
-	<!-- SNS 정보는 후순위로.. -->
 	<entry key="selectBlog">
 		SELECT BLOG_NO, BLOG_TITLE, BLOG.MEMBER_NO, MEMBER_NM, INTRO
         , SNS_EMAIL, SNS_GIT, SNS_TWITT, SNS_FBOOK, SNS_HOME
@@ -36,6 +35,12 @@
 	
 	
 	<!-- 블로그 태그 조회는 따로 빼야할듯 -->
+	
+	<!-- 프로필 이미지 조회 -->
+	<entry key="selectProfImg">
+		SELECT * FROM MEMBER_IMG
+		WHERE MEMBER_NO = (SELECT MEMBER_NO FROM BLOG WHERE BLOG_NO = ?)
+	</entry>
 	
 	
 	
@@ -199,6 +204,13 @@
 	</entry>
 	
 	
+	<!-- 댓글 신고하기 -->
+	<entry key="reportReply">
+		INSERT INTO REPLY_REPORT
+		VALUES(SEQ_REPLY_REPORT.NEXTVAL, ?, DEFAULT, DEFAULT, ?, ? )
+	</entry>
+	
+	
 	
 	<!-- ************************ 좋아요 ******************************** -->
 	
@@ -254,6 +266,34 @@
 		WHERE POST_NO IN 
     	(SELECT POST_NO FROM POST WHERE BLOG_NO = ?)
 	</entry>
+	
+	
+	<!-- ***************** 카테고리 ******************** -->
+	
+	<!-- 카테고리 추가 -->
+	<entry key="addCategory">
+		INSERT INTO CATEGORY 
+		VALUES(SEQ_CATEGORY.NEXTVAL, ? , ?)
+	</entry>
+	
+	
+	<!-- 카테고리 변경 -->
+	<entry key="switchCategory">
+		UPDATE POST SET
+		CATEGORY_CD = (SELECT CATEGORY_CD FROM CATEGORY
+		    		   WHERE BLOG_NO = ? AND CATEGORY_NM = '없음')
+		WHERE BLOG_NO = ?
+		AND CATEGORY_CD = ?
+	</entry>
+	
+	
+	<!-- 카테고리 제거, 삭제 -->
+	<entry key="removeCategory">
+		DELETE FROM CATEGORY
+		WHERE CATEGORY_CD = ?
+	</entry>
+	
+	
 	
 
 </properties>

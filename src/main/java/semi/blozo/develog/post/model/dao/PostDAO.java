@@ -14,6 +14,7 @@ import java.util.Properties;
 import semi.blozo.develog.board.model.vo.PostVO;
 import semi.blozo.develog.board.model.vo.TagVO;
 import semi.blozo.develog.post.model.vo.Blog;
+import semi.blozo.develog.post.model.vo.MemberImage;
 import semi.blozo.develog.post.model.vo.Post;
 import semi.blozo.develog.post.model.vo.PostImage;
 import semi.blozo.develog.post.model.vo.PostPagination;
@@ -614,7 +615,7 @@ public class PostDAO {
 	 * @return 
 	 * @throws Exception
 	 */
-	public int updateTag(TagVO tagVO, Connection conn) throws Exception{
+	public int insertTag(TagVO tagVO, Connection conn) throws Exception{
 
 		int result = 0;
 		
@@ -743,6 +744,116 @@ public class PostDAO {
 			pstmt.setString(1, reportPostContent);
 			pstmt.setInt(2, postNo);
 			pstmt.setInt(3, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	/** 프로필 이미지 조회
+	 * @param blogNo
+	 * @param conn
+	 * @return profileImg
+	 * @throws Exception
+	 */
+	public MemberImage selectProfImg(int blogNo, Connection conn) throws Exception{
+
+		MemberImage profileImg = null;
+		
+		try {
+			String sql = prop.getProperty("selectProfImg");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, blogNo);
+			
+			rs= pstmt.executeQuery();
+			if(rs.next()) {
+				profileImg = new MemberImage();
+				profileImg.setMemberImgPath(rs.getString("MEMBER_IMG_PATH"));
+				profileImg.setMemberImgName(rs.getString("MEMBER_IMG_NM"));
+				profileImg.setMemberImgOriginal(rs.getString("MEMBER_IMG_ORIGINAL"));
+				profileImg.setMemberNo(rs.getInt("MEMBER_NO"));
+			}
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return profileImg;
+	}
+
+	/** 카테고리 추가
+	 * @param blogNo
+	 * @param categoryName
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int addCategory(int blogNo, String categoryName, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("addCategory");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, categoryName);
+			pstmt.setInt(2, blogNo);
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	/** 기존 포스트의 카테고리 변경하기
+	 * @param categoryCode 
+	 * @param conn 
+	 * @param blogNo 
+	 * @return result
+	 * @throws Exception
+	 */
+	public int switchCategory(int categoryCode, int blogNo, Connection conn) throws Exception{
+		
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("switchCategory");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, blogNo);
+			pstmt.setInt(2, blogNo);
+			pstmt.setInt(3, categoryCode);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	/** 카테고리 제거하기, 삭제
+	 * @param categoryCode
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int removeCategory(int categoryCode, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("removeCategory");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryCode);
 			
 			result = pstmt.executeUpdate();
 			

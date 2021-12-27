@@ -153,7 +153,4 @@ public class MemberProfileService {
 //		return result;
 //	}
 
-
-
-	
 }

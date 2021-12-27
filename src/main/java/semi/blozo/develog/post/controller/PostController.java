@@ -29,6 +29,7 @@ import semi.blozo.develog.member.model.vo.Member;
 import semi.blozo.develog.post.model.service.PostService;
 import semi.blozo.develog.post.model.service.ReplyService;
 import semi.blozo.develog.post.model.vo.Blog;
+import semi.blozo.develog.post.model.vo.MemberImage;
 import semi.blozo.develog.post.model.vo.Post;
 import semi.blozo.develog.post.model.vo.PostCategory;
 import semi.blozo.develog.post.model.vo.PostImage;
@@ -109,6 +110,11 @@ public class PostController extends HttpServlet{
 
 							List<TagVO> tagListAll = service.selectBlogTagList(blog.getBlogNo());
 							
+							// 블로그 프로필 이미지 조회
+							MemberImage profileImg = service.selectProfImg(blog.getBlogNo());
+							blog.setProfileImg(profileImg);
+							
+							
 							
 							// 화면 출력하기
 							req.setAttribute("blog", blog);
@@ -116,6 +122,7 @@ public class PostController extends HttpServlet{
 							req.setAttribute("postList", postList);
 							req.setAttribute("tagListAll", tagListAll);
 							req.setAttribute("categoryList", categoryList);
+							req.setAttribute("profileImg", profileImg);
 							
 							
 							path = "/WEB-INF/views/post/blogMain.jsp";
@@ -166,6 +173,13 @@ public class PostController extends HttpServlet{
 								// + 댓글 조회
 								List<PostReply> prList = new ReplyService().selectPostReplyList(postNo);
 								
+								// 카테고리 조회
+								List<Category> categoryList = new PostingService().selectCategory(post.getBlogNo());
+								
+								// 프로필 이미지 조회
+								MemberImage profileImg = service.selectProfImg(post.getBlogNo());
+								post.setProfileImg(profileImg);
+								
 								// 좋아요 여부 저장용
 								int likeYN = service.likedPost(postNo, memberNo);
 								
@@ -174,10 +188,12 @@ public class PostController extends HttpServlet{
 								}
 								
 								req.setAttribute("prList", prList);
+								req.setAttribute("categoryList", categoryList);
 								req.setAttribute("replyCount", prList.size());
 								req.setAttribute("post", post);
 								req.setAttribute("tagList", tagList);
 								req.setAttribute("tagListAll", tagListAll);
+								req.setAttribute("profileImg", profileImg);
 								
 								path = "/WEB-INF/views/post/postView.jsp";
 								dispatcher = req.getRequestDispatcher(path);
@@ -237,8 +253,10 @@ public class PostController extends HttpServlet{
 							 String filePath = "/resources/images/board/";
 							 String realPath = root + filePath;
 							
+							 
 							 MultipartRequest mReq
 							 	= new MultipartRequest(req, realPath , maxSize ,"UTF-8" ,new MyRenamePolicy());
+							 
 							 
 							// 1) 텍스트 형식의 파라미터
 							String postTitle = mReq.getParameter("postTitle");
@@ -246,14 +264,19 @@ public class PostController extends HttpServlet{
 							int categoryCode = Integer.parseInt(mReq.getParameter("categoryCode"));
 							int postStatusCode = Integer.parseInt(mReq.getParameter("postStatusCode"));
 							
+							
 							// 로그인멤버에 블로그번호 세팅되어있나 확인해보기
 							int blogNo = ((Member)req.getSession().getAttribute("loginMember")).getBlogNo();
 							
-							// ****************** 테스트용 임의로 지정 ***************************
-							blogNo = 21;
 							
 							// 수정할 게시글 번호 얻어오기 (insert와의 차이점)
 							int postNo = Integer.parseInt(mReq.getParameter("pno"));
+							
+							
+							System.out.println("포스트 수정 테스트 ==============================");
+							System.out.println("블로그 번호 " + blogNo);
+							System.out.println("포스트 번호 " + postNo);
+							
 							
 							PostVO postVO = new PostVO();
 							
@@ -263,6 +286,17 @@ public class PostController extends HttpServlet{
 							postVO.setPostStatusCode(postStatusCode);
 							postVO.setBlogNo(blogNo);
 							postVO.setPostNo(postNo);
+							
+							Post post = new Post();
+							post.setPostTitle(postTitle);
+							post.setPostContent(postContent);
+							post.setCategoryCode(categoryCode);
+							post.setPostStatusCode(postStatusCode);
+							post.setBlogNo(blogNo);
+							post.setPostNo(postNo);
+							
+							
+							System.out.println("수정 내용을 담은 정보 " + postVO);
 								
 							// 태그
 							String[] tags = mReq.getParameterValues("tags");
@@ -278,7 +312,8 @@ public class PostController extends HttpServlet{
 								}
 							}
 							
-							System.out.println(tagVOList);
+							System.out.println("수정하거나 추가한 태그 : " + tagVOList);
+							
 							
 							// 썸네일 이미지 처리 
 							// 2) 파일 형식의 파라미터
@@ -288,7 +323,7 @@ public class PostController extends HttpServlet{
 							PostImage thumbImg = new PostImage();
 							
 							// hasMoreElements() : 다음 요소가 있으면 true 
-							if( files.hasMoreElements() ) {
+							while( files.hasMoreElements() ) {
 								// 썸네일 추가
 								// 썸네일vo가 잘 담겨왔는지 확인 후 result postVO 방식처럼 진행되고
 								
@@ -297,13 +332,17 @@ public class PostController extends HttpServlet{
 								if( mReq.getFilesystemName(name) != null) { 
 									
 									//변경된 값들을 담을 객체
+									thumbImg.setPostImgPath(filePath); // 파일이 있는 주소 경로
 									thumbImg.setPostImgName(mReq.getFilesystemName(name));
 									thumbImg.setPostImgOriginal(mReq.getOriginalFileName(name));
-									thumbImg.setPostImgPath(filePath); // 파일이 있는 주소 경로
 									
-								}
+									thumbImg.setPostNo(postNo);
+									
+								}	// end if
+								
+								System.out.println("썸네일 이미지 정보" + thumbImg);
 														
-							}
+							} // end while
 							
 							// service로 넘기기
 							int result = service.updatePost(postVO, tagVOList, thumbImg);
@@ -313,7 +352,7 @@ public class PostController extends HttpServlet{
 								message = "포스트가 수정되었습니다.";
 								byte[] ptext = loginMember.getMemberNm().getBytes("UTF-8");
 								String value = new String(ptext, "ISO-8859-1"); 
-								path = "../" + value + "/?pno=" + postVO.getPostNo();
+								path = "../" + value + "/view?pno=" + postVO.getPostNo();
 									
 							}else {
 								
@@ -465,18 +504,25 @@ public class PostController extends HttpServlet{
 							
 							
 							// 댓글 신고
-//							else if(arr[2].equals("report")) {
-//								
-//								String memberName = req.getParameter("memberName");
-//								String reportReplyContent = req.getParameter("reportReplyContent");
-//								int replyNo = Integer.parseInt(req.getParameter("replyNo"));
-//								int memberNo = loginMember.getMemberNo();
-//								
-//								System.out.println(memberName);
-//								System.out.println(memberNo);
-//								
-//								
-//							}
+							else if(arr[2].equals("report")) {
+								
+								String memberName = req.getParameter("memberName");
+								int memberNo = loginMember.getMemberNo();
+								String reportReplyContent = req.getParameter("reportReplyContent");
+								int replyNo = Integer.parseInt(req.getParameter("replyNo"));
+								
+								System.out.println(memberName);
+								System.out.println(memberNo);
+								System.out.println(replyNo);
+								System.out.println(reportReplyContent);
+								
+								int result = new ReplyService().reportReply(replyNo, memberNo, reportReplyContent);
+								
+								resp.getWriter().print(result);
+								
+								
+								
+							}
 							
 							
 						}	// 댓글 부분 END
@@ -519,9 +565,43 @@ public class PostController extends HttpServlet{
 						// 카테고리
 						else if(arr[1].equals("category")) {
 							
+							
+							// 카테고리 목록 조회하기
 							if(arr[2].equals("select")) {
 								
+								int blogNo = Integer.parseInt(req.getParameter("blogNo"));
+								String memberName = req.getParameter("memberName");
 								
+								
+								List<Category> categoryList = new PostingService().selectCategory(blogNo);
+								
+								new Gson().toJson(categoryList, resp.getWriter());
+								
+							}
+							
+							
+							// 카테고리 생성
+							else if(arr[2].equals("add")) {
+								
+								int blogNo = Integer.parseInt(req.getParameter("blogNo"));
+								String categoryName = req.getParameter("categoryName");
+								
+								int result = service.addCategory(blogNo, categoryName);
+								
+								resp.getWriter().print(result);
+							}
+							
+							
+							// 카테고리 제거 (포스트의 카테고리번호를 기본값으로 바꾼 뒤 삭제)
+							else if(arr[2].equals("remove")) {
+								
+								int categoryCode = Integer.parseInt(req.getParameter("categoryCode"));
+								String categoryName = req.getParameter("categoryName");
+								int blogNo = Integer.parseInt(req.getParameter("blogNo"));
+								
+								int result = service.removeCategory(categoryCode, categoryName, blogNo);
+								
+								resp.getWriter().print(result);
 								
 							}
 							
@@ -530,15 +610,6 @@ public class PostController extends HttpServlet{
 							
 							
 						}
-						
-						
-						
-						
-						
-						
-						
-						
-						
 						
 						
 						

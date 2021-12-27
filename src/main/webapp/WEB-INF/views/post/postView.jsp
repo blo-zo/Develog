@@ -28,12 +28,20 @@
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <ul class="list-group category-list">
-          <li class="list-group-item category">전체 포스트</li>
-          <li class="list-group-item category">카테고리 1</li>
-          <li class="list-group-item category">카테고리 2</li>
-          <li class="list-group-item category">카테고리 3</li>
-          <li class="list-group-item category">카테고리 4</li>
+        <ul class="list-group" >
+          <li class="list-group-item category" onclick="location.href='${contextPath}/blog/${blog.memberName}'">전체 포스트</li>
+        </ul>
+        
+        <ul class="list-group category-list list-box">
+        
+        	<c:forEach items="${categoryList}" var="category">
+        		
+        		<c:if test="${category.categoryName != '없음'}">
+		          <li class="list-group-item category userCategory" onclick="findOrDelete();">${category.categoryName}</li>
+        		</c:if>
+        	
+        	</c:forEach>
+        
         </ul>
         
         <c:if test="${post.memberNo == loginMember.memberNo}">
@@ -42,7 +50,7 @@
 	
 	          <div class="category-control">
 	
-	            <button class="category-control-btn" id="add-category-btn">
+	            <button class="category-control-btn" id="add-category-btn" onclick="addCategory()">
 	              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-5v5h-2v-5h-5v-2h5v-5h2v5h5v2z"/></svg>
 	            </button>
 	            <label for="add-category-btn" style="cursor: pointer;">카테고리 추가</label>
@@ -51,7 +59,7 @@
 	
 	          <div class="category-control">
 	          
-	            <button class="category-control-btn" id="remove-category-btn">
+	            <button class="category-control-btn" id="remove-category-btn" onclick="deleteCategory()">
 	              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-12v-2h12v2z"/></svg>
 	            </button>
 	            <label for="remove-category-btn" style="cursor: pointer;">카테고리 삭제</label>
@@ -163,7 +171,7 @@
 	          <!-- 게시글 프로필 영역 -->
 	          <div class="post-profile-area">
 	            <div class="post-profile-photo">
-	              <img id="post-profile-img" src="https://via.placeholder.com/200x200" alt="">
+	              <img id="post-profile-img" src="${contextPath}${profileImg.memberImgPath}${profileImg.memberImgName}" alt="">
 	            </div>
 	            <div class="post-profile-text">
 	              <h1>${post.memberName}</h1>
@@ -262,6 +270,7 @@
 	          
 	          </div>
 	
+	          <%-- 
 	          
 	          <div class="post-index">
 	  
@@ -284,6 +293,8 @@
 	            </a>
 	  
 	          </div>
+	          
+	          --%>
 	
 	        </div>
 	
@@ -328,6 +339,7 @@
  	  </div>
  	  
  	  
+ 	  <%-- 댓글 신고하기.. 댓글 번호 얻어오는 방법? --%>
 	  <div class="modal" id="reportReplyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       	<div class="modal-dialog modal-lg">
        	  <div class="modal-content">
@@ -340,12 +352,11 @@
                <section id="modal-section">
                  <div>
                     <div class="content" input-modal>&nbsp;신고내용</div>
+                    신고할 댓글 ${reply.replyNo}
                     <div class="content">
                      	<div class="input-modal">
                             <form action="reply/report" method="POST">
-                       		  <input type="hidden" name="memberName" value="${post.memberName}">	
-                       		  <input type="hidden" name="reportReplyNo" value="${reply.replyNo}">	
-                              <textarea name="reportReplyContent" cols="30" rows="10" placeholder="신고내용 입력" style="resize:none;"></textarea>
+                              <textarea name="reportReplyContent" class="reportReplyContent" cols="30" rows="10" placeholder="신고내용 입력" style="resize:none;"></textarea>
 							  <button class="btn btn-primary report-btn">제출</button>                       		
                        		</form>
                      	</div>
@@ -364,6 +375,8 @@
 		<input type="hidden" name = "pno" value="${param.pno}">
 		<input type="hidden" name = "memberName" value="${post.memberName}">
 		</form>
+		
+		<%-- 댓글 신고에 사용할 replyNo, content --%>
 		
 <script>
 
@@ -386,7 +399,7 @@ const postNo = "${post.postNo}";
 const memberName = "${post.memberName}";
 
 // 현재 블로그 번호
-const blogNo = "${loginMember.blogNo}";
+const blogNo = "${post.blogNo}";
 
 
 // 수정 전 댓글 요소를 저장할 변수 (댓글 수정 시 사용)

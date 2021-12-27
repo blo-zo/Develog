@@ -37,47 +37,47 @@
 
 
 
-// ready 함수
-$(function(){
+//ready 함수
+// $(function(){
 
-  // 최근 검색어 삭제
-  $(".search-delete").on("click", function(){
+//   // 최근 검색어 삭제
+//   $(".search-delete").on("click", function(){
   
-    const recentText = $(this).parent();
+//     const recentText = $(this).parent();
   
-    recentText.remove();
+//     recentText.remove();
   
-  });
+//   });
   
-  // 전체 삭제하기
-  $("#search-delete-all").on("click",function(){
+//   // 전체 삭제하기
+//   $("#search-delete-all").on("click",function(){
   
-    const recentTexts = $(this).parent().siblings();
+//     const recentTexts = $(this).parent().siblings();
   
-    recentTexts.remove();
+//     recentTexts.remove();
   
-  });
+//   });
   
   
   
-  // 검색어 value 값으로 화면에 결과 표시
+//   //검색어 value 값으로 화면에 결과 표시
   
-  // $("#search-form").on("submit",function(){
-  //   const inputValue = $("#search-input").val();
-  //   const searchResult =  $(".search-result-large > span");
+//   $("#search-form").on("submit",function(){
+//     const inputValue = $("#search-input").val();
+//     const searchResult =  $(".search-result-large > span");
     
-  //   searchResult.text(inputValue);
-  //   console.log("gggggggggg");
-  //   console.log(inputValue);
-  //   console.log(searchResult);
-  // });
+//     searchResult.text(inputValue);
+//     console.log("gggggggggg");
+//     console.log(inputValue);
+//     console.log(searchResult);
+//   });
 
 
-  // $("#search-input").on("input",function(){
+//   $("#search-input").on("input",function(){
     
-  //   $(".search-result-large > span").text($("#search-input").val());
+//     $(".search-result-large > span").text($("#search-input").val());
     
-  // });
+//   });
 
   
   
@@ -89,14 +89,14 @@ $(function(){
   
   
   
- });
+//  });
 
-// 검색 함수
-function test() {
-  const inputValue = $("#search-input").val();
+// // 검색 함수
+// function test() {
+//   const inputValue = $("#search-input").val();
 
-  const searchResult = $(".search-result-large > span");
-  searchResult.text(inputValue);
+//   const searchResult = $(".search-result-large > span");
+//   searchResult.text(inputValue);
 
-  return false;
-}
+//   return false;
+// }
