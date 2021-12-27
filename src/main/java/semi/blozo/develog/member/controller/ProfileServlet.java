@@ -119,7 +119,11 @@ public class ProfileServlet extends HttpServlet{
 							memberImg.setMemberImgOriginal(mReq.getOriginalFileName(name));
 							memberImg.setMemberImgPath(filePath); // 파일이 있는 주소 경로
 						
-					}
+					} else { // 파일이 비어있다면  == 이미지 제거 버튼
+						memberImg.setMemberImgName("user.png");
+						memberImg.setMemberImgOriginal("user.png");
+						memberImg.setMemberImgPath("/resources/images/common/"); 
+					}	
 //					if( mReq.getFilesystemName(name) != null) { 
 //						
 //						memberImg.setMemberImgName(mReq.getFilesystemName(name));
@@ -136,7 +140,7 @@ public class ProfileServlet extends HttpServlet{
 				
 				
 				if(result > 0) {
-					session.setAttribute("message", "회원 정보가 수정 되었습니다.");
+//					session.setAttribute("message", "회원 정보가 수정 되었습니다.");
 					loginMember.setMemberNm(profileVO.getMemberNm());
 					// 수정된 값이 화면에서도 보이게 세팅
 					
