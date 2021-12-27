@@ -24,7 +24,7 @@
        
     </style>
 </head>
-<body>
+<body class="body"">
     <!-- 검색창 오프캔버스 -->
     
     
