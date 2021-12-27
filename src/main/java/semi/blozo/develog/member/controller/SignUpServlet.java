@@ -29,13 +29,17 @@ public class SignUpServlet extends HttpServlet{
 		String memberEmail = req.getParameter("signUpEmail");
 		String memberPw = req.getParameter("signUpPw");
 		Member member = new Member(memberPw, memberNm, memberEmail);
-		
+		 String path = null;
 		try {
 			MemberService service = new MemberService();
 			int result = service.signUp(member);
 			String message = null;
 			if(result > 0) {
 				message = "회원가입이 완료되었습니다.";
+				path = req.getContextPath()+"/main";
+			}else {
+				path = "/WEB-INF/views/member/signUp.jsp";
+				message = "회원가입 중 오류입니다.";
 			}
 			HttpSession session = req.getSession();
 			

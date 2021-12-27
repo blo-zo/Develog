@@ -48,7 +48,7 @@ function checkEmail(){
 			data : {"email" : email},
 			success : function(result){
 				if(result != null){
-					console.log(result);
+					
 					
 					
 					
@@ -65,12 +65,12 @@ function checkEmail(){
 							
 							$("#checkPwd").text("인증번호가 일치합니다.").css("color","green");
 							searchCheckObj.temp = true;
-							console.log(searchCheckObj.temp);
+							
 							alert("인증번호가 일치합니다.");
 							
 						}else{
 							$("#checkPwd").text("인증번호가 일치하지않습니다.").css("color","red");
-							console.log(searchCheckObj.temp);
+							
 							searchCheckObj.temp = false;
 							alert("인증번호가 일치하지않습니다.");
 							
@@ -163,10 +163,8 @@ $("#newPassword").on("input", function () {
         $("#checkPwd1").text("");
         searchCheckObj.pw = false;
     } else if (regExp.test(inputPwd)) {
-        $("#checkPwd1").text("알맞은 비밀번호 형식입니다.").css("color", "green");
         searchCheckObj.pw = true;
     } else {
-        $("#checkPwd1").text("잘못된 비밀번호 형식입니다.").css("color", "red");
         searchCheckObj.pw = false;
     }
 
@@ -192,10 +190,8 @@ $("#newPassword, #newPassword1").on("input", function () {
 
 
     } else if (pw == pw1) {
-        checkPw1.text("비밀번호가 일치합니다").css("color", "green");
         searchCheckObj.pw1 = true;
     } else {
-        checkPw1.text("비밀번호가 일치하지않습니다.").css("color", "red");
         searchCheckObj.pw1 = false;
     }
 
