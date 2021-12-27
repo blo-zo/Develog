@@ -228,7 +228,7 @@ html, body{
 /* 아직 회원가입 안하셨어요? */
 #qs{
   display: inline-block;
-  margin-right: 70px;
+  margin-right: 50px;
   font-size: 15px;
 }
 

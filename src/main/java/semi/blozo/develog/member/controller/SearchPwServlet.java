@@ -45,10 +45,10 @@ public class SearchPwServlet extends HttpServlet {
 			if(result>0) {
 				
 				message = "비밀번호가 변경되었습니다";
-				path = "searchpw";
+				path = req.getContextPath()+"/main";
 			}else {
 				message = "비밀번호 수정중 오류가 발생했습니다.";
-				path = "searchpw";
+				path = "/WEB-INP/views/member/searchPw.jsp";
 			}
 			req.getSession().setAttribute("message", message);
 			resp.sendRedirect(path);

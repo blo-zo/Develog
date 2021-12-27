@@ -45,8 +45,9 @@ public class UpdatePwServlet extends HttpServlet{
 			System.out.println(result);
 			if(result>0) {
 				
-				message = "비밀번호가 변경되었습니다";
-				path = "updatepw";
+				message = "비밀번호가 변경되었습니다. 다시 로그인해주세요.";
+				session.invalidate();
+				path = req.getContextPath()+"/main";
 			}else {
 				message = "현재 비밀번호가 일치하지 않습니다.";
 				path = "updatepw";
