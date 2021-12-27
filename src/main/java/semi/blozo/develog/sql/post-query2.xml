@@ -151,7 +151,7 @@
 	<!-- 포스트 신고 -->
 	<entry key="reportPost">
 		INSERT INTO POST_REPORT
-		VALUES(SEQ_POST_REPORT.NEXTVAL, ?, DEFAULT, DEFAULT, ?, ?)
+		VALUES(SEQ_REPORT.NEXTVAL, ?, DEFAULT, DEFAULT, ?, ?)
 	</entry>
 
 
@@ -207,7 +207,7 @@
 	<!-- 댓글 신고하기 -->
 	<entry key="reportReply">
 		INSERT INTO REPLY_REPORT
-		VALUES(SEQ_REPLY_REPORT.NEXTVAL, ?, DEFAULT, DEFAULT, ?, ? )
+		VALUES(SEQ_REPORT.NEXTVAL, ?, DEFAULT, DEFAULT, ?, ? )
 	</entry>
 	
 	

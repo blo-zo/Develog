@@ -37,7 +37,7 @@
         	<c:forEach items="${categoryList}" var="category">
         		
         		<c:if test="${category.categoryName != '없음'}">
-		          <li class="list-group-item category userCategory" onclick="findOrDelete(this,);">${category.categoryName}</li>
+		          <li class="list-group-item category userCategory" onclick="findOrDelete(this,${category.categoryCode},'${category.categoryName}');">${category.categoryName}</li>
         		</c:if>
         	
         	</c:forEach>
@@ -538,9 +538,6 @@ const blogNo = "${blog.blogNo}";
 
 const blogMemberName = "${blog.memberName}";
 
-
-const categoryCode = "${category.categoryCode}";
-const categoryName = "${category.categoryName}";
 
 
 // 수정 전 댓글 요소를 저장할 변수 (댓글 수정 시 사용)

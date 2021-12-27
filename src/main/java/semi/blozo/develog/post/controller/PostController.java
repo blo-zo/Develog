@@ -596,9 +596,15 @@ public class PostController extends HttpServlet{
 							// 카테고리 제거 (포스트의 카테고리번호를 기본값으로 바꾼 뒤 삭제)
 							else if(arr[2].equals("remove")) {
 								
-								int categoryCode = Integer.parseInt(req.getParameter("categoryCode"));
 								String categoryName = req.getParameter("categoryName");
+								System.out.println(categoryName);
+
 								int blogNo = Integer.parseInt(req.getParameter("blogNo"));
+								System.out.println(blogNo);
+								
+								int categoryCode = Integer.parseInt(req.getParameter("categoryCode"));
+								System.out.println(categoryCode);
+								
 								
 								int result = service.removeCategory(categoryCode, categoryName, blogNo);
 								
