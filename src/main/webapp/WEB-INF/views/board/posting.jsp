@@ -23,7 +23,7 @@
 	<div class="wrapper">
 		<div class="write-area" style="max-width: 80%;">
 			<div class="head-title">
-				<textarea id="head-textarea" class="head-textarea" name="postTitle" placeholder="제목을 입력하세요" maxlength="60" ></textarea>
+				<textarea id="head-textarea" class="head-textarea" name="postTitle" placeholder="제목을 입력하세요" maxlength="60"  style="background-color : #fdfdfd"></textarea>
 			</div><!-- head title -->
 
 			<div class="line"></div>

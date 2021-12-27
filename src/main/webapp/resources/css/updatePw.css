@@ -2,6 +2,7 @@ html,body{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: #FDFDFD;
 }
 .b-container{
     width: 1000px;
@@ -9,7 +10,7 @@ html,body{
     border-radius: 5px;
     margin: auto;
     margin-top: 80px;
-    background-color: #FDFDFD;
+    
     opacity: 0.7;
 }
 
@@ -18,6 +19,11 @@ button{
     cursor: pointer;
 }
 
+.main{
+	background-color: #f6f6f6;
+    border-radius: 10px; 
+    padding: 20px;
+}
 
 .session-val{
     display: inline-block;

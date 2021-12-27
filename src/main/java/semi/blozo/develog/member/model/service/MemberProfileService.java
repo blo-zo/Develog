@@ -68,39 +68,33 @@ public class MemberProfileService {
 		// 1) 닉네임, 한 줄 소개
 		int result= dao.updateProfileMember(profileVO,  conn);
 		
-		System.out.println("닉넴 result"+result);
-		
-		
-		
 		if(result > 0) {
 			// 2) 디벨로그 제목
 			result = dao.updateProfileBlog(profileVO,  conn);
-			System.out.println("디벨로그 " + result);
+
 			if(result > 0) {
 				// 3) 소셜정보
 				result = dao.updateProfileSns(profileVO,  conn);
-				System.out.println("SNS 업데이트 " + result);
+				
 				if(result >0) {
 					// 4) 회원 이미지 유무 조회
 					result = dao.selectMemberImg(profileVO,  conn);
-					System.out.println("이미지 유무 조회 " + result);
+					
 					if(result >0) {
 						// 4-1) 회원 이미지 있을 시 수정
 						result = dao.updateMemberImg(memberImg, conn);	
-						System.out.println("이미지 있을 때 " + result);
-					}else {
-						// 4-2) 회원 이미지 없을 시 삽입
-						result = dao.insertMemberImg(memberImg, conn);
-						System.out.println("이미지 없을 때 " + result);
 					}
-					if(result >0) {
-						conn.commit();						
-					}else {
-						conn.rollback();
-					}
-				}else {
-					conn.rollback();
-				}
+//					}else {
+//						// 4-2) 회원 이미지 없을 시 삽입
+//						result = dao.insertMemberImg(memberImg, conn);
+//						
+//					}
+					if(result >0) { conn.commit(); }
+					
+					else { conn.rollback(); }
+					
+					
+				}else { conn.rollback(); }
 				
 			} else { rollback(conn); }
 			
@@ -130,29 +124,5 @@ public class MemberProfileService {
 	
 	}
 
-
-//	public int updateMemberImg(ProfileImgVO memberImg) throws Exception{
-//		Connection conn = getConnection();
-//		
-//		int result = dao.updateMemberImg(memberImg, conn);	
-//		
-//		if(result > 0) conn.commit();
-//		else		   conn.rollback();
-//		
-//		return result;
-//	
-//	}
-//
-//
-//	public int insertMemberImg(ProfileImgVO memberImg) throws Exception {
-//		Connection conn = getConnection();
-//		
-//		int result = dao.insertMemberImg(memberImg, conn);
-//		
-//		if(result > 0) conn.commit();
-//		else		   conn.rollback();
-//	
-//		return result;
-//	}
 
 }
