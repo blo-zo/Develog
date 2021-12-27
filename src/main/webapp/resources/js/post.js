@@ -442,8 +442,8 @@ function reportReply(replyNo){
             if(result > 0){
   
               $("#reportReplyModal").modal('hide');
-              location.href= contextPath + "/blog/" + memberName + "/view/?pno=" + postNo;
               alert("신고가 정상 접수되었습니다.");
+              location.href= contextPath + "/blog/" + memberName + "/view/?pno=" + postNo;
   
             }else{
               alert("신고 처리과정 중 문제 발생");
