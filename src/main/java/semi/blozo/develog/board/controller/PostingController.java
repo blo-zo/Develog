@@ -42,6 +42,12 @@ public class PostingController extends HttpServlet {
 		RequestDispatcher dispatcher = null;
 		String message = null;
 		
+
+		// 썸네일 이미지
+		HttpSession session = req.getSession();
+		
+		Member loginMember = (Member)req.getSession().getAttribute("loginMember");
+		
 		try {
 			// 파일 들어오면 담을 객체 선언
 			PostingService service = new PostingService();
@@ -64,8 +70,6 @@ public class PostingController extends HttpServlet {
 				
 				} else { // POST 방식 요청
 					
-					// 썸네일 이미지
-					HttpSession session = req.getSession();
 					
 					int maxSize = 1024 * 1024 * 100;
 					String root =  session.getServletContext().getRealPath("/");
@@ -143,8 +147,14 @@ public class PostingController extends HttpServlet {
 					
 					if (result > 0) {
 						message = "게시글이 작성되었습니다.";
-						path = req.getContextPath();
-
+						
+						
+						byte[] ptext = loginMember.getMemberNm().getBytes("UTF-8");
+						
+                        String value = new String(ptext, "ISO-8859-1"); 
+                        path = req.getContextPath() + "/blog/" + value + "/view?pno=" + postVO.getPostNo();
+                        
+//						/Develog/blog/봉국/view?pno=291
 					} else {
 						message = "게시글 등록 중 문제가 발생하였습니다.";
 						path = "insert";
@@ -164,8 +174,6 @@ public class PostingController extends HttpServlet {
 			
 			else if(command.equals("insertImage")) {
 					
-				HttpSession session = req.getSession();
-				
 				int maxSize = 1024 * 1024 * 100;
 				String root =  session.getServletContext().getRealPath("/");
 				String filePath = "/resources/images/board/";
