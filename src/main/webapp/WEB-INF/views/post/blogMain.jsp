@@ -115,7 +115,7 @@
 	  		<c:when test="${(blog.snsTwitt =='Twitter 계정을 입력하세요.') || (empty blog.snsTwitt)}">
 	  		</c:when>
       		<c:otherwise>
-	  			<a href="${blog.snsTwitt}"><img class="social-icon" src="${contextPath}/resources/images/common/twitter.png"></a>
+	  			<a href="https://twitter.com/${blog.snsTwitt}"><img class="social-icon" src="${contextPath}/resources/images/common/twitter.png"></a>
       		</c:otherwise>
       	</c:choose>
 	  		
@@ -123,7 +123,7 @@
 	  		<c:when test="${(blog.snsGit =='Github 계정을 입력하세요.') || (empty blog.snsGit)}">
 	  		</c:when>
       		<c:otherwise>
-	  			<a href="${blog.snsGit}"><img class="social-icon" src="${contextPath}/resources/images/common/github.png"></a>
+	  			<a href="https://github.com/${blog.snsGit}"><img class="social-icon" src="${contextPath}/resources/images/common/github.png"></a>
       		</c:otherwise>
       	</c:choose>
 	  	

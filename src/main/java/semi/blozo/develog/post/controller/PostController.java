@@ -77,12 +77,12 @@ public class PostController extends HttpServlet{
 					
 					PostService service = new PostService();
 					
-					int cp = req.getParameter("cp") == null ? 1 : Integer.parseInt(req.getParameter("cp"));
 					
 					
 					// 블로그 메인 페이지 ( + 정렬, 검색 만들어야함)
 					if(arr.length == 1) {	
 						
+						int cp = req.getParameter("cp") == null ? 1 : Integer.parseInt(req.getParameter("cp"));
 						// /blog/memberName 값
 						String memberName = URLDecoder.decode(arr[0],"UTF-8");
 						

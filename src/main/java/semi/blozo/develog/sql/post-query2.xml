@@ -140,6 +140,12 @@
 		WHERE POST_NO = ?
 	</entry>
 	
+	<!-- 썸네일 삽입 -->
+	<entry key="insertPostThumb">
+		INSERT INTO THUMB_IMG 
+		VALUES( SEQ_THUMB_IMG.NEXTVAL, ?, ?, DEFAULT, ?, ?)
+	</entry>
+	
 	<!-- 포스트 삭제 -->
 	<entry key="deletePost">
 		UPDATE POST SET

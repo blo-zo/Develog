@@ -864,6 +864,29 @@ public class PostDAO {
 		return result;
 	}
 
+	public int insertPostThumb(PostImage thumbImg, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("insertPostThumb");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, thumbImg.getPostImgPath());
+			pstmt.setString(2, thumbImg.getPostImgName());
+			pstmt.setString(3, thumbImg.getPostImgOriginal());
+			pstmt.setInt(4, thumbImg.getPostNo());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 	
 
 	
