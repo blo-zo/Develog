@@ -99,7 +99,6 @@
         <div class="recent-search">
           <p>
             <span id="recent-search"></span> 
-            <span class="search-delete">X</span>
           </p>
           
   

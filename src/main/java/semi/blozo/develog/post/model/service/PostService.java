@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import semi.blozo.develog.board.model.dao.PostingDAO;
 import semi.blozo.develog.board.model.vo.PostVO;
 import semi.blozo.develog.board.model.vo.TagVO;
 import semi.blozo.develog.board.model.vo.ThumbImgVO;
@@ -328,8 +329,6 @@ public class PostService {
 		
 		int postNo = postVO.getPostNo();
 		
-		int finalResult = 0;
-		
 		if(result > 0) {	// 글 부분 수정 성공한 경우
 			
 			Boolean flag = true;
@@ -364,18 +363,23 @@ public class PostService {
 				if(flag) {
 					
 					// 썸네일 수정
-					finalResult = dao.updatePostThumb(thumbImg, conn);
+					result = dao.updatePostThumb(thumbImg, conn);
 					// finalResult => 최종 수정 결과
 					
-					if(result > 0)	{	
+					if(result == 0)	{	
 						
-						// 썸네일까지 모두 수정 완료되면 커밋!
-						commit(conn);
+						// 0행 업데이트 => 새로 삽입하기
+						result = dao.insertPostThumb(thumbImg, conn);
 						
+						if(result > 0) {
+							commit(conn);
+						}else {
+							rollback(conn);
+						}
 						
 					}
-					// 썸네일 수정 실패 시
-					else rollback(conn);
+					
+					commit(conn);
 				}	
 				
 				

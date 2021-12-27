@@ -33,7 +33,7 @@
     </div>
     <div class="offcanvas-body">
         <ul class="list-group" >
-          <li class="list-group-item category" onclick="location.href='${contextPath}/blog/${blog.memberName}'">전체 포스트</li>
+          <li class="list-group-item category" onclick="location.href='${contextPath}/blog/${post.memberName}'">전체 포스트</li>
         </ul>
         
         <ul class="list-group category-list list-box">

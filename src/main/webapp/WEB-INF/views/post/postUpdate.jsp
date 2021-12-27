@@ -171,6 +171,6 @@
 <script src="https://unpkg.com/js-offcanvas@1.2.8/dist/_js/js-offcanvas.pkgd.min.js"></script> 
 <link href="https://unpkg.com/js-offcanvas@1.2.8/dist/_css/prefixed/js-offcanvas.css" rel="stylesheet">
 
-<script src="${contextPath}/resources/js/posting.js"></script>
+<script src="${contextPath}/resources/js/updatePost.js"></script>
 </body>
 </html>
