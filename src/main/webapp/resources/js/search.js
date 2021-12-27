@@ -1,43 +1,37 @@
-console.log("search.js");
+//console.log("search.js");
 // ****** 공통 검색창 JS *******
 
-	// function search(){
-  // 		const searchInput = document.getElementById("search-input").value
-  // 		console.log(searchInput);
-  // 		if(searchInput.trim().length != 0){
-	// 	$.ajax({
+	/* function search(){
+   		const searchInput = document.getElementById("search-input").value
+   		console.log(searchInput);
+  		if(searchInput.trim().length != 0){
+	 	$.ajax({
   				
-	// 			url : contextPath + "/search",
+				url : contextPath + "/search",
   				
-	// 			type : "GET",
+	 			type : "GET",
   				
-	// 			data : {"searchInput" : searchInput},
-  				
-	// 			success : function(result){
-  // 					if(result != null){
-  // 				console.log("검색 ajax");
-  						
+  				dataType : "JSON",
+				data : {"searchInput" : searchInput},
+				success : function(searchPost){
+					
+  					console.log(searchPost);
   			
- 	// 	 					}	
-  		
 
-  // 					},
-  //           error : function(req, status, error){
-  //             console.log("ajax 실패");
-  //             console.log(req.responseText);
-  //             console.log(status);
-  //             console.log(error);
-  //         }
- 	// 		 });
-
-	// 	}	
+					},
+           error : function(req, status, error){
+               console.log(req.responseText);
+            console.log(status);
+               console.log(error);
+         				 }
+ 	 				 });
+ 				}	
 
 
-	// }
+		 }*/
 
 
-
-
+	
 
 
 

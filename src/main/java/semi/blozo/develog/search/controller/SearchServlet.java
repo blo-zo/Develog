@@ -9,7 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
+import semi.blozo.develog.main.service.MainService;
 import semi.blozo.develog.post.model.vo.Post;
 import semi.blozo.develog.search.model.service.SearchService;
 
@@ -30,14 +34,14 @@ public class SearchServlet extends HttpServlet{
 //		String command = uri.substring(  (contextPath + "/searcb/").length() );
 		
 		SearchService service = new SearchService();
-		
-
+		MainService  service2 = new MainService();
+		HttpSession session = req.getSession();
 		try {
 			
 			
 			String searchInput = req.getParameter("searchInput");	// 검색어
 			System.out.println(searchInput);
-			if(searchInput != null) {	// 검색어를 입력한 경우
+			if(searchInput != null ) {	// 검색어를 입력한 경우
 				
 				
 				int searchResultCount = service.searchResultCount(searchInput);	// 검색 결과 수
@@ -48,7 +52,10 @@ public class SearchServlet extends HttpServlet{
 					
 					List<Post> searchPost = service.searchPost(searchInput); // 검색결과 전체 조회
 					
-					req.setAttribute("searchInput", '"' + searchInput + '"' + "의 검색 결과");
+					
+				
+					
+					req.setAttribute("searchInput", searchInput );
 					req.setAttribute("searchResultCount", searchResultCount);
 					req.setAttribute("searchPost", searchPost);
 					System.out.println("검색 결과 전체 조회" + searchPost); // 글상태 일반일 경우만 조회
@@ -57,22 +64,29 @@ public class SearchServlet extends HttpServlet{
 					dispatcher = req.getRequestDispatcher(path);
 					dispatcher.forward(req, resp);
 
-				}else { //검색 결과 가 없을 시 다시 alert창 메세지
-				
+				}else if(searchResultCount == 0 ) { //검색 결과 가 없을 시 다시 alert창 메세지
 					
+					List<Post> allList = service2.allList();
+					message = "검색결과가 없습니다";
+					path = "/WEB-INF/views/search/search.jsp";
+					req.setAttribute("allList" , allList);
+					req.setAttribute("searchInput", searchInput );
+					session.setAttribute("message", message);
+					dispatcher = req.getRequestDispatcher(path);
+					dispatcher.forward(req, resp);
 				}
 				
 			}else {	// 검색어가 null인 경우
 				
 				req.setAttribute("searchInput", "입력한 검색어가 없습니다.");
-				req.setAttribute("searchResultCount", "null");
+				req.setAttribute("searchResultCount", "0");
 				path = "/WEB-INF/views/search/search.jsp";
 				
 				dispatcher = req.getRequestDispatcher(path);
 				dispatcher.forward(req, resp);
 			}
 			
-
+				
 			
 			
 		}catch(Exception e) {
