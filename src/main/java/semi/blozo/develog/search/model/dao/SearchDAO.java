@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Properties;
 
 import semi.blozo.develog.post.model.vo.Post;
+import semi.blozo.develog.post.model.vo.PostImage;
 
 public class SearchDAO {
 	
@@ -121,7 +122,45 @@ public class SearchDAO {
 			
 			return searchPost;
 		}
-
+		/** 썸네일 이미지 가져오기
+		 * @param postNo
+		 * @param conn
+		 * @return searchImg
+		 * @throws Exception
+		 */
+		public PostImage searchImg(int postNo, Connection conn)throws Exception {
+			
+			PostImage searchImg = null;
+			
+			try {
+				
+				String sql = prop.getProperty("selectImg");
+				
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, postNo);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					
+					searchImg = new PostImage();
+					
+					searchImg.setPostImgNo(rs.getInt("THUMB_IMG_NO"));
+					searchImg.setPostImgPath(rs.getString("THUMB_IMG_PATH"));
+					searchImg.setPostImgName(rs.getString("THUMB_IMG_NM"));
+					searchImg.setPostImgOriginal(rs.getString("THUMB_IMG_ORIGINAL"));
+					searchImg.setPostNo(postNo);
+					
+				}
+				
+			}finally {
+				
+				close(rs);
+				close(pstmt);
+				
+			}
+			
+			return searchImg;
+		}
 
 		
 		

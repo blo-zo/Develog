@@ -16,7 +16,7 @@ html, body{
 }
 
 .hr{
-  width: 800px;
+  width: 1000px;
   border: 2px solid gray;
   margin: auto;
   margin-bottom: 50px;
@@ -244,7 +244,7 @@ html, body{
 /* 검색 결과 화면 */
 #search-result{
   max-width: 1200px;
-  height: 400px;
+  height: 150px;
   text-align: center;
   margin: auto;
 }
