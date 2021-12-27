@@ -29,7 +29,7 @@
       
       <c:forEach items = "${enquiryList}" var = "enquiry">
       <a href="${contextPath}/enquiry/view?no=${enquiry.enquiryNo}&cp=${pagination.currentPage}">
-        <div>
+        <div class="List">
 	
           <p>${enquiry.enquiryTitle}</p>
           <p>${enquiry.enquiryContent}</p>
