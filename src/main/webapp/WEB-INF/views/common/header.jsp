@@ -46,18 +46,7 @@
         
         <!-- x버튼을 누르면 p태그 요소(this)가 없어지게 -->
         <!-- prepend 활용 -->
-        <div class="recent-search">
-          <p>
-            <span id="recent-search"></span> 
-            <span class="search-delete">X</span>
-          </p>
-          
-  
-          <p>
-            <span id="search-delete-all">전체 삭제</span>
-          </p>
-  
-        </div>
+   
         
       </div>
     </div>
@@ -102,7 +91,7 @@
           <li>
             <div class="dropdown">
               <a href="#" class="nav-link d-block text-decoration-none " id="userID" data-bs-toggle="dropdown" aria-expanded="false">
-						<P>${sessionScope.loginMember.memberNm}</P>						
+						<P style="margin: 0px;">${sessionScope.loginMember.memberNm}</P>						
 	              </a>
               <ul class="dropdown-menu text-small" aria-labelledby="userID">
                 <li><a class="dropdown-item" href="${contextPath}/blog/${loginMember.memberNm}">내 블로그</a></li>
