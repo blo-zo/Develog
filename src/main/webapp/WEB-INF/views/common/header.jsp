@@ -15,16 +15,18 @@
     <title>홈페이지</title>
     <link  rel="stylesheet"   href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-   
     <link rel="stylesheet" href="${contextPath}/resources/css/mainPage.css">
     <link rel="stylesheet" href="${signUp}">
     <link rel = "stylesheet" href = "${searchPw}">
     <link rel = "stylesheet" href = "${updatePw}">
-    <style>
+    
+   	<style>
+	@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+	</style>
        
-    </style>
+   
 </head>
-<body>
+<body class="body"">
     <!-- 검색창 오프캔버스 -->
     
     
@@ -38,7 +40,7 @@
     <div class="offcanvas-body">
       <div id="search-area">
         <div>
-          <form action="search" id="search-form" onsubmit="document.getElementById('search-icon').onclick">
+          <form action="${contextPath}/search" id="search-form" onsubmit="document.getElementById('search-icon').onclick">
             <input type="text" id="search-input" name="searchInput"  placeholder="검색어를 입력해주세요.">
               <svg id="search-icon" onclick="document.getElementById('search-form').submit()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M23.809 21.646l-6.205-6.205c1.167-1.605 1.857-3.579 1.857-5.711 0-5.365-4.365-9.73-9.731-9.73-5.365 0-9.73 4.365-9.73 9.73 0 5.366 4.365 9.73 9.73 9.73 2.034 0 3.923-.627 5.487-1.698l6.238 6.238 2.354-2.354zm-20.955-11.916c0-3.792 3.085-6.877 6.877-6.877s6.877 3.085 6.877 6.877-3.085 6.877-6.877 6.877c-3.793 0-6.877-3.085-6.877-6.877z"/></svg>
           </form>
@@ -57,8 +59,8 @@
       
               <!-- 로고 -->
               <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="${contextPath}" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto">
-                  <p>develog</p>
+                <a  style="color: black;" href="${contextPath}" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto">
+                  <p style=  "color : #323232;    font-size: 20px; font-family: 'Titillium Web', sans-serif; font-weight: bold">Develog</p>
                 </a>
                 
                 <ul id = "searchList" class="nav col-12 col-lg-auto my-2 justify-content-center align-items-center my-md-0 text-small">

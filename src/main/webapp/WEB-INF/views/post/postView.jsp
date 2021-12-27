@@ -12,6 +12,10 @@
 	<!-- Bootstrap5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="${contextPath}/resources/css/post.css">
+    
+    <style>
+		@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+	</style>
 	
 </head>
 	
@@ -22,7 +26,7 @@
 <!-- 카테고리 오프캔버스 -->
   <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbar">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="category-menu-title" style="font-weight: bold; font-size: 30px; cursor:pointer;" onclick="location.href='${contextPath}/main'">
+      <h5 class="offcanvas-title" id="category-menu-title" style="color:#323232; font-family: 'Titillium Web', sans-serif; font-weight: bold; font-size: 30px; cursor:pointer;" onclick="location.href='${contextPath}/main'">
         Develog
       </h5>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -37,7 +41,7 @@
         	<c:forEach items="${categoryList}" var="category">
         		
         		<c:if test="${category.categoryName != '없음'}">
-		          <li class="list-group-item category userCategory" onclick="findOrDelete(this,${category.categoryCode},'${category.categoryName}');">${category.categoryName}</li>
+		          <li class="list-group-item category userCategory" onclick="findOrDelete(this,${category.categoryCode},'${category.categoryName}');">${category.categoryName}</li> 
         		</c:if>
         	
         	</c:forEach>
@@ -159,11 +163,11 @@
 	          </div>
 	
 	          <div class="post-prev-next-btn">
-	            <div class="post-prev-btn">이전 글</div>
+	           <%--  <div class="post-prev-btn">이전 글</div> --%>
                 <div class="goList">
 	              <a href="${contextPath}/blog/${post.memberName}">목록으로</a>
                 </div>
-	            <div class="post-next-btn">다음 글</div>
+	           <%-- <div class="post-next-btn">다음 글</div> --%>
 	          </div>
 	
 	        </div>
@@ -191,6 +195,8 @@
              	 </p>
 	            </div>
 	          </div>
+	          
+	          <hr style="width:800px;">
 	
 	
 			  <!-- 댓글 영역 -->
@@ -324,14 +330,13 @@
             <div class="modal-body">
                <section id="modal-section">
                  <div>
-                    <div class="content" input-modal>&nbsp;신고내용</div>
                     <div class="content">
                        <div class="input-modal">
                        		<form action="reportPost" method="POST">
                        		  <input type="hidden" name="memberName" value="${post.memberName}">	
                        		  <input type="hidden" name="reportPostNo" value="${post.postNo}">	
-                              <textarea name="reportPostContent" cols="30" rows="10" placeholder="신고내용 입력" style="resize:none;"></textarea>
-							  <button class="btn btn-primary">제출</button>                       		
+                              <textarea name="reportPostContent" cols="30" rows="10" placeholder="신고내용 입력" style="resize:none; width:90%; margin-left:30px; padding:10px;"></textarea>
+							  <button class="btn btn-primary" style="float:right; margin-right:31px;">제출</button>                       		
                        		</form>
                           </div>
                     </div>
@@ -355,13 +360,11 @@
             <div class="modal-body">
                <section id="modal-section">
                  <div>
-                    <div class="content" input-modal>&nbsp;신고내용</div>
-                    신고할 댓글 ${reply.replyNo}
                     <div class="content">
                      	<div class="input-modal">
                             <form action="reply/report" method="POST">
-                              <textarea name="reportReplyContent" class="reportReplyContent" cols="30" rows="10" placeholder="신고내용 입력" style="resize:none;"></textarea>
-							  <button class="btn btn-primary report-btn">제출</button>                       		
+                              <textarea name="reportReplyContent" class="reportReplyContent" cols="30" rows="10" placeholder="신고내용 입력" style="resize:none; width:90%; margin-left:30px; padding:10px;"></textarea>
+							  <button class="btn btn-primary report-btn" style="float:right; margin-right:31px;">제출</button>                       		
                        		</form>
                      	</div>
                     </div>
@@ -405,6 +408,9 @@ const memberName = "${post.memberName}";
 
 // 현재 블로그 번호
 const blogNo = "${post.blogNo}";
+
+const categoryName = "${category.categoryName}";
+const categoryCode = "${category.categoryCode}";
 
 
 

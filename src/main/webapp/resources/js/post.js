@@ -495,7 +495,8 @@ function selectCategoryList(){
 
         const listBox = $(".list-box");
 
-        const li = $('<li class="list-group-item category userCategory" onclick="findOrDelete(this, ${category.categoryCode}, "${category.categoryName}");">');
+        const li = $('<li class="list-group-item category userCategory" onclick="findOrDelete(this,' + category.categoryCode + 
+                              ',\''+ category.categoryName +'\');">');
 
         if(category.categoryName != "없음"){
 
@@ -564,10 +565,10 @@ function addCategory(){
   
             if(result > 0){ // 삽입 성공
   
-              const li = $('<li class="list-group-item category userCategory" onclick="findOrDelete(this, ${category.categoryCode}, "${category.categoryName}");">');
+              // const li = $('<li class="list-group-item category userCategory" onclick="findOrDelete(this, ${category.categoryCode}, \'${category.categoryName}\');">');
         
-              li.text(input.val());
-              listBox.append(li);
+              // li.text(input.val());
+              // listBox.append(li);
               input.remove();
 
               selectCategoryList();
@@ -662,7 +663,31 @@ function findOrDelete(el, categoryCode, categoryName){
 
     }else{
 
-      alert("준비중인 기능입니다.");
+      // alert("준비중인 기능입니다.");
+
+      // 해당 카테고리로 포스트 조회하기
+      $.ajax({
+
+        url : contextPath + "/blog/" + memberName + "/category/find",
+        data : {"blogNo" : blogNo, "categoryName" : categoryName,
+                 "categoryCode" : categoryCode },
+        type : "POST",
+    
+        success : function(result){
+          
+
+
+    
+        },
+    
+        error : function(req, status, error){
+          console.log("포스트 조회 실패")
+          console.log(req.responseText);
+        }
+    
+      });
+
+
     }
 
     

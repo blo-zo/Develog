@@ -34,6 +34,9 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="${contextPath}/resources/css/search.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/mainPage.css">
+	<style>
+	@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+	</style>
 </head>
 <body>
  
@@ -81,7 +84,7 @@
               <!-- 로고 -->
               <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a href="${contextPath}" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto">
-                  <p>develog</p>
+                  <p style=  "color : #323232;    font-size: 20px; font-family: 'Titillium Web', sans-serif; font-weight: bold">Develog</p>
                 </a>
                 
                 <ul id = "searchList" class="nav col-12 col-lg-auto my-2 justify-content-center align-items-center my-md-0 text-small">
