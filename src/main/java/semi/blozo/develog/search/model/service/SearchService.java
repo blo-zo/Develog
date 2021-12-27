@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import semi.blozo.develog.post.model.vo.Post;
+import semi.blozo.develog.post.model.vo.PostImage;
 import semi.blozo.develog.search.model.dao.SearchDAO;
 
 public class SearchService {
@@ -37,8 +38,14 @@ public class SearchService {
 	
 		Connection conn = getConnection();
 		List<Post> searchPost = dao.searchPost(conn , searchInput);
-		
-		
+		if(searchPost != null) { // 썸네일 이미지 얻어오기
+			for(Post post : searchPost) {
+				
+				PostImage searchImg = dao.searchImg(post.getPostNo(), conn);
+				post.setPostImg(searchImg);
+				
+			}
+		}
 		close(conn);
 		return searchPost;
 	}

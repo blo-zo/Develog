@@ -68,7 +68,7 @@
       
               <!-- 로고 -->
               <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="main" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto">
+                <a href="${contextPath}" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto">
                   <p>develog</p>
                 </a>
                 
@@ -201,6 +201,3 @@
   
 </header>
   <!-- -----------------------------------------------------------모달 끝----------------------------------------- -->  
-
-
-   
