@@ -443,6 +443,7 @@ public class PostController extends HttpServlet{
 						else if(arr[1].equals("reply")) {
 							
 							
+							
 							if(arr[2].equals("select")) {
 								
 								// 파라미터 얻어오기
