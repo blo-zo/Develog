@@ -50,7 +50,7 @@ function reportDetailContent(e){
 }
 
 function enquiryDetailContent(e){
-    enquiryNo = e.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerText
+    enquiryNo = e.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText
     const title = e.parentElement.previousElementSibling.innerText
     $.ajax({
         url : contextPath + "/admin/enquiry/modal", // 절대 경로로 해야 하나?
@@ -59,8 +59,9 @@ function enquiryDetailContent(e){
         dataType : "JSON",
         success : function(enquiry){
             console.log(enquiry);
-            inputModal[0].innerHTML = '제목 : '+enquiry.enquiryTitle+'<br>'+'userid@email.com <br>  작성일 : ' + enquiry.createDate+ '<br> 미답장' 
-            inputModal[1].innerHTML = enquiry.enquiryContent
+            inputModal[0].innerHTML = '제목 : '+enquiry.enquiryTitle+' <br>  작성일 : ' + enquiry.createDate+ '<br> 미답장' 
+            inputModal[1].innerHTML = enquiry.enquiryContent.replace(/(<([^>]+)>)/gi, "")
+            
         },
         error : function(req, status, error){
             console.log("ajax 실패");
@@ -178,3 +179,15 @@ console.log(memberNo);
 }
 
 
+// 화면 XSS처리 
+function XSSCheck(str, level) {
+
+    if (level == undefined || level == 0) {
+       str = str.replace(/\<|\>|\"|\'|\%|\;|\(|\)|\&|\+|\-|\s/g, "");
+    } else if (level != undefined && level == 1) {
+       str = str.replace(/\</g, "&lt;");
+       str = str.replace(/\>/g, "&gt;");
+    }
+    return str;
+ }
+ 

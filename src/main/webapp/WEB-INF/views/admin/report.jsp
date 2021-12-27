@@ -262,7 +262,7 @@ section>div:nth-child(4) {
 	<script>
 		const contextPath = "${pageContext.servletContext.contextPath}" // 아니 스크립트에 EL표현식이 있으니까 ajax에 Syntax json에러가 나내 ㄷㄷ
 	</script>
-	<script src="${pageContext.servletContext.contextPath}/resources/js/modal.js"></script>
+	<script src="${pageContext.servletContext.contextPath}/resources/js/adminMember.js"></script>
 	<script>
 			const inputSearch = document.getElementById("search-area").firstElementChild
 			inputSearch.addEventListener("keyup", function(){
