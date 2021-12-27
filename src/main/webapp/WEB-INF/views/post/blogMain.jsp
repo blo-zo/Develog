@@ -12,7 +12,9 @@
 	<!-- Bootstrap5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="${contextPath}/resources/css/post.css">
-	
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+	</style>
 </head>
 
 	<!-- header include -->
@@ -22,7 +24,7 @@
 	<!-- 카테고리 오프캔버스 -->
   <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbar">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="category-menu-title" style="color:#323232; font-weight: bold; font-size: 30px; cursor:pointer;" onclick="location.href='${contextPath}/main'">
+      <h5 class="offcanvas-title" id="category-menu-title" style="color:#323232; font-family: 'Titillium Web', sans-serif; font-weight: bold; font-size: 30px; cursor:pointer;" onclick="location.href='${contextPath}/main'">
         Develog
       </h5>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
