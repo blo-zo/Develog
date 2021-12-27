@@ -660,6 +660,9 @@ function findOrDelete(el, categoryCode, categoryName){
     
       });
 
+    }else{
+
+      alert("준비중인 기능입니다.");
     }
 
     
