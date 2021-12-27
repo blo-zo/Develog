@@ -18,7 +18,6 @@ urlPatterns = {"/member/login" , "/member/signup", "/member/searchpw" , "/member
 public class EncryptFilter implements Filter {
 
 	public void init(FilterConfig fConfig) throws ServletException {
-	System.out.println("벨로그 필터 생성");
 	}
    
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -40,7 +39,6 @@ public class EncryptFilter implements Filter {
 		
 	}
 	public void destroy() {
-		System.out.println("벨로그필터 제거! 재생성");
 	}
 
 

@@ -43,7 +43,6 @@ public class AdminController extends HttpServlet {
 		String message = null;
 		HttpSession session = req.getSession();
 		AdminService service = new AdminService();
-		System.out.println("controller : " + command);
 		try{
 			int cp = req.getParameter("cp") == null ? 1: Integer.parseInt(req.getParameter("cp"));
 			
