@@ -1099,7 +1099,7 @@ public class AdminDAO {
 			pstmt.setString(1, title);
 			pstmt.setString(2, content);
 			pstmt.setInt(3, enquiry.getEnquiryNo());
-			pstmt.setInt(4, 0);
+			pstmt.setInt(4, enquiry.getMemberNo());
 			result = pstmt.executeUpdate();
 		}finally {
 			pstmt.close();
