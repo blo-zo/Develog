@@ -73,9 +73,9 @@ public class EnquriyDAO {
 			int startRow =(pagination.getCurrentPage() - 1)* pagination.getLimit() +1;
 			int endRow = startRow + pagination.getLimit() -1;
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-			pstmt.setInt(3, memberNo);
+			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			rs = pstmt.executeQuery();
 		
 			while(rs.next()) {
