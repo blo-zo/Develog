@@ -10,12 +10,13 @@
                 <p class="updatePw-title">비밀번호변경</p>
                 
                 <br>
-                
+                <div class="main" style="background-color: #f6f6f6;
+    border-radius: 10px; padding: 20px;">
                 <table>
                     
                     
                     <!-- 이메일 -->
-                    
+                   <%--  
                     <tr>
                         <td> <label for="email" class="label1">이메일</label> 
                             <div class="session-val">
@@ -32,7 +33,7 @@
                             </div>
 						</td> 
                         
-                    </tr>
+                    </tr> --%>
              
 					<tr>
                         
@@ -90,7 +91,7 @@
                     
                 </table>  
 
-                
+               </div> 
             </fieldset>
         </form>
         

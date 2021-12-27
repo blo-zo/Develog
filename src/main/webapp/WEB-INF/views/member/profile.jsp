@@ -70,7 +70,7 @@
 	              <img class="email-img" id="email-img" src="${contextPath}/resources/images/boardIcon/email.png">
 	            </div>
 	            <div class="email-input">
-	                <input type="text"  class="line-intro" id="emailContent" name="" value="${profileVO.snsEmail}"  placeholder="이메일을 입력해주세요." maxlength = 16 >
+	                <input type="text"  class="line-intro" id="emailContent" name="snsEmail" value="${profileVO.snsEmail}"  placeholder="이메일을 입력해주세요." maxlength = 16 >
 	            </div>
 	          </div>
 	
@@ -80,7 +80,7 @@
 	              <img  class="github-img"  id="github-img" src="${contextPath}/resources/images/boardIcon/github.png">
 	            </div>
 	            <div class="github-input">
-	                <input type="text"  class="line-intro" id="gitContent" name="" value="${profileVO.snsGit}"  placeholder="Github 계정을 입력하세요." maxlength = 16 >
+	                <input type="text"  class="line-intro" id="gitContent" name="snsGit" value="${profileVO.snsGit}"  placeholder="Github 계정을 입력하세요." maxlength = 16 >
 	            </div>
 	          </div>
 	
@@ -90,7 +90,7 @@
 	              <img class="twitter-img" id="twitter-img" src="${contextPath}/resources/images/boardIcon/twitter.png" >
 	            </div>
 	            <div class="twitter-input">
-	                <input type="text" class="line-intro"  id="twitterContent" name="" value="${profileVO.snsTwitt}"  placeholder="Twitter 계정을 입력하세요." 
+	                <input type="text" class="line-intro"  id="twitterContent" name="snsTwitt" value="${profileVO.snsTwitt}"  placeholder="Twitter 계정을 입력하세요." 
 	                maxlength = 16 >
 	            </div>
 	          </div>
@@ -102,7 +102,7 @@
 	              >
 	            </div>
 	            <div class="facebook-input">
-	                <input type="text"  class="line-intro" id="facebookContent" name="" value="${profileVO.snsFbook}" placeholder="http://www.facebook.com/" maxlength = 16 >
+	                <input type="text"  class="line-intro" id="facebookContent" name="snsFbook" value="${profileVO.snsFbook}" placeholder="http://www.facebook.com/" maxlength = 16 >
 	            </div>
 	          </div>
 	
@@ -112,7 +112,7 @@
 	              <img  class="homepage-img" id="homepage-img" src="${contextPath}/resources/images/boardIcon/home.png" alt="" >
 	            </div>
 	            <div class="homepage-input">
-	                <input type="text" class="line-intro" id="homeContent" name="" value="${profileVO.snsHome}" placeholder="홈페이지 주소를 입력하세요." maxlength = 16 >
+	                <input type="text" class="line-intro" id="homeContent" name="snsHome" value="${profileVO.snsHome}" placeholder="홈페이지 주소를 입력하세요." maxlength = 16 >
 	            </div>
 	          </div> <!-- homepage -->
 	

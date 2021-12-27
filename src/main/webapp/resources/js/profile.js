@@ -70,6 +70,7 @@ $(function() {
 
 function changeIMG(){
 	//img 태그의 아이디로 변경 할 때
+	$(".profileImg > img").addClass('member-img-size');
 	$(".profileImg").children("img").attr("src", "../resources/images/common/user.png");
     
 }

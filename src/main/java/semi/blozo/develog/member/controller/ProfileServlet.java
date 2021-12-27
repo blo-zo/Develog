@@ -67,13 +67,15 @@ public class ProfileServlet extends HttpServlet{
 			ProfileImgVO memberImg = service.selectProfileImg(memberNo);
 			
 			req.setAttribute("profileVO", profileVO);
-			req.setAttribute("memberImg", memberImg);
+			req.setAttribute("memberImg", memberImg);	
+	
 			
-
-			System.out.println("여기지나가니?");
+			
+			System.out.println("setAttribute" + profileVO);
+			
 			
 			if(command.equals("profile/update")) {
-				System.out.println("profile");
+	
 			
 				// 개인 프로필  이미지
 				int maxSize = 1024 * 1024 * 100;
@@ -88,31 +90,45 @@ public class ProfileServlet extends HttpServlet{
 				profileVO.setIntro(mReq.getParameter("line-intro"));
 				profileVO.setBlogTitle(mReq.getParameter("devel-input"));
 				
+				profileVO.setSnsEmail(mReq.getParameter("snsEmail"));
+				profileVO.setSnsGit(mReq.getParameter("snsGit"));
+				profileVO.setSnsTwitt(mReq.getParameter("snsTwitt"));
+				profileVO.setSnsFbook(mReq.getParameter("snsFbook"));
+				profileVO.setSnsHome(mReq.getParameter("snsHome"));
+				
+				System.out.println(profileVO);
+				
+				
 				// 2) 파일 형식의 파라미터
 				Enumeration<String> files = mReq.getFileNames();
 				
 				// 회원가입한 회원은 기본 프로필 이미지가 없다
 				// 문제: 프로필 사진을 바꿔도 설정페이지로 가면 
 				
-	
-				
-				
 				// 회원의 프로필을 지정
 				memberImg.setBlogNo(memberNo);
 				
-				
+			
 				if( files.hasMoreElements() ) {
-					
+				
 					String name = files.nextElement(); // 다음 요소값(name) 얻어오기
-					
-					if( mReq.getFilesystemName(name) != null) { 
+												
+					if( mReq.getFilesystemName(name) != null) { // 값이 있는데
 						
-						memberImg.setMemberImgName(mReq.getFilesystemName(name));
-						memberImg.setMemberImgOriginal(mReq.getOriginalFileName(name));
-						memberImg.setMemberImgPath(filePath); // 파일이 있는 주소 경로
+							memberImg.setMemberImgName(mReq.getFilesystemName(name));
+							memberImg.setMemberImgOriginal(mReq.getOriginalFileName(name));
+							memberImg.setMemberImgPath(filePath); // 파일이 있는 주소 경로
 						
 					}
-				}
+//					if( mReq.getFilesystemName(name) != null) { 
+//						
+//						memberImg.setMemberImgName(mReq.getFilesystemName(name));
+//						memberImg.setMemberImgOriginal(mReq.getOriginalFileName(name));
+//						memberImg.setMemberImgPath(filePath); // 파일이 있는 주소 경로
+//						
+//					}
+				}	
+				
 				
 				
 				//조회 후 살리기
