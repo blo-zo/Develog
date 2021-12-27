@@ -4,12 +4,13 @@ import static semi.blozo.develog.common.JDBCTemplate.*;
 import java.sql.Connection;
 
 import semi.blozo.develog.member.model.dao.MemberDAO;
+import semi.blozo.develog.member.model.dao.MemberProfileDAO;
 import semi.blozo.develog.member.model.vo.Member;
 
 
 public class MemberService {
 	private MemberDAO dao = new MemberDAO();
-	
+
 	/** 로그인입니다.
 	 * @param memberEmail
 	 * @param memberPw
@@ -42,15 +43,19 @@ public class MemberService {
 				if(result1 > 0 ) {
 					// 블로그
 					int result2 = dao.insertBlog(conn);
+				
 					System.out.println("블로그 들어가면 1임 :"+ result2);
 				
 					if(result2 >0) {
 						// 카테고리
 						int result3 = dao.insertCategory(conn);
 						System.out.println("카테고리 들어가면 1임 :"+ result3);
+						if(result3 > 0) {
+							int result4 = dao.insertMemberImg(conn);
+							commit(conn);
+						}
 					};
 				}
-			commit(conn);
 		}else {
 			rollback(conn);
 		}

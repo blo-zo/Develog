@@ -71,6 +71,10 @@ a{
 /*---------------- Header ----------------*/
 /* 검색창 오프캔버스 */
 /* 헤더 */
+
+.memberName{
+	margin: 0px;
+}
 .jun-header{
   max-width: 1200px;
   margin: auto;

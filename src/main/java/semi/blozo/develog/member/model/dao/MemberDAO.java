@@ -280,6 +280,27 @@ public class MemberDAO {
 		return result;
 	}
 
+	/** 프로필 이미지삽입
+	 * @param conn
+	 * @return
+	 */
+	public int insertMemberImg(Connection conn)throws Exception {
+		
+		int result = 0;
+	      
+	      try {
+	         String sql = prop.getProperty("insertMemberImg");
+	         pstmt = conn.prepareStatement(sql);
+	         
+	       
+	         result = pstmt.executeUpdate();
+	         
+	      }  finally { close(pstmt); }
+	      
+	      return result;
+	
+	}
+
 
 	
 

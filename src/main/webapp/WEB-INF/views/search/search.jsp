@@ -114,7 +114,7 @@
           <li>
             <div class="dropdown">
               <a href="#" class="nav-link d-block text-decoration-none " id="userID" data-bs-toggle="dropdown" aria-expanded="false">
-						<P>${sessionScope.loginMember.memberNm}</P>						
+						<P class="memberName">${sessionScope.loginMember.memberNm}</P>						
 	              </a>
               <ul class="dropdown-menu text-small" aria-labelledby="userID">
                 <li><a class="dropdown-item" href="${contextPath}/blog/${loginMember.memberNm}">내 블로그</a></li>
@@ -178,7 +178,7 @@
               
             </div>
             <div class="signUp-box">
-            <div class="idcheckbox" id="idcheckbox">
+            <div class="idcheckbox" id="idcheckbox" style="text-align: left">
              <label for="idcheck">이메일 저장</label> 
              <c:if test="${!empty cookie.save.value}">
              <c:set var = "chk" value = "checked"></c:set>

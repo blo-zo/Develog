@@ -124,7 +124,7 @@ public class EnquriyDAO {
 				enquiry.setEnquiryTitle(rs.getString("ENQUIRY_TITLE"));
 				enquiry.setEnquiryContent(rs.getString("ENQUIRY_CONTENT"));
 				enquiry.setCreateDt(rs.getString("CREATE_DT"));
-				enquiry.setModifyDt(rs.getString("MODIFY_DT"));
+
 				enquiry.setParentEnquriy(rs.getInt("PARENT_ENQUIRY"));
 				
 			
