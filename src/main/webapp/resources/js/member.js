@@ -69,7 +69,7 @@ $("#signUp-name").on("input", function () {
             }
         });
     } else {
-        $("#checkName").text("닉네임은 한글로 두글자이상 10글자이하로 작성해주세요.").css("color", "red");
+        $("#checkName").text("닉네임은 한글로 두글자이상 5글자이하로 작성해주세요.").css("color", "red");
         signUpCheckObj.name = false;
     }
 

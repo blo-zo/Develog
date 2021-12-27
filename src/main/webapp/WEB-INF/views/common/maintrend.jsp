@@ -17,7 +17,7 @@
           <a href="${contextPath}/blog/${list.memberName}/view?pno=${list.postNo}">
               <img src="${contextPath}${list.postImg.postImgPath}${list.postImg.postImgName}" alt="" class="carousel-imgbox">
                <div class="bg">
-               <div style="margin: auto;  width: 250px; height: 50px; margin-top: 120px; ">
+               <div style="margin: auto;  width: 250px; height: 50px; margin-top: 120px; color: black; font-weight: bold; ">
                  ${list.postTitle}
                </div>
                 </div>
@@ -32,7 +32,7 @@
         <div class="swiper-pagination"></div>
       </div>
         <!-- --------------------------------------------캐러셀 끝------------------------------------------------------- -->
-        <button onclick=" location.href='${contextPath}/member/updatepw'"  >비밀번호 변경</button>
+        
 		
      
         

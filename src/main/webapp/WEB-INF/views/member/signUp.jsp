@@ -15,7 +15,7 @@
 
 				<tr>
 
-					<td><label for="signUp-name" class="label1">닉네임</label><input maxlength="10" autocomplete="off" class="signUp-input" id="signUp-name" type="text" name="signUpNm" placeholder="  닉네임을 입력해주세요." required="required"></td>
+					<td><label for="signUp-name" class="label1">닉네임</label><input maxlength ="5" class="signUp-input" id="signUp-name" type="text" name="signUpNm" placeholder="  닉네임을 입력해주세요." required="required"></td>
 				<tr>
 					<td>
 
