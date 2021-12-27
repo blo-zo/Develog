@@ -340,46 +340,55 @@ public class PostService {
 			// 2번 방법) 한 번 싹 지웠다가 다시 삽입하기 =>  채택
 			
 			
-			result = dao.deleteTag(postNo, conn); // 포스트에 있는 태그 모두 삭제
-			
-			if(result > 0) {
+			try {
+				result = dao.deleteTag(postNo, conn); // 포스트에 있는 태그 모두 삭제
+				
+				// 기존에 태그가 없는 경우 0행 삭제함 -> 어떻게 고쳐야할까?
 				
 				for(TagVO tagVO : tagVOList) {
 					tagVO.setTagName(XSS.replaceParameter( tagVO.getTagName()) );  
 					tagVO.setPostNo(postVO.getPostNo());
 					
-					result = dao.updateTag(tagVO, conn);
+					result = dao.insertTag(tagVO, conn);
 					
 					if( result != 1) { // 태그 삽입(수정) 실패 시
 						rollback(conn);
 						
 						flag = false;
 						break;
-					} 
-				}
+					}
+				}	// 태그 새로 삽입 끝
 				
+				
+				// 태그가 모두 잘 삽입 된 경우 썸네일 수정 시작
 				if(flag) {
 					
 					// 썸네일 수정
 					finalResult = dao.updatePostThumb(thumbImg, conn);
 					// finalResult => 최종 수정 결과
 					
-					if(result > 0)	{
+					if(result > 0)	{	
+						
+						// 썸네일까지 모두 수정 완료되면 커밋!
 						commit(conn);
+						
+						
 					}
+					// 썸네일 수정 실패 시
 					else rollback(conn);
-					
-				}else { // 썸네일 수정 실패 시
-					rollback(conn);
 				}	
 				
 				
-			}else { // 태그 삭제 실패 시
+			}catch(SQLException e){	// 0행 혹은 여러 행 삭제가 아닌 예외가 발생한 경우
 				rollback(conn);
 			}
 			
-		}else {	// 글 부분 수정 실패
+			
+		}else {	
+			
+			// 글 부분 수정 실패
 			rollback(conn);
+			
 		}
 		
 		close(conn);
@@ -463,6 +472,59 @@ public class PostService {
 		MemberImage profileImg = dao.selectProfImg(blogNo, conn);
 		close(conn);
 		return profileImg;
+	}
+
+
+
+	/** 카테고리 추가
+	 * @param blogNo
+	 * @param categoryName
+	 * @return result
+	 * @throws Exception
+	 */
+	public int addCategory(int blogNo, String categoryName) throws Exception{
+
+		Connection conn = getConnection();
+		int result = dao.addCategory(blogNo, categoryName, conn);
+		
+		if(result>0)commit(conn);
+		else rollback(conn);
+		
+		close(conn);
+		return result;
+	}
+
+
+
+	/** 카테고리 제거
+	 * @param categoryCode
+	 * @param categoryName
+	 * @param blogNo
+	 * @return result
+	 * @throws Exception
+	 */
+	public int removeCategory(int categoryCode, String categoryName, int blogNo) throws Exception{
+
+		Connection conn = getConnection();
+		
+		int result = 0;
+		// 먼저 해당 카테고리 게시글을 기본카테고리("없음")로 변경시킨다.
+		try {
+			
+			result = dao.switchCategory(categoryCode, blogNo, conn);
+			
+			result = dao.removeCategory(categoryCode, conn); 
+			
+			if(result>0) commit(conn);
+			else rollback(conn);
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
 	}
 	
 	

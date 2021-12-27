@@ -809,3 +809,12 @@ border-bottom-right-radius: 10px;}
   max-width: 800px;;
   max-height: 50px;
 }
+
+.delete-form{
+  background-color: #ff000036;
+  border: 0.5px solid white;
+}
+
+.delete-form:hover{
+  background-color: rgb(255 0 0 / 56%);
+}

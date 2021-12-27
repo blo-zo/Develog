@@ -615,7 +615,7 @@ public class PostDAO {
 	 * @return 
 	 * @throws Exception
 	 */
-	public int updateTag(TagVO tagVO, Connection conn) throws Exception{
+	public int insertTag(TagVO tagVO, Connection conn) throws Exception{
 
 		int result = 0;
 		
@@ -784,6 +784,84 @@ public class PostDAO {
 		}
 		
 		return profileImg;
+	}
+
+	/** 카테고리 추가
+	 * @param blogNo
+	 * @param categoryName
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int addCategory(int blogNo, String categoryName, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("addCategory");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, categoryName);
+			pstmt.setInt(2, blogNo);
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	/** 기존 포스트의 카테고리 변경하기
+	 * @param categoryCode 
+	 * @param conn 
+	 * @param blogNo 
+	 * @return result
+	 * @throws Exception
+	 */
+	public int switchCategory(int categoryCode, int blogNo, Connection conn) throws Exception{
+		
+		int result = 0;
+		
+		try {
+			
+			String sql = prop.getProperty("switchCategory");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, blogNo);
+			pstmt.setInt(2, blogNo);
+			pstmt.setInt(3, categoryCode);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	/** 카테고리 제거하기, 삭제
+	 * @param categoryCode
+	 * @param conn
+	 * @return result
+	 * @throws Exception
+	 */
+	public int removeCategory(int categoryCode, Connection conn) throws Exception{
+
+		int result = 0;
+		
+		try {
+			String sql = prop.getProperty("removeCategory");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryCode);
+			
+			result = pstmt.executeUpdate();
+			
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	
