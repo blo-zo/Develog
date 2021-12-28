@@ -91,7 +91,7 @@
 	            </div>
 	            <div class="twitter-input">
 	                <input type="text" class="line-intro"  id="twitterContent" name="snsTwitt" value="${profileVO.snsTwitt}"  placeholder="Twitter 계정을 입력하세요." 
-	                maxlength = 16 >
+	                maxlength = 25 >
 	            </div>
 	          </div>
 	
@@ -102,7 +102,7 @@
 	              >
 	            </div>
 	            <div class="facebook-input">
-	                <input type="text"  class="line-intro" id="facebookContent" name="snsFbook" value="${profileVO.snsFbook}" placeholder="http://www.facebook.com/" maxlength = 16 >
+	                <input type="text"  class="line-intro" id="facebookContent" name="snsFbook" value="${profileVO.snsFbook}" placeholder="http://www.facebook.com/" maxlength = 25 >
 	            </div>
 	          </div>
 	
