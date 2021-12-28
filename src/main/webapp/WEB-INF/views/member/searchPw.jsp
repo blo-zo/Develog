@@ -74,7 +74,7 @@
 				<!-- 비밀번호 -->
 				<tr>
 
-					<td><label for="password" class="label1">임시비밀번호</label><input class="searchPw-input" id="temp" type="password" name="temp" placeholder="  비밀번호를 입력해주세요">
+					<td><label for="password" class="label1">인증번호</label><input class="searchPw-input" id="temp" type="password" name="temp" placeholder="  비밀번호를 입력해주세요">
 					
 						<button type="button" id="sub_btn2">확인</button>
 					</td>
