@@ -71,9 +71,6 @@ public class ProfileServlet extends HttpServlet{
 	
 			
 			
-			System.out.println("setAttribute" + profileVO);
-			
-			
 			if(command.equals("profile/update")) {
 	
 			
@@ -95,8 +92,6 @@ public class ProfileServlet extends HttpServlet{
 				profileVO.setSnsTwitt(mReq.getParameter("snsTwitt"));
 				profileVO.setSnsFbook(mReq.getParameter("snsFbook"));
 				profileVO.setSnsHome(mReq.getParameter("snsHome"));
-				
-				System.out.println(profileVO);
 				
 				
 				// 2) 파일 형식의 파라미터

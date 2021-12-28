@@ -186,8 +186,7 @@ public class PostingController extends HttpServlet {
 				
 				if( files.hasMoreElements() ) {
 					String name = files.nextElement(); // 다음 요소값(name) 얻어오기
-					System.out.println(mReq.getOriginalFileName(name));
-					System.out.println(mReq.getFilesystemName(name));
+					
 					resp.getWriter().print(req.getContextPath()+filePath+mReq.getFilesystemName(name));
 				}
 			}
